@@ -11,10 +11,7 @@ pub struct Pcg32 {
 
 impl Pcg32 {
     pub fn new(seed: u64, stream: u64) -> Self {
-        let mut rng = Pcg32 {
-            state: 0,
-            inc: (stream << 1) | 1,
-        };
+        let mut rng = Pcg32 { state: 0, inc: (stream << 1) | 1 };
         rng.next_u32();
         rng.state = rng.state.wrapping_add(seed);
         rng.next_u32();
@@ -37,11 +34,6 @@ mod tests {
         // pcg32-demo 用種子 42、序列 54 的前六個數
         let mut rng = Pcg32::new(42, 54);
         let got: Vec<u32> = (0..6).map(|_| rng.next_u32()).collect();
-        assert_eq!(
-            got,
-            [
-                0xa15c02b7, 0x7b47f409, 0xba1d3330, 0x83d2f293, 0xbfa4784b, 0xcbed606e
-            ]
-        );
+        assert_eq!(got, [0xa15c02b7, 0x7b47f409, 0xba1d3330, 0x83d2f293, 0xbfa4784b, 0xcbed606e]);
     }
 }

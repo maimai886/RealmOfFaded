@@ -1,0 +1,5 @@
+{
+  "note": "建角不能用的名字，不分大小寫；exact 是整個名字相同，fragments 是名字裡含有",
+  "exact": ["gm", "admin", "administrator", "system", "moderator", "rof", "realmoffaded"],
+  "fragments": ["管理員", "管理者", "客服", "官方", "系統", "公告", "營運", "gamemaster"]
+}

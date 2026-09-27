@@ -8,4 +8,5 @@ publish.workspace = true
 
 [dependencies]
 rof-core.workspace = true
-rof-protocol.workspace = true
+rof-data.workspace = true
+glam.workspace = true

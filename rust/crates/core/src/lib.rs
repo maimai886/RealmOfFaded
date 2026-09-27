@@ -7,4 +7,4 @@ mod walker;
 
 pub use collision::{CELL, MapCollision};
 pub use path::{PathFinder, Walked, walk};
-pub use walker::{ARRIVE_DISTANCE, MOVE_SPEED, PathBudget, TICK_MS, TICK_SECONDS, Walker};
+pub use walker::{MOVE_SPEED, PathBudget, TICK_MS, TICK_SECONDS, Walker};

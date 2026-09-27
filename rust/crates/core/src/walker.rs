@@ -6,7 +6,6 @@ use crate::path::{BUDGET_MAX, BUDGET_PER_SECOND, PathFinder, walk};
 
 pub const TICK_MS: i64 = 50;
 pub const TICK_SECONDS: f32 = TICK_MS as f32 / 1000.0;
-pub const ARRIVE_DISTANCE: f32 = 0.1;
 // 初心者在 jobs.json 和角色資料都沒寫 move_speed 時的預設值
 pub const MOVE_SPEED: f32 = 3.5;
 
@@ -84,7 +83,7 @@ impl Walker {
         if self.target.is_some() {
             let step = speed * TICK_SECONDS;
             let collision = finder.collision();
-            let walked = walk(collision, self.position, &self.path, self.index, step, ARRIVE_DISTANCE, step);
+            let walked = walk(collision, self.position, &self.path, self.index, step, step);
             (self.position, self.index) = (walked.position, walked.index);
             if walked.arrived || walked.stuck {
                 self.target = None;
@@ -138,7 +137,7 @@ mod tests {
         let trail = walk_until_stopped(&mut walker, &finder);
         assert!(trail.iter().all(|&p| collision.is_walkable(p)), "路上穿進了擋路");
         let [dx, dz] = [walker.position[0] - behind[0], walker.position[1] - behind[1]];
-        assert!((dx * dx + dz * dz).sqrt() <= ARRIVE_DISTANCE, "停在 {:?}", walker.position);
+        assert!(dx == 0.0 && dz == 0.0, "停在 {:?}", walker.position);
     }
 
     #[test]
@@ -152,6 +151,6 @@ mod tests {
         walker.command(1, Some(target));
         walk_until_stopped(&mut walker, &finder);
         let [dx, dz] = [walker.position[0] - target[0], walker.position[1] - target[1]];
-        assert!((dx * dx + dz * dz).sqrt() <= ARRIVE_DISTANCE, "停在 {:?}", walker.position);
+        assert!(dx == 0.0 && dz == 0.0, "停在 {:?}", walker.position);
     }
 }

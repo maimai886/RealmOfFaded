@@ -4,7 +4,7 @@
 use std::collections::VecDeque;
 
 use glam::Vec2;
-use rof_core::{ARRIVE_DISTANCE, MapCollision, PathBudget, PathFinder, TICK_SECONDS, walk};
+use rof_core::{MapCollision, PathBudget, PathFinder, TICK_SECONDS, walk};
 use rof_data::MapData;
 
 const MIN_STEP: f32 = 0.000001;
@@ -17,6 +17,8 @@ const SNAP_DISTANCE: f32 = 4.0;
 // 停著時這個距離內一次對齊，短按只走一兩個 tick，平滑拉回看起來像往回退
 const IDLE_CORRECT_DISTANCE: f32 = 0.35;
 const HISTORY_MS: f64 = 1500.0;
+// 離目的地這麼近就不再轉向，免得到站那一幀面向亂跳
+const FACE_DISTANCE: f32 = 0.1;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Correction {
@@ -138,7 +140,7 @@ impl Prediction {
             return [0.0; 2];
         };
         let to_target = target - self.position;
-        if to_target.length() <= ARRIVE_DISTANCE {
+        if to_target.length() <= FACE_DISTANCE {
             return [0.0; 2];
         }
         // 已經在走就面向路上的下一個點；排程中的路還沒算，先面向目的地
@@ -168,9 +170,17 @@ impl Prediction {
         }
     }
 
-    /// 伺服器位置是 lag_ms 以前的結果，拿那一刻的預測來比
-    pub fn reconcile(&mut self, server: [f32; 2], now_ms: f64, lag_ms: f64) -> Correction {
-        let server = Vec2::from(server);
+    /// 伺服器位置是 lag_ms 以前的結果，拿那一刻的預測來比；回傳怎麼修和誤差幾公尺
+    pub fn reconcile(&mut self, server: [f32; 2], now_ms: f64, lag_ms: f64) -> (Correction, f32) {
+        let error = self.error_at(server, now_ms - lag_ms);
+        (self.correct(server.into(), now_ms, lag_ms), error)
+    }
+
+    fn error_at(&self, server: [f32; 2], time_ms: f64) -> f32 {
+        (Vec2::from(server) - self.position_at(time_ms) - self.pending).length()
+    }
+
+    fn correct(&mut self, server: Vec2, now_ms: f64, lag_ms: f64) -> Correction {
         let past = self.position_at(now_ms - lag_ms);
         let error = server - (past + self.pending);
         let distance = error.length();
@@ -218,7 +228,7 @@ impl Prediction {
         let max_step = (self.move_speed * TICK_SECONDS).max(MIN_STEP);
         let travel = self.move_speed * travel_s;
         let pos = self.position.into();
-        let walked = walk(collision, pos, &self.path, self.index, travel, ARRIVE_DISTANCE, max_step);
+        let walked = walk(collision, pos, &self.path, self.index, travel, max_step);
         (self.position, self.index) = (walked.position.into(), walked.index);
         if walked.arrived || walked.stuck {
             self.target = None;

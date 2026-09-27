@@ -333,7 +333,7 @@ pub(crate) fn nearest_cell(
 pub struct Walked {
     pub position: [f32; 2],
     pub index: usize,
-    /// 到了終點 arrive 公尺內
+    /// 站上終點
     pub arrived: bool,
     /// 一步都沒動
     pub stuck: bool,
@@ -346,7 +346,6 @@ pub fn walk(
     path: &[[f32; 2]],
     mut index: usize,
     travel: f32,
-    arrive: f32,
     max_step: f32,
 ) -> Walked {
     let start = Vec2::from(position);
@@ -378,6 +377,6 @@ pub fn walk(
             break;
         }
     }
-    let arrived = index + 1 >= path.len() && path.last().is_some_and(|&end| here.distance(end.into()) <= arrive);
+    let arrived = index + 1 >= path.len() && path.last().is_some_and(|&end| Vec2::from(end) == here);
     Walked { position: here.into(), index, arrived, stuck: here == start && travel > MIN_MOVE }
 }

@@ -1,0 +1,159 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/map/terrain.gdshader" id="1"]
+[ext_resource type="Texture2D" path="res://assets/generated/textures/grass.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/generated/textures/grass_dry.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/generated/textures/dirt.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/generated/textures/cobblestone.png" id="5"]
+[ext_resource type="Shader" path="res://assets/shaders/map/foliage.gdshader" id="6"]
+[ext_resource type="Shader" path="res://assets/shaders/map/grass_blade.gdshader" id="7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_material"]
+sky_top_color = Color(0.3745, 0.6218, 0.9465, 1)
+sky_horizon_color = Color(0.8528, 0.9149, 0.9639, 1)
+ground_bottom_color = Color(0.5757, 0.6392, 0.5642, 1)
+ground_horizon_color = Color(0.8528, 0.9149, 0.9639, 1)
+sun_angle_max = 12.0
+sun_curve = 0.1
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_material")
+radiance_size = 0
+
+[sub_resource type="Environment" id="environment"]
+background_mode = 2
+sky = SubResource("sky")
+ambient_light_source = 3
+tonemap_mode = 4
+tonemap_exposure = 1.08
+adjustment_enabled = true
+adjustment_contrast = 1.04
+adjustment_saturation = 1.1
+glow_enabled = true
+glow_levels/1 = 0.0
+glow_levels/2 = 0.6
+glow_levels/3 = 1.0
+glow_levels/4 = 1.0
+glow_levels/5 = 0.9
+glow_levels/6 = 0.6
+glow_levels/7 = 0.3
+glow_intensity = 0.3
+glow_strength = 1.05
+glow_bloom = 0.0
+glow_blend_mode = 1
+glow_hdr_threshold = 2.05
+glow_hdr_scale = 2.0
+glow_hdr_luminance_cap = 10.0
+fog_enabled = true
+fog_mode = 0
+fog_light_color = Color(0.8611, 0.9251, 0.9263, 1)
+fog_density = 0.0009
+fog_aerial_perspective = 0.35
+fog_sky_affect = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.001
+volumetric_fog_albedo = Color(0.8611, 0.9251, 0.9263, 1)
+volumetric_fog_anisotropy = 0.78
+volumetric_fog_length = 80.0
+volumetric_fog_ambient_inject = 0.4
+sdfgi_enabled = true
+sdfgi_use_occlusion = false
+sdfgi_cascades = 3
+sdfgi_min_cell_size = 0.4
+ssao_enabled = true
+ssao_radius = 1.6
+ssao_intensity = 1.0
+ssil_enabled = true
+
+[sub_resource type="FastNoiseLite" id="noise"]
+seed = 20260915
+frequency = 0.02
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="noise_texture"]
+width = 512
+height = 512
+seamless = true
+noise = SubResource("noise")
+
+[sub_resource type="ShaderMaterial" id="terrain_material"]
+shader = ExtResource("1")
+shader_parameter/grass_tex = ExtResource("2")
+shader_parameter/dry_tex = ExtResource("3")
+shader_parameter/dirt_tex = ExtResource("4")
+shader_parameter/stone_tex = ExtResource("5")
+shader_parameter/noise_tex = SubResource("noise_texture")
+shader_parameter/grass_tint = Color(1, 1, 0.98, 1)
+shader_parameter/dry_tint = Color(1, 0.97, 0.9, 1)
+shader_parameter/stone_tint = Color(0.9, 0.88, 0.85, 1)
+shader_parameter/dry_amount = 0.45
+shader_parameter/clump_strength = 0.55
+shader_parameter/macro_strength = 0.24
+
+[sub_resource type="PlaneMesh" id="plane"]
+
+[sub_resource type="FastNoiseLite" id="patch_noise"]
+seed = 7
+frequency = 0.012
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="patch_texture"]
+width = 512
+height = 512
+seamless = true
+noise = SubResource("patch_noise")
+
+[sub_resource type="ShaderMaterial" id="grass_material"]
+shader = ExtResource("7")
+shader_parameter/root_color = Color(0.4, 0.62, 0.2744, 1)
+shader_parameter/tip_color = Color(0.7, 0.83, 0.4508, 1)
+shader_parameter/patch_noise = SubResource("patch_texture")
+
+[sub_resource type="ShaderMaterial" id="canopy_material"]
+shader = ExtResource("6")
+shader_parameter/sphere_normals = 0.85
+shader_parameter/shade_bottom = 0.78
+shader_parameter/shade_top = 1.3
+shader_parameter/sway_strength = 0.09
+shader_parameter/plant_variation = 1.0
+shader_parameter/sun_kiss = Vector3(0.1, 0.1, 0.02)
+shader_parameter/pastel = 0.7
+
+[sub_resource type="ShaderMaterial" id="cover_material"]
+shader = ExtResource("6")
+shader_parameter/sphere_normals = 1.0
+shader_parameter/canopy_center = Vector3(0, -60, 0)
+shader_parameter/shade_bottom = 0.8
+shader_parameter/shade_top = 1.15
+shader_parameter/sway_strength = 0.12
+shader_parameter/plant_variation = 0.3
+shader_parameter/sun_kiss = Vector3(0.05, 0.05, 0.01)
+shader_parameter/pastel = 0.7
+
+[node name="Meadow" type="Node3D"]
+metadata/grass = SubResource("grass_material")
+metadata/canopy = SubResource("canopy_material")
+metadata/cover = SubResource("cover_material")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.819152, 0.353129, -0.451984, 0, 0.788011, 0.615661, 0.573576, -0.50432, 0.645501, 0, 0, 0)
+light_color = Color(1, 0.9087, 0.7184, 1)
+light_energy = 2.0
+light_angular_distance = 2.6
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 0.6
+shadow_opacity = 0.7
+shadow_blur = 0.3
+directional_shadow_split_1 = 0.06
+directional_shadow_split_2 = 0.16
+directional_shadow_split_3 = 0.4
+directional_shadow_max_distance = 95.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("environment")
+
+[node name="Terrain" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("plane")
+material_override = SubResource("terrain_material")

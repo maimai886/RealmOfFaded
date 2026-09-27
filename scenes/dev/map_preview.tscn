@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[node name="MapPreview" type="Node3D"]
+
+[node name="Map" type="RofMap" parent="."]
+map_id = "meadow"
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 4, 36.769553, -2.230447)
+current = true
+fov = 15.0
+near = 1.0
+far = 300.0
+
+[node name="ShotTaker" type="ShotTaker" parent="."]

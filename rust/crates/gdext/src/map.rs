@@ -10,9 +10,10 @@ use godot::classes::geometry_instance_3d::ShadowCastingSetting;
 use godot::classes::image::Format;
 use godot::classes::mesh::PrimitiveType;
 use godot::classes::multi_mesh::TransformFormat;
+use godot::classes::rendering_server::GlobalShaderParameterType;
 use godot::classes::{
     INode3D, Image, ImageTexture, Material, Mesh, MeshInstance3D, MultiMesh, MultiMeshInstance3D, PackedScene,
-    PlaneMesh, ProjectSettings, ShaderMaterial, StandardMaterial3D, SurfaceTool,
+    PlaneMesh, ProjectSettings, RenderingServer, ShaderMaterial, StandardMaterial3D, SurfaceTool,
 };
 use godot::prelude::*;
 use serde_json::Value;
@@ -110,7 +111,21 @@ impl Rng {
     }
 }
 
+// 著色器的全域參數，樹冠照它挖洞讓自己的角色露出來
+const FOCUS: &str = "map_focus";
+
+/// 自己的角色腳底，世界每幀更新
+pub fn set_focus(position: Vector3) {
+    RenderingServer::singleton().global_shader_parameter_set(FOCUS, &position.to_variant());
+}
+
 pub fn build(map_id: &str) -> Gd<Node3D> {
+    // 要在載入地圖場景、編譯葉片著色器之前登記；預設放在地底，預覽場景沒有角色就不挖
+    static REGISTER: std::sync::Once = std::sync::Once::new();
+    REGISTER.call_once(|| {
+        let below = Vector3::new(0.0, -1000.0, 0.0).to_variant();
+        RenderingServer::singleton().global_shader_parameter_add(FOCUS, GlobalShaderParameterType::VEC3, &below);
+    });
     let built = Map::load(map_id).and_then(|map| {
         let path = format!("res://scenes/maps/{}.tscn", map.scene);
         let scene = try_load::<PackedScene>(&path).map_err(|e| e.to_string())?;

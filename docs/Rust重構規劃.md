@@ -1,8 +1,9 @@
 # Rust 重構規劃
 
-2026-09-27 使用者拍板兩件事：
-- 純邏輯、協定、伺服器改用 Rust，表現層留 GDScript，從零重寫
+2026-09-27 使用者拍板：
+- 改用 Rust 從零重寫。同一天再改：「除了UI交換用GD之外 其餘能用rust就用」，所以只有介面用 GDScript，世界表現、特效、聲音、輸入、鏡頭也都是 Rust
 - 遊戲改名 Realm of Faded，簡稱 ROF，專案另開資料夾和 GitHub 版本庫
+- 測試照第 6 節重寫，舊的不照搬。使用者：「測那麼多還是一堆bug 我實在搞不懂測啥」
 
 舊專案 `../Sproutia` 凍結當對照組。決策原文在 `決策紀錄.md` 同一天那條。這份是現行規劃，做到哪就改到哪。
 
@@ -15,11 +16,20 @@
 | 封包格式和欄位驗證 | Rust | `rust/crates/protocol`，`rof-protocol` |
 | 客戶端預測、快照內插、伺服器時鐘 | Rust | `rust/crates/netcore`，`rof-netcore` |
 | 伺服器，獨立執行檔，不用 Godot | Rust | `rust/crates/server`，`rof-server` |
-| 給 GDScript 呼叫的擴充，唯一依賴 godot 的 crate | Rust | `rust/crates/gdext`，`rof-gdext` |
-| 介面、特效、動畫、場景、聲音、輸入 | GDScript | `src/`、`scenes/` |
+| Godot 擴充，唯一依賴 godot 的 crate：世界表現、角色和怪物的顯示、打擊感、特效、聲音、輸入、鏡頭、地圖載入、連線、開發工具 | Rust | `rust/crates/gdext`，`rof-gdext` |
+| 介面：登入選角、HUD、各種視窗、提示框、設定、聊天 | GDScript | `src/ui/` |
+| 著色器、場景、資料 | `.gdshader`、`.tscn`、JSON | `assets/`、`scenes/`、`data/` |
+
+**GDScript 只寫介面**。介面向擴充拿資料、把玩家按的東西交給擴充，不算數值、不判規則、不碰世界裡的節點。
+介面的 1.75 萬行從舊專案 `src/ui/` 搬過來改接擴充，不重打，配色、視窗、字級都是使用者一輪輪退件調出來的，重打會丟細節。
+舊的世界表現 `src/world/`、`src/effects/`、`src/audio/`、`src/input/` 約 2.1 萬行照行為改寫成 Rust。
+
+**可以調的數字放資料不放程式**：特效時間、打擊感定格、聲音對照、鏡頭參數這些常常要調的數字寫在 `data/*.json`，
+改了不用重編 Rust，Windows 上改 Rust 要關掉 Godot 才換得掉 DLL，這條可以省掉大部分重編。
 
 從舊專案搬過來的：文件、`data/`、`assets/`、`locale/`、美術產線 `art_pipeline/`、美術原圖 `art_source/`、崗位和 skill `.claude/`。
 舊的遊戲程式 `src/`、`server/`、`tests/`、`scenes/` 沒有搬，照這份的順序重寫，要看舊行為就去 `../Sproutia` 讀。
+美術產線是 Python 和 Blender，不是遊戲程式，照舊。
 
 ## 2. 目錄
 
@@ -31,7 +41,8 @@ RealmOfFaded/
     .gdignore        Godot 不掃這裡
     Cargo.toml       workspace
     crates/          上面那六個 crate
-  src/ scenes/       新的表現層
+  src/ui/            介面，唯一的 GDScript
+  scenes/            場景
   tests/smoke.gd     客戶端冒煙測試
   data/ assets/ locale/ docs/ art_pipeline/ art_source/
   server_data/       本機伺服器存檔，不進版本庫
@@ -77,8 +88,9 @@ RealmOfFaded/
 2. `rof-core` 葉子：formulas、leveling、combat、combat_stats、move_grid、colour_effects
 3. 地圖碰撞、尋路、移動
 4. `rof-protocol` 和 `rof-server`：登入、記憶體資料庫、地圖 tick，每秒 20 tick
-5. `rof-netcore` 和 `rof-gdext`：預測、內插、時鐘；擴充發的訊號名稱和字典形狀盡量照舊的 43 個，表現層照舊的寫法重寫時比較好對
-6. 戰鬥世界、怪物 AI
+5. `rof-netcore` 和 `rof-gdext`：預測、內插、時鐘，世界場景、角色顯示、點地移動、鏡頭；
+   擴充發給介面的訊號名稱和字典形狀照舊的 43 個，介面搬過來才接得上
+6. 戰鬥世界、怪物 AI、打擊感、特效、聲音
 7. 背包裝備、簽章存檔
 8. 技能
 
@@ -95,16 +107,31 @@ RealmOfFaded/
 | 客戶端事件分派 | `src/world/net_session.gd` 的 `_on_push` |
 | 惡意客戶端測試 | `tests/test_security_*.gd`，共用 `tests/security_case.gd` |
 
-## 6. 指令
+## 6. 測試怎麼寫
+
+舊專案 1738 個測試，大多測單一個公式對不對，使用者遇到的問題卻幾乎都出在接起來的地方和畫面上：
+單機擊退的公式對，但表現層每幀把位置寫回去蓋掉；預測和伺服器各自測都過，連起來走就被拉回；
+角色被樹蓋住、手機上特效淡不掉是畫面，只有截圖看得出來。舊測試不照搬，新的只寫這五種：
+
+1. **照玩法走一遍**：開真的伺服器，機器人登入、走到萊姆旁邊、打死、拿經驗、登出再登入，每一步比對玩家應該看到的結果。
+   一個功能一條，名字寫它在驗什麼，例如「打萊姆會被擊退」「點地走路客戶端和伺服器停在同一格」
+2. **使用者回報的問題先寫成會失敗的測試再修**，修好它就一直守著，同一個問題不回來第二次；測試名字用使用者講的話
+3. **資料檢查**：職業、技能、武器、怪物、地圖互相對不對得上，例如技能要的職業等級不超過前置技能的上限、弓要是雙手
+4. **防作弊**：加速、改封包、洗道具、改存檔。玩家看不到，出事就是全服，照舊要寫
+5. **畫面一律截圖給使用者看**，不拿測試代替
+
+不寫的：常數等於某個數、函式有回傳東西、把實作抄一遍的測試。
+
+## 7. 指令
 
 - 全部 Rust 測試：在 `rust/` 跑 `cargo test --workspace`
 - 編擴充：在 `rust/` 跑 `cargo build -p rof-gdext`
 - 開伺服器：在 `rust/` 跑 `cargo run -p rof-server -- --port=7780`
 - 客戶端冒煙：在根目錄跑 `godot --headless --path . --script res://tests/smoke.gd`
 
-## 7. 風險
+## 8. 風險
 
 - 手機：Android 用 cargo-ndk 編 arm64 可行；iOS 要在 Mac 上編，實例少，M3 前要實測一次
 - 網頁：gdext 的網頁支援還是實驗性，要 nightly 和版本對得上的 emscripten；現在沒有網頁匯出，先不處理
-- 熱重載：Windows 會鎖 DLL，改 Rust 常常要重開 Godot；邏輯靠 cargo 測試驗，少開編輯器
+- 熱重載：Windows 會鎖 DLL，改 Rust 常常要重開 Godot。表現層也在 Rust 之後這條更重要，調手感的數字一律放資料檔
 - 編譯時間：godot 綁定第一次編一分多鐘，所以只有 `rof-gdext` 依賴 godot，其他 crate 跑測試不用編它

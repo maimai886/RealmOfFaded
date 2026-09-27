@@ -1,7 +1,7 @@
 # Realm of Faded 開發守則
 
 遊戲名 Realm of Faded，簡稱 ROF，2026-09-27 從 Sproutia 改名。
-同一天改成邏輯和伺服器用 Rust、表現層用 GDScript，從零重寫；舊專案 `../Sproutia` 凍結當對照，不再改。
+同一天改成只有介面用 GDScript，其他能用 Rust 的都用 Rust，從零重寫；舊專案 `../Sproutia` 凍結當對照，不再改。
 **寫程式之前先讀 `docs/Rust重構規劃.md`**，範圍、目錄、技術決定、里程碑都在那裡。
 
 這是給任何接手開發的 AI 或人看的入口。先讀 `docs/遊戲總規格.md`，再讀 `docs/交接指南.md`，
@@ -26,10 +26,13 @@
 
 ## 程式規範
 
-- 邏輯、協定、伺服器用 Rust，cargo workspace 在 `rust/`，六個 crate 的分工在 `docs/Rust重構規劃.md`；只有 `rof-gdext` 依賴 godot
+- **只有介面用 GDScript，其他能用 Rust 的都用 Rust**。2026-09-27 使用者：「除了UI交換用GD之外 其餘能用rust就用」。
+  邏輯、協定、伺服器、世界表現、角色顯示、打擊感、特效、聲音、輸入、鏡頭都是 Rust；cargo workspace 在 `rust/`，
+  六個 crate 的分工在 `docs/Rust重構規劃.md`，只有 `rof-gdext` 依賴 godot。著色器、場景、資料照舊是 `.gdshader`、`.tscn`、JSON
 - 純邏輯放 `rust/crates/core`，不依賴 godot，伺服器和客戶端共用；移動和碰撞要兩邊算得一模一樣，位置用 f32、三角函數走 libm
 - Rust 寫法：`cargo fmt` 排版，`cargo clippy` 不留警告；不寫 unsafe，gdext 規定的除外；錯誤用 Result 往上傳，伺服器不准因為一個玩家的封包 panic
-- 表現層用 Godot 4.7 GDScript 放 `src/`，用 `preload` 常數引用腳本，不用 `class_name`；表現層不算數值、不判規則，要什麼問擴充
+- 介面用 Godot 4.7 GDScript 放 `src/ui/`，用 `preload` 常數引用腳本，不用 `class_name`；介面不算數值、不判規則、不碰世界裡的節點，要什麼問擴充
+- 常常要調的數字，例如特效時間、打擊感定格、聲音對照、鏡頭，放 `data/*.json` 不寫死在 Rust，調手感不用重編
 - `.gdextension` 不能有 BOM，Windows PowerShell 5.1 寫檔會帶，用 Write 工具或 bash 寫
 - 註解用繁體中文白話寫，不要用括號補充說明
 - 操作都是指令，結果都是事件；表現層只訂閱事件
@@ -86,7 +89,8 @@
   Windows 上 Godot 在 `D:\Godot_v4.7.2-stable_win64.exe\Godot_v4.7.2-stable_win64_console.exe`
 - 美術管線測試：`blender -b --factory-startup --python-exit-code 1 -P art_pipeline/tests/run.py`；Windows 上 Blender 在 `D:\Program Files\Blender Foundation\Blender 5.2lender.exe`
 - 畫面：截圖參數照舊專案的 `--dev-shot=路徑` 一樣的用法重做，做好之前用 `--shot=路徑`，截完自己 Read 圖檢查
-- 惡意客戶端測試：舊專案 `tests/test_security_*.gd` 那 195 個，照協定改寫成對 Rust 伺服器的黑箱測試
+- 測試照 `docs/Rust重構規劃.md` 第 6 節寫：照玩法走一遍、使用者回報的問題先寫成會失敗的測試、資料檢查、防作弊，畫面一律截圖。
+  2026-09-27 使用者：「測那麼多還是一堆bug 我實在搞不懂測啥」，不寫把實作抄一遍的測試，測試名字寫它在驗什麼
 
 ## 協作與交付
 

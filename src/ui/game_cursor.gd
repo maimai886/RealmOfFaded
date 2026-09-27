@@ -21,6 +21,10 @@ static func install() -> void:
 	var window := (Engine.get_main_loop() as SceneTree).root
 	if not window.size_changed.is_connected(_refresh):
 		window.size_changed.connect(_refresh)
+		# 游標圖要在 RenderingServer 關掉前放掉，不然關閉時報材質洩漏
+		window.tree_exiting.connect(func():
+			for shape in SHAPES.values():
+				Input.set_custom_mouse_cursor(null, shape))
 	_refresh()
 
 

@@ -136,15 +136,12 @@ struct Footprint {
     own: Part,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Default)]
+#[serde(default)]
 struct Part {
-    #[serde(default)]
     shape: Shape,
-    #[serde(default)]
     radius: f32,
-    #[serde(default)]
     half: [f32; 2],
-    #[serde(default)]
     offset: [f32; 2],
 }
 

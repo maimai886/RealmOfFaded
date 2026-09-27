@@ -89,7 +89,6 @@ pub(crate) struct Character {
     pub(crate) gender: Gender,
     pub(crate) appearance: Appearance,
     created_at: i64,
-    map: String,
     pub(crate) position: [f32; 2],
 }
 
@@ -458,7 +457,7 @@ impl Game {
                 job_id: JOB.into(),
                 base_level: 1,
                 job_level: 1,
-                map: c.map.clone(),
+                map: MAP.into(),
                 appearance: c.appearance.clone(),
                 gender: c.gender,
                 created_at: c.created_at,
@@ -491,9 +490,9 @@ impl Game {
         }
         let id = format!("c{}", self.characters.len() + 1);
         let created_at = SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs() as i64);
-        let (map, position) = (MAP.to_string(), self.world.map.player_spawn);
+        let position = self.world.map.player_spawn;
         let character =
-            Character { id, account, server_id, name, gender: create.gender, appearance, created_at, map, position };
+            Character { id, account, server_id, name, gender: create.gender, appearance, created_at, position };
         let reply = CreateReply { character_id: character.id.clone() };
         self.characters.push(character);
         done(reply)

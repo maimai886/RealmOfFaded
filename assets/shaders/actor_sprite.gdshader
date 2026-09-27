@@ -13,6 +13,22 @@ uniform float grading_cube = 21.0;
 uniform float blend_saturation = 0.82;
 uniform float blend_lift = 0.08;
 uniform vec3 blend_haze = vec3(0.86, 0.88, 0.84);
+// 紙片受光：圖上已經畫了明暗，只補一層時段的味道，數字由 Actor.light_from 照地圖的太陽和環境光寫進來
+uniform float lit_amount = 0.0;
+// 太陽照射的方向，世界座標
+uniform vec3 sun_direction = vec3(0.0, -1.0, 0.0);
+uniform vec3 sun_color : source_color = vec3(1.0);
+uniform vec3 ambient_color : source_color = vec3(0.5);
+// 法線取圓柱：左右圓潤，頭頂腳底不壓暗；人只佔畫格寬的 0.6，法線往上仰一點才吃得到高低差
+uniform float bulge = 0.85;
+uniform float figure_span = 0.6;
+uniform float normal_tilt = 0.35;
+// 向光邊：輪廓朝太陽那側一道亮邊，寬度是螢幕像素
+uniform float rim_width = 2.5;
+uniform float rim_strength = 0.35;
+// 這一格在圖集裡的 UV 範圍，和水平翻轉時要把法線左右轉回來
+instance uniform vec4 frame_uv = vec4(0.0, 0.0, 1.0, 1.0);
+instance uniform float flip_sign = 1.0;
 varying vec2 depth_clip;
 
 vec3 srgb_to_linear(vec3 c) {
@@ -63,6 +79,33 @@ vec3 compensate(vec3 t) {
 	return max(mix(low, high, zf - z0), vec3(0.0));
 }
 
+// 亮度開根號壓縮、顏色不壓，受光面才不會爆白；下限留著，夜裡可以暗但不能糊成一團
+vec3 sprite_light(vec2 uv, mat4 inv_view) {
+	vec2 inside = (uv - frame_uv.xy) / max(frame_uv.zw, vec2(1e-5));
+	float across = clamp((inside.x * 2.0 - 1.0) / figure_span, -1.0, 1.0) * flip_sign;
+	vec3 view_normal = normalize(vec3(across * bulge, normal_tilt, sqrt(max(1.0 - across * across, 0.04))));
+	vec3 world_normal = normalize((inv_view * vec4(view_normal, 0.0)).xyz);
+	// 半蘭伯特，背光面不死黑
+	float lambert = smoothstep(0.05, 0.9, dot(world_normal, -normalize(sun_direction)) * 0.5 + 0.5);
+	vec3 raw = as_linear(ambient_color) + as_linear(sun_color) * lambert;
+	float level = max(dot(raw, vec3(0.299, 0.587, 0.114)), 0.02);
+	return raw / level * clamp(sqrt(level), 0.45, 1.5);
+}
+
+// 往太陽的方向看過去是透明的就是邊；畫格外面是別格，也算透明
+float sprite_rim(vec2 uv, mat4 view, vec2 footprint) {
+	vec2 screen = (view * vec4(-normalize(sun_direction), 0.0)).xy;
+	float strength = length(screen);
+	if (strength < 0.05) {
+		return 0.0;
+	}
+	vec2 probe = uv + vec2(screen.x * flip_sign, -screen.y) / strength * footprint * rim_width;
+	vec2 inside = (probe - frame_uv.xy) / max(frame_uv.zw, vec2(1e-5));
+	bool in_frame = all(greaterThanEqual(inside, vec2(0.0))) && all(lessThanEqual(inside, vec2(1.0)));
+	float outside = in_frame ? 1.0 - texture(sheet, probe).a : 1.0;
+	return outside * smoothstep(0.05, 0.4, strength);
+}
+
 void vertex() {
 	vec3 scale = vec3(length(MODEL_MATRIX[0].xyz), length(MODEL_MATRIX[1].xyz), length(MODEL_MATRIX[2].xyz));
 	mat4 billboard = mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
@@ -81,7 +124,13 @@ void vertex() {
 
 void fragment() {
 	vec4 tex = texture(sheet, UV);
-	vec3 target = linear_to_srgb(as_linear(tex.rgb));
+	vec3 rgb = as_linear(tex.rgb);
+	if (lit_amount > 0.0) {
+		rgb *= mix(vec3(1.0), sprite_light(UV, INV_VIEW_MATRIX), lit_amount);
+		float rim = sprite_rim(UV, VIEW_MATRIX, fwidth(UV)) * rim_strength * lit_amount;
+		rgb = mix(rgb, max(rgb, vec3(0.0)) + as_linear(sun_color) * 0.6, clamp(rim, 0.0, 1.0));
+	}
+	vec3 target = linear_to_srgb(rgb);
 	float grey = dot(target, vec3(0.299, 0.587, 0.114));
 	target = mix(vec3(grey), target, blend_saturation);
 	target = mix(blend_haze, target, 1.0 - blend_lift * (1.0 - grey));

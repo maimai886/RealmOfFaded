@@ -1,19 +1,21 @@
 //! 角色的紙片顯示：多方向圖集貼在正對鏡頭的紙片上，格式照 docs/精靈圖規格.md，數字照 docs/M1舊行為.md 第 7 節。
 
-use std::cell::{Cell, RefCell};
+use std::cell::RefCell;
 use std::collections::HashMap;
-use std::f32::consts::FRAC_PI_4;
+use std::f32::consts::{FRAC_PI_4, TAU};
 
 use godot::classes::camera_3d::ProjectionType;
-use godot::classes::environment::BgMode;
+use godot::classes::environment::{AmbientSource, BgMode};
 use godot::classes::geometry_instance_3d::ShadowCastingSetting;
 use godot::classes::image::Format;
 use godot::classes::sub_viewport::UpdateMode;
 use godot::classes::{
-    Camera3D, Environment, FileAccess, INode3D, ISubViewport, Image, ImageTexture, Json, MeshInstance3D, Node,
-    QuadMesh, RenderingServer, Shader, ShaderMaterial, Sprite3D, SubViewport, Texture2D, Viewport,
+    Camera3D, DirectionalLight3D, Environment, FileAccess, INode3D, ISubViewport, Image, ImageTexture, MeshInstance3D,
+    QuadMesh, RenderingServer, Shader, ShaderMaterial, Sprite3D, SubViewport, Texture2D, Viewport, WorldEnvironment,
 };
+use godot::global::randf;
 use godot::prelude::*;
+use serde_json::Value;
 
 const BODY_DIR: &str = "res://assets/generated/sprites/characters/body";
 // 男女共用底板，女生沒有自己那份時用男生的
@@ -31,6 +33,14 @@ const MAX_PLAYBACK: f32 = 2.6;
 const SPEED_START_JUMP: f32 = 0.7;
 const SPEED_RISE_S: f32 = 0.05;
 const SPEED_FALL_S: f32 = 0.07;
+// 呼吸和走路的起伏佔身高的比例，約一兩個像素，照舊專案 sprite_actor.gd
+const BOB_IDLE: f32 = 0.012;
+const BOB_WALK: f32 = 0.022;
+const BOB_IDLE_PERIOD_S: f32 = 2.6;
+// 受光只補一層時段的味道，圖上已經畫了明暗，多了會髒；舊專案 map_environment.gd 的 sprite_lit_amount
+const LIT_AMOUNT: f32 = 0.45;
+// 環境光取天空時沒有顏色可讀，用舊專案白天的代表色
+const SKY_AMBIENT: Color = Color::from_rgb(0.6, 0.66, 0.78);
 // 換地圖時環境會重建，每隔這麼久確認一次色調映射有沒有變
 const GRADING_CHECK_S: f64 = 0.5;
 // 反查表每個通道幾階；21 階半秒內量完，內插誤差 2/255 以內
@@ -45,29 +55,27 @@ void fragment() { ALBEDO = texture(cube, UV).rgb; }";
 
 type Rgb = [f32; 3];
 
-/// 所有角色共用的圖集、材質、反查表，做一次掛著，換裝和生怪那一幀不新建
+/// 所有角色共用的圖集、材質、反查表、受光，做一次掛著，生角色那一幀不新建
 #[derive(Default)]
 struct Cache {
     sheets: HashMap<String, Sheet>,
     materials: HashMap<String, Gd<ShaderMaterial>>,
     // 環境的 key 對到反查表，None 是還在量
     grading: HashMap<String, Option<Gd<ImageTexture>>>,
+    light: Vec<(&'static str, Variant)>,
 }
 
 thread_local! {
     static CACHE: RefCell<Cache> = RefCell::default();
-    static LIVE_ACTORS: Cell<u32> = const { Cell::new(0) };
 }
 
 fn cache<R>(f: impl FnOnce(&mut Cache) -> R) -> R {
     CACHE.with_borrow_mut(f)
 }
 
-// 角色和探針都走了就放掉快取；留到結束才放的話 Godot 已經關了，放 Gd 會 panic
-fn release_if_unused() {
-    if LIVE_ACTORS.get() == 0 {
-        cache(|c| *c = Cache::default());
-    }
+/// 擴充結束時由 lib.rs 呼叫；留到行程結束才放的話 Godot 已經關了，放 Gd 會 panic
+pub fn release() {
+    cache(|c| *c = Cache::default());
 }
 
 #[derive(Clone, Copy, PartialEq)]
@@ -88,6 +96,8 @@ struct Sheet {
     directions: i32,
     idle: Action,
     walk: Action,
+    // 腳底到頭頂，公尺
+    height: f32,
 }
 
 impl Sheet {
@@ -96,26 +106,35 @@ impl Sheet {
         if !FileAccess::file_exists(&path) {
             return None;
         }
-        let meta = Json::parse_string(&FileAccess::get_file_as_string(&path));
+        let meta: Value = serde_json::from_str(&FileAccess::get_file_as_string(&path).to_string()).ok()?;
+        let number = |value: &Value| value.as_f64().map(|n| n as f32);
+        let pair = |key: &str| Some(Vector2::new(number(&meta[key][0])?, number(&meta[key][1])?));
         let action = |name: &str| {
-            let info = get(&get(&meta, "actions")?, name)?;
+            let info = &meta["actions"][name];
             Some(Action {
-                start: number(&info, "start")? as i32,
-                frames: number(&info, "frames")? as i32,
-                fps: number(&info, "fps")?,
+                start: number(&info["start"])? as i32,
+                frames: number(&info["frames"])? as i32,
+                fps: number(&info["fps"])?,
             })
         };
-        Some(Sheet {
+        let mut sheet = Sheet {
             dir: dir.to_owned(),
             texture: try_load(&format!("{dir}/sheet.png")).ok()?,
-            size: pair(&meta, "frame_size")?,
-            anchor: pair(&meta, "anchor")?,
-            pixels_per_meter: number(&meta, "pixels_per_meter")?,
-            columns: number(&meta, "columns")? as i32,
-            directions: get(&meta, "directions")?.try_to::<VarArray>().ok()?.len() as i32,
+            size: pair("frame_size")?,
+            anchor: pair("anchor")?,
+            pixels_per_meter: number(&meta["pixels_per_meter"])?,
+            columns: number(&meta["columns"])? as i32,
+            directions: meta["directions"].as_array()?.len() as i32,
             idle: action("idle")?,
             walk: action("walk")?,
-        })
+            height: 0.0,
+        };
+        // meta 沒寫 top_row，從面向鏡頭站立第一格最高的不透明像素量
+        let mut image = sheet.texture.get_image()?;
+        image.decompress();
+        let top = image.get_region(sheet.frame_rect(sheet.idle, 0, 0).to_rect2i())?.get_used_rect().position.y;
+        sheet.height = (sheet.anchor.y - top as f32) / sheet.pixels_per_meter;
+        Some(sheet)
     }
 
     fn cached(dir: &str) -> Option<Sheet> {
@@ -145,19 +164,6 @@ impl Sheet {
     }
 }
 
-fn get(value: &Variant, key: &str) -> Option<Variant> {
-    value.try_to::<VarDictionary>().ok()?.get(key)
-}
-
-fn number(value: &Variant, key: &str) -> Option<f32> {
-    get(value, key)?.try_to_relaxed().ok()
-}
-
-fn pair(value: &Variant, key: &str) -> Option<Vector2> {
-    let list = get(value, key)?.try_to::<VarArray>().ok()?;
-    Some(Vector2::new(list.get(0)?.try_to_relaxed().ok()?, list.get(1)?.try_to_relaxed().ok()?))
-}
-
 /// 面向換算成八方向：0 下、1 左下、2 左…順時針；離邊界不到遲滯量就維持目前的
 fn pick_direction(facing: f32, camera_yaw: f32, current: i32) -> i32 {
     let units = ((camera_yaw - facing) / FRAC_PI_4).rem_euclid(8.0);
@@ -168,6 +174,10 @@ fn pick_direction(facing: f32, camera_yaw: f32, current: i32) -> i32 {
 // 和畫面更新率無關的平滑，60Hz 和 120Hz 一樣快
 fn ease_toward(current: f32, wanted: f32, seconds: f32, delta: f32) -> f32 {
     current + (wanted - current) * (1.0 - (-delta / seconds).exp())
+}
+
+fn luma(color: Color) -> f32 {
+    color.r * 0.299 + color.g * 0.587 + color.b * 0.114
 }
 
 #[derive(GodotClass)]
@@ -185,6 +195,7 @@ pub struct Actor {
     frame: i32,
     frame_time: f32,
     shown: Option<(i32, i32, i32)>,
+    bob_phase: f32,
     grading_key: Option<String>,
     grading_wait: f64,
 }
@@ -213,7 +224,8 @@ impl Actor {
         body.add_child(&caster);
         self.base_mut().add_child(&body);
         (self.body, self.caster, self.sheet) = (Some(body), Some(caster), Some(sheet));
-        LIVE_ACTORS.set(LIVE_ACTORS.get() + 1);
+        // 每個人的起伏錯開，一群人才不會整齊地一起上下
+        self.bob_phase = randf() as f32 * TAU;
     }
 
     /// velocity 是地面上的 x、z 速度，公尺每秒；camera_yaw 是鏡頭繞 Y 軸的弧度
@@ -230,10 +242,39 @@ impl Actor {
         }
     }
 
-    fn sync_grading(&mut self) {
-        let Some(viewport) = self.base().get_viewport() else {
-            return;
+    /// 地圖蓋好後呼叫一次：照地圖場景的 Sun 和 WorldEnvironment 給所有角色受光
+    #[func]
+    fn light_from(map: Gd<Node>) {
+        let sun = map.try_get_node_as::<DirectionalLight3D>("Sun");
+        let world = map.try_get_node_as::<WorldEnvironment>("WorldEnvironment");
+        let (Some(sun), Some(environment)) = (sun, world.and_then(|w| w.get_environment())) else {
+            return godot_error!("地圖 {} 沒有 Sun 或 WorldEnvironment，角色不受光", map.get_name());
         };
+        let sun_light = sun.get_color() * sun.get_param(godot::classes::light_3d::Param::ENERGY);
+        let ambient = if environment.get_ambient_source() == AmbientSource::COLOR {
+            environment.get_ambient_light_color()
+        } else {
+            SKY_AMBIENT
+        } * environment.get_ambient_light_energy();
+        // 以中間調為基準換算，角色不會被太陽推到爆白
+        let scale = 1.0 / luma(ambient + sun_light * 0.5).max(0.02);
+        let rgb = |c: Color| Vector3::new(c.r, c.g, c.b) * scale;
+        let light = vec![
+            ("lit_amount", LIT_AMOUNT.to_variant()),
+            ("sun_direction", (-sun.get_transform().basis.col_c()).to_variant()),
+            ("sun_color", rgb(sun_light).to_variant()),
+            ("ambient_color", rgb(ambient).to_variant()),
+        ];
+        cache(|c| {
+            for material in c.materials.values_mut() {
+                light.iter().for_each(|(name, value)| material.set_shader_parameter(*name, value));
+            }
+            c.light = light;
+        });
+    }
+
+    fn sync_grading(&mut self) {
+        let Some(viewport) = self.base().get_viewport() else { return };
         let key = environment_of(&viewport).map_or(String::new(), |environment| key_of(&environment));
         if self.grading_key.as_ref() == Some(&key) {
             return;
@@ -244,9 +285,7 @@ impl Actor {
             Some(None) => return,
             None => return GradingProbe::start(&viewport, &key),
         };
-        let (Some(body), Some(sheet)) = (self.body.as_mut(), self.sheet.as_ref()) else {
-            return;
-        };
+        let (Some(body), Some(sheet)) = (self.body.as_mut(), self.sheet.as_ref()) else { return };
         body.set_material_override(&material(sheet, &key, lut));
         self.grading_key = Some(key);
     }
@@ -256,20 +295,35 @@ impl Actor {
             return;
         };
         let (direction, flipped) = sheet.sheet_direction(self.direction);
-        for sprite in [body, caster] {
-            sprite.set_region_rect(sheet.frame_rect(action, direction, self.frame));
+        let rect = sheet.frame_rect(action, direction, self.frame);
+        for sprite in [&mut *body, caster] {
+            sprite.set_region_rect(rect);
             sprite.set_flip_h(flipped);
             sprite.set_offset(sheet.anchor_offset(flipped));
         }
+        // 受光照這一格的左右算圓柱法線；flip_h 只換 UV，法線的左右要自己轉回來
+        let size = sheet.texture.get_size();
+        let uv = Vector4::new(
+            rect.position.x / size.x,
+            rect.position.y / size.y,
+            rect.size.x / size.x,
+            rect.size.y / size.y,
+        );
+        body.set_instance_shader_parameter("frame_uv", &uv.to_variant());
+        body.set_instance_shader_parameter("flip_sign", &(if flipped { -1.0 } else { 1.0 }).to_variant());
     }
-}
 
-impl Drop for Actor {
-    fn drop(&mut self) {
-        if self.sheet.is_some() {
-            LIVE_ACTORS.set(LIVE_ACTORS.get() - 1);
-            release_if_unused();
-        }
+    // 站著是對稱的慢呼吸；走路跟著步頻，一步兩個起伏、腳著地時最低
+    fn bob(&mut self, delta: f32, walking: bool) {
+        let (Some(sheet), Some(body)) = (&self.sheet, self.body.as_mut()) else { return };
+        let lift = if walking {
+            self.bob_phase += delta * self.display_speed / WALK_REFERENCE_SPEED * TAU * 2.0;
+            self.bob_phase.sin().abs() * BOB_WALK
+        } else {
+            self.bob_phase += delta * TAU / BOB_IDLE_PERIOD_S;
+            (self.bob_phase.sin() * 0.5 + 0.5) * BOB_IDLE
+        };
+        body.set_position(Vector3::new(0.0, lift * sheet.height, 0.0));
     }
 }
 
@@ -306,6 +360,7 @@ impl INode3D for Actor {
             self.shown = shown;
             self.show_frame(action);
         }
+        self.bob(delta, walking);
     }
 }
 
@@ -321,6 +376,7 @@ fn material(sheet: &Sheet, key: &str, lut: Option<Gd<ImageTexture>>) -> Gd<Shade
                 material.set_shader_parameter("grading_lut", &lut.to_variant());
                 material.set_shader_parameter("grading_cube", &(CUBE as f32).to_variant());
             }
+            c.light.iter().for_each(|(name, value)| material.set_shader_parameter(*name, value));
             material
         });
         entry.clone()
@@ -328,10 +384,8 @@ fn material(sheet: &Sheet, key: &str, lut: Option<Gd<ImageTexture>>) -> Gd<Shade
 }
 
 fn environment_of(viewport: &Gd<Viewport>) -> Option<Gd<Environment>> {
-    viewport
-        .get_camera_3d()
-        .and_then(|camera| camera.get_environment())
-        .or_else(|| viewport.find_world_3d()?.get_environment())
+    let camera_environment = viewport.get_camera_3d().and_then(|camera| camera.get_environment());
+    camera_environment.or_else(|| viewport.find_world_3d()?.get_environment())
 }
 
 fn compatibility() -> bool {
@@ -340,7 +394,8 @@ fn compatibility() -> bool {
 
 // 會影響顏色的設定拼起來，一樣的環境共用一張反查表
 fn key_of(environment: &Gd<Environment>) -> String {
-    let properties = "tonemap_mode tonemap_exposure tonemap_white tonemap_agx_white tonemap_agx_contrast         adjustment_enabled adjustment_brightness adjustment_contrast adjustment_saturation";
+    let properties = "tonemap_mode tonemap_exposure tonemap_white tonemap_agx_white tonemap_agx_contrast \
+                      adjustment_enabled adjustment_brightness adjustment_contrast adjustment_saturation";
     let mut parts: Vec<String> = properties.split_whitespace().map(|p| environment.get(p).to_string()).collect();
     // 相容渲染器開泛光才畫進浮點緩衝，量出來不一樣
     if compatibility() && environment.is_glow_enabled() {
@@ -394,9 +449,7 @@ struct GradingProbe {
 impl GradingProbe {
     fn start(viewport: &Gd<Viewport>, key: &str) {
         cache(|c| c.grading.insert(key.to_owned(), None));
-        let Some(source) = environment_of(viewport) else {
-            return;
-        };
+        let Some(source) = environment_of(viewport) else { return };
         let mut environment = source.duplicate_resource();
         // 只留色調映射；色彩調整 Mobile 的 SubViewport 不做，一律關掉改由目標先扣
         // 相容渲染器開泛光才畫進浮點緩衝，只借緩衝、強度歸零
@@ -404,11 +457,8 @@ impl GradingProbe {
         environment.set_glow_intensity(0.0);
         environment.set_glow_bloom(0.0);
         environment.set_glow_hdr_bleed_threshold(4.0);
-        for property in
-            "adjustment_enabled fog_enabled volumetric_fog_enabled ssao_enabled ssil_enabled sdfgi_enabled".split(' ')
-        {
-            environment.set(property, &false.to_variant());
-        }
+        let disabled = "adjustment_enabled fog_enabled volumetric_fog_enabled ssao_enabled ssil_enabled sdfgi_enabled";
+        disabled.split(' ').for_each(|property| environment.set(property, &false.to_variant()));
         environment.set_background(BgMode::COLOR);
         environment.set_bg_color(Color::BLACK);
         let targets: Vec<Rgb> = (0..CUBE * CUBE * CUBE).map(|i| undo_adjustment(cube_color(i), &source)).collect();
@@ -479,12 +529,6 @@ impl GradingProbe {
     }
 }
 
-impl Drop for GradingProbe {
-    fn drop(&mut self) {
-        release_if_unused();
-    }
-}
-
 #[godot_api]
 impl ISubViewport for GradingProbe {
     // 每量一次等三幀讓探針畫完
@@ -509,18 +553,20 @@ impl ISubViewport for GradingProbe {
     }
 }
 
-/// 預覽：男生一排走路、女生一排站著，各八個方向
+/// 預覽：萌芽草原中央石板，男生一排走路、女生一排站著，各八個方向
 #[derive(GodotClass)]
 #[class(init, base=Node3D)]
 struct ActorPreview {
     base: Base<Node3D>,
     actors: Vec<(Gd<Actor>, Vector2)>,
-    shot_waiting: bool,
 }
 
 #[godot_api]
 impl INode3D for ActorPreview {
     fn ready(&mut self) {
+        let map = crate::map::build("meadow");
+        self.base_mut().add_child(&map);
+        Actor::light_from(map.upcast());
         let yaw = self.base().get_viewport().and_then(|v| v.get_camera_3d()).map_or(0.0, |c| c.get_global_rotation().y);
         // 玩家移動速度 3.5；0.1 過了轉身門檻、不到走路門檻，站著面向那一方
         for (row, gender, speed) in [(-1.6, "male", 3.5), (1.6, "female", 0.1)] {
@@ -533,20 +579,12 @@ impl INode3D for ActorPreview {
                 self.actors.push((actor, Vector2::new(facing.sin(), facing.cos()) * speed));
             }
         }
-        // 顯示校正量好才截圖
-        let mut shot = self.base().get_node_as::<Node>("ShotTaker");
-        self.shot_waiting = shot.is_processing();
-        shot.set_process(false);
     }
 
     fn process(&mut self, _delta: f64) {
         let yaw = self.base().get_viewport().and_then(|v| v.get_camera_3d()).map_or(0.0, |c| c.get_global_rotation().y);
         for (actor, velocity) in &mut self.actors {
             actor.bind_mut().set_motion(*velocity, yaw);
-        }
-        if self.shot_waiting && self.actors.iter().all(|(actor, _)| actor.bind().grading_key.is_some()) {
-            self.shot_waiting = false;
-            self.base().get_node_as::<Node>("ShotTaker").set_process(true);
         }
     }
 }

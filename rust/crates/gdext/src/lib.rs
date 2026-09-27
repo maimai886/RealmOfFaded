@@ -14,7 +14,13 @@ mod world;
 struct RofExtension;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for RofExtension {}
+unsafe impl ExtensionLibrary for RofExtension {
+    fn on_stage_deinit(stage: InitStage) {
+        if stage == InitStage::MainLoop {
+            actors::release();
+        }
+    }
+}
 
 #[derive(GodotClass)]
 #[class(init, base=RefCounted)]

@@ -9,6 +9,9 @@ uniform int grading_enabled = 0;
 // 反查表排成 2D：x 是 r + cube × b、y 是 g，一片裡用雙線性、兩片之間再混一次
 uniform sampler2D grading_lut : filter_linear, repeat_disable;
 uniform float grading_cube = 21.0;
+// 顯示校正推得到的最亮值，Actor 從反查表量出來；超過膝點的亮部整個顏色照比例柔和壓下去，保住皮膚和白衣服的色差
+uniform float grading_ceiling = 1.0;
+uniform float highlight_knee = 0.85;
 // 原圖全彩全對比放進有空氣感的場景很搶戲，先收一點飽和、把暗部往霧色提，霧色是 sRGB
 uniform float blend_saturation = 0.82;
 uniform float blend_lift = 0.08;
@@ -106,6 +109,16 @@ float sprite_rim(vec2 uv, mat4 view, vec2 footprint) {
 	return outside * smoothstep(0.05, 0.4, strength);
 }
 
+vec3 fit_highlights(vec3 c) {
+	float peak = max(max(c.r, c.g), c.b);
+	float knee = grading_ceiling * highlight_knee;
+	if (peak <= knee) {
+		return c;
+	}
+	float room = grading_ceiling - knee;
+	return c * (knee + room * (1.0 - exp((knee - peak) / room))) / peak;
+}
+
 void vertex() {
 	vec3 scale = vec3(length(MODEL_MATRIX[0].xyz), length(MODEL_MATRIX[1].xyz), length(MODEL_MATRIX[2].xyz));
 	mat4 billboard = mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
@@ -134,6 +147,7 @@ void fragment() {
 	float grey = dot(target, vec3(0.299, 0.587, 0.114));
 	target = mix(vec3(grey), target, blend_saturation);
 	target = mix(blend_haze, target, 1.0 - blend_lift * (1.0 - grey));
+	target = fit_highlights(target);
 	ALBEDO = grading_enabled == 1 ? compensate(target) : to_output(srgb_to_linear(target));
 	ALPHA = tex.a;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;

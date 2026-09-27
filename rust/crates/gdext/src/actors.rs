@@ -179,10 +179,6 @@ fn ease_toward(current: f32, wanted: f32, seconds: f32, delta: f32) -> f32 {
     current + (wanted - current) * (1.0 - (-delta / seconds).exp())
 }
 
-fn luma(color: Color) -> f32 {
-    color.r * 0.299 + color.g * 0.587 + color.b * 0.114
-}
-
 #[derive(GodotClass)]
 #[class(init, base=Node3D)]
 pub struct Actor {
@@ -262,7 +258,8 @@ impl Actor {
             SKY_AMBIENT
         } * environment.get_ambient_light_energy();
         // 以中間調為基準換算，角色不會被太陽推到爆白
-        let scale = 1.0 / luma(ambient + sun_light * 0.5).max(0.02);
+        let mid = ambient + sun_light * 0.5;
+        let scale = 1.0 / (mid.r * 0.299 + mid.g * 0.587 + mid.b * 0.114).max(0.02);
         let rgb = |c: Color| Vector3::new(c.r, c.g, c.b) * scale;
         let light = vec![
             ("lit_amount", LIT_AMOUNT.to_variant()),
@@ -398,7 +395,7 @@ fn material(sheet: &Sheet, key: &str, lut: Option<Gd<ImageTexture>>) -> Gd<Shade
             if let Some(lut) = lut {
                 material.set_shader_parameter("grading_enabled", &1.to_variant());
                 material.set_shader_parameter("grading_lut", &lut.to_variant());
-                material.set_shader_parameter("grading_cube", &(CUBE as f32).to_variant());
+                material.set_shader_parameter("grading_ceiling", &lut.get_meta("ceiling"));
             }
             c.light.iter().for_each(|(name, value)| material.set_shader_parameter(*name, value));
             material
@@ -597,8 +594,10 @@ impl ISubViewport for GradingProbe {
         self.iteration += 1;
         self.texture.update(&cube_image(&self.inputs));
         if self.iteration == ITERATIONS {
-            let texture = self.texture.clone();
-            cache(|c| c.grading.insert(self.key.clone(), Some(texture)));
+            // 灰階上推得到的最亮一格；著色器把亮部照比例壓到這裡，只夾單一通道的話皮膚的紅會被吃掉
+            let top = (0..CUBE).map(|k| k * (1 + CUBE + CUBE * CUBE)).rfind(|&i| self.inputs[i][0] < MAX_INPUT);
+            self.texture.set_meta("ceiling", &top.map_or(1.0, |i| cube_color(i)[0]).to_variant());
+            cache(|c| c.grading.insert(self.key.clone(), Some(self.texture.clone())));
             self.base_mut().queue_free();
         }
     }

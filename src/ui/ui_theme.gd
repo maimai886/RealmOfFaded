@@ -88,7 +88,8 @@ static func window_theme() -> Theme:
 	theme.set_color("caret_color", "LineEdit", ACCENT)
 	theme.set_color("selection_color", "LineEdit", Color(ACCENT_SOFT, 0.75))
 	# 勾選框是一顆菱形，方形勾選框是系統對話框的東西
-	var check_off := diamond_texture(14, Color(0, 0, 0, 0), Color(INK_DIM, 0.9))
+	# 沒勾的空心菱形：深色芯加近白細邊，手機縮小後才看得到
+	var check_off := diamond_texture(14, Color(0, 0, 0, 0.3), Color(INK, 0.85))
 	var check_on := diamond_texture(14, ORNAMENT, Color(INK, 0.7))
 	for state in ["normal", "hover", "pressed", "hover_pressed", "focus"]:
 		theme.set_stylebox(state, "CheckBox", StyleBoxEmpty.new())
@@ -230,7 +231,7 @@ static func diamond_texture(size: int, fill: Color, outline: Color) -> Texture2D
 		for x in big:
 			var d := absf(x + 0.5 - big / 2.0) + absf(y + 0.5 - big / 2.0)
 			if d <= half:
-				image.set_pixel(x, y, fill if d <= half - 4.0 else outline)
+				image.set_pixel(x, y, fill if d <= half - 6.0 else outline)
 	image.resize(size, size, Image.INTERPOLATE_LANCZOS)
 	return ImageTexture.create_from_image(image)
 

@@ -56,6 +56,10 @@ PICK = {"attack": [4, 6, 9, 14, 18, 26]}
 OUTLINE_COLOR = (54, 45, 40)
 OUTLINE_PX = 2
 WHITE = 238
+# 去背邊緣反算用的墨線和紙的亮度，和 monsters_v2/mpuppet.cut_on_white 同一組
+INK_LUMA = 60.0
+PAPER_LUMA = 250.0
+CUT_RING_PX = 4
 
 
 def cut(image):
@@ -79,11 +83,17 @@ def cut(image):
         if np.array_equal(grown, background):
             break
         background = grown
-    alpha = np.where(background, 0.0, 255.0)
-    ring = (np.asarray(Image.fromarray((background * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(5))) > 0) & ~background
-    soft = np.clip((240.0 - patch.min(2)) / 40.0, 0.0, 1.0) * 255.0
-    alpha[ring] = np.minimum(alpha[ring], soft[ring])
-    return Image.fromarray(np.dstack([patch, alpha]).astype(np.uint8), "RGBA")
+    alpha = np.where(background, 0.0, 1.0)
+    ring = (np.asarray(Image.fromarray((background * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(CUT_RING_PX * 2 + 1))) > 0) & ~background
+    # 邊緣是墨線和白紙混出來的：照混色反算透明度和墨色，只調淡不改色會在描邊內側留一圈淡粉白，縮小後就是手臂腿旁邊的毛邊
+    luma = patch @ np.array([0.299, 0.587, 0.114])
+    mix = np.clip((PAPER_LUMA - luma) / (PAPER_LUMA - INK_LUMA), 0.0, 1.0)
+    alpha = np.where(ring, np.minimum(alpha, mix), alpha)
+    safe = np.maximum(alpha, 1e-3)[..., None]
+    unmixed = np.clip((patch - PAPER_LUMA * (1.0 - safe)) / safe, 0.0, 255.0)
+    rgb = np.where((ring & (alpha < 1.0))[..., None], unmixed, patch)
+    alpha = np.where(alpha < 0.08, 0.0, alpha)
+    return Image.fromarray(np.dstack([rgb, alpha * 255.0]).round().astype(np.uint8), "RGBA")
 
 
 def trim(figure):

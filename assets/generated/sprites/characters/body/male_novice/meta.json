@@ -771,7 +771,7 @@
   },
   "source": {
     "pipeline": "art_pipeline/characters_v5/puppet_sheet.py",
-    "views": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\art_source\\characters_v5\\male_base\\views",
-    "shipped_from": "placeholder/characters/body/male_novice_puppet 2026-09-24 姿勢庫"
+    "views": "art_source/characters_v5/male_base/views",
+    "shipped_from": "puppet_sheet.py 直接出貨 2026-09-28 去背反算和關節圓頭修正，清掉髒邊"
   }
 }

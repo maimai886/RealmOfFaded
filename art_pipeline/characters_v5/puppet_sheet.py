@@ -46,6 +46,8 @@ LAYER_ORDER = ("far_arm", "far_leg", "near_leg", "torso", "near_arm", "head")
 # 補的那段不拿原圖的像素，原圖那裡是短褲或衣服，轉出去會像撕下一塊布；改填肢體自己在關節附近的中位色，
 # 大腿補出來是膚色的圓頭、上臂補出來是袖子的顏色。數字是半寬的倍數，腿補多一點、肩膀補少一點
 JOINT_EXTEND_RATIO = {"thigh": 0.8, "shin": 0.8, "foot": 0.7, "upper_arm": 0.4, "forearm": 0.6}
+# 圓頭離剪影邊緣至少這麼多個工作像素，邊緣的墨線才不會被膚色蓋掉
+CAP_INSET_PX = 4
 ORDER = ["idle", "walk", "attack", "cast", "hit", "die", "sit", "pickup"]
 
 
@@ -390,6 +392,7 @@ def segment(canvas, reference, radii, rest=None, merge_arms=False, fitted=False,
     parts = {}
     from PIL import ImageFilter
     grow = PART_OVERLAP_PX * WORK_SCALE * 2 + 1
+    inner = np.asarray(Image.fromarray(((alpha >= 250) * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(CAP_INSET_PX * 2 + 1))) > 0
     for index, name in enumerate(active):
         mask = (owner == index) & (alpha > 0)
         if not mask.any():
@@ -404,8 +407,9 @@ def segment(canvas, reference, radii, rest=None, merge_arms=False, fitted=False,
             near_joint = mask & (np.hypot(xs - ax, ys - ay) <= radius * 1.5) & (alpha > 200) & bright
             if near_joint.sum() >= 8:
                 fill = np.median(arr[near_joint][:, :3], axis=0)
-                # 圓頭只補在原圖本來就有顏色的地方：補到剪影外面，站著不動時就多出一塊，肩膀上那塊灰就是這樣來的
-                cap = extensions[name] & ~mask & (alpha > 0)
+                # 圓頭只補在剪影裡面、離邊緣的墨線有一段距離的地方：以前用 alpha > 0，縮圖留下的淡邊被補成不透明的膚色，
+                # 就是手臂腿旁邊的粉色毛邊；更早補到剪影外面，肩膀上多一塊灰
+                cap = extensions[name] & ~mask & inner
                 part[cap, 0] = fill[0]
                 part[cap, 1] = fill[1]
                 part[cap, 2] = fill[2]
@@ -829,7 +833,7 @@ def main():
     meta = {"frame_size": list(frame_size), "columns": columns, "pixels_per_meter": 96, "anchor": list(rig["anchor"]),
             "directions": directions, "filter": "nearest" if PIXEL_MODE else "linear", "layout": "packed", "head_layer": False, "head_width": 0,
             "actions": actions, "head_attach": head_attach,
-            "source": {"pipeline": "art_pipeline/characters_v5/puppet_sheet.py", "views": os.path.abspath(args.views)}}
+            "source": {"pipeline": "art_pipeline/characters_v5/puppet_sheet.py", "views": os.path.relpath(args.views, PROJECT_ROOT).replace(os.sep, "/")}}
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as handle:
         json.dump(meta, handle, ensure_ascii=False, indent=2)
         handle.write("\n")

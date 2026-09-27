@@ -247,6 +247,7 @@ pub struct EnterReply {
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PingReply {
+    /// 地圖時間，和 entity.state 的 tick 乘 50 同一個時鐘
     pub time_ms: i64,
 }
 

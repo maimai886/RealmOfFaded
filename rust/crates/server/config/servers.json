@@ -1,0 +1,11 @@
+{
+  "note": "伺服器列表，只有這裡寫的會出現在選擇畫面；capacity 是同時在線人數上限，maintenance 為 true 時顯示維護中並拒絕進入",
+  "servers": [
+    {
+      "id": "dawn",
+      "name": "晨曦",
+      "capacity": 200,
+      "maintenance": false
+    }
+  ]
+}

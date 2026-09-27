@@ -1,5 +1,6 @@
 shader_type spatial;
 render_mode cull_disabled, diffuse_lambert_wrap, specular_disabled;
+#include "cloud.gdshaderinc"
 
 // 素材包的樹冠、草叢、花：alpha 裁切加輕輕隨風晃，法線換成從樹冠中心往外，整團葉子像一顆球受光
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap, repeat_disable;
@@ -32,7 +33,7 @@ void vertex() {
 	vec2 origin = MODEL_MATRIX[3].xz;
 	float pick = fract(sin(dot(origin, vec2(12.9898, 78.233))) * 43758.5453);
 	vec3 hue = mix(vec3(0.84, 1.0, 0.96), vec3(1.14, 1.04, 0.78), pick);
-	plant_tint = mix(vec3(1.0), hue * mix(0.86, 1.1, fract(pick * 7.13)), plant_variation);
+	plant_tint = mix(vec3(1.0), hue * mix(0.86, 1.1, fract(pick * 7.13)), plant_variation) * cloud_shade(origin);
 }
 
 void fragment() {

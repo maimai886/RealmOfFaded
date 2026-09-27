@@ -1,5 +1,6 @@
 shader_type spatial;
 render_mode cull_disabled, diffuse_lambert_wrap, specular_disabled;
+#include "cloud.gdshaderinc"
 
 // 草毯：草根到草尖一個漸層，草根對齊地面貼圖的綠；法線朝上和地面同一個受光
 uniform vec3 root_color : source_color = vec3(0.4, 0.62, 0.28);
@@ -18,7 +19,7 @@ void vertex() {
 	float sway = sin(TIME * 1.3 + phase) * 0.7 + sin(TIME * 2.9 + phase * 1.7) * 0.3;
 	VERTEX.xz += vec2(1.0, 0.6) * sway * sway_strength * UV.y * UV.y;
 	NORMAL = normalize((inverse(MODEL_MATRIX) * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
-	blade_tint = mix(vec3(0.9, 1.0, 1.0), vec3(1.12, 1.04, 0.8), smoothstep(0.35, 0.7, patch)) * mix(0.92, 1.08, fine);
+	blade_tint = mix(vec3(0.9, 1.0, 1.0), vec3(1.12, 1.04, 0.8), smoothstep(0.35, 0.7, patch)) * mix(0.92, 1.08, fine) * cloud_shade(origin.xz);
 }
 
 void fragment() {

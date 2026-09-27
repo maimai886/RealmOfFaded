@@ -1,5 +1,6 @@
 shader_type spatial;
 render_mode diffuse_lambert, specular_disabled;
+#include "cloud.gdshaderinc"
 
 // 四層手繪地面：草為底、乾草成片混入、泥土路和石板照路徑折線和圓形區域在 GPU 算距離
 const int MAX_POINTS = 48;
@@ -107,6 +108,8 @@ void fragment() {
 	color = mix(color, color * vec3(1.06, 1.0, 0.9), (mid - 0.5) * macro_strength * 2.0);
 	float clump = (1.0 - smoothstep(0.25, 0.55, mix(macro, grit, 0.25))) * clump_strength * (1.0 - max(weights[2], weights[3]));
 	color = mix(color, color * vec3(0.62, 0.8, 0.7), clump);
+
+	color *= cloud_shade(xz);
 
 	vec2 muv = (xz - walk_rect.xy) / walk_rect.zw;
 	float away = walk_mask_range;

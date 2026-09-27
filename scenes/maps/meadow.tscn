@@ -76,6 +76,17 @@ height = 512
 seamless = true
 noise = SubResource("noise")
 
+[sub_resource type="FastNoiseLite" id="cloud_noise"]
+seed = 7
+frequency = 0.012
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="cloud_texture"]
+width = 512
+height = 512
+seamless = true
+noise = SubResource("cloud_noise")
+
 [sub_resource type="ShaderMaterial" id="terrain_material"]
 shader = ExtResource("1")
 shader_parameter/grass_tex = ExtResource("2")
@@ -89,25 +100,18 @@ shader_parameter/stone_tint = Color(0.9, 0.88, 0.85, 1)
 shader_parameter/dry_amount = 0.45
 shader_parameter/clump_strength = 0.55
 shader_parameter/macro_strength = 0.24
+shader_parameter/cloud_noise = SubResource("cloud_texture")
+shader_parameter/cloud_strength = 0.26
 
 [sub_resource type="PlaneMesh" id="plane"]
-
-[sub_resource type="FastNoiseLite" id="patch_noise"]
-seed = 7
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="patch_texture"]
-width = 512
-height = 512
-seamless = true
-noise = SubResource("patch_noise")
 
 [sub_resource type="ShaderMaterial" id="grass_material"]
 shader = ExtResource("7")
 shader_parameter/root_color = Color(0.4, 0.62, 0.2744, 1)
 shader_parameter/tip_color = Color(0.7, 0.83, 0.4508, 1)
-shader_parameter/patch_noise = SubResource("patch_texture")
+shader_parameter/patch_noise = SubResource("cloud_texture")
+shader_parameter/cloud_noise = SubResource("cloud_texture")
+shader_parameter/cloud_strength = 0.26
 
 [sub_resource type="ShaderMaterial" id="canopy_material"]
 shader = ExtResource("6")
@@ -118,6 +122,8 @@ shader_parameter/sway_strength = 0.09
 shader_parameter/plant_variation = 1.0
 shader_parameter/sun_kiss = Vector3(0.1, 0.1, 0.02)
 shader_parameter/pastel = 0.7
+shader_parameter/cloud_noise = SubResource("cloud_texture")
+shader_parameter/cloud_strength = 0.26
 
 [sub_resource type="ShaderMaterial" id="cover_material"]
 shader = ExtResource("6")
@@ -129,6 +135,8 @@ shader_parameter/sway_strength = 0.12
 shader_parameter/plant_variation = 0.3
 shader_parameter/sun_kiss = Vector3(0.05, 0.05, 0.01)
 shader_parameter/pastel = 0.7
+shader_parameter/cloud_noise = SubResource("cloud_texture")
+shader_parameter/cloud_strength = 0.26
 
 [node name="Meadow" type="Node3D"]
 metadata/grass = SubResource("grass_material")

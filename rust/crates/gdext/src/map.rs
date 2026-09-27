@@ -3,8 +3,6 @@
 
 use std::collections::HashMap;
 use std::f32::consts::{SQRT_2, TAU};
-use std::fmt::Display;
-use std::ops::Index;
 use std::path::Path;
 
 use godot::classes::base_material_3d::{TextureParam, Transparency};
@@ -17,6 +15,7 @@ use godot::classes::{
     PlaneMesh, ProjectSettings, ShaderMaterial, StandardMaterial3D, SurfaceTool,
 };
 use godot::prelude::*;
+use serde_json::Value;
 
 const NATURE: &str = "res://assets/vendor/quaternius/nature/";
 const SEED: u64 = 20260915;
@@ -131,9 +130,9 @@ pub fn build(map_id: &str) -> Gd<Node3D> {
     root
 }
 
-// 地圖檔的 [x, z]；擴充沒有直接依賴 serde_json，數字從文字轉
-fn xz<V: Index<usize, Output = V> + Display>(pair: &V) -> Vector2 {
-    let number = |i| pair[i].to_string().parse().unwrap_or(0.0);
+// 地圖檔的 [x, z]
+fn xz(pair: &Value) -> Vector2 {
+    let number = |i: usize| pair[i].as_f64().unwrap_or(0.0) as f32;
     Vector2::new(number(0), number(1))
 }
 

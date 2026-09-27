@@ -1,6 +1,5 @@
 extends SceneTree
-## 客戶端冒煙測試：擴充載得進來、GDScript 呼叫得到 Rust
-## godot --headless --path . --script res://tests/smoke.gd
+## 擴充載得進來、GDScript 呼叫得到 Rust
 
 
 func _initialize() -> void:

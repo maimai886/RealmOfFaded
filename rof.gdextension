@@ -1,5 +1,4 @@
-; 邏輯擴充。開發時直接讀 cargo 編出來的檔，匯出時再複製
-; 這個檔不能有 BOM，有的話 Godot 只報載入失敗
+; 不能有 BOM，有的話 Godot 只報載入失敗
 [configuration]
 entry_symbol = "gdext_rust_init"
 compatibility_minimum = 4.7

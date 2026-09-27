@@ -1,5 +1,3 @@
-; Realm of Faded 的 Godot 專案，表現層用 GDScript，邏輯在 rust/ 的擴充裡
-
 config_version=5
 
 [application]
@@ -23,7 +21,6 @@ theme/custom_font="res://assets/vendor/fonts/jf-openhuninn-2.1.ttf"
 
 renderer/rendering_method="forward_plus"
 renderer/rendering_method.mobile="mobile"
-; 抗鋸齒用 FXAA 不用 TAA：TAA 會讓面向鏡頭的紙片角色拖影，
-; 草葉和樹葉卡片也會糊。參考 CobraCode 的 UE 2D/3D 混合範本，它也是 FXAA。
+; FXAA，TAA 會讓紙片角色拖影、草葉變糊
 anti_aliasing/quality/screen_space_aa=1
 textures/vram_compression/import_etc2_astc=true

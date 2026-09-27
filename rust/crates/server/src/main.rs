@@ -1,9 +1,9 @@
-//! 遊戲伺服器。M1 起接上 tokio 和 WebSocket，現在只讀參數和檢查資料。
+//! 遊戲伺服器，M1 接上 WebSocket。
 
 use std::path::PathBuf;
 use std::process::ExitCode;
 
-/// 新專案的開發伺服器預設 7780，不撞舊專案的 7777、7778、7779
+// 舊專案佔了 7777 到 7779
 const DEFAULT_PORT: u16 = 7780;
 
 fn main() -> ExitCode {
@@ -29,7 +29,11 @@ fn main() -> ExitCode {
     };
     match rof_data::read_json(&dir.join("balance.json")) {
         Ok(_) => {
-            println!("Realm of Faded 伺服器 {}，埠 {port}，資料 {}", env!("CARGO_PKG_VERSION"), dir.display());
+            println!(
+                "Realm of Faded 伺服器 {}，埠 {port}，資料 {}",
+                env!("CARGO_PKG_VERSION"),
+                dir.display()
+            );
             ExitCode::SUCCESS
         }
         Err(e) => {

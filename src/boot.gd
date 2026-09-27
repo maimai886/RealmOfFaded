@@ -1,6 +1,5 @@
 extends Control
-## 開機畫面：確認 Rust 擴充載得進來，M1 換成登入畫面
-## --shot=路徑 會截一張圖存起來然後結束，給驗收用
+## 開機畫面，M1 換成登入；--shot=路徑 截圖後結束
 
 const BACKGROUND := Color(0.07, 0.08, 0.1)
 const TITLE_COLOR := Color(0.94, 0.93, 0.9)

@@ -1,0 +1,4 @@
+{
+  "_comment": "角色紙片的播放手感。walk_reference_speed 是走路動作倍率 1 時對應的移動速度，公尺每秒；3.15 讓玩家 3.5 公尺每秒時每格 75 毫秒、一秒約 3.3 步，照 RO：roBrowser getAnimationDelay 是 延遲 × 移動速度 ÷ 150，走路延遲 3、rAthena 150 毫秒走一格。腳會滑一點，RO 本來就這樣",
+  "walk_reference_speed": 3.15
+}

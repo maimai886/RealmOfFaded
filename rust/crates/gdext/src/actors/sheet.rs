@@ -144,7 +144,7 @@ pub(super) fn texture(dir: &str) -> Option<Gd<Texture2D>> {
 
 /// 裝備欄位的舊圖層在身體前面和後面的槽位，照 data/paper_doll.json
 pub(super) fn slot_for(equipment: &str, order: i32) -> i32 {
-    let doll = doll();
+    let doll = data(PAPER_DOLL);
     let layers = doll["layers"].as_array().cloned().unwrap_or_default();
     let layer = layers.iter().find(|l| l["slot"] == equipment);
     let side = if order > 0 { "front" } else { "back" };
@@ -153,13 +153,14 @@ pub(super) fn slot_for(equipment: &str, order: i32) -> i32 {
 
 /// 槽位換成緊密的名次再乘間距，只推寫進深度的平面：身體 0、前面 1、2、3、後面 −1、−2
 pub(super) fn depth_push(slot: i32, slots: &BTreeSet<i32>) -> f32 {
-    let doll = doll();
+    let doll = data(PAPER_DOLL);
     let number = |key: &str, default: f64| doll[key].as_f64().unwrap_or(default);
     let rank = if slot > 0 { slots.range(1..=slot).count() as i32 } else { -(slots.range(slot..0).count() as i32) };
     let rank = rank.clamp(number("outline_slot", -5.0) as i32 + 1, number("max_slot", 7.0) as i32);
     rank as f32 * number("slot_spacing", 0.004) as f32
 }
 
-fn doll() -> Rc<Value> {
-    cache(|c| c.doll.get_or_insert_with(|| Rc::new(read_json(PAPER_DOLL).unwrap_or_default())).clone())
+/// 資料檔讀一次掛著
+pub(super) fn data(path: &'static str) -> Rc<Value> {
+    cache(|c| c.data.entry(path).or_insert_with(|| Rc::new(read_json(path).unwrap_or_default())).clone())
 }

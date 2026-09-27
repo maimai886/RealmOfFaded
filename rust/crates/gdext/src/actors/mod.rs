@@ -18,7 +18,7 @@ use godot::global::randf;
 use godot::prelude::*;
 use grading::{GradingProbe, environment_of, key_of};
 use serde_json::Value;
-use sheet::{Sheet, depth_push, slot_for, texture};
+use sheet::{Sheet, data, depth_push, slot_for, texture};
 
 const BODY_DIR: &str = "res://assets/generated/sprites/characters/body";
 const LAYER_DIR: &str = "res://assets/generated/sprites/characters/layers";
@@ -28,20 +28,19 @@ const SPRITE_SHADER: &str = "res://assets/shaders/actor_sprite.gdshader";
 // 手繪像素圖集走銳利雙線性，由 meta 的 filter 決定
 const PIXEL_SHADER: &str = "res://assets/shaders/actor_sprite_pixel.gdshader";
 const SHADOW_SHADER: &str = "res://assets/shaders/actor_shadow.gdshader";
+const ACTORS: &str = "res://data/actors.json";
 // 離方向格子邊界不到這麼多格就不換方向，斜走才不會來回閃
 const DIRECTION_HYSTERESIS: f32 = 0.08;
 const TURN_SPEED: f32 = 0.05;
 const IDLE_SPEED: f32 = 0.15;
-const WALK_REFERENCE_SPEED: f32 = 1.7;
 const MIN_PLAYBACK: f32 = 0.55;
 const MAX_PLAYBACK: f32 = 2.6;
 // 起步那一幀直接跳到目標的 0.7 倍，再 0.05 秒追上；停下 0.07 秒收，太長腳會在地上磨
 const SPEED_START_JUMP: f32 = 0.7;
 const SPEED_RISE_S: f32 = 0.05;
 const SPEED_FALL_S: f32 = 0.07;
-// 呼吸和走路的起伏佔身高的比例，約一兩個像素，照舊專案 sprite_actor.gd
+// 站著呼吸的起伏佔身高的比例，約一個像素，照舊專案 sprite_actor.gd；走路的起伏圖裡已經畫了
 const BOB_IDLE: f32 = 0.012;
-const BOB_WALK: f32 = 0.022;
 const BOB_IDLE_PERIOD_S: f32 = 2.6;
 // 受光只補一層時段的味道，圖上已經畫了明暗，多了會髒；舊專案 map_environment.gd 的 sprite_lit_amount
 const LIT_AMOUNT: f32 = 0.45;
@@ -62,7 +61,8 @@ struct Cache {
     light: Vec<(&'static str, Variant)>,
     // 別人的名字、自己的名字
     names: Vec<Gd<LabelSettings>>,
-    doll: Option<Rc<Value>>,
+    // 讀過的資料檔
+    data: HashMap<&'static str, Rc<Value>>,
 }
 
 thread_local! {
@@ -309,15 +309,10 @@ impl Actor {
         caster.set_offset(body.sprite.get_offset());
     }
 
-    // 站著是對稱的慢呼吸；走路跟著步頻，一步兩個起伏、腳著地時最低；每一層跟著身體一起動
+    // 站著是對稱的慢呼吸，每一層跟著身體一起動
     fn bob(&mut self, delta: f32, walking: bool) {
-        let lift = if walking {
-            self.bob_phase += delta * self.display_speed / WALK_REFERENCE_SPEED * TAU * 2.0;
-            self.bob_phase.sin().abs() * BOB_WALK
-        } else {
-            self.bob_phase += delta * TAU / BOB_IDLE_PERIOD_S;
-            (self.bob_phase.sin() * 0.5 + 0.5) * BOB_IDLE
-        };
+        self.bob_phase += delta * TAU / BOB_IDLE_PERIOD_S;
+        let lift = if walking { 0.0 } else { (self.bob_phase.sin() * 0.5 + 0.5) * BOB_IDLE };
         let height =
             self.parts.first().map_or(0.0, |p| p.sheet.height.unwrap_or(p.sheet.anchor.y / p.sheet.pixels_per_meter));
         for part in &mut self.parts {
@@ -350,7 +345,7 @@ impl INode3D for Actor {
             (self.action, self.frame, self.frame_time) = (name, 0, 0.0);
         }
         let playback =
-            if walking { (self.display_speed / WALK_REFERENCE_SPEED).clamp(MIN_PLAYBACK, MAX_PLAYBACK) } else { 1.0 };
+            if walking { (self.display_speed / walk_reference_speed()).clamp(MIN_PLAYBACK, MAX_PLAYBACK) } else { 1.0 };
         self.frame_time += delta * playback * action.fps;
         self.frame = (self.frame + self.frame_time as i32) % action.frames;
         self.frame_time = self.frame_time.fract();
@@ -362,6 +357,11 @@ impl INode3D for Actor {
         self.bob(delta, walking);
         self.place_name();
     }
+}
+
+// 走路動作倍率 1 對應的移動速度，照 data/actors.json
+fn walk_reference_speed() -> f32 {
+    data(ACTORS)["walk_reference_speed"].as_f64().unwrap_or(3.15) as f32
 }
 
 // 一張圖集一種環境一份材質；key 是 shadow 時給影子替身

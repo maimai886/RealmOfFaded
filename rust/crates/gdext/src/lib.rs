@@ -40,6 +40,6 @@ impl RofInfo {
 
     #[func]
     fn tick_ms() -> i64 {
-        rof_netcore::TICK_MS as i64
+        rof_netcore::TICK_MS
     }
 }

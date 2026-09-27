@@ -190,6 +190,11 @@ mod tests {
     }
 
     #[test]
+    fn escaped_backslash_before_u0000_is_plain_text() {
+        assert!(decode(r#"{"v":1,"t":"x","id":1,"d":{"s":"\\u0000 只是文字"}}"#, any).is_ok());
+    }
+
+    #[test]
     fn long_strings_are_not_numbers() {
         let text = format!(r#"{{"v":1,"t":"x","id":1,"d":{{"s":"{}"}}}}"#, "1".repeat(200));
         assert!(decode(&text, any).is_ok());

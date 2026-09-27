@@ -104,3 +104,30 @@ async fn clicking_behind_a_tree_walks_around_it_and_the_other_player_sees_it() {
     };
     assert_eq!(watched, stopped, "另一個人看到他停在同一點");
 }
+
+#[tokio::test(flavor = "multi_thread")]
+async fn a_player_who_walks_far_away_disappears_and_comes_back() {
+    let server = common::server().await;
+    let (mut alice, _) = Bot::player(&server, "alice", "阿利").await;
+    let (mut bob, bob_id) = Bot::player(&server, "bobby", "阿寶").await;
+    assert_eq!(alice.push("entity.spawn").await["id"].as_u64(), Some(bob_id));
+    // 走到隔兩格、直線距離超過 20 公尺的地方，再走回來
+    for [x, z] in [[-17.0, -36.0], [4.0, -38.0]] {
+        bob.request("move.to", json!({"x": x, "z": z})).await;
+        bob.wait_until_stopped(bob_id).await;
+    }
+    let mut seen = Vec::new();
+    while let Some(message) = alice.recv(300).await {
+        let d = &message["d"];
+        let about_bob =
+            d["id"] == bob_id || d["entities"].as_array().is_some_and(|e| e.iter().any(|e| e["id"] == bob_id));
+        if about_bob {
+            seen.push(message["t"].as_str().unwrap().to_string());
+        }
+    }
+    let gone = seen.iter().position(|t| t == "entity.despawn").expect("走遠了要消失");
+    let back = seen.iter().position(|t| t == "entity.spawn").expect("走回來要再出現");
+    assert!(gone < back && seen[gone + 1..back].is_empty(), "看不到的時候收不到他的位置：{seen:?}");
+    assert_eq!(seen.iter().filter(|t| *t == "entity.despawn").count(), 1, "不重複消失");
+    assert_eq!(seen.iter().filter(|t| *t == "entity.spawn").count(), 1, "不重複出現");
+}

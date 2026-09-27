@@ -1,0 +1,3 @@
+# 全專案一致的排版，寬一點少換行
+max_width = 120
+use_small_heuristics = "Max"

@@ -84,6 +84,9 @@ func _ready() -> void:
 	if config.load(LOGIN_CONFIG) == OK and String(config.get_value("login", "account", "")) != "":
 		_account_edit.text = config.get_value("login", "account")
 		_remember_check.button_pressed = true
+	var reason: String = _rof.last_disconnect_reason() if _rof else ""
+	if reason != "":
+		_show_message(_login_message, _disconnect_text(reason), UiTheme.INK_BAD)
 	_show_page("login", false)
 
 
@@ -127,14 +130,18 @@ func _on_connected() -> void:
 		_do_login()
 
 
-## 連不上只顯示原因，連上之後斷的才說連線中斷，自己登出的不顯示
+## 從世界斷線時 Rof 先換回新的登入頁，原因由 _ready 讀
 func _on_disconnected(reason: String) -> void:
-	var text := _reason(reason) if _login_after_connect else Texts.text("login.disconnected", {"reason": _reason(reason)})
-	_show_message(_login_message, text if _online or _login_after_connect else "", UiTheme.INK_BAD)
+	_show_message(_login_message, _disconnect_text(reason), UiTheme.INK_BAD)
 	_pending.clear()
 	_online = false
 	_login_after_connect = false
 	_show_page("login")
+
+
+static func _disconnect_text(code: String) -> String:
+	var key := "login.reason_" + code
+	return Texts.text(key if Texts.has(key) else "login.reason_disconnected")
 
 
 static func _reason(code: String) -> String:

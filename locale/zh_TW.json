@@ -205,7 +205,6 @@
 	"login.submit": "登入",
 	"login.quit": "離開",
 	"login.connecting": "連線中……",
-	"login.disconnected": "連線中斷：{reason}",
 	"login.reason_unknown": "發生錯誤：{code}",
 	"login.reason_bad_account": "帳號需為 4～16 個英文、數字或底線",
 	"login.reason_bad_password": "密碼至少 4 個字",

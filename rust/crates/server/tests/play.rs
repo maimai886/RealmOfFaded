@@ -131,3 +131,39 @@ async fn a_player_who_walks_far_away_disappears_and_comes_back() {
     assert_eq!(seen.iter().filter(|t| *t == "entity.despawn").count(), 1, "不重複消失");
     assert_eq!(seen.iter().filter(|t| *t == "entity.spawn").count(), 1, "不重複出現");
 }
+
+#[tokio::test(flavor = "multi_thread")]
+async fn after_players_leave_in_every_way_newcomers_still_see_each_other() {
+    let server = common::server_with(|s| (s.heartbeat_ms, s.idle_timeout_ms) = (800, 1500)).await;
+    let (mut idle, _) = Bot::player(&server, "idler", "發呆").await;
+    let (mut quitter, _) = Bot::player(&server, "quitter", "走人").await;
+    quitter.request("move.to", json!({"x": 8, "z": -38})).await;
+    drop(quitter);
+    let (mut spammer, _) = Bot::player(&server, "spammer", "洗頻").await;
+    while spammer.is_open() && spammer.kick.is_none() {
+        spammer.send("move.to", json!({"x": "bad", "z": 0})).await;
+        spammer.recv(1).await;
+    }
+    let mut halfway = Bot::connect(&server).await;
+    halfway.login("halfway").await;
+    let character = halfway.create("半路").await["character_id"].clone();
+    halfway.send("char.enter", json!({"character_id": character})).await;
+    drop(halfway);
+    let mut hashing = Bot::connect(&server).await;
+    hashing
+        .send(
+            "auth.login",
+            json!({"account": "hasher", "password": "secret1", "client_version": common::CLIENT_VERSION}),
+        )
+        .await;
+    drop(hashing);
+    assert_eq!(idle.kicked().await, "idle_timeout");
+
+    let (mut a, a_id) = Bot::player(&server, "newa", "新甲").await;
+    let (mut b, b_id) = Bot::player(&server, "newb", "新乙").await;
+    assert_eq!(b.push("entity.spawn").await["id"].as_u64(), Some(a_id), "後進來的看得到先進來的");
+    assert_eq!(a.push("entity.spawn").await["id"].as_u64(), Some(b_id), "先進來的看得到後進來的");
+    assert!(b.pushes.iter().all(|p| p["t"] != "entity.spawn"), "離開的人沒有留下身體：{:?}", b.pushes);
+    let servers = a.request("server.list", json!({})).await;
+    assert_eq!(servers["servers"][0]["online"], 2, "在線人數只算還在的人");
+}

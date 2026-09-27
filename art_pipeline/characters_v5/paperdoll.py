@@ -288,6 +288,10 @@ def _crop(rgba):
     return int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1
 
 
+# 圖層小圖彼此留幾個像素：鏡頭拉遠走 mipmap 時才不會吃到隔壁那張，和怪物部位的架子一樣
+SHELF_GAP_PX = 4
+
+
 def shelf_pack(cells, width=1024):
     """裁好的格子排進一張圖：照高度由高到低一列一列放。回傳 (圖的寬高, {鍵: (x, y)})"""
     order = sorted(cells, key=lambda key: -cells[key].shape[0])
@@ -296,9 +300,9 @@ def shelf_pack(cells, width=1024):
     for key in order:
         h, w = cells[key].shape[:2]
         if x + w > width:
-            x, y, row_h = 0, y + row_h + 1, 0
+            x, y, row_h = 0, y + row_h + SHELF_GAP_PX, 0
         places[key] = (x, y)
-        x += w + 1
+        x += w + SHELF_GAP_PX
         row_h = max(row_h, h)
     height = y + row_h
     return (width, max(1, height)), places

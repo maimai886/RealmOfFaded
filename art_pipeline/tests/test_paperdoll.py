@@ -95,7 +95,7 @@ def test_cape_and_back_hair_swap_sides_between_front_and_back_views():
         assert paperdoll.SLOTS["head_low"][direction] > paperdoll.SLOTS["hair_front"][direction]
 
 
-def test_shelf_pack_does_not_overlap():
+def test_shelf_pack_keeps_gap_between_pieces():
     import numpy as np
     import paperdoll
     rng = np.random.default_rng(3)
@@ -105,7 +105,8 @@ def test_shelf_pack_does_not_overlap():
     for key, (x, y) in places.items():
         h, w = cells[key].shape[:2]
         assert x + w <= width and y + h <= height
-        used[y:y + h, x:x + w] += 1
+        # 往右下多算間距那麼寬，互相碰到就是間距不夠，mipmap 會吃到隔壁
+        used[y:y + h + paperdoll.SHELF_GAP_PX, x:x + w + paperdoll.SHELF_GAP_PX] += 1
     assert used.max() == 1
 
 

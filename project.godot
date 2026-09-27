@@ -28,3 +28,10 @@ renderer/rendering_method.mobile="mobile"
 ; FXAA，TAA 會讓紙片角色拖影、草葉變糊
 anti_aliasing/quality/screen_space_aa=1
 textures/vram_compression/import_etc2_astc=true
+
+[shader_globals]
+
+map_focus={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}

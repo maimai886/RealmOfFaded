@@ -29,12 +29,12 @@
 - **只有介面用 GDScript，其他能用 Rust 的都用 Rust**。2026-09-27 使用者：「除了UI交換用GD之外 其餘能用rust就用」。
   邏輯、協定、伺服器、世界表現、角色顯示、打擊感、特效、聲音、輸入、鏡頭都是 Rust；cargo workspace 在 `rust/`，
   六個 crate 的分工在 `docs/Rust重構規劃.md`，只有 `rof-gdext` 依賴 godot。著色器、場景、資料照舊是 `.gdshader`、`.tscn`、JSON
+- **寫程式照 `docs/程式規範.md`：用最少的程式碼做到目標、簡單好讀；註解最多一行，只寫看不出來的重點，不寫廢話**。
+  2026-09-27 使用者：「注釋精簡不超過一行表達重點別寫廢話」「目標都以最少代碼且能達到目標為準」；每個里程碑回報行數，預算在那份第 6 節
 - 純邏輯放 `rust/crates/core`，不依賴 godot，伺服器和客戶端共用；移動和碰撞要兩邊算得一模一樣，位置用 f32、三角函數走 libm
-- Rust 寫法：`cargo fmt` 排版，`cargo clippy` 不留警告；不寫 unsafe，gdext 規定的除外；錯誤用 Result 往上傳，伺服器不准因為一個玩家的封包 panic
-- 介面用 Godot 4.7 GDScript 放 `src/ui/`，用 `preload` 常數引用腳本，不用 `class_name`；介面不算數值、不判規則、不碰世界裡的節點，要什麼問擴充
+- 介面用 GDScript 放 `src/ui/`，不算數值、不判規則、不碰世界裡的節點，要什麼問擴充
 - 常常要調的數字，例如特效時間、打擊感定格、聲音對照、鏡頭，放 `data/*.json` 不寫死在 Rust，調手感不用重編
 - `.gdextension` 不能有 BOM，Windows PowerShell 5.1 寫檔會帶，用 Write 工具或 bash 寫
-- 註解用繁體中文白話寫，不要用括號補充說明
 - 操作都是指令，結果都是事件；表現層只訂閱事件
 - 資料驅動：職業、技能、道具、怪物、地圖、NPC、外觀選項都在 `data/*.json`
 - 職業有二十一個，程式任何地方不寫死職業清單、上限、門檻，一律讀 `data/jobs.json` 和 `data/balance.json`；

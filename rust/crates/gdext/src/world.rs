@@ -236,7 +236,6 @@ impl INode3D for RofWorld {
         me.set_position(position);
         me.bind_mut().set_motion(ground(prediction.intended_velocity()), yaw);
         camera.bind_mut().follow(position);
-        crate::map::set_focus(position);
         for (actor, buffer) in self.others.values_mut() {
             let sample = buffer.sample(render_ms);
             actor.set_position(spot(sample.position));

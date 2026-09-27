@@ -17,10 +17,6 @@ uniform float plant_variation = 0.0;
 // 樹冠頂端被太陽照到的亮邊，加色不是乘色
 uniform vec3 sun_kiss = vec3(0.0);
 uniform float pastel = 0.0;
-// 擋在鏡頭和自己角色之間的樹冠挖一個點陣的洞，洞裡還留兩成葉子看得出是樹；map_focus 是角色腳底，由 map.rs 每幀更新
-global uniform vec3 map_focus;
-uniform float see_through = 0.0;
-const float BAYER[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0);
 
 varying vec3 sphere_normal_view;
 varying float canopy_height;
@@ -42,16 +38,6 @@ void vertex() {
 
 void fragment() {
 	vec4 tex = texture(albedo_texture, UV);
-	// 陰影圖是正交投影，只在鏡頭那一趟挖洞，影子才不會跟著破
-	if (see_through > 0.0 && PROJECTION_MATRIX[3][3] < 0.5) {
-		vec3 focus = (VIEW_MATRIX * vec4(map_focus + vec3(0.0, 0.9, 0.0), 1.0)).xyz;
-		vec2 across = (VERTEX.xy * focus.z / VERTEX.z - focus.xy) / vec2(1.3, 1.6);
-		float hole = (1.0 - smoothstep(0.7, 1.0, length(across))) * step(focus.z + 0.5, VERTEX.z);
-		ivec2 cell = ivec2(FRAGCOORD.xy) % 4;
-		if (hole * see_through > (BAYER[cell.x + cell.y * 4] + 0.5) / 16.0) {
-			discard;
-		}
-	}
 	vec3 leaf = tex.rgb * mix(shade_bottom, shade_top, canopy_height) * plant_tint;
 	leaf = mix(leaf, vec3(dot(leaf, vec3(0.299, 0.587, 0.114))), pastel * 0.22) * (1.0 + pastel * 0.35);
 	ALBEDO = leaf + sun_kiss * canopy_height * canopy_height;

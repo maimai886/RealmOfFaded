@@ -124,7 +124,6 @@ shader_parameter/sun_kiss = Vector3(0.1, 0.1, 0.02)
 shader_parameter/pastel = 0.7
 shader_parameter/cloud_noise = SubResource("cloud_texture")
 shader_parameter/cloud_strength = 0.26
-shader_parameter/see_through = 0.8
 
 [sub_resource type="ShaderMaterial" id="cover_material"]
 shader = ExtResource("6")

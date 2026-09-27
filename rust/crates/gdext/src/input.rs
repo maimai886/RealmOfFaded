@@ -119,8 +119,7 @@ impl GroundPicker {
     #[signal]
     fn clicked(x: f32, z: f32);
 
-    #[func]
-    fn set_walkable(&mut self, walkable: bool) {
+    pub(crate) fn set_walkable(&mut self, walkable: bool) {
         self.dirty |= self.walkable != walkable;
         self.walkable = walkable;
     }

@@ -13,6 +13,7 @@ use serde_json::json;
 use crate::actors::Actor;
 use crate::camera::RofCamera;
 use crate::client::{RofClient, now_ms};
+use crate::input::GroundPicker;
 use crate::shot::arg;
 
 // 兩則移動指令至少隔 50 毫秒，目標差不到 0.25 公尺不送
@@ -57,7 +58,7 @@ impl RofWorld {
     #[func]
     fn on_hovered(&mut self, x: f32, z: f32) {
         let walkable = self.collision.as_ref().is_some_and(|c| c.is_walkable([x, z]));
-        self.base().get_node_as::<Node>("Picker").call("set_walkable", &[walkable.to_variant()]);
+        self.base().get_node_as::<GroundPicker>("Picker").bind_mut().set_walkable(walkable);
     }
 
     #[func]

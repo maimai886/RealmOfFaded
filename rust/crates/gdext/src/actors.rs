@@ -10,8 +10,9 @@ use godot::classes::geometry_instance_3d::ShadowCastingSetting;
 use godot::classes::image::Format;
 use godot::classes::sub_viewport::UpdateMode;
 use godot::classes::{
-    Camera3D, DirectionalLight3D, Environment, FileAccess, INode3D, ISubViewport, Image, ImageTexture, MeshInstance3D,
-    QuadMesh, RenderingServer, Shader, ShaderMaterial, Sprite3D, SubViewport, Texture2D, Viewport, WorldEnvironment,
+    Camera3D, DirectionalLight3D, Environment, FileAccess, Font, FontVariation, INode3D, ISubViewport, Image,
+    ImageTexture, Label, LabelSettings, MeshInstance3D, QuadMesh, RenderingServer, Script, Shader, ShaderMaterial,
+    Sprite3D, SubViewport, Texture2D, Viewport, WorldEnvironment,
 };
 use godot::global::randf;
 use godot::prelude::*;
@@ -63,6 +64,8 @@ struct Cache {
     // 環境的 key 對到反查表，None 是還在量
     grading: HashMap<String, Option<Gd<ImageTexture>>>,
     light: Vec<(&'static str, Variant)>,
+    // 別人的名字、自己的名字
+    names: Vec<Gd<LabelSettings>>,
 }
 
 thread_local! {
@@ -198,6 +201,8 @@ pub struct Actor {
     bob_phase: f32,
     grading_key: Option<String>,
     grading_wait: f64,
+    // 名字和它排在腳下幾個畫面像素
+    name: Option<(Gd<Label>, f32)>,
 }
 
 #[godot_api]
@@ -271,6 +276,24 @@ impl Actor {
             }
             c.light = light;
         });
+    }
+
+    /// 名字畫在腳下，照舊專案 name_plates.gd：自己的字大一級、往下讓開 HP 和 SP 條
+    pub(crate) fn set_display_name(&mut self, name: String, own: bool) {
+        let mut label = Label::new_alloc();
+        label.set_text(&name);
+        label.set_label_settings(&name_settings(own));
+        self.base_mut().add_child(&label);
+        self.name = Some((label, if own { 26.0 } else { 14.0 }));
+    }
+
+    fn place_name(&mut self) {
+        let Some(camera) = self.base().get_viewport().and_then(|v| v.get_camera_3d()) else { return };
+        let at = self.base().get_global_position();
+        let Some((label, down)) = self.name.as_mut() else { return };
+        label.set_visible(!camera.is_position_behind(at));
+        let size = label.get_minimum_size();
+        label.set_position((camera.unproject_position(at) + Vector2::new(-size.x / 2.0, *down - size.y / 2.0)).round());
     }
 
     fn sync_grading(&mut self) {
@@ -361,6 +384,7 @@ impl INode3D for Actor {
             self.show_frame(action);
         }
         self.bob(delta, walking);
+        self.place_name();
     }
 }
 
@@ -381,6 +405,30 @@ fn material(sheet: &Sheet, key: &str, lut: Option<Gd<ImageTexture>>) -> Gd<Shade
         });
         entry.clone()
     })
+}
+
+// 粗體白字加右下一格深色影子，中文小字描邊會糊；字級和顏色取介面的 ui_theme.gd
+fn name_settings(own: bool) -> Gd<LabelSettings> {
+    if let Some(settings) = cache(|c| c.names.get(own as usize).cloned()) {
+        return settings;
+    }
+    let mut theme = load::<Script>("res://src/ui/ui_theme.gd");
+    let constants = theme.get_script_constant_map();
+    let mut bold = FontVariation::new_gd();
+    bold.set_base_font(&theme.call("font", &["body".to_variant()]).to::<Gd<Font>>());
+    bold.set_variation_embolden(0.6);
+    let names = ["FONT_SMALL", "FONT_BODY"].map(|size| {
+        let mut settings = LabelSettings::new_gd();
+        settings.set_font(&bold);
+        settings.set_font_size(constants.at(size).to());
+        settings.set_font_color(constants.at("TEXT_BODY").to());
+        settings.set_shadow_color(constants.at("OUTLINE").to());
+        settings.set_shadow_size(0);
+        settings.set_shadow_offset(Vector2::ONE);
+        settings
+    });
+    cache(|c| c.names = names.to_vec());
+    names[own as usize].clone()
 }
 
 fn environment_of(viewport: &Gd<Viewport>) -> Option<Gd<Environment>> {
@@ -538,7 +586,10 @@ impl ISubViewport for GradingProbe {
             return;
         }
         self.wait = 0;
-        let mut image = self.base().get_texture().unwrap().get_image().unwrap();
+        // 沒有畫面的客戶端讀不回像素，不校正
+        let Some(mut image) = self.base().get_texture().and_then(|t| t.get_image()) else {
+            return self.base_mut().queue_free();
+        };
         image.convert(Format::RGBA8);
         let measured =
             image.get_data().as_slice().chunks(4).map(|p| [p[0], p[1], p[2]].map(|c| c as f32 / 255.0)).collect();

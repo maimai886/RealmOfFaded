@@ -107,7 +107,9 @@ impl RofWorld {
                 let built = crate::map::build(&enter.map);
                 self.base_mut().add_child(&built);
                 Actor::light_from(built.clone().upcast());
-                self.me = Some(self.actor(enter.me.gender, &enter.me.appearance, me));
+                let mut actor = self.actor(enter.me.gender, &enter.me.appearance, me);
+                actor.bind_mut().set_display_name(enter.me.name, true);
+                self.me = Some(actor);
                 self.self_id = enter.self_id;
                 // 收齊擋路之前預測只看範圍
                 self.prediction = Some(Prediction::new(&map, me, MOVE_SPEED));
@@ -130,7 +132,8 @@ impl RofWorld {
                 }
             }
             Push::EntitySpawn(s) if s.id != self.self_id => {
-                let actor = self.actor(s.gender, &s.appearance, [s.x, s.z]);
+                let mut actor = self.actor(s.gender, &s.appearance, [s.x, s.z]);
+                actor.bind_mut().set_display_name(s.name, false);
                 self.others.insert(s.id, (actor, SnapshotBuffer::new(clock.server_now(now), [s.x, s.z])));
             }
             Push::EntityDespawn { id, .. } => {

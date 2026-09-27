@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[node name="CameraPreview" type="PickerPreview"]
+
+[node name="Map" type="RofMap" parent="."]
+map_id = "meadow"
+
+[node name="Camera" type="RofCamera" parent="."]
+
+[node name="Picker" type="GroundPicker" parent="."]
+
+[node name="ShotTaker" type="ShotTaker" parent="."]

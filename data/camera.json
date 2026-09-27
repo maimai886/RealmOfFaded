@@ -1,0 +1,12 @@
+{
+	"_comment": "鏡頭手感，數字來源 docs/M1舊行為.md 第 7 節；距離單位公尺，最遠 52 是整套美術的基準，改了要重算 docs/美術技術框架.md",
+	"min_distance": 24.0,
+	"max_distance": 52.0,
+	"zoom_step": 3.0,
+	"pan_zoom_scale": 1.2,
+	"magnify_zoom_meters": 18.0,
+	"rotate_per_pixel": 0.006,
+	"follow_speed": 5.0,
+	"rotate_sharpness": 14.0,
+	"zoom_sharpness": 10.0
+}

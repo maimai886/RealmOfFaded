@@ -1,0 +1,10 @@
+[package]
+name = "rof-core"
+description = "純邏輯：戰鬥、數值、背包、技能、地圖碰撞，伺服器和客戶端共用"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+rof-data.workspace = true

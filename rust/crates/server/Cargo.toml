@@ -1,0 +1,12 @@
+[package]
+name = "rof-server"
+description = "遊戲伺服器，獨立執行檔，不用 Godot"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+rof-data.workspace = true
+rof-core.workspace = true
+rof-protocol.workspace = true

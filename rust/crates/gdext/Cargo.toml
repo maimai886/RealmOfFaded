@@ -1,0 +1,16 @@
+[package]
+name = "rof-gdext"
+description = "給 GDScript 呼叫的 Godot 擴充，唯一依賴 godot 的 crate"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot.workspace = true
+rof-data.workspace = true
+rof-protocol.workspace = true
+rof-netcore.workspace = true

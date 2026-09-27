@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use godot::classes::{ClassDb, INode3D, Input, InputEventMouseButton, InputEventMouseMotion};
+use godot::classes::{INode3D, Input, InputEventMouseButton, InputEventMouseMotion};
 use godot::global::MouseButton;
 use godot::prelude::*;
 use rof_data::MapData;
@@ -11,6 +11,7 @@ use rof_protocol::{Appearance, Gender, Push};
 use serde_json::json;
 
 use crate::actors::Actor;
+use crate::camera::RofCamera;
 use crate::client::{RofClient, now_ms};
 use crate::shot::arg;
 
@@ -26,8 +27,8 @@ fn spot(point: [f32; 2]) -> Vector3 {
     Vector3::new(point[0], 0.0, point[1])
 }
 
-fn ground(velocity: [f32; 2]) -> Variant {
-    Vector2::new(velocity[0], velocity[1]).to_variant()
+fn ground(velocity: [f32; 2]) -> Vector2 {
+    Vector2::new(velocity[0], velocity[1])
 }
 
 #[derive(GodotClass)]
@@ -39,8 +40,8 @@ pub struct RofWorld {
     collision: Option<MapCollision>,
     prediction: Option<Prediction>,
     self_id: u32,
-    me: Option<Gd<Node3D>>,
-    others: HashMap<u32, (Gd<Node3D>, SnapshotBuffer)>,
+    me: Option<Gd<Actor>>,
+    others: HashMap<u32, (Gd<Actor>, SnapshotBuffer)>,
     /// 伺服器上自己最後的位置和是不是停著
     server_self: Option<([f32; 2], bool)>,
     idle_checked: f64,
@@ -78,13 +79,13 @@ impl RofWorld {
 }
 
 impl RofWorld {
-    fn actor(&mut self, gender: Gender, appearance: &Appearance, at: [f32; 2]) -> Gd<Node3D> {
-        let mut actor = Actor::new_alloc().upcast::<Node3D>();
+    fn actor(&mut self, gender: Gender, appearance: &Appearance, at: [f32; 2]) -> Gd<Actor> {
+        let mut actor = Actor::new_alloc();
         let mut look = VarDictionary::new();
         for (key, value) in appearance {
             look.set(key.as_str(), *value);
         }
-        actor.call("setup", &[gender.as_str().to_variant(), look.to_variant()]);
+        actor.bind_mut().setup(gender.as_str().into(), look);
         actor.set_position(spot(at));
         self.base_mut().add_child(&actor);
         actor
@@ -104,7 +105,7 @@ impl RofWorld {
                 };
                 let built = crate::map::build(&enter.map);
                 self.base_mut().add_child(&built);
-                ClassDb::singleton().class_call_static("Actor", "light_from", &[built.to_variant()]);
+                Actor::light_from(built.clone().upcast());
                 self.me = Some(self.actor(enter.me.gender, &enter.me.appearance, me));
                 self.self_id = enter.self_id;
                 // 收齊擋路之前預測只看範圍
@@ -219,8 +220,8 @@ impl INode3D for RofWorld {
         }
         let render_ms = client_ref.clock.render_time(now);
         drop(client_ref);
-        let mut camera = self.base().get_node_as::<Node3D>("Camera");
-        let yaw = camera.call("yaw", &[]);
+        let mut camera = self.base().get_node_as::<RofCamera>("Camera");
+        let yaw = camera.bind().yaw();
         let (Some(prediction), Some(me)) = (self.prediction.as_mut(), self.me.as_mut()) else { return };
         prediction.step(delta as f32, now);
         if let Some((at, true)) = self.server_self
@@ -232,12 +233,12 @@ impl INode3D for RofWorld {
         }
         let position = spot(prediction.position());
         me.set_position(position);
-        me.call("set_motion", &[ground(prediction.intended_velocity()), yaw.clone()]);
-        camera.call("follow", &[position.to_variant()]);
+        me.bind_mut().set_motion(ground(prediction.intended_velocity()), yaw);
+        camera.bind_mut().follow(position);
         for (actor, buffer) in self.others.values_mut() {
             let sample = buffer.sample(render_ms);
             actor.set_position(spot(sample.position));
-            actor.call("set_motion", &[ground(sample.velocity), yaw.clone()]);
+            actor.bind_mut().set_motion(ground(sample.velocity), yaw);
         }
         self.send_move(now);
         self.dev_click();

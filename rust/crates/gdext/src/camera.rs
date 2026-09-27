@@ -71,7 +71,7 @@ pub struct RofCamera {
 impl RofCamera {
     /// 目標的世界座標，每幀給；第一次直接跳過去
     #[func]
-    fn follow(&mut self, target: Vector3) {
+    pub(crate) fn follow(&mut self, target: Vector3) {
         if self.target.is_none() {
             self.base_mut().set_position(target);
         }
@@ -79,7 +79,7 @@ impl RofCamera {
     }
 
     #[func]
-    fn yaw(&self) -> f32 {
+    pub(crate) fn yaw(&self) -> f32 {
         self.base().get_rotation().y
     }
 

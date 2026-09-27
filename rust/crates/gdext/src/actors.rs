@@ -203,7 +203,7 @@ pub struct Actor {
 #[godot_api]
 impl Actor {
     #[func]
-    fn setup(&mut self, gender: GString, _appearance: VarDictionary) {
+    pub(crate) fn setup(&mut self, gender: GString, _appearance: VarDictionary) {
         let Some(sheet) = Sheet::cached(&format!("{BODY_DIR}/{gender}_novice"))
             .or_else(|| Sheet::cached(&format!("{BODY_DIR}/{SHARED_GENDER}_novice")))
         else {
@@ -230,7 +230,7 @@ impl Actor {
 
     /// velocity 是地面上的 x、z 速度，公尺每秒；camera_yaw 是鏡頭繞 Y 軸的弧度
     #[func]
-    fn set_motion(&mut self, velocity: Vector2, camera_yaw: f32) {
+    pub(crate) fn set_motion(&mut self, velocity: Vector2, camera_yaw: f32) {
         let speed = velocity.length();
         if speed > TURN_SPEED {
             self.facing = velocity.x.atan2(velocity.y);
@@ -244,7 +244,7 @@ impl Actor {
 
     /// 地圖蓋好後呼叫一次：照地圖場景的 Sun 和 WorldEnvironment 給所有角色受光
     #[func]
-    fn light_from(map: Gd<Node>) {
+    pub(crate) fn light_from(map: Gd<Node>) {
         let sun = map.try_get_node_as::<DirectionalLight3D>("Sun");
         let world = map.try_get_node_as::<WorldEnvironment>("WorldEnvironment");
         let (Some(sun), Some(environment)) = (sun, world.and_then(|w| w.get_environment())) else {

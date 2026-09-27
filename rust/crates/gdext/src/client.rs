@@ -51,6 +51,7 @@ pub struct RofClient {
     pending: HashMap<i64, Pending>,
     retries: Vec<(f64, Pending)>,
     kick: Option<String>,
+    last_reason: String,
     pub clock: ServerClock,
     pub pushes: VecDeque<Push>,
     dev: HashMap<i64, Dev>,
@@ -75,6 +76,12 @@ impl RofClient {
             return self.lost("connect_failed");
         }
         (self.peer, self.opened, self.connect_started) = (Some(peer), false, now_ms());
+    }
+
+    /// 最後一次斷線的原因，新的登入頁拿來顯示
+    #[func]
+    pub fn last_disconnect_reason(&self) -> String {
+        self.last_reason.clone()
     }
 
     /// 自己斷的不發 disconnected
@@ -118,7 +125,7 @@ impl RofClient {
     }
 
     fn lost(&mut self, reason: &str) {
-        self.peer = None;
+        (self.peer, self.last_reason) = (None, reason.into());
         self.reset();
         let mut tree = self.base().get_tree();
         if tree.get_current_scene().is_some_and(|s| s.get_scene_file_path() == WORLD_SCENE) {

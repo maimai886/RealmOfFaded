@@ -642,16 +642,14 @@ func _refresh_character_info() -> void:
 		return
 	_character_info.columns = 4
 	var summary: Dictionary = _characters[_selected]
-	var stats := " ".join(["str", "agi", "vit", "int", "dex", "luk"].map(func(stat):
-		return "%s %d" % [stat.to_upper(), int(summary[stat])]))
+	# HP、SP、能力值等 M2 伺服器有數值再加
 	var cells := [
 		"character.name", summary["name"], "character.job", _job_name(summary["job_id"]),
 		"character.base_level", str(int(summary["base_level"])), "character.job_level", str(int(summary["job_level"])),
-		"character.map", _map_name(summary["map"]), "character.hp_sp", Texts.text("character.hp_sp_value", _integers(summary, ["hp", "max_hp", "sp", "max_sp"])),
-		"character.stats", stats, "", "",
+		"character.map", _map_name(summary["map"]),
 	]
 	for i in range(0, cells.size(), 2):
-		_character_info.add_child(_text(Texts.text(cells[i]) if cells[i] != "" else "", UiTheme.FONT_SMALL, UiTheme.INK_DIM))
+		_character_info.add_child(_text(Texts.text(cells[i]), UiTheme.FONT_SMALL, UiTheme.INK_DIM))
 		_character_info.add_child(_text(cells[i + 1]))
 
 

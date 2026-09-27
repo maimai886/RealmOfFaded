@@ -14,3 +14,4 @@ godot.workspace = true
 rof-data.workspace = true
 rof-protocol.workspace = true
 rof-netcore.workspace = true
+serde_json.workspace = true

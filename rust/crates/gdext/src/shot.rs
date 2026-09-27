@@ -1,4 +1,4 @@
-//! 帶 `--shot=路徑` 時，等畫面穩定後截圖存檔並結束，驗收用。
+//! 帶 `--shot=路徑` 時截圖存檔並結束，`--shot-wait=秒` 等光照和霧穩定再截，驗收色調用 6 秒。
 
 use godot::classes::{INode, Node, Os};
 use godot::prelude::*;
@@ -12,19 +12,22 @@ pub struct ShotTaker {
     base: Base<Node>,
     path: String,
     frames: u32,
+    wait: f64,
 }
 
 #[godot_api]
 impl INode for ShotTaker {
     fn ready(&mut self) {
         self.path = arg("--shot=").unwrap_or_default();
+        self.wait = arg("--shot-wait=").and_then(|s| s.parse().ok()).unwrap_or(0.0);
         let active = !self.path.is_empty();
         self.base_mut().set_process(active);
     }
 
-    fn process(&mut self, _delta: f64) {
+    fn process(&mut self, delta: f64) {
         self.frames += 1;
-        if self.frames < SETTLE_FRAMES {
+        self.wait -= delta;
+        if self.frames < SETTLE_FRAMES || self.wait > 0.0 {
             return;
         }
         let image = self.base().get_viewport().and_then(|v| v.get_texture()).and_then(|t| t.get_image());

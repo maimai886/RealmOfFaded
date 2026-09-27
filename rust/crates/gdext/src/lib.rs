@@ -2,6 +2,15 @@
 
 use godot::prelude::*;
 
+// 每個模組一個擁有者，分工在 docs/M1介面.md
+mod actors;
+mod camera;
+mod client;
+mod input;
+mod map;
+mod shot;
+mod world;
+
 struct RofExtension;
 
 #[gdextension]

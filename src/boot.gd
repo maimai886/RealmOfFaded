@@ -1,5 +1,5 @@
 extends Control
-## 開機畫面，M1 換成登入；--shot=路徑 截圖後結束
+## 開機畫面，M1 換成登入
 
 const BACKGROUND := Color(0.07, 0.08, 0.1)
 const TITLE_COLOR := Color(0.94, 0.93, 0.9)
@@ -37,22 +37,3 @@ func _ready() -> void:
 		note.text = "擴充沒有載進來"
 	box.add_child(note)
 
-	var shot := _arg("--shot=")
-	if shot != "":
-		_take_shot(shot)
-
-
-func _take_shot(path: String) -> void:
-	for i in 3:
-		await get_tree().process_frame
-	await RenderingServer.frame_post_draw
-	var err := get_viewport().get_texture().get_image().save_png(path)
-	print("截圖 ", path, " ", error_string(err))
-	get_tree().quit(0 if err == OK else 1)
-
-
-func _arg(prefix: String) -> String:
-	for a in OS.get_cmdline_user_args() + OS.get_cmdline_args():
-		if a.begins_with(prefix):
-			return a.substr(prefix.length())
-	return ""

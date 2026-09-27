@@ -54,13 +54,9 @@ pub fn encode(t: &str, id: i64, d: Map<String, Value>) -> String {
 
 /// 伺服器推送，id 一律 0
 pub fn encode_push(push: &Push) -> String {
-    let mut root = match serde_json::to_value(push) {
-        Ok(Value::Object(root)) => root,
-        _ => unreachable!("Push 一定是物件"),
-    };
-    root.insert("v".into(), Value::from(VERSION));
-    root.insert("id".into(), Value::from(0));
-    Value::Object(root).to_string()
+    // 直接寫字串不經過 Value，Value 會把 f32 放大成 f64，11.92 變成 11.920000076293945
+    let body = serde_json::to_string(push).unwrap_or_default();
+    format!(r#"{{"v":{VERSION},"id":0,{}"#, body.get(1..).unwrap_or_default())
 }
 
 /// 成功的回應，reason 是空字串

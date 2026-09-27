@@ -80,6 +80,7 @@ impl Bot {
             match timeout(Duration::from_millis(wait_ms), socket.next()).await {
                 Err(_) => return None,
                 Ok(Some(Ok(Message::Text(text)))) => {
+                    assert!(text.len() <= rof_protocol::MAX_MESSAGE_BYTES, "伺服器送了 {} 位元組", text.len());
                     let value: Value = serde_json::from_str(&text).unwrap();
                     if value["t"] == "kick" {
                         self.kick = value["d"]["reason"].as_str().map(String::from);

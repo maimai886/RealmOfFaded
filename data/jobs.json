@@ -1,0 +1,478 @@
+{
+  "novice": {
+    "name": "初心者",
+    "tier": 0,
+    "hp_growth": 6,
+    "hp_curve": 6,
+    "sp_growth": 3,
+    "sp_curve": 3,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 860,
+      "dagger": 850,
+      "sword": 830,
+      "staff": 740,
+      "shield": -30
+    },
+    "attack_range": 1.5,
+    "weight_bonus": 0,
+    "next_jobs": [
+      "squire",
+      "sorcerer",
+      "scout",
+      "devout"
+    ],
+    "art_id": "novice",
+    "colour_element": ""
+  },
+  "squire": {
+    "name": "劍侍",
+    "tier": 1,
+    "hp_growth": 12,
+    "hp_curve": 30,
+    "sp_growth": 2,
+    "sp_curve": 2,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 860,
+      "dagger": 880,
+      "sword": 880,
+      "two_hand_sword": 800,
+      "shield": -20
+    },
+    "attack_range": 1.6,
+    "weight_bonus": 800,
+    "next_jobs": [
+      "holyblade",
+      "bladesman"
+    ],
+    "art_id": "swordman",
+    "colour_element": "earth"
+  },
+  "sorcerer": {
+    "name": "術士",
+    "tier": 1,
+    "hp_growth": 7,
+    "hp_curve": 14,
+    "sp_growth": 8,
+    "sp_curve": 12,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 800,
+      "dagger": 800,
+      "staff": 780,
+      "shield": -30
+    },
+    "attack_range": 1.5,
+    "weight_bonus": 200,
+    "next_jobs": [
+      "wizard",
+      "thaumaturge"
+    ],
+    "art_id": "mage",
+    "colour_element": "fire"
+  },
+  "scout": {
+    "name": "斥候",
+    "tier": 1,
+    "hp_growth": 9,
+    "hp_curve": 20,
+    "sp_growth": 4,
+    "sp_curve": 5,
+    "ranged_attack": true,
+    "aspd_base": {
+      "none": 860,
+      "dagger": 850,
+      "bow": 820,
+      "shield": -30
+    },
+    "attack_range": 7.0,
+    "weight_bonus": 600,
+    "next_jobs": [
+      "hunter",
+      "assassin"
+    ],
+    "art_id": "archer",
+    "colour_element": "wind"
+  },
+  "devout": {
+    "name": "信徒",
+    "tier": 1,
+    "hp_growth": 10,
+    "hp_curve": 22,
+    "sp_growth": 6,
+    "sp_curve": 9,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 840,
+      "dagger": 840,
+      "censer": 800,
+      "staff": 740,
+      "shield": -25
+    },
+    "attack_range": 1.8,
+    "weight_bonus": 450,
+    "next_jobs": [
+      "clergy",
+      "ascetic"
+    ],
+    "art_id": "devout",
+    "colour_element": "light"
+  },
+  "holyblade": {
+    "name": "聖劍士",
+    "tier": 2,
+    "hp_growth": 16,
+    "hp_curve": 45,
+    "sp_growth": 3,
+    "sp_curve": 4,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 880,
+      "dagger": 900,
+      "sword": 920,
+      "two_hand_sword": 840,
+      "shield": -20
+    },
+    "attack_range": 1.6,
+    "weight_bonus": 800,
+    "next_jobs": [
+      "champion"
+    ],
+    "art_id": "hero",
+    "colour_element": "light"
+  },
+  "bladesman": {
+    "name": "劍客",
+    "tier": 2,
+    "hp_growth": 14,
+    "hp_curve": 38,
+    "sp_growth": 3,
+    "sp_curve": 4,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 880,
+      "dagger": 920,
+      "sword": 910,
+      "two_hand_sword": 820,
+      "shield": -25
+    },
+    "attack_range": 1.6,
+    "weight_bonus": 700,
+    "next_jobs": [
+      "blademaster"
+    ],
+    "art_id": "bladesman",
+    "colour_element": "wind"
+  },
+  "wizard": {
+    "name": "巫師",
+    "tier": 2,
+    "hp_growth": 8,
+    "hp_curve": 18,
+    "sp_growth": 10,
+    "sp_curve": 18,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 820,
+      "dagger": 820,
+      "staff": 840,
+      "shield": -20
+    },
+    "attack_range": 1.5,
+    "weight_bonus": 200,
+    "next_jobs": [
+      "archsage"
+    ],
+    "art_id": "elementalist",
+    "colour_element": "water"
+  },
+  "thaumaturge": {
+    "name": "方術士",
+    "tier": 2,
+    "hp_growth": 9,
+    "hp_curve": 22,
+    "sp_growth": 9,
+    "sp_curve": 15,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 830,
+      "dagger": 840,
+      "staff": 820,
+      "shield": -20
+    },
+    "attack_range": 1.5,
+    "weight_bonus": 250,
+    "next_jobs": [
+      "onmyoji"
+    ],
+    "art_id": "thaumaturge",
+    "colour_element": "time"
+  },
+  "hunter": {
+    "name": "獵人",
+    "tier": 2,
+    "hp_growth": 11,
+    "hp_curve": 26,
+    "sp_growth": 5,
+    "sp_curve": 8,
+    "ranged_attack": true,
+    "aspd_base": {
+      "none": 880,
+      "dagger": 860,
+      "bow": 880,
+      "shield": -30
+    },
+    "attack_range": 8.0,
+    "weight_bonus": 600,
+    "next_jobs": [
+      "sniper"
+    ],
+    "art_id": "hunter",
+    "colour_element": "earth"
+  },
+  "assassin": {
+    "name": "刺客",
+    "tier": 2,
+    "hp_growth": 12,
+    "hp_curve": 28,
+    "sp_growth": 5,
+    "sp_curve": 7,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 900,
+      "dagger": 940,
+      "sword": 860,
+      "bow": 840,
+      "shield": -30
+    },
+    "attack_range": 1.6,
+    "weight_bonus": 600,
+    "next_jobs": [
+      "ninja"
+    ],
+    "art_id": "assassin",
+    "colour_element": "dark"
+  },
+  "clergy": {
+    "name": "神職者",
+    "tier": 2,
+    "hp_growth": 12,
+    "hp_curve": 28,
+    "sp_growth": 8,
+    "sp_curve": 14,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 860,
+      "dagger": 860,
+      "censer": 860,
+      "staff": 780,
+      "shield": -20
+    },
+    "attack_range": 1.8,
+    "weight_bonus": 450,
+    "next_jobs": [
+      "oracle"
+    ],
+    "art_id": "clergy",
+    "colour_element": "light"
+  },
+  "ascetic": {
+    "name": "行者",
+    "tier": 2,
+    "hp_growth": 15,
+    "hp_curve": 40,
+    "sp_growth": 6,
+    "sp_curve": 10,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 880,
+      "dagger": 880,
+      "censer": 900,
+      "staff": 780,
+      "shield": -20
+    },
+    "attack_range": 1.7,
+    "weight_bonus": 700,
+    "next_jobs": [
+      "warsaint"
+    ],
+    "art_id": "ascetic",
+    "colour_element": "fire"
+  },
+  "champion": {
+    "name": "勇者",
+    "tier": 3,
+    "hp_growth": 20,
+    "hp_curve": 58,
+    "sp_growth": 4,
+    "sp_curve": 6,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 900,
+      "dagger": 910,
+      "sword": 940,
+      "two_hand_sword": 880,
+      "shield": -15
+    },
+    "attack_range": 1.7,
+    "weight_bonus": 900,
+    "next_jobs": [],
+    "art_id": "champion",
+    "colour_element": "light"
+  },
+  "blademaster": {
+    "name": "劍豪",
+    "tier": 3,
+    "hp_growth": 17,
+    "hp_curve": 48,
+    "sp_growth": 4,
+    "sp_curve": 5,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 900,
+      "dagger": 940,
+      "sword": 950,
+      "two_hand_sword": 870,
+      "shield": -25
+    },
+    "attack_range": 1.7,
+    "weight_bonus": 800,
+    "next_jobs": [],
+    "art_id": "blademaster",
+    "colour_element": "wind"
+  },
+  "archsage": {
+    "name": "大賢者",
+    "tier": 3,
+    "hp_growth": 10,
+    "hp_curve": 24,
+    "sp_growth": 12,
+    "sp_curve": 24,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 840,
+      "dagger": 840,
+      "staff": 880,
+      "shield": -20
+    },
+    "attack_range": 1.5,
+    "weight_bonus": 250,
+    "next_jobs": [],
+    "art_id": "archsage",
+    "colour_element": "water"
+  },
+  "onmyoji": {
+    "name": "陰陽師",
+    "tier": 3,
+    "hp_growth": 11,
+    "hp_curve": 28,
+    "sp_growth": 11,
+    "sp_curve": 21,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 850,
+      "dagger": 860,
+      "staff": 860,
+      "shield": -20
+    },
+    "attack_range": 1.6,
+    "weight_bonus": 300,
+    "next_jobs": [],
+    "art_id": "onmyoji",
+    "colour_element": "space"
+  },
+  "sniper": {
+    "name": "神射手",
+    "tier": 3,
+    "hp_growth": 13,
+    "hp_curve": 32,
+    "sp_growth": 6,
+    "sp_curve": 10,
+    "ranged_attack": true,
+    "aspd_base": {
+      "none": 900,
+      "dagger": 880,
+      "bow": 920,
+      "shield": -30
+    },
+    "attack_range": 9.0,
+    "weight_bonus": 700,
+    "next_jobs": [],
+    "art_id": "sniper",
+    "colour_element": "wind"
+  },
+  "ninja": {
+    "name": "忍者",
+    "tier": 3,
+    "hp_growth": 14,
+    "hp_curve": 34,
+    "sp_growth": 6,
+    "sp_curve": 9,
+    "ranged_attack": false,
+    "aspd_base": {
+      "none": 920,
+      "dagger": 960,
+      "sword": 880,
+      "bow": 860,
+      "shield": -30
+    },
+    "attack_range": 1.6,
+    "weight_bonus": 600,
+    "next_jobs": [],
+    "art_id": "ninja",
+    "colour_element": "dark"
+  },
+  "oracle": {
+    "name": "神諭官",
+    "tier": 3,
+    "hp_growth": 14,
+    "hp_curve": 34,
+    "sp_growth": 10,
+    "sp_curve": 18,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 880,
+      "dagger": 880,
+      "censer": 880,
+      "staff": 800,
+      "shield": -20
+    },
+    "attack_range": 1.8,
+    "weight_bonus": 500,
+    "next_jobs": [],
+    "art_id": "oracle",
+    "colour_element": "light"
+  },
+  "warsaint": {
+    "name": "鬥聖",
+    "tier": 3,
+    "hp_growth": 18,
+    "hp_curve": 46,
+    "sp_growth": 7,
+    "sp_curve": 12,
+    "ranged_attack": false,
+    "magic_skills": true,
+    "aspd_base": {
+      "none": 900,
+      "dagger": 900,
+      "censer": 920,
+      "staff": 800,
+      "shield": -20
+    },
+    "attack_range": 1.7,
+    "weight_bonus": 800,
+    "next_jobs": [],
+    "art_id": "warsaint",
+    "colour_element": "fire"
+  }
+}

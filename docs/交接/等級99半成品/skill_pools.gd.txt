@@ -1,0 +1,96 @@
+extends RefCounted
+## 技能點分階：每一階一個點池，那一階的點只能點那一階的技能
+## 規則在 docs/技能與流派.md 第 1.4 節和 docs/轉生與等級.md 第 1 節，2026-09-18 和 09-19 定案
+## 點池用職業代號當鍵，一條職業路線上一階只有一個職業，所以一個職業就是一階
+## 技能屬於哪個池看技能資料的 job 欄位；急救、全彩爆發這種找 NPC 學或一開始就會的不花點
+## character 是 character_data.gd 的實例，registry_like 要有 has_job、job、job_ids、has_skill、skill
+
+const Formulas := preload("res://src/core/formulas.gd")
+const Leveling := preload("res://src/core/leveling.gd")
+const SkillTree := preload("res://src/core/skill_tree.gd")
+
+
+## 這個技能要花哪一階的點，回傳職業代號；技能不存在時是空字串
+static func pool_of_skill(skill_id: String, registry_like) -> String:
+	if not registry_like.has_skill(skill_id):
+		return ""
+	return String(registry_like.skill(skill_id).get("job", ""))
+
+
+## 花不花技能點：找 NPC 學的和一開始就會的不花
+static func costs_points(skill: Dictionary) -> bool:
+	return not bool(skill.get("quest", false)) and not bool(skill.get("innate", false))
+
+
+## 角色在這一階總共拿到多少點
+## 目前這一階看職業等級；走過的階一定是練到頂才轉的，因為上限就是門檻，所以直接算上限
+static func earned(job_id: String, character, registry_like) -> int:
+	if job_id == String(character.job_id):
+		return Formulas.skill_points_for_job_level(int(character.job_level))
+	if not registry_like.has_job(job_id):
+		return 0
+	var tier := int(registry_like.job(job_id).get("tier", 0))
+	return Formulas.skill_points_for_job_level(Leveling.job_level_max(tier))
+
+
+## 每一階已經花掉的點，職業代號對應點數；不在這條職業路線上的技能不算
+static func spent_by_job(skills: Dictionary, route: Array, registry_like) -> Dictionary:
+	var spent := {}
+	for job_id in route:
+		spent[String(job_id)] = 0
+	for skill_id in skills:
+		if not registry_like.has_skill(String(skill_id)):
+			continue
+		var skill: Dictionary = registry_like.skill(String(skill_id))
+		var job_id := String(skill.get("job", ""))
+		if not spent.has(job_id) or not costs_points(skill):
+			continue
+		spent[job_id] = int(spent[job_id]) + maxi(0, int(skills[skill_id]))
+	return spent
+
+
+## 照規則把點池重算一次，伺服器讀存檔時呼叫，也是舊存檔的搬遷
+## 1. 職業等級超過這一階的上限就壓回上限，那一級的經驗歸 0；2026-09-19 一轉 50 改 30、二轉 70 改 50
+## 2. 每一階的點池等於「拿到的減掉花掉的」，存檔裡寫的點數不信
+## 3. 某一階花掉的比拿到的多，那一階和之後的階學的技能全部退掉重點，前面的階不動；
+##    只退超出的那幾級要猜玩家想留哪一招，而且後面階的技能前置指回這一階，拆一半會留下前置不成立的技能
+## 回傳 {job_level_clamped, reset_from, refunded}，reset_from 是從哪一階開始退的職業代號，沒退是空字串
+static func settle(character, registry_like) -> Dictionary:
+	var result := {"job_level_clamped": false, "reset_from": "", "refunded": 0}
+	var route: Array = SkillTree.job_route(String(character.job_id), registry_like)
+	if route.is_empty():
+		character.skill_pools = {}
+		return result
+	var tier := int(registry_like.job(String(character.job_id)).get("tier", 0))
+	var cap := Leveling.job_level_max(tier)
+	if int(character.job_level) > cap:
+		character.job_level = cap
+		character.job_exp = 0
+		result["job_level_clamped"] = true
+	character.job_level = maxi(1, int(character.job_level))
+	var spent := spent_by_job(character.skills, route, registry_like)
+	for index in route.size():
+		var job_id := String(route[index])
+		if int(spent[job_id]) <= earned(job_id, character, registry_like):
+			continue
+		result["reset_from"] = job_id
+		for later in range(index, route.size()):
+			result["refunded"] += int(spent[String(route[later])])
+		_forget_skills(character, route.slice(index), registry_like)
+		spent = spent_by_job(character.skills, route, registry_like)
+		break
+	var pools := {}
+	for job_id in route:
+		pools[String(job_id)] = maxi(0, earned(String(job_id), character, registry_like) - int(spent[String(job_id)]))
+	character.skill_pools = pools
+	return result
+
+
+## 把這幾階花點學的技能拿掉，不花點的留著
+static func _forget_skills(character, jobs: Array, registry_like) -> void:
+	for skill_id in character.skills.keys():
+		if not registry_like.has_skill(String(skill_id)):
+			continue
+		var skill: Dictionary = registry_like.skill(String(skill_id))
+		if String(skill.get("job", "")) in jobs and costs_points(skill):
+			character.skills.erase(skill_id)

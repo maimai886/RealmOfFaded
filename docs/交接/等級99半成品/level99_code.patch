@@ -1,0 +1,600 @@
+diff --git a/data/exp_tables.json b/data/exp_tables.json
+index c400960..8804297 100644
+--- a/data/exp_tables.json
++++ b/data/exp_tables.json
+@@ -1,5 +1,5 @@
+ {
+-  "note": "基本經驗 = round(30 × Lv^1.85 + 70 × Lv)；職業經驗同樣是 L^1.85 的曲線，一轉係數 18.49、二轉係數 91、三轉係數 182，見 docs/自有數值系統.md 第 5.4 節",
++  "note": "基本經驗 = round(30 × Lv^1.85 + 70 × Lv)，1 升 2 到 98 升 99 共 98 筆；職業經驗同樣是 L^1.85 的曲線，一轉係數 18.49、二轉係數 91、三轉係數 182，一轉 29 筆到 30 級、二轉 49 筆到 50 級，見 docs/自有數值系統.md 第 5.4 節和 docs/轉生與等級.md 第 3 節",
+   "base": [
+     100,
+     248,
+@@ -59,7 +59,46 @@
+     55356,
+     57138,
+     58946,
+-    60780
++    60780,
++    62639,
++    64523,
++    66433,
++    68369,
++    70330,
++    72316,
++    74327,
++    76364,
++    78425,
++    80512,
++    82624,
++    84760,
++    86922,
++    89108,
++    91319,
++    93555,
++    95815,
++    98101,
++    100410,
++    102745,
++    105103,
++    107487,
++    109894,
++    112326,
++    114783,
++    117263,
++    119768,
++    122297,
++    124850,
++    127427,
++    130029,
++    132654,
++    135303,
++    137976,
++    140674,
++    143395,
++    146139,
++    148908,
++    151700
+   ],
+   "job_tier0": [
+     25,
+@@ -101,27 +140,7 @@
+     7666,
+     8221,
+     8793,
+-    9383,
+-    9990,
+-    10615,
+-    11257,
+-    11916,
+-    12593,
+-    13287,
+-    13998,
+-    14725,
+-    15470,
+-    16232,
+-    17012,
+-    17807,
+-    18619,
+-    19447,
+-    20292,
+-    21153,
+-    22031,
+-    22925,
+-    23836,
+-    24763
++    9383
+   ],
+   "job_tier2": [
+     91,
+@@ -172,27 +191,7 @@
+     108428,
+     112829,
+     117311,
+-    121872,
+-    126513,
+-    131234,
+-    136034,
+-    140913,
+-    145871,
+-    150908,
+-    156023,
+-    161217,
+-    166488,
+-    171837,
+-    177264,
+-    182769,
+-    188350,
+-    194009,
+-    199744,
+-    205556,
+-    211445,
+-    217410,
+-    223451,
+-    229568
++    121872
+   ],
+   "job_tier3": [
+     182,
+diff --git a/server/world/map_instance.gd b/server/world/map_instance.gd
+index ab006d7..916cd90 100644
+--- a/server/world/map_instance.gd
++++ b/server/world/map_instance.gd
+@@ -582,6 +582,8 @@ func stats_data(player: OnlinePlayer) -> Dictionary:
+ 		"job_exp": character.job_exp,
+ 		"stat_points": character.stat_points,
+ 		"skill_points": character.skill_points,
++		# 技能點分階，每一階各自的點池，技能視窗每一頁顯示那一階的點
++		"skill_pools": character.skill_pools.duplicate(),
+ 		"gold": character.gold,
+ 		"skills": character.skills.duplicate(),
+ 		"str": character.str_stat,
+diff --git a/server/world/player_commands.gd b/server/world/player_commands.gd
+index e1ee8d2..72aaf24 100644
+--- a/server/world/player_commands.gd
++++ b/server/world/player_commands.gd
+@@ -375,16 +375,17 @@ static func _after_equipment_change(player, before: Dictionary) -> void:
+ # 技能
+ 
+ ## 規則在 BattleWorld.command_learn_skill，成功後寫稽核並要求這個 tick 結束時存檔
+-## 回應帶 skill_id、level、skill_points
++## 回應帶 skill_id、level、skill_points 和 skill_pools；skill_points 是目前這一階的點，skill_pools 是每一階的點
+ static func _learn_skill(player, skill_id: String) -> Dictionary:
+ 	var world: BattleWorld = player.map.world
+ 	if not world.command_learn_skill(player.entity_id, skill_id):
+ 		return _fail(world.last_failure if world.last_failure != "" else REASON_REJECTED)
+ 	var level := int(player.character.skills.get(skill_id, 0))
+ 	player.map.server.audit_player(player, "skill.learn", {"skill_id": skill_id, "level": level,
+-			"skill_points": player.character.skill_points})
++			"skill_pools": player.character.skill_pools.duplicate()})
+ 	player.save_requested = true
+-	return _ok({"skill_id": skill_id, "level": level, "skill_points": player.character.skill_points})
++	return _ok({"skill_id": skill_id, "level": level, "skill_points": player.character.skill_points,
++			"skill_pools": player.character.skill_pools.duplicate()})
+ 
+ 
+ ## target 和 x、z 由 protocol 保證最多一種，都沒給是自身技能；驗證學過、冷卻、SP、距離都在 BattleWorld
+diff --git a/src/core/battle_world.gd b/src/core/battle_world.gd
+index 6b2ba79..32e67e3 100644
+--- a/src/core/battle_world.gd
++++ b/src/core/battle_world.gd
+@@ -1543,7 +1543,7 @@ func refresh_player_stats(entity_id: int) -> void:
+ # ---- 技能指令 ----
+ 
+ ## 用 skill_tree.gd 的規則學一級技能，扣 1 技能點，學完重算數值讓被動立刻生效
+-## 成功發 skill_learned {player, skill_id, level, skill_points}
++## 成功發 skill_learned {player, skill_id, level, skill_points, skill_pools}，技能點扣技能所屬那一階的池
+ ## 失敗發 skill_failed {player, skill_id, reason}，reason 是 skill_tree.gd 的 CODE_ 常數
+ ## 死掉的玩家也可以學
+ func command_learn_skill(player_id: int, skill_id: String) -> bool:
+@@ -1560,7 +1560,8 @@ func command_learn_skill(player_id: int, skill_id: String) -> bool:
+ 	tree.learn(skill_id, character, _registry)
+ 	_refresh_player(e)
+ 	_queued_events.append({"type": "skill_learned", "time_ms": _now, "player": player_id, "skill_id": skill_id,
+-			"level": int(character.skills[skill_id]), "skill_points": character.skill_points})
++			"level": int(character.skills[skill_id]), "skill_points": character.skill_points,
++			"skill_pools": character.skill_pools.duplicate()})
+ 	return true
+ 
+ 
+diff --git a/src/core/character_data.gd b/src/core/character_data.gd
+index 0aee0a5..3b7e685 100644
+--- a/src/core/character_data.gd
++++ b/src/core/character_data.gd
+@@ -10,6 +10,7 @@ const Equipment := preload("res://src/core/equipment.gd")
+ const Inventory := preload("res://src/core/inventory.gd")
+ const SkillCombat := preload("res://src/core/skill_combat.gd")
+ const SkillTree := preload("res://src/core/skill_tree.gd")
++const SkillPools := preload("res://src/core/skill_pools.gd")
+ const Quest := preload("res://src/core/quest.gd")
+ const ItemMods := preload("res://src/core/item_mods.gd")
+ const Palette := preload("res://src/core/palette.gd")
+@@ -65,10 +66,13 @@ const STAT_FIELDS := {
+ 	"luk": "luk",
+ }
+ 
++## 技能點不在這裡，因為它分階存在 skill_pools，存檔另外寫
+ const INT_FIELDS := [
+-	"base_level", "job_level", "base_exp", "job_exp", "stat_points", "skill_points",
++	"base_level", "job_level", "base_exp", "job_exp", "stat_points",
+ 	"str_stat", "agi", "vit", "int_stat", "dex", "luk", "hp", "sp", "gold", "chroma", "line_hp",
+ ]
++## 一條職業路線最多幾階，存檔裡的點池超過這個數就是被改過
++const MAX_SKILL_POOLS := 8
+ 
+ var name: String = ""
+ var job_id: String = STARTING_JOB
+@@ -77,7 +81,15 @@ var job_level: int = 1
+ var base_exp: int = 0
+ var job_exp: int = 0
+ var stat_points: int = 0
+-var skill_points: int = 0
++## 技能點分階，職業代號對應那一階還沒花的點，那一階的點只能點那一階的技能
++## 規則和重算在 src/core/skill_pools.gd，見 docs/技能與流派.md 第 1.4 節
++var skill_pools: Dictionary = {}
++## 目前這個職業那一階的點池，升職業等級拿到的點進這裡；前面幾階剩下的點看 skill_points_of
++var skill_points: int:
++	get:
++		return int(skill_pools.get(job_id, 0))
++	set(value):
++		skill_pools[job_id] = value
+ var str_stat: int = 1
+ var agi: int = 1
+ var vit: int = 1
+@@ -139,7 +151,7 @@ static func create_new(character_name: String, registry = null) -> CharacterData
+ 	character.name = character_name
+ 	character.stat_points = STARTING_STAT_POINTS
+ 	# 使用者定：建角色就有 1 點技能點，加上初心者每升一級 1 點，練滿剛好 10 點
+-	character.skill_points = Formulas.tuning("levels", "novice_starting_skill_points", 1)
++	character.skill_pools = {STARTING_JOB: Formulas.starting_skill_points()}
+ 	character.equipment = STARTING_EQUIPMENT.duplicate()
+ 	if registry == null:
+ 		registry = Registry.load_default()
+@@ -150,27 +162,41 @@ static func create_new(character_name: String, registry = null) -> CharacterData
+ 	return character
+ 
+ 
+-## 一開始就會、不佔技能點的技能，資料寫 innate，例如全彩爆發；新角色和舊存檔讀進來都補上
+ ## 技能重排之後，存檔裡已經不存在的技能整個拿掉、超過新上限的壓回上限，點數全部退回來重點
+ ## 2026-09-26 劍侍換成新一轉時，重擊、震地斬、堅忍、活力恢復、戰吼拿掉，劍術修練從 10 級改 5 級
+-## 找 NPC 學、不花點的技能拿掉時不退點
++## 退的點不在這裡加，SkillPools.settle 照「拿到的減掉花掉的」重算每一階的點池，拿掉的技能自然退回那一階；
++## 已經不存在的技能不知道原本屬於哪一階，重算時照職業等級算，所以一樣退得回來
+ static func _refund_retired_skills(character, registry) -> void:
+ 	if registry == null or not registry.has_method("has_skill"):
+ 		return
+-	var refund := 0
+ 	for skill_id in character.skills.keys():
+ 		var level := int(character.skills[skill_id])
+ 		if not registry.has_skill(String(skill_id)):
+ 			character.skills.erase(skill_id)
+-			refund += level
+ 			continue
+ 		var skill: Dictionary = registry.skill(String(skill_id))
+ 		var cap := maxi(1, int(skill.get("max_level", 1)))
+ 		if level > cap:
+ 			character.skills[skill_id] = cap
+-			if not bool(skill.get("quest", false)) and not bool(skill.get("innate", false)):
+-				refund += level - cap
+-	character.skill_points += refund
++
++
++## 某一階還沒花的點，job 是那一階的職業代號
++func skill_points_of(job: String) -> int:
++	return int(skill_pools.get(job, 0))
++
++
++## 某一階的點數加減，扣到負的不會發生，呼叫方要先用 skill_points_of 檢查
++func add_skill_points(job: String, delta: int) -> void:
++	skill_pools[job] = maxi(0, skill_points_of(job) + delta)
++
++
++## 開發工具和測試用：這條職業路線上每一階的點池都設成 amount
++func fill_skill_pools(amount: int, registry) -> void:
++	for job in SkillTree.job_route(job_id, registry):
++		skill_pools[String(job)] = amount
++
++
++## 一開始就會、不佔技能點的技能，資料寫 innate，例如全彩爆發；新角色和舊存檔讀進來都補上
+ 
+ 
+ static func grant_innate_skills(character, registry) -> void:
+@@ -345,6 +371,9 @@ func to_dict() -> Dictionary:
+ 	var dict := {"name": name, "job_id": job_id}
+ 	for field in INT_FIELDS:
+ 		dict[field] = get(field)
++	# skill_points 是目前這一階的點，給後台和舊版的讀法看；真正的點數在 skill_pools
++	dict["skill_points"] = skill_points
++	dict["skill_pools"] = skill_pools.duplicate()
+ 	dict["equipment"] = equipment.duplicate()
+ 	var mods := {}
+ 	for slot in equipment_mods:
+@@ -415,6 +444,17 @@ static func from_dict(d: Dictionary, registry = null) -> CharacterData:
+ 				character.skills[String(skill_id)] = level
+ 	_refund_retired_skills(character, registry)
+ 	grant_innate_skills(character, registry)
++	# 技能點分階：新存檔讀 skill_pools，2026-09-27 以前的存檔只有一個 skill_points，先整個算在目前這一階
++	# 有 registry 就照規則重算一次，舊存檔的搬遷、職業等級壓回新上限、花超過的退點都在這一步
++	character.skill_pools = read_skill_pools(d.get("skill_pools"))
++	if not d.get("skill_pools") is Dictionary:
++		character.skill_pools = {character.job_id: maxi(0, int(d.get("skill_points", 0)))}
++	if registry != null and registry.has_method("has_job") and registry.has_method("has_skill"):
++		var settled: Dictionary = SkillPools.settle(character, registry)
++		if bool(settled["job_level_clamped"]) or String(settled["reset_from"]) != "":
++			print("[存檔] %s 的技能點照分階規則重算：職業等級壓回 %d，從 %s 開始退了 %d 點" % [character.name,
++					character.job_level, settled["reset_from"] if settled["reset_from"] != "" else "無",
++					settled["refunded"]])
+ 	# 舊存檔沒有任務欄位時是空的進度；格式不對的內容在 sanitize_state 就丟掉
+ 	character.quests = Quest.sanitize_state(d.get("quests"))
+ 	# 首殺紀錄只收合法的怪物 id，數量有上限，存檔被改也塞不爆
+@@ -442,6 +482,20 @@ static func from_dict(d: Dictionary, registry = null) -> CharacterData:
+ 	return character
+ 
+ 
++## 存檔或伺服器推來的點池，鍵換成現在的職業代號，負數和怪欄位丟掉，數量有上限
++static func read_skill_pools(saved) -> Dictionary:
++	var pools := {}
++	if not saved is Dictionary:
++		return pools
++	for job in saved:
++		if pools.size() >= MAX_SKILL_POOLS:
++			break
++		var value = saved[job]
++		if (job is String or job is StringName) and (value is int or value is float):
++			pools[migrate_job_id(String(job))] = maxi(0, int(value))
++	return pools
++
++
+ static func _stat_field(stat: String) -> String:
+ 	if STAT_FIELDS.has(stat):
+ 		return STAT_FIELDS[stat]
+diff --git a/src/core/formulas.gd b/src/core/formulas.gd
+index 1c51c83..e709883 100644
+--- a/src/core/formulas.gd
++++ b/src/core/formulas.gd
+@@ -370,18 +370,26 @@ static func stat_points_gained(new_base_level: int) -> int:
+ 			+ new_base_level / maxi(1, tuning("attributes", "points_per_level_divisor", 5))
+ 
+ 
+-## 升到 new_job_level 這一級拿到的技能點，每級 1 點，每逢 5 的倍數再多 1 點
+-## tier 是這個職業的階，初心者是 0：初心者照使用者定的總共 10 點，建角色 1 點加每升一級 1 點，不吃五的倍數的加成
+-static func skill_points_gained(new_job_level: int, tier := 1) -> int:
++## 升到 new_job_level 這一級拿到的技能點，一級一點，每一階都一樣
++## 2026-09-19 定案逢五多給一點那條作廢，一階的點數等於那一階的職業等級上限，見 docs/轉生與等級.md 第 1 節
++## tier 留著給舊的呼叫方，現在不看
++static func skill_points_gained(new_job_level: int, _tier := 1) -> int:
+ 	if new_job_level <= 1:
+ 		return 0
+-	var points := tuning("levels", "skill_point_per_job_level", 1)
+-	if tier < tuning("levels", "skill_point_bonus_from_tier", 1):
+-		return points
+-	var every := maxi(1, tuning("levels", "skill_point_bonus_every", 5))
+-	if new_job_level % every == 0:
+-		points += tuning("levels", "skill_point_bonus_extra", 1)
+-	return points
++	return maxi(0, tuning("levels", "skill_point_per_job_level", 1))
++
++
++## 建角和轉職那一刻先給的技能點，加上每升一級一點，練到上限 N 剛好 N 點
++static func starting_skill_points() -> int:
++	return maxi(0, tuning("levels", "starting_skill_points", 1))
++
++
++## 從 1 級練到 job_level 這一階總共拿到的技能點
++static func skill_points_for_job_level(job_level: int) -> int:
++	var total := starting_skill_points()
++	for level in range(2, maxi(1, job_level) + 1):
++		total += skill_points_gained(level)
++	return total
+ 
+ 
+ # ---- 詠唱 ----
+diff --git a/src/core/job_change.gd b/src/core/job_change.gd
+index 85ceabd..59b2b28 100644
+--- a/src/core/job_change.gd
++++ b/src/core/job_change.gd
+@@ -3,7 +3,8 @@ extends RefCounted
+ ## character 是 character_data.gd 的實例，registry 是 registry.gd 的實例
+ 
+ ## 讀不到 balance.json 時的最後防線，實際值讀 data/balance.json 的 levels.job_change_level
+-## 初心者職業 10 級可以一轉，一轉職業 30 級可以二轉，見 docs/自有數值系統.md 第 5 節
++## 初心者職業 10 級可以一轉，一轉職業 30 級可以二轉，門檻就是那一階的職業等級上限，見 docs/轉生與等級.md 第 1 節
++## 二轉沒有門檻：第一輪二轉之後走轉生，三轉只給轉生過的角色，所以二轉不能直接轉三轉
+ const REQUIRED_JOB_LEVEL_BY_TIER := {0: 10, 1: 30}
+ const Formulas := preload("res://src/core/formulas.gd")
+ const BasicSkill := preload("res://src/core/basic_skill.gd")
+@@ -43,7 +44,7 @@ const MAX_SHOWN_NUMBER := 9999.0
+ const MAX_SHOWN_ID_LENGTH := 32
+ 
+ 
+-## 這個 tier 轉職需要的職業等級
++## 這個 tier 轉職需要的職業等級，這一階沒有轉職門檻時回傳 0
+ static func required_job_level(tier: int) -> int:
+ 	var table = Formulas.balance().get("levels", {}).get("job_change_level", {})
+ 	if table is Dictionary and table.has(str(tier)):
+@@ -62,6 +63,9 @@ static func can_change(character, target_job_id: String, registry) -> Dictionary
+ 		return _fail(REASON_NOT_NEXT, {"from": character.job_id, "to": target_job_id})
+ 	var tier := int(current.get("tier", 0))
+ 	var required: int = required_job_level(tier)
++	# 這一階沒有轉職門檻就是不能從這裡轉：二轉轉三轉要先轉生，jobs.json 的 next_jobs 留著給轉生之後用
++	if required <= 0:
++		return _fail(REASON_NOT_NEXT, {"from": character.job_id, "to": target_job_id})
+ 	if character.job_level < required:
+ 		return _fail(REASON_JOB_LEVEL, {"required": required, "current": character.job_level})
+ 	if tier == 0:
+@@ -110,6 +114,9 @@ static func apply_change(character, target_job_id: String, registry) -> void:
+ 	character.job_level = 1
+ 	character.job_exp = 0
+ 	character.job_trials = {}
++	# 新的一階從 1 點開始，上一階沒點完的留在上一階的點池，只能點回上一階的技能
++	if "skill_pools" in character:
++		character.skill_pools[target_job_id] = Formulas.starting_skill_points()
+ 
+ 
+ static func _fail(reason: String, params: Dictionary) -> Dictionary:
+diff --git a/src/core/leveling.gd b/src/core/leveling.gd
+index 1aa387a..a32d5c5 100644
+--- a/src/core/leveling.gd
++++ b/src/core/leveling.gd
+@@ -6,8 +6,9 @@ extends RefCounted
+ const Formulas := preload("res://src/core/formulas.gd")
+ 
+ ## 讀不到 balance.json 時的最後防線，和檔案裡的一致
+-const DEFAULT_BASE_LEVEL_MAX := 60
+-const DEFAULT_JOB_LEVEL_MAX := {0: 10, 1: 50, 2: 70}
++## 2026-09-19 定案：基本 99，每一階練到頂就換下一階，初心者 10、一轉 30、二轉 50、三轉 70，見 docs/轉生與等級.md
++const DEFAULT_BASE_LEVEL_MAX := 99
++const DEFAULT_JOB_LEVEL_MAX := {0: 10, 1: 30, 2: 50, 3: 70}
+ const DEFAULT_DEATH_EXP_PERMILLE := 5
+ 
+ 
+@@ -40,7 +41,7 @@ static func job_exp_to_next(job_tier: int, job_level: int, registry) -> int:
+ 	return _table_value(registry.exp_table("job_tier%d" % job_tier), job_level)
+ 
+ 
+-## 這個 tier 的職業等級上限：初心者 10、一轉 50、二轉 70
++## 這個 tier 的職業等級上限，也是轉下一階的門檻：初心者 10、一轉 30、二轉 50、三轉 70
+ static func job_level_max(job_tier: int) -> int:
+ 	var table = Formulas.balance().get("levels", {}).get("job_max", {})
+ 	if table is Dictionary and table.has(str(job_tier)):
+@@ -65,7 +66,7 @@ static func grant_levels(character, base_levels: int, job_levels: int, registry)
+ 
+ 
+ ## 一次可以連升好幾級，升基本等級拿屬性點，升職業等級拿技能點
+-## 技能點每級 1 點，一轉以後每逢 5 的倍數再多 1 點，公式在 Formulas.skill_points_gained
++## 技能點每級 1 點，進目前職業那一階的點池，公式在 Formulas.skill_points_gained
+ ## 到上限後經驗歸 0，之後拿到的經驗直接丟掉
+ static func add_exp(character, base_amount: int, job_amount: int, registry) -> Dictionary:
+ 	var base_levels := 0
+diff --git a/src/core/skill_tree.gd b/src/core/skill_tree.gd
+index 1ddc632..c88597b 100644
+--- a/src/core/skill_tree.gd
++++ b/src/core/skill_tree.gd
+@@ -1,6 +1,6 @@
+ extends RefCounted
+ ## 一個角色學會的技能和等級，也就是存檔裡的技能資料
+-## character 只用到 job_id、job_level 和 skill_points 三個欄位
++## character 只用到 job_id、job_level 和分階的技能點，技能點照技能所屬的職業那一階扣
+ ## registry_like 要提供 has_skill、skill、has_job、job、job_ids，skill_data.gd 就符合
+ 
+ const SkillTree := preload("res://src/core/skill_tree.gd")
+@@ -58,20 +58,32 @@ func can_learn(skill_id: String, character, registry_like) -> Dictionary:
+ 			var req_name := String(registry_like.skill(req_id).get("name", req_id))
+ 			return _fail("%s 要先練到 %d 級" % [req_name, need],
+ 					CODE_MISSING_REQUIREMENT)
+-	if int(character.skill_points) < 1:
++	# 技能點分階：扣技能所屬那一階的點池，別階剩下的點不能拿來用，見 docs/技能與流派.md 第 1.4 節
++	if points_for_job(character, skill_job) < 1:
+ 		return _fail("技能點不足", CODE_NO_SKILL_POINTS)
+ 	return {"ok": true, "reason": "", "code": ""}
+ 
+ 
+-## 成功時等級加 1、技能點扣 1；失敗時什麼都不改
++## 成功時等級加 1、技能所屬那一階的點扣 1；失敗時什麼都不改
+ func learn(skill_id: String, character, registry_like) -> bool:
+ 	if not can_learn(skill_id, character, registry_like)["ok"]:
+ 		return false
+ 	learned[skill_id] = level_of(skill_id) + 1
+-	character.skill_points -= 1
++	var skill_job := String(registry_like.skill(skill_id).get("job", ""))
++	if character.has_method("add_skill_points"):
++		character.add_skill_points(skill_job, -1)
++	else:
++		character.skill_points -= 1
+ 	return true
+ 
+ 
++## 某一階還沒花的點；沒有分階點池的舊物件只有一個 skill_points，當成每一階共用
++static func points_for_job(character, job_id: String) -> int:
++	if character.has_method("skill_points_of"):
++		return int(character.skill_points_of(job_id))
++	return int(character.skill_points)
++
++
+ ## 這個職業路線看得到的全部技能，從初心者開始依職業順序排
+ func available_skills(job_id: String, registry_like) -> Array:
+ 	var result: Array = []
+diff --git a/src/net/protocol.gd b/src/net/protocol.gd
+index e612093..a403559 100644
+--- a/src/net/protocol.gd
++++ b/src/net/protocol.gd
+@@ -17,7 +17,7 @@ const Crafting := preload("res://src/core/crafting.gd")
+ const VERSION := 1
+ ## 客戶端版本，登入時送給伺服器比對，不同就拒絕登入
+ ## 改了協定或遊戲規則、舊客戶端不能再連時就要改這個值
+-const CLIENT_VERSION := "0.9.8"
++const CLIENT_VERSION := "0.9.9"
+ ## 單一訊息 UTF-8 位元組數上限，超過伺服器直接斷線
+ const MAX_MESSAGE_BYTES := 8192
+ ## JSON 數字能精確表示的最大整數，信封 id 和沒設範圍的整數欄位都不能超過
+diff --git a/src/ui/skills_window.gd b/src/ui/skills_window.gd
+index 2a80066..e12fd9d 100644
+--- a/src/ui/skills_window.gd
++++ b/src/ui/skills_window.gd
+@@ -118,7 +118,8 @@ func refresh() -> void:
+ 	_tab_index = clampi(_tab_index, 0, _route.size() - 1)
+ 	_job_label.text = _job_name(String(character.job_id), registry)
+ 	_job_label.visible = _route.size() <= 1
+-	_points_label.text = str(character.skill_points)
++	# 技能點分階，每一頁顯示那一階自己的點，別階的點不能拿來點這一頁
++	_points_label.text = str(SkillTree.points_for_job(character, String(_route[_tab_index])))
+ 	_rebuild_tabs(registry)
+ 	_rebuild_tree(String(_route[_tab_index]), character, registry)
+ 	_built_signature = _tree_signature()
+@@ -131,8 +132,8 @@ func _tree_signature() -> String:
+ 	if _session == null:
+ 		return ""
+ 	var character = _session.character
+-	return "%s|%d|%d|%s" % [character.job_id, int(character.job_level), int(character.skill_points),
+-			str(character.skills)]
++	var pools = character.skill_pools if "skill_pools" in character else character.skill_points
++	return "%s|%d|%s|%s" % [character.job_id, int(character.job_level), str(pools), str(character.skills)]
+ 
+ 
+ ## 分頁就是角色走過的職業，一個職業一顆按鈕；只有一個職業時整排收起來，職業名字在上面那行
+diff --git a/src/world/net_session.gd b/src/world/net_session.gd
+index 8329d65..7980a2b 100644
+--- a/src/world/net_session.gd
++++ b/src/world/net_session.gd
+@@ -90,6 +90,10 @@ signal garden_changed
+ signal colour_changed(cells: Array)
+ ## 自己坐下或站起來，手機的坐下鈕照這個換字
+ signal rest_changed(resting: bool)
++## 怪物開始詠唱或走進視野時正在詠唱，HUD 在牠頭上畫詠唱條；offset_ms 是本機時間減伺服器時間
++signal monster_cast_shown(node: Node3D, event: Dictionary, offset_ms: float)
++## 怪物詠唱被打斷、目標不見或死了，reason 是伺服器的代碼
++signal monster_cast_stopped(entity_id: int, reason: String)
+ 
+ ## 走到比射程再近這麼多才放，伺服器那邊的位置差一點點也不會被判太遠
+ const CAST_RANGE_MARGIN_M := 0.3
+@@ -932,6 +936,8 @@ func learn_skill(skill_id: String) -> void:
+ 			return
+ 		character.skills[String(result.get("skill_id", skill_id))] = int(result.get("level", 1))
+ 		character.skill_points = int(result.get("skill_points", character.skill_points))
++		if result.get("skill_pools") is Dictionary:
++			character.skill_pools = CharacterData.read_skill_pools(result["skill_pools"])
+ 		skills_changed.emit()
+ 		_emit_player_stats())
+ 
+@@ -1996,6 +2002,9 @@ func _on_self_stats(data: Dictionary) -> void:
+ 			["line_hp", "line_hp"]]:
+ 		if data.has(pair[0]):
+ 			character.set(pair[1], int(data[pair[0]]))
++	# 技能點分階，每一階的點池以伺服器為準，蓋掉上面只寫目前這一階的 skill_points
++	if data.get("skill_pools") is Dictionary:
++		character.skill_pools = CharacterData.read_skill_pools(data["skill_pools"])
+ 	# 奪色：調色盤由伺服器決定，變了才通知視窗和快捷列重畫
+ 	if data.get("palette") is Array:
+ 		var palette := Palette.sanitize(data["palette"], registry)
+@@ -2349,9 +2358,8 @@ func _handle_event(event: Dictionary) -> void:
+ 		"monster_cast_start":
+ 			_on_monster_cast_start_event(event)
+ 		"monster_cast_cancel":
+-			var stopped: Node3D = _nodes.get(int(event.get("entity", -1)))
+-			if stopped:
+-				_presenter.float_text_over(stopped, "被打斷", UiTheme.TEXT_DIM, 0.0, UiTheme.FONT_BODY)
++			# 被打斷由頭上的詠唱條斷掉表現，不另外飄字
++			monster_cast_stopped.emit(int(event.get("entity", -1)), String(event.get("reason", "")))
+ 		"monster_emerge", "monster_shout", "monster_summon", "monster_phase", "monster_flee":
+ 			_on_monster_cue_event(event)
+ 		"rest_start":
+@@ -2485,9 +2493,18 @@ func _on_monster_cast_start_event(event: Dictionary) -> void:
+ 	_presenter.skill_effects.monster_telegraph(event.get("position"), float(event.get("radius", 1.0)),
+ 			int(float(event.get("at_ms", 0)) - float(event.get("time_ms", 0))),
+ 			String(event.get("element", "neutral")))
++	# 招式名和詠唱進度畫在頭上的詠唱條，時間照伺服器時鐘換成本機時間，補送的從剩下的比例接著跑
+ 	var caster_node: Node3D = _nodes.get(int(event.get("entity", -1)))
+-	if caster_node and String(event.get("name", "")) != "":
+-		_presenter.float_text_over(caster_node, String(event["name"]), UiTheme.TEXT_ACCENT, 0.0, UiTheme.FONT_BODY)
++	if caster_node:
++		monster_cast_shown.emit(caster_node, event, monster_cast_offset_ms(event))
++
++
++## 伺服器毫秒換本機毫秒要加的量：本機這個時刻對應的伺服器時間就是自己角色在伺服器上的時間，
++## 預告落下那一刻條剛好跑滿；時鐘還沒同步就用事件的 time_ms 當成現在
++func monster_cast_offset_ms(event: Dictionary) -> float:
++	if _clock.is_synced():
++		return _clock.offset()
++	return _now_ms() - float(event.get("time_ms", _latest_server_ms))
+ 
+ 
+ ## 破土、喊同伴、召喚、換階段、逃跑，看板都在 skill_effects 的登記表裡

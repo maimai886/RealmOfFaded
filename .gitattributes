@@ -1,0 +1,23 @@
+# Godot 不管在哪個作業系統都用 LF 寫這些檔案
+# Windows 的 git 預設會把它們當成 CRLF，結果引擎一重新匯入，上千個 .import 就全部顯示被修改
+# 固定成 LF 之後 Windows 和 macOS 的工作目錄內容一致，不會再有只差換行的假修改
+*.import text eol=lf
+*.uid text eol=lf
+*.godot text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.gd text eol=lf
+*.gdshader text eol=lf
+*.cfg text eol=lf
+
+# shell 腳本用 CRLF 在 macOS 和 Linux 上會直接跑不起來
+*.sh text eol=lf
+*.command text eol=lf
+
+# Windows 的批次檔反過來要 CRLF
+*.bat text eol=crlf
+
+# Rust 和擴充設定檔一律 LF，.gdextension 還不能有 BOM
+*.rs text eol=lf
+*.toml text eol=lf
+*.gdextension text eol=lf

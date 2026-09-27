@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://assets/vendor/elemental_impacts_lite/core/free_elemental_fx.gd" id="1_script"]
+[ext_resource type="Resource" path="res://assets/vendor/elemental_impacts_lite/presets/elem_fire.tres" id="2_preset"]
+
+[node name="FreeElementalFxFireImpact" type="Node3D"]
+script = ExtResource("1_script")
+preset = ExtResource("2_preset")

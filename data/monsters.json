@@ -1,0 +1,397 @@
+{
+  "horn_slime": {
+    "name": "萊姆",
+    "art": {
+      "sheet": "horn_slime",
+      "frame_px": 192,
+      "view_m": 1.4,
+      "rig": "critter",
+      "motion": "hop",
+      "height": 0.9
+    },
+    "description": "頭上有角的水泡，撞人很痛喔！",
+    "level": 1,
+    "element": "water",
+    "element_level": 1,
+    "race": "plant",
+    "size": "small",
+    "aggressive": false,
+    "assist": false,
+    "move_speed": 0.7,
+    "stats": {
+      "max_hp": 84,
+      "max_sp": 0,
+      "atk": 6,
+      "matk": 0,
+      "def": 10,
+      "soft_def": 0,
+      "mdef": 7,
+      "soft_mdef": 0,
+      "hit": 27,
+      "flee": 20,
+      "crit_rate": 0.01,
+      "luk": 1,
+      "attack_delay": 2.0,
+      "attack_range": 1.0,
+      "element": "water",
+      "element_level": 1
+    },
+    "base_exp": 12,
+    "job_exp": 6,
+    "dmotion_ms": 360,
+    "respawn_seconds": 8,
+    "drops": [
+      {
+        "item": "dew_gel",
+        "chance": 0.8313,
+        "tier": "common"
+      },
+      {
+        "item": "paint_blue",
+        "chance": 0.3,
+        "tier": "common"
+      },
+      {
+        "item": "red_potion",
+        "chance": 0.0534,
+        "tier": "uncommon"
+      },
+      {
+        "item": "soul_horn_slime",
+        "chance": 0.002,
+        "tier": "epic"
+      }
+    ],
+    "first_kill": {
+      "base_exp": 12,
+      "job_exp": 6
+    },
+    "codex": {
+      "kills_to_fill": 30,
+      "story": "草原上的露水被灰蝕染過，凝成會頂人的小泡泡。頭上那根角是偷來的晨光。"
+    }
+  },
+  "leaf_sprout": {
+    "name": "小樹苗",
+    "art": {
+      "sheet": "leaf_sprout",
+      "frame_px": 128,
+      "view_m": 1.1,
+      "rig": "critter",
+      "motion": "waddle",
+      "height": 0.85
+    },
+    "description": "會走路的嫩芽。打一隻，旁邊的會一起過來…",
+    "level": 2,
+    "element": "earth",
+    "element_level": 1,
+    "race": "plant",
+    "size": "small",
+    "aggressive": false,
+    "assist": true,
+    "assist_range": 3.0,
+    "eats_colour": true,
+    "move_speed": 1.0,
+    "stats": {
+      "max_hp": 136,
+      "max_sp": 0,
+      "atk": 8,
+      "matk": 0,
+      "def": 17,
+      "soft_def": 0,
+      "mdef": 10,
+      "soft_mdef": 0,
+      "hit": 29,
+      "flee": 26,
+      "crit_rate": 0.015,
+      "luk": 2,
+      "attack_delay": 1.6,
+      "attack_range": 1.1,
+      "element": "earth",
+      "element_level": 1
+    },
+    "base_exp": 19,
+    "job_exp": 10,
+    "dmotion_ms": 330,
+    "respawn_seconds": 9,
+    "drops": [
+      {
+        "item": "soft_moss",
+        "chance": 0.2274,
+        "tier": "common"
+      },
+      {
+        "item": "paint_green",
+        "chance": 0.3,
+        "tier": "common"
+      },
+      {
+        "item": "dry_branch",
+        "chance": 0.1011,
+        "tier": "uncommon"
+      },
+      {
+        "item": "twig_knotted",
+        "chance": 0.2,
+        "tier": "common"
+      },
+      {
+        "item": "twig_curly",
+        "chance": 0.12,
+        "tier": "common"
+      },
+      {
+        "item": "twig_bent",
+        "chance": 0.08,
+        "tier": "uncommon"
+      },
+      {
+        "item": "twig_straight",
+        "chance": 0.03,
+        "tier": "rare"
+      },
+      {
+        "item": "soul_leaf_sprout",
+        "chance": 0.002,
+        "tier": "epic"
+      }
+    ],
+    "first_kill": {
+      "base_exp": 19,
+      "job_exp": 10
+    },
+    "codex": {
+      "kills_to_fill": 30,
+      "story": "成群走動的芽，一路把草吃成線稿，只為了讓頭頂那兩片葉子更綠。"
+    }
+  },
+  "crystal_bunny": {
+    "name": "水晶兔",
+    "art": {
+      "sheet": "crystal_bunny",
+      "frame_px": 192,
+      "view_m": 1.4,
+      "rig": "critter",
+      "motion": "hop",
+      "height": 0.8
+    },
+    "description": "耳朵是水晶的兔子，靠近會撞過來。",
+    "level": 3,
+    "element": "water",
+    "element_level": 1,
+    "race": "brute",
+    "size": "small",
+    "aggressive": true,
+    "detect_range": 4.0,
+    "assist": false,
+    "move_speed": 1.15,
+    "stats": {
+      "max_hp": 176,
+      "max_sp": 0,
+      "atk": 12,
+      "matk": 0,
+      "def": 22,
+      "soft_def": 0,
+      "mdef": 20,
+      "soft_mdef": 0,
+      "hit": 33,
+      "flee": 34,
+      "crit_rate": 0.02,
+      "luk": 3,
+      "attack_delay": 1.5,
+      "attack_range": 1.0,
+      "element": "water",
+      "element_level": 1
+    },
+    "base_exp": 28,
+    "job_exp": 15,
+    "dmotion_ms": 300,
+    "respawn_seconds": 11,
+    "drops": [
+      {
+        "item": "soft_moss",
+        "chance": 0.4864,
+        "tier": "common"
+      },
+      {
+        "item": "paint_blue",
+        "chance": 0.3,
+        "tier": "common"
+      },
+      {
+        "item": "red_potion",
+        "chance": 0.1297,
+        "tier": "uncommon"
+      },
+      {
+        "item": "soul_crystal_bunny",
+        "chance": 0.002,
+        "tier": "epic"
+      }
+    ],
+    "first_kill": {
+      "base_exp": 28,
+      "job_exp": 15
+    },
+    "codex": {
+      "kills_to_fill": 30,
+      "story": "喝了灰蝕滲進的泉水，毛長成了水晶。牠跑得快，是怕顏色被搶回去。"
+    }
+  },
+  "stump_king": {
+    "name": "木樁王",
+    "art": {
+      "sheet": "stump_king",
+      "frame_px": 320,
+      "view_m": 4.2,
+      "rig": "critter",
+      "motion": "stomp",
+      "height": 3.5
+    },
+    "description": "草原盡頭的老樹樁。咦？剛剛是不是動了一下？",
+    "level": 30,
+    "element": "earth",
+    "element_level": 2,
+    "race": "plant",
+    "size": "large",
+    "aggressive": true,
+    "assist": false,
+    "eats_colour": true,
+    "colour_eat_radius_mm": 4500,
+    "colour_release": "map",
+    "move_speed": 0.75,
+    "chase_limit": 12.0,
+    "mini_boss": true,
+    "status_immune": true,
+    "knockback_immune": true,
+    "stats": {
+      "max_hp": 32000,
+      "max_sp": 0,
+      "atk": 205,
+      "matk": 0,
+      "def": 176,
+      "soft_def": 0,
+      "mdef": 56,
+      "soft_mdef": 0,
+      "hit": 102,
+      "flee": 66,
+      "crit_rate": 0.02,
+      "luk": 10,
+      "attack_delay": 1.8,
+      "attack_range": 1.8,
+      "element": "earth",
+      "element_level": 2
+    },
+    "base_exp": 13980,
+    "job_exp": 7690,
+    "dmotion_ms": 420,
+    "respawn_seconds": 3600,
+    "drops": [
+      {
+        "item": "clear_dewdrop",
+        "chance": 1.0,
+        "tier": "epic",
+        "amount": 1,
+        "amount_max": 2
+      },
+      {
+        "item": "dry_branch",
+        "chance": 0.9,
+        "tier": "common",
+        "amount": 2,
+        "amount_max": 4
+      },
+      {
+        "item": "paint_green",
+        "chance": 1.0,
+        "tier": "common",
+        "amount": 3,
+        "amount_max": 5
+      },
+      {
+        "item": "soft_moss",
+        "chance": 0.9,
+        "tier": "uncommon",
+        "amount": 2,
+        "amount_max": 3
+      },
+      {
+        "item": "orange_potion",
+        "chance": 0.3,
+        "tier": "rare",
+        "amount": 1,
+        "amount_max": 2
+      },
+      {
+        "item": "soul_stump_king",
+        "chance": 0.08,
+        "tier": "epic"
+      },
+      {
+        "item": "seed_stump_king",
+        "chance": 0.2,
+        "tier": "epic"
+      }
+    ],
+    "behavior": {
+      "ambush": {
+        "trigger_range": 3.5,
+        "emerge_ms": 700
+      },
+      "cast": {
+        "skill_id": "stump_acorn_fall",
+        "name": "落果",
+        "center": "target",
+        "range": 12.0,
+        "radius": 2.5,
+        "damage_percent": 170,
+        "telegraph_ms": 1100,
+        "cooldown_ms": 9000,
+        "interruptible": false
+      },
+      "phases": [
+        {
+          "hp_percent": 60,
+          "name": "年輪",
+          "area_attack": {
+            "radius": 4.0,
+            "damage_percent": 220,
+            "cooldown_ms": 7000,
+            "telegraph_ms": 1200
+          }
+        },
+        {
+          "hp_percent": 30,
+          "name": "枯怒",
+          "move_speed": 1.1,
+          "cast": {
+            "skill_id": "stump_acorn_fall",
+            "name": "落果",
+            "center": "target",
+            "range": 12.0,
+            "radius": 2.5,
+            "damage_percent": 170,
+            "telegraph_ms": 1000,
+            "cooldown_ms": 5000,
+            "interruptible": false
+          }
+        }
+      ]
+    },
+    "first_kill": {
+      "base_exp": 13980,
+      "job_exp": 7690,
+      "item": "seed_stump_king"
+    },
+    "codex": {
+      "kills_to_fill": 5,
+      "story": "萌芽草原最老的樹，被灰蝕從根部掏空。整片草原的顏色都藏在牠的年輪裡。"
+    },
+    "area_attack": {
+      "radius": 4.0,
+      "damage_percent": 220,
+      "cooldown_ms": 10000,
+      "telegraph_ms": 1200
+    }
+  }
+}

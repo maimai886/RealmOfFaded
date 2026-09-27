@@ -1,0 +1,1147 @@
+{
+  "source": "每一種擺設模型的碰撞footprint。地圖檔只寫 props，不可行走區由 src/core/prop_footprints.gd 從這裡算出來，所以任何產生器擺的東西都自動是實心的。規則見 docs/世界地圖規劃.md 第 12 節",
+  "notes": [
+    "blocks 為 false 的是不擋路的裝飾，仍然要列出來，沒列到的模型測試會抓出來",
+    "shape 是 circle 配 radius，或 rect 配 half [半寬, 半深]；數值是 scale 1.0 時的公尺，實際乘上 prop 的 scale",
+    "人造物的 half 和 radius 直接量模型外框，tests/test_prop_collision.gd 會擋下比模型大的 footprint",
+    "樹、石頭、山丘這些自然物只擋樹幹和底座，比外框小很多是故意的，和 RO 只擋樹幹一樣",
+    "offset 是模型中心沒有落在原點時的補正 [x, z]，也會跟著 rotation_y 轉",
+    "parts 是多塊組成的 footprint，例如城門樓中間要留通道；每一塊有自己的 offset [x, z]，會跟著 rotation_y 轉",
+    "rect 跟著 rotation_y 轉之後取外接的軸對齊矩形，45 度時會比實際大一點，是刻意保守",
+    "擋不擋路的判準：地面以上高過 0.25 公尺的東西一律擋路。世界對移動來說是平的，角色永遠站在 y 等於 0，",
+    "所以只要模型比腳踝高，走進去就是身體插進模型裡；燈柱、長椅、花槽、廣場石階、燭台、瓦礫、斷劍全部算",
+    "真的要走得過去的只有兩種：地面貼花那種完全平的東西，和中間留通道的地標，後者要寫 walk_through 和理由",
+    "shape 用 square 的是拿方塊當一團圓東西的替身：圓的邊法線一路在轉，伺服器一個 tick 一步、客戶端一幀一步沿著圓滑會走出不同路線，量到差 0.19 公尺超過修正門檻，方形差 0.002 以下。畫面上看不出差別，而且方形的碰撞比圓形還快一成",
+    "passage 為 true 的是中間真的留了一條路的擺設，例如城門樓的門洞，它自己的座標是走得過去的；不能靠有沒有 parts 判斷，廣場石階也是用 parts 排成一條但它是實心的"
+  ],
+  "footprints": {
+    "generated/models/townkit/house_a": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.09,
+        2.77
+      ],
+      "offset": [
+        0.0,
+        0.08
+      ]
+    },
+    "generated/models/townkit/house_b": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.68,
+        3.27
+      ],
+      "offset": [
+        0.0,
+        0.08
+      ]
+    },
+    "generated/models/townkit/shop": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.39,
+        3.25
+      ],
+      "offset": [
+        0.0,
+        0.47
+      ]
+    },
+    "generated/models/townkit/inn": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        4.34,
+        3.84
+      ],
+      "offset": [
+        0.0,
+        0.32
+      ]
+    },
+    "generated/models/townkit/smithy": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.49,
+        3.44
+      ],
+      "offset": [
+        0.0,
+        0.46
+      ]
+    },
+    "generated/models/townkit/storage": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.94,
+        3.7
+      ],
+      "offset": [
+        0.0,
+        0.12
+      ]
+    },
+    "generated/models/townkit/town_hall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        5.9,
+        4.32
+      ],
+      "offset": [
+        -1.06,
+        0.46
+      ]
+    },
+    "generated/models/townkit/market_stall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.45,
+        0.78
+      ],
+      "offset": [
+        0.0,
+        0.04
+      ]
+    },
+    "generated/models/townkit/guard_tower": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 1.93
+    },
+    "generated/models/townkit/fountain": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 2.68
+    },
+    "generated/models/townkit/shrine_pedestal": {
+      "blocks": true,
+      "note": "連最外圈的石階一起擋，石階半徑 2.3。一個方塊只到軸上 2.04，沿軸走會踩到最外圈半個腳，2026-09-24 改成方塊加兩條長方形拼成近似圓：軸上到 2.3、對角到 2.04，最多凸出圓 0.2。不用圓是因為沿圓滑動伺服器和客戶端會走出不同的路線，見上面",
+      "parts": [
+        {
+          "shape": "square",
+          "radius": 2.3,
+          "offset": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "shape": "rect",
+          "half": [
+            2.3,
+            1.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "shape": "rect",
+          "half": [
+            1.0,
+            2.3
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "generated/models/townkit/gatehouse": {
+      "blocks": true,
+      "passage": true,
+      "note": "中間 4.6 公尺是通道，只擋兩根門墩和兩座塔，傳送點就在通道裡",
+      "parts": [
+        {
+          "shape": "rect",
+          "half": [
+            0.45,
+            1.6
+          ],
+          "offset": [
+            -2.75,
+            0.0
+          ]
+        },
+        {
+          "shape": "rect",
+          "half": [
+            0.45,
+            1.6
+          ],
+          "offset": [
+            2.75,
+            0.0
+          ]
+        },
+        {
+          "shape": "square",
+          "radius": 1.74,
+          "offset": [
+            -3.9,
+            0.0
+          ]
+        },
+        {
+          "shape": "square",
+          "radius": 1.74,
+          "offset": [
+            3.9,
+            0.0
+          ]
+        }
+      ]
+    },
+    "generated/models/townkit/wall_straight": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.0,
+        0.4
+      ]
+    },
+    "generated/models/townkit/hedge": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.1,
+        0.4
+      ]
+    },
+    "generated/models/townkit/cart": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.52,
+        1.12
+      ],
+      "offset": [
+        -0.52,
+        0.0
+      ]
+    },
+    "generated/models/townkit/crate_stack": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.9,
+        0.5
+      ],
+      "offset": [
+        0.45,
+        -0.05
+      ]
+    },
+    "generated/models/townkit/barrel_pair": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.74,
+        0.79
+      ],
+      "offset": [
+        0.37,
+        0.28
+      ]
+    },
+    "generated/models/townkit/lamp_post": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.3,
+      "note": "燈柱的柱子，模型外框 0.6 寬"
+    },
+    "generated/models/townkit/signpost": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.3,
+      "note": "路標的柱子，看板伸出去的部分在頭上不用擋"
+    },
+    "generated/models/townkit/flower_box": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.81,
+        0.3
+      ],
+      "note": "花槽 0.77 公尺高，到大腿"
+    },
+    "generated/models/townkit/bench": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.9,
+        0.26
+      ],
+      "note": "長椅 0.93 公尺高，到腰"
+    },
+    "generated/models/townkit/plaza_step": {
+      "blocks": true,
+      "note": "廣場石階 0.38 公尺高。世界是平的踏不上去，要進廣場走四條街的缺口。用四個圓排成一條而不是一塊長方形，因為長方形轉過角度之後取外接矩形會漲成三倍寬，會把石階之間的缺口夾死",
+      "parts": [
+        {
+          "shape": "square",
+          "radius": 0.5,
+          "offset": [
+            -1.5,
+            0.0
+          ]
+        },
+        {
+          "shape": "square",
+          "radius": 0.5,
+          "offset": [
+            -0.5,
+            0.0
+          ]
+        },
+        {
+          "shape": "square",
+          "radius": 0.5,
+          "offset": [
+            0.5,
+            0.0
+          ]
+        },
+        {
+          "shape": "square",
+          "radius": 0.5,
+          "offset": [
+            1.5,
+            0.0
+          ]
+        }
+      ]
+    },
+    "generated/models/landmarks/ancient_tree": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 3.4
+    },
+    "generated/models/landmarks/forest_shrine": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 2.8
+    },
+    "generated/models/landmarks/cave_mouth": {
+      "blocks": false,
+      "walk_through": true,
+      "note": "地窟入口，中間要走得進去，兩側的岩壁由地圖檔自己的 blockers 擋"
+    },
+    "generated/models/landmarks/rock_arch": {
+      "blocks": false,
+      "walk_through": true,
+      "note": "岩拱下面要走得過去，兩側石柱由地圖檔自己的 blockers 擋"
+    },
+    "vendor/kaykit/nature/tree_single_A": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.16
+    },
+    "vendor/kaykit/nature/tree_single_B": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.16
+    },
+    "vendor/kaykit/nature/tree_single_A_cut": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.14
+    },
+    "vendor/kaykit/nature/trees_A_cut": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.2
+    },
+    "vendor/kaykit/nature/trees_A_large": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.72
+    },
+    "vendor/kaykit/nature/trees_A_medium": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.72
+    },
+    "vendor/kaykit/nature/trees_B_large": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.72
+    },
+    "vendor/kaykit/nature/trees_B_medium": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.72
+    },
+    "vendor/kaykit/nature/rock_single_A": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/nature/rock_single_B": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/nature/rock_single_C": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/nature/rock_single_D": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/nature/rock_single_E": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/nature/hill_single_A": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.467
+    },
+    "vendor/kaykit/nature/hill_single_C": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.467
+    },
+    "vendor/kaykit/nature/hills_B": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.467
+    },
+    "vendor/kaykit/nature/hills_C": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.467
+    },
+    "vendor/kaykit/nature/mountain_A": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.6
+    },
+    "vendor/kaykit/nature/mountain_A_grass": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.6
+    },
+    "vendor/kaykit/nature/mountain_B": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.6
+    },
+    "vendor/kaykit/nature/mountain_B_grass": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.6
+    },
+    "vendor/kaykit/nature/mountain_C": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.6
+    },
+    "vendor/kaykit/nature/mountain_C_grass": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.6
+    },
+    "vendor/kaykit/town/tree_single_A": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/town/tree_single_B": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.26
+    },
+    "vendor/kaykit/town/trees_A_small": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22
+    },
+    "vendor/kaykit/town/wall_straight": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.0,
+        0.4
+      ]
+    },
+    "vendor/kaykit/dungeon/pillar_decorated": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.86
+    },
+    "vendor/kaykit/dungeon/wall_arched": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.0,
+        0.5
+      ]
+    },
+    "vendor/kaykit/dungeon/barrel_large": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.9
+    },
+    "vendor/kaykit/dungeon/barrel_small_stack": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.93,
+        0.5
+      ]
+    },
+    "vendor/kaykit/dungeon/crates_stacked": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.05,
+        1.13
+      ],
+      "offset": [
+        -0.05,
+        -0.03
+      ]
+    },
+    "vendor/kaykit/dungeon/keg": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.9
+    },
+    "vendor/kaykit/dungeon/trunk_large_A": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.65
+    },
+    "vendor/kaykit/dungeon/stairs_wide": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.5,
+        2.05
+      ],
+      "offset": [
+        0.0,
+        1.95
+      ],
+      "note": "樓梯 5.1 公尺高，爬不上去。模型原點在最下面一階的前緣，footprint 往前多蓋 0.1 公尺把原點包進來。往下一層的傳送點擺在樓梯前面，走到腳下就換圖"
+    },
+    "vendor/kaykit/dungeon/candle_triple": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.22,
+      "note": "燭台 0.87 公尺高，到腰"
+    },
+    "vendor/kaykit/dungeon/rubble_half": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.0,
+        1.5
+      ],
+      "offset": [
+        2.0,
+        -0.02
+      ],
+      "note": "崩塌的半座拱門，3.5 公尺高，不是平躺的瓦礫"
+    },
+    "vendor/kaykit/dungeon/sword_shield_broken": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.71,
+        0.17
+      ],
+      "offset": [
+        -0.05,
+        0.08
+      ],
+      "note": "插在地上的斷劍破盾，露出地面 1.17 公尺"
+    },
+    "generated/models/towns/dawn/house_1": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.34,
+        2.48
+      ]
+    },
+    "generated/models/towns/dawn/house_2": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.71,
+        2.5
+      ]
+    },
+    "generated/models/towns/dawn/inn": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.12,
+        2.73
+      ]
+    },
+    "generated/models/towns/dawn/smithy": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.28,
+        2.67
+      ]
+    },
+    "generated/models/towns/dawn/storage": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.9,
+        2.96
+      ]
+    },
+    "generated/models/towns/dawn/town_hall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.1,
+        3.71
+      ]
+    },
+    "generated/models/towns/dawn/windmill": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.61,
+        2.63
+      ]
+    },
+    "generated/models/towns/magic/academy_tower": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.83,
+        1.41
+      ]
+    },
+    "generated/models/towns/magic/observatory": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.47,
+        2.24
+      ]
+    },
+    "generated/models/towns/magic/academy_hall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.15,
+        5.0
+      ]
+    },
+    "generated/models/towns/magic/canal_house": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.13,
+        3.7
+      ]
+    },
+    "generated/models/towns/magic/bridge": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.3,
+        1.72
+      ]
+    },
+    "generated/models/towns/magic/crystal_well": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.6,
+        1.6
+      ]
+    },
+    "generated/models/towns/japan/inn": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.17,
+        3.49
+      ]
+    },
+    "generated/models/towns/japan/pagoda": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.99,
+        2.99
+      ]
+    },
+    "generated/models/towns/japan/shrine": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.58,
+        2.57
+      ]
+    },
+    "generated/models/towns/parts/market_stall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.25,
+        1.05
+      ]
+    },
+    "generated/models/towns/parts/awning": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.31,
+        1.06
+      ]
+    },
+    "generated/models/towns/parts/balcony": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.77,
+        0.7
+      ]
+    },
+    "generated/models/towns/parts/stairs": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.03,
+        1.12
+      ]
+    },
+    "generated/models/towns/parts/well": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.11,
+        1.06
+      ]
+    },
+    "generated/models/towns/parts/torii": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.16,
+        0.51
+      ]
+    },
+    "generated/models/towns/parts/stone_lantern": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.59,
+        0.59
+      ]
+    },
+    "generated/models/towns/keep/gatehouse": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        4.37,
+        4.23
+      ]
+    },
+    "generated/models/towns/keep/barracks": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        4.69,
+        2.88
+      ]
+    },
+    "generated/models/towns/keep/great_hall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.42,
+        3.45
+      ]
+    },
+    "generated/models/towns/keep/watchtower": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.01,
+        2.01
+      ]
+    },
+    "generated/models/towns/keep/forge": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.19,
+        2.67
+      ]
+    },
+    "generated/models/towns/keep/oath_stone": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.88,
+        2.88
+      ]
+    },
+    "generated/models/towns/highbough/tree_platform": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.95,
+        2.96
+      ]
+    },
+    "generated/models/towns/highbough/lookout": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.15,
+        2.28
+      ]
+    },
+    "generated/models/towns/highbough/stilt_hut": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.16,
+        2.36
+      ]
+    },
+    "generated/models/towns/highbough/ladder_post": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.2,
+        1.72
+      ]
+    },
+    "generated/models/towns/highbough/rope_bridge": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.3,
+        1.2
+      ]
+    },
+    "generated/models/towns/lanternford/chapel": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.15,
+        3.26
+      ]
+    },
+    "generated/models/towns/lanternford/almshouse": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        6.08,
+        3.06
+      ]
+    },
+    "generated/models/towns/lanternford/covered_bridge": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.73,
+        1.85
+      ]
+    },
+    "generated/models/towns/lanternford/bell_tower": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.71,
+        1.71
+      ]
+    },
+    "generated/models/towns/lanternford/boathouse": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.83,
+        4.17
+      ]
+    },
+    "generated/models/towns/lanternford/herb_shop": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.5,
+        2.49
+      ]
+    },
+    "generated/models/towns/japan/dojo": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.49,
+        2.81
+      ]
+    },
+    "generated/models/towns/japan/onmyo_office": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.71,
+        3.5
+      ]
+    },
+    "generated/models/towns/japan/ninja_house": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.8,
+        2.83
+      ]
+    },
+    "generated/models/towns/japan/ascetic_hall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.36,
+        2.35
+      ]
+    },
+    "generated/models/towns/japan/forge": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.63,
+        2.24
+      ]
+    },
+    "generated/models/towns/japan/gate": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.3,
+        2.0
+      ]
+    },
+    "generated/models/towns/japan/tea_house": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.53,
+        2.46
+      ]
+    },
+    "generated/models/towns/furniture/counter": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.59,
+        0.4
+      ]
+    },
+    "generated/models/towns/furniture/shelf": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.53,
+        0.24
+      ]
+    },
+    "generated/models/towns/furniture/bookshelf": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.46,
+        0.28
+      ]
+    },
+    "generated/models/towns/furniture/table_set": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.59,
+        0.59
+      ]
+    },
+    "generated/models/towns/furniture/bed": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.79,
+        0.94
+      ]
+    },
+    "generated/models/towns/furniture/fireplace": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.79,
+        0.51
+      ]
+    },
+    "generated/models/towns/furniture/anvil_set": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.97,
+        0.7
+      ]
+    },
+    "generated/models/towns/furniture/crates": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.64,
+        0.71
+      ]
+    },
+    "generated/models/towns/furniture/altar": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.68,
+        0.52
+      ]
+    },
+    "generated/models/towns/furniture/desk": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.59,
+        0.62
+      ]
+    },
+    "generated/models/towns/furniture/weapon_rack": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.71,
+        0.47
+      ]
+    },
+    "generated/models/towns/furniture/low_table": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.68,
+        0.68
+      ]
+    },
+    "generated/models/towns/furniture/kakejiku": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.79,
+        0.44
+      ]
+    },
+    "generated/models/towns/furniture/sword_stand": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.35,
+        0.15
+      ]
+    },
+    "generated/models/towns/dawn/item_shop": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        2.83,
+        2.27
+      ]
+    },
+    "generated/models/towns/street/bench": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.61,
+        0.31
+      ]
+    },
+    "generated/models/towns/street/barrel": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.42,
+        0.42
+      ]
+    },
+    "generated/models/towns/street/barrels": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.72,
+        0.37
+      ]
+    },
+    "generated/models/towns/street/cart": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.72,
+        0.46
+      ]
+    },
+    "generated/models/towns/street/wall": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        3.39,
+        0.61
+      ]
+    },
+    "generated/models/towns/street/wall_tower": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        1.67,
+        1.67
+      ]
+    },
+    "generated/models/towns/street/flower_pots": {
+      "blocks": true,
+      "shape": "rect",
+      "half": [
+        0.45,
+        0.38
+      ]
+    },
+    "generated/models/tree_broadleaf": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.76,
+      "note": "闊葉樹，畫面換成卡片樹；樹根外擴那一圈量起來半邊 0.67 公尺，方塊半邊是 radius × 0.886"
+    },
+    "generated/models/shrub": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.8,
+      "note": "矮樹叢，一公尺二高，貼地那一圈半邊 0.72 公尺"
+    },
+    "generated/models/boulder": {
+      "blocks": true,
+      "shape": "square",
+      "radius": 0.75,
+      "note": "大石頭，畫面換成 Quaternius 的石頭，貼地那一圈半邊 0.6 到 0.8 公尺"
+    }
+  }
+}

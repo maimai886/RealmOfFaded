@@ -1,0 +1,1067 @@
+{
+  "name": "碎石谷",
+  "scene": "valley",
+  "safe_zone": false,
+  "level_range": [
+    13,
+    20
+  ],
+  "warp_allowed": true,
+  "bounds": {
+    "min": [
+      -36.0,
+      -36.0
+    ],
+    "max": [
+      36.0,
+      36.0
+    ]
+  },
+  "player_spawn": [
+    0.0,
+    27.0
+  ],
+  "save_point": [
+    0.0,
+    26.0
+  ],
+  "paths": [
+    [
+      [
+        0.0,
+        33.0
+      ],
+      [
+        -3.0,
+        26.0
+      ],
+      [
+        4.0,
+        16.0
+      ],
+      [
+        8.0,
+        6.0
+      ],
+      [
+        2.0,
+        -4.0
+      ],
+      [
+        -6.0,
+        -12.0
+      ],
+      [
+        0.0,
+        -20.0
+      ],
+      [
+        12.0,
+        -24.0
+      ],
+      [
+        24.0,
+        -16.0
+      ],
+      [
+        33.0,
+        -8.0
+      ]
+    ],
+    [
+      [
+        2.0,
+        -4.0
+      ],
+      [
+        -10.0,
+        2.0
+      ],
+      [
+        -20.0,
+        8.7
+      ]
+    ]
+  ],
+  "spawns": [],
+  "npcs": [],
+  "portals": [
+    {
+      "id": "to_forest",
+      "position": [
+        0.0,
+        33.0
+      ],
+      "radius": 1.5,
+      "to_map": "whisper_forest",
+      "to_position": [
+        0.0,
+        -27.5
+      ]
+    },
+    {
+      "id": "to_cavern",
+      "position": [
+        33.0,
+        -8.0
+      ],
+      "radius": 1.5,
+      "to_map": "gloom_cavern_b1",
+      "to_position": [
+        -22.5,
+        -19.5
+      ]
+    }
+  ],
+  "props": [
+    {
+      "model": "vendor/kaykit/nature/mountain_A_grass",
+      "position": [
+        -33.0,
+        -30.0
+      ],
+      "rotation_y": 222.0,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_B_grass",
+      "position": [
+        -33.0,
+        -19.0
+      ],
+      "rotation_y": 235.8,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_C_grass",
+      "position": [
+        -33.0,
+        -8.0
+      ],
+      "rotation_y": 351.9,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_A_grass",
+      "position": [
+        -33.0,
+        3.0
+      ],
+      "rotation_y": 318.9,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_B_grass",
+      "position": [
+        -33.0,
+        14.0
+      ],
+      "rotation_y": 93.7,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_C_grass",
+      "position": [
+        -33.0,
+        25.0
+      ],
+      "rotation_y": 85.1,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_C",
+      "position": [
+        -30.0,
+        -33.0
+      ],
+      "rotation_y": 51.5,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_A_grass",
+      "position": [
+        -19.0,
+        -33.0
+      ],
+      "rotation_y": 134.3,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_B",
+      "position": [
+        -8.0,
+        -33.0
+      ],
+      "rotation_y": 118.2,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_C",
+      "position": [
+        3.0,
+        -33.0
+      ],
+      "rotation_y": 313.1,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_A_grass",
+      "position": [
+        14.0,
+        -33.0
+      ],
+      "rotation_y": 336.2,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_B",
+      "position": [
+        25.0,
+        -33.0
+      ],
+      "rotation_y": 75.2,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_B_grass",
+      "position": [
+        33.0,
+        -30.0
+      ],
+      "rotation_y": 77.0,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_C_grass",
+      "position": [
+        33.0,
+        -19.0
+      ],
+      "rotation_y": 306.4,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_B_grass",
+      "position": [
+        33.0,
+        3.0
+      ],
+      "rotation_y": 323.1,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_C_grass",
+      "position": [
+        33.0,
+        14.0
+      ],
+      "rotation_y": 296.8,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/mountain_A",
+      "position": [
+        33.0,
+        25.0
+      ],
+      "rotation_y": 7.5,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_E",
+      "position": [
+        31.5,
+        -13.5
+      ],
+      "rotation_y": 20,
+      "scale": 9.0
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_C",
+      "position": [
+        31.5,
+        -2.5
+      ],
+      "rotation_y": 200,
+      "scale": 9.0
+    },
+    {
+      "model": "vendor/kaykit/dungeon/wall_arched",
+      "position": [
+        35.2,
+        -8.0
+      ],
+      "rotation_y": 90,
+      "scale": 0.9
+    },
+    {
+      "model": "vendor/kaykit/nature/hills_B",
+      "position": [
+        -30.0,
+        33.0
+      ],
+      "rotation_y": 54.3,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hills_B",
+      "position": [
+        -20.0,
+        33.0
+      ],
+      "rotation_y": 104.8,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hills_B",
+      "position": [
+        -10.0,
+        33.0
+      ],
+      "rotation_y": 178.5,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hills_B",
+      "position": [
+        10.0,
+        33.0
+      ],
+      "rotation_y": 178.0,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hills_B",
+      "position": [
+        20.0,
+        33.0
+      ],
+      "rotation_y": 284.8,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hills_C",
+      "position": [
+        30.0,
+        33.0
+      ],
+      "rotation_y": 91.5,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        -13.72,
+        -1.52
+      ],
+      "rotation_y": 350.2,
+      "scale": 7.58
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_C",
+      "position": [
+        -11.88,
+        -8.53
+      ],
+      "rotation_y": 150.6,
+      "scale": 7.97
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_C",
+      "position": [
+        -8.91,
+        -18.02
+      ],
+      "rotation_y": 188.3,
+      "scale": 7.56
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_E",
+      "position": [
+        8.7,
+        -10.15
+      ],
+      "rotation_y": 258.4,
+      "scale": 9.17
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_E",
+      "position": [
+        -19.35,
+        -5.46
+      ],
+      "rotation_y": 104.5,
+      "scale": 9.24
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        17.1,
+        15.81
+      ],
+      "rotation_y": 150.6,
+      "scale": 8.34
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        -20.93,
+        -17.26
+      ],
+      "rotation_y": 224.0,
+      "scale": 7.45
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        -13.14,
+        16.04
+      ],
+      "rotation_y": 127.2,
+      "scale": 8.25
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_C",
+      "position": [
+        12.33,
+        0.82
+      ],
+      "rotation_y": 131.5,
+      "scale": 7.24
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_E",
+      "position": [
+        15.98,
+        8.64
+      ],
+      "rotation_y": 9.2,
+      "scale": 8.16
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_E",
+      "position": [
+        22.42,
+        -3.39
+      ],
+      "rotation_y": 288.5,
+      "scale": 7.93
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        9.82,
+        18.57
+      ],
+      "rotation_y": 132.9,
+      "scale": 9.2
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_E",
+      "position": [
+        -18.05,
+        3.13
+      ],
+      "rotation_y": 246.0,
+      "scale": 7.32
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        -0.68,
+        11.72
+      ],
+      "rotation_y": 201.0,
+      "scale": 9.08
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_C",
+      "position": [
+        18.31,
+        -13.37
+      ],
+      "rotation_y": 293.0,
+      "scale": 9.19
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_D",
+      "position": [
+        -14.85,
+        -21.26
+      ],
+      "rotation_y": 68.5,
+      "scale": 7.05
+    },
+    {
+      "model": "vendor/kaykit/nature/hill_single_A",
+      "position": [
+        -5.75,
+        19.46
+      ],
+      "rotation_y": 36.8,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hill_single_A",
+      "position": [
+        -8.38,
+        8.16
+      ],
+      "rotation_y": 86.2,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/hill_single_C",
+      "position": [
+        -19.96,
+        20.55
+      ],
+      "rotation_y": 30.3,
+      "scale": 6.0
+    },
+    {
+      "model": "vendor/kaykit/nature/trees_A_cut",
+      "position": [
+        -3.4,
+        -20.21
+      ],
+      "rotation_y": 107.3,
+      "scale": 4.0
+    },
+    {
+      "model": "vendor/kaykit/nature/trees_A_cut",
+      "position": [
+        17.02,
+        22.72
+      ],
+      "rotation_y": 193.7,
+      "scale": 4.0
+    },
+    {
+      "model": "vendor/kaykit/nature/trees_A_cut",
+      "position": [
+        -2.22,
+        5.24
+      ],
+      "rotation_y": 288.6,
+      "scale": 4.0
+    },
+    {
+      "model": "vendor/kaykit/nature/trees_A_cut",
+      "position": [
+        22.45,
+        12.63
+      ],
+      "rotation_y": 197.2,
+      "scale": 4.0
+    },
+    {
+      "model": "vendor/kaykit/nature/trees_A_cut",
+      "position": [
+        12.95,
+        -13.95
+      ],
+      "rotation_y": 50.0,
+      "scale": 4.0
+    },
+    {
+      "model": "vendor/kaykit/nature/trees_A_cut",
+      "position": [
+        -18.15,
+        14.05
+      ],
+      "rotation_y": 191.1,
+      "scale": 4.0
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_A",
+      "position": [
+        -14.12,
+        10.15
+      ],
+      "rotation_y": 18.4,
+      "scale": 4.64
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_A",
+      "position": [
+        15.88,
+        19.92
+      ],
+      "rotation_y": 29.0,
+      "scale": 5.26
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_A",
+      "position": [
+        -3.2,
+        0.65
+      ],
+      "rotation_y": 261.5,
+      "scale": 4.67
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_B",
+      "position": [
+        22.43,
+        -12.3
+      ],
+      "rotation_y": 308.4,
+      "scale": 5.31
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_A",
+      "position": [
+        -22.0,
+        13.42
+      ],
+      "rotation_y": 154.8,
+      "scale": 5.0
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_B",
+      "position": [
+        9.11,
+        -6.58
+      ],
+      "rotation_y": 3.4,
+      "scale": 4.49
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_A",
+      "position": [
+        -16.63,
+        -1.4
+      ],
+      "rotation_y": 283.8,
+      "scale": 4.26
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_A",
+      "position": [
+        -8.01,
+        5.03
+      ],
+      "rotation_y": 247.6,
+      "scale": 4.65
+    },
+    {
+      "model": "vendor/kaykit/nature/rock_single_B",
+      "position": [
+        -20.67,
+        1.26
+      ],
+      "rotation_y": 189.3,
+      "scale": 4.02
+    },
+    {
+      "model": "generated/models/landmarks/cave_mouth",
+      "position": [
+        35.6,
+        -8.0
+      ],
+      "rotation_y": -90,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/landmarks/rock_arch",
+      "position": [
+        5.0,
+        1.0
+      ],
+      "rotation_y": 31.0,
+      "scale": 1.0
+    }
+  ],
+  "blockers": [
+    {
+      "type": "rect",
+      "min": [
+        -40.0,
+        -40.0
+      ],
+      "max": [
+        -27.5,
+        40.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -40.0,
+        -40.0
+      ],
+      "max": [
+        40.0,
+        -27.5
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        27.5,
+        -40.0
+      ],
+      "max": [
+        40.0,
+        -15.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        27.5,
+        1.0
+      ],
+      "max": [
+        40.0,
+        40.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        29.7276,
+        -15.2724
+      ],
+      "max": [
+        33.2724,
+        -11.7276
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        29.7276,
+        -4.2724
+      ],
+      "max": [
+        33.2724,
+        -0.7276
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -40.0,
+        28.5
+      ],
+      "max": [
+        -5.5,
+        40.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        5.5,
+        28.5
+      ],
+      "max": [
+        40.0,
+        40.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -14.8632,
+        -2.6632
+      ],
+      "max": [
+        -12.5768,
+        -0.3768
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -13.0764,
+        -9.7264
+      ],
+      "max": [
+        -10.6836,
+        -7.3336
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -10.0443,
+        -19.1543
+      ],
+      "max": [
+        -7.7757,
+        -16.8857
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        7.3175,
+        -11.5325
+      ],
+      "max": [
+        10.0825,
+        -8.7675
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -20.7413,
+        -6.8513
+      ],
+      "max": [
+        -17.9587,
+        -4.0687
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        15.8416,
+        14.5516
+      ],
+      "max": [
+        18.3584,
+        17.0684
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -22.0555,
+        -18.3855
+      ],
+      "max": [
+        -19.8045,
+        -16.1345
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -14.3807,
+        14.7993
+      ],
+      "max": [
+        -11.8993,
+        17.2807
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        11.24,
+        -0.27
+      ],
+      "max": [
+        13.42,
+        1.91
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        14.7482,
+        7.4082
+      ],
+      "max": [
+        17.2118,
+        9.8718
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        21.2236,
+        -4.5864
+      ],
+      "max": [
+        23.6164,
+        -2.1936
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        8.4375,
+        17.1875
+      ],
+      "max": [
+        11.2025,
+        19.9525
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -19.1489,
+        2.0311
+      ],
+      "max": [
+        -16.9511,
+        4.2289
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -2.0447,
+        10.3553
+      ],
+      "max": [
+        0.6847,
+        13.0847
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        16.9275,
+        -14.7525
+      ],
+      "max": [
+        19.6925,
+        -11.9875
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -15.9134,
+        -22.3234
+      ],
+      "max": [
+        -13.7866,
+        -20.1966
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -8.2314,
+        16.9786
+      ],
+      "max": [
+        -3.2686,
+        21.9414
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -10.8614,
+        5.6786
+      ],
+      "max": [
+        -5.8986,
+        10.6414
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -22.4414,
+        18.0686
+      ],
+      "max": [
+        -17.4786,
+        23.0314
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        6.4935,
+        -2.3065
+      ],
+      "max": [
+        9.5065,
+        0.7065
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        0.4935,
+        1.2935
+      ],
+      "max": [
+        3.5065,
+        4.3065
+      ]
+    }
+  ],
+  "ground": {
+    "relief": {
+      "edge_height": 13.0,
+      "edge_span": 13.0,
+      "edge_start": 0.5
+    }
+  },
+  "zones": [
+    {
+      "id": "dry_riverbed",
+      "name": "乾河床",
+      "center": [
+        3.0,
+        4.0
+      ],
+      "radius": 14.0,
+      "hint": "從北邊傳送點一路彎到東邊裂縫的主路，碎石鼠分兩群守在中段"
+    },
+    {
+      "id": "snail_slope",
+      "name": "蝸坡",
+      "center": [
+        -14.0,
+        12.0
+      ],
+      "radius": 9.0,
+      "hint": "岩殼蝸走得慢、防禦高，打不動就換武器或找屬性剋牠"
+    },
+    {
+      "id": "rat_warren",
+      "name": "鼠窩",
+      "center": [
+        -10.0,
+        -12.0
+      ],
+      "radius": 8.0,
+      "hint": "碎石鼠一被打就叫同伴，血少了會逃跑，別追進窩裡"
+    },
+    {
+      "id": "vulture_roost",
+      "name": "鷲巢",
+      "center": [
+        14.0,
+        -20.0
+      ],
+      "radius": 10.0,
+      "hint": "峽谷禿鷲從高處俯衝，鷲母會從遠處扇風刃"
+    },
+    {
+      "id": "west_gully",
+      "name": "西側支流",
+      "center": [
+        -22.0,
+        12.0
+      ],
+      "radius": 12.0,
+      "hint": "河床往西的分支，人比較少，適合單人清怪"
+    },
+    {
+      "id": "cracked_shelf",
+      "name": "裂岩台",
+      "center": [
+        -26.0,
+        -26.0
+      ],
+      "radius": 5.0,
+      "hint": "西南角山壁下的窄台，要繞過整片礫石才走得到",
+      "hidden": true
+    }
+  ]
+}

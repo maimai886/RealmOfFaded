@@ -1,0 +1,15 @@
+{
+  "_comment": "角色紙娃娃的圖層，照 RO 分層。slot 是裝備欄位的代號，和 data/items.json 的 slot 一樣，列在這裡的欄位才有外觀圖層；part 是產圖端的部位名稱，見 docs/精靈圖規格.md 的「紙娃娃圖層」。槽位是整數，身體 0，大的畫在前面，數字照產圖端 paperdoll.py 的槽位表：新的 cropped 圖層每一格自己寫槽位，舊的圖層只寫 order 說在身體前面或後面，就用這裡的 front、back。引擎每一格把這個角色身上各層的槽位換成緊密的名次，身體 0、前面 1、2、3、後面 −1、−2，每差一名只把寫進深度的平面往鏡頭推 slot_spacing 公尺，畫面位置不動。名次夾在 outline_slot 加 1 到 max_slot 之間，描邊排在 outline_slot；相容渲染器 24 位元深度在 52 公尺約 0.00016 公尺一階，0.004 公尺是二十幾階，從描邊到最前面 12 格共 0.048 公尺，不到 0.05，兩個角色的前後還是照腳的位置排。head_slot 是舊的整顆頭圖層排在哪裡。adds_height 是這一層的高度要算進名字和血條的位置",
+  "slot_spacing": 0.004,
+  "outline_slot": -5,
+  "max_slot": 7,
+  "head_slot": 20,
+  "layers": [
+    {"slot": "weapon", "part": "weapon", "front": 60, "back": -10},
+    {"slot": "shield", "part": "shield", "front": 55, "back": -12},
+    {"slot": "garment", "part": "cape", "front": 5, "back": -30},
+    {"slot": "head_low", "part": "head_low", "front": 30, "back": 30},
+    {"slot": "head_mid", "part": "head_mid", "front": 40, "back": 40},
+    {"slot": "head", "part": "head_top", "front": 50, "back": 50, "adds_height": true}
+  ]
+}

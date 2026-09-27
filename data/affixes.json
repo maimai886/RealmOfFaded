@@ -1,0 +1,266 @@
+{
+  "note": "詞綴表，規格在 docs/裝備成長.md 第 3 節；規則全部寫在這裡，程式只負責照著擲",
+  "rarity_order": ["common", "uncommon", "rare", "epic"],
+  "rarity_names": {
+    "common": "普通",
+    "uncommon": "精良",
+    "rare": "稀有",
+    "epic": "傳承"
+  },
+  "note_count": "掉落的裝備擲幾條詞綴由掉落表的 tier 決定上限，擲出來幾條就是什麼稀有度，稀有度不另外擲",
+  "tier_affix_count": {
+    "common": [0, 0],
+    "uncommon": [1, 1],
+    "rare": [1, 2],
+    "epic": [1, 3]
+  },
+  "rarity_by_affix_count": ["common", "uncommon", "rare", "epic"],
+  "note_pools": "部位對應到哪一個詞綴池；武器和防具是兩個不重疊的池，飾品自己一個",
+  "pools": {
+    "weapon": "weapon",
+    "armor": "armor",
+    "shield": "armor",
+    "head": "armor",
+    "garment": "armor",
+    "shoes": "armor",
+    "accessory": "accessory"
+  },
+  "note_group": "同一件裝備上 group 不會重複，所以不會出現兩條加攻擊力；atk_flat 和 atk_percent 是不同的 group，可以同時出現",
+  "note_suffix": "詞尾不佔那一到三條的額度，另外擲一次，只有武器擲得到；2026-09-25 以前是會換攻擊屬性的屬性詞綴，奪色定案攻擊屬性只從調色盤來，改成加數值，group 和同一項屬性的詞頭相同，所以不會擲到這件已經有的加成，見 docs/裝備成長.md 第 3.3 節",
+  "suffix_affix": {
+    "chance_percent": {
+      "common": 0,
+      "uncommon": 0,
+      "rare": 12,
+      "epic": 25
+    }
+  },
+  "reroll": {
+    "material": "affix_solvent",
+    "material_count": 1,
+    "gold": {
+      "common": 500,
+      "uncommon": 1500,
+      "rare": 4000,
+      "epic": 9000
+    }
+  },
+  "affixes": {
+    "keen": {
+      "name": "銳利的", "kind": "prefix", "key": "atk", "mode": "flat", "group": "atk_flat",
+      "pools": ["weapon"], "weight": 10,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 4},
+        {"max_item_level": 24, "min": 3, "max": 9},
+        {"max_item_level": 99, "min": 6, "max": 18}
+      ]
+    },
+    "savage": {
+      "name": "狂猛的", "kind": "prefix", "key": "atk_percent", "mode": "percent", "group": "atk_percent",
+      "pools": ["weapon"], "weight": 4,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 2},
+        {"max_item_level": 24, "min": 1, "max": 3},
+        {"max_item_level": 99, "min": 2, "max": 5}
+      ]
+    },
+    "arcane": {
+      "name": "玄奧的", "kind": "prefix", "key": "matk", "mode": "flat", "group": "matk_flat",
+      "pools": ["weapon", "accessory"], "weight": 8,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 4},
+        {"max_item_level": 24, "min": 3, "max": 9},
+        {"max_item_level": 99, "min": 6, "max": 18}
+      ]
+    },
+    "eldritch": {
+      "name": "詭祕的", "kind": "prefix", "key": "matk_percent", "mode": "percent", "group": "matk_percent",
+      "pools": ["weapon"], "weight": 4,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 2},
+        {"max_item_level": 24, "min": 1, "max": 3},
+        {"max_item_level": 99, "min": 2, "max": 5}
+      ]
+    },
+    "precise": {
+      "name": "精準的", "kind": "prefix", "key": "hit", "mode": "flat", "group": "hit_flat",
+      "pools": ["weapon", "accessory"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 2, "max": 5},
+        {"max_item_level": 24, "min": 4, "max": 10},
+        {"max_item_level": 99, "min": 8, "max": 20}
+      ]
+    },
+    "mighty": {
+      "name": "雄壯的", "kind": "prefix", "key": "str", "mode": "flat", "group": "str_flat",
+      "pools": ["weapon"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "steady": {
+      "name": "沉穩的", "kind": "prefix", "key": "dex", "mode": "flat", "group": "dex_flat",
+      "pools": ["weapon"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "clever": {
+      "name": "靈慧的", "kind": "prefix", "key": "int", "mode": "flat", "group": "int_flat",
+      "pools": ["weapon"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "lucky": {
+      "name": "幸運的", "kind": "prefix", "key": "luk", "mode": "flat", "group": "luk_flat",
+      "pools": ["weapon", "accessory"], "weight": 6,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "guarding": {
+      "name": "護衛的", "kind": "prefix", "key": "def", "mode": "flat", "group": "def_flat",
+      "pools": ["armor"], "weight": 10,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 3},
+        {"max_item_level": 24, "min": 2, "max": 7},
+        {"max_item_level": 99, "min": 5, "max": 14}
+      ]
+    },
+    "bulwark": {
+      "name": "銅牆的", "kind": "prefix", "key": "def_percent", "mode": "percent", "group": "def_percent",
+      "pools": ["armor"], "weight": 4,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 2},
+        {"max_item_level": 24, "min": 1, "max": 3},
+        {"max_item_level": 99, "min": 2, "max": 5}
+      ]
+    },
+    "warding": {
+      "name": "御法的", "kind": "prefix", "key": "mdef", "mode": "flat", "group": "mdef_flat",
+      "pools": ["armor", "accessory"], "weight": 8,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 2},
+        {"max_item_level": 24, "min": 1, "max": 4},
+        {"max_item_level": 99, "min": 2, "max": 8}
+      ]
+    },
+    "shrouded": {
+      "name": "蔽法的", "kind": "prefix", "key": "mdef_percent", "mode": "percent", "group": "mdef_percent",
+      "pools": ["armor"], "weight": 4,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 2},
+        {"max_item_level": 24, "min": 1, "max": 3},
+        {"max_item_level": 99, "min": 2, "max": 5}
+      ]
+    },
+    "evasive": {
+      "name": "飄忽的", "kind": "prefix", "key": "flee", "mode": "flat", "group": "flee_flat",
+      "pools": ["armor"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 2, "max": 5},
+        {"max_item_level": 24, "min": 4, "max": 10},
+        {"max_item_level": 99, "min": 8, "max": 20}
+      ]
+    },
+    "hardy": {
+      "name": "堅韌的", "kind": "prefix", "key": "vit", "mode": "flat", "group": "vit_flat",
+      "pools": ["armor"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "swift": {
+      "name": "迅捷的", "kind": "prefix", "key": "agi", "mode": "flat", "group": "agi_flat",
+      "pools": ["armor"], "weight": 7,
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_fire": {
+      "name": "熾焰", "kind": "suffix", "suffix": true, "key": "str", "mode": "flat", "group": "str_flat",
+      "pools": ["weapon"], "weight": 3, "min_rarity": "rare",
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_water": {
+      "name": "澄水", "kind": "suffix", "suffix": true, "key": "int", "mode": "flat", "group": "int_flat",
+      "pools": ["weapon"], "weight": 3, "min_rarity": "rare",
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_wind": {
+      "name": "疾風", "kind": "suffix", "suffix": true, "key": "agi", "mode": "flat", "group": "agi_flat",
+      "pools": ["weapon"], "weight": 3, "min_rarity": "rare",
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_earth": {
+      "name": "厚土", "kind": "suffix", "suffix": true, "key": "vit", "mode": "flat", "group": "vit_flat",
+      "pools": ["weapon"], "weight": 3, "min_rarity": "rare",
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_light": {
+      "name": "晨光", "kind": "suffix", "suffix": true, "key": "dex", "mode": "flat", "group": "dex_flat",
+      "pools": ["weapon"], "weight": 2, "min_rarity": "epic",
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_dark": {
+      "name": "灰蝕", "kind": "suffix", "suffix": true, "key": "luk", "mode": "flat", "group": "luk_flat",
+      "pools": ["weapon"], "weight": 2, "min_rarity": "epic",
+      "rolls": [
+        {"max_item_level": 9, "min": 1, "max": 1},
+        {"max_item_level": 24, "min": 1, "max": 2},
+        {"max_item_level": 99, "min": 1, "max": 4}
+      ]
+    },
+    "of_time": {
+      "name": "遲滯", "kind": "suffix", "suffix": true, "key": "hit", "mode": "flat", "group": "hit_flat",
+      "pools": ["weapon"], "weight": 1, "min_rarity": "epic",
+      "rolls": [
+        {"max_item_level": 9, "min": 2, "max": 5},
+        {"max_item_level": 24, "min": 4, "max": 10},
+        {"max_item_level": 99, "min": 8, "max": 20}
+      ]
+    },
+    "of_space": {
+      "name": "裂隙", "kind": "suffix", "suffix": true, "key": "flee", "mode": "flat", "group": "flee_flat",
+      "pools": ["weapon"], "weight": 1, "min_rarity": "epic",
+      "rolls": [
+        {"max_item_level": 9, "min": 2, "max": 5},
+        {"max_item_level": 24, "min": 4, "max": 10},
+        {"max_item_level": 99, "min": 8, "max": 20}
+      ]
+    }
+  }
+}

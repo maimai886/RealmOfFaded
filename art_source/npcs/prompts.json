@@ -1,0 +1,156 @@
+{
+ "_說明": "NPC 立繪和場景 Q 版圖的來源：本機 ComfyUI、Illustrious-XL，出圖一次再放大 1.5 倍細修，手裁出來放大重畫過，去背用 birefnet。立繪原圖在 portraits/，Q 版去背圖在這一層",
+ "guardian": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 44,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, 1girl, solo, full body, standing, looking at viewer, gentle smile, long hair, silver hair, green eyes, light blue hooded cape, hood up, gold trim on cape, white robe, green leaf brooch, holding one wooden staff, green crystal orb on top of staff, other hand waving, brown boots, white background, simple background, fantasy priestess",
+   "hand_repaints": [
+    "760,440,1020,700 seed 202",
+    "320,570,580,830 seed 202"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 303,
+   "prompt": "chibi, super deformed, front view, 1girl, gentle smile, long silver hair, green eyes, light blue hood, hood up, light blue cape, gold trim, white robe, green gem brooch, holding a wooden staff upright in right hand, green orb on staff top, brown boots",
+   "negative_extra": "green hood, green cape, green clothes, orange cape, black hood, dark clothes"
+  }
+ },
+ "sword_mentor": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 52,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1boy, adult man, mature male, short brown beard, brown eyes, confident grin, deep red tabard with gold trim over chainmail, open-face steel helmet, brown gloves, brown boots, right hand resting on the pommel of a broadsword planted point-down in front of him, left hand raised in greeting, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, green clothes, purple clothes",
+   "hand_repaints": [
+    "900,800,1180,1080=sword_mentor_hand_900_800_1180_1080_202.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 303,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1boy, adult man, mature male, short brown beard, brown eyes, confident grin, deep red tabard with gold trim over chainmail, open-face steel helmet, brown gloves, brown boots, right hand resting on a broadsword planted point-down beside him, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, green clothes, purple clothes"
+  }
+ },
+ "mage_mentor": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 22,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1girl, long pale lavender hair, purple eyes, calm smile, purple witch hat with gold band, purple robe with gold trim, brown boots, right hand holding an amethyst crystal staff, left hand raised with a small magic spark at the fingertip, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, green clothes, red clothes",
+   "hand_repaints": [
+    "560,440,820,700=mage_mentor_hand_560_440_820_700_202.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 101,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1girl, long pale lavender hair, purple eyes, calm smile, purple witch hat with gold band, purple robe with gold trim, brown boots, holding an amethyst crystal staff upright in right hand, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, green clothes, red clothes"
+  }
+ },
+ "archer_mentor": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 22,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1girl, short brown hair, green eyes, cheerful smile, forest green hood, leather vest, leather bracers, green tunic, quiver of arrows on back, brown boots, (holding a wooden longbow:1.4) in left hand, bow held vertically at her side, right hand raised waving, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, red clothes",
+   "hand_repaints": [
+    "660,760,920,1020=archer_mentor_hand_660_760_920_1020_101.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 303,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1girl, short brown hair, green eyes, cheerful smile, forest green hood, leather vest, leather bracers, green tunic, quiver of arrows on back, brown boots, holding a wooden bow at her side in left hand, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, red clothes"
+  }
+ },
+ "faith_mentor": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 22,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1girl, long honey blonde hair, amber eyes, gentle kind smile, warm golden hooded shawl with green leaf embroidery, cream dress, brown shoes, both hands holding a small brass censer in front of her chest, thin smoke rising, green lining on the shawl, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, green hood",
+   "hand_repaints": [
+    "20,680,280,940=faith_mentor_hand_20_680_280_940_202.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 303,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1girl, long honey blonde hair, amber eyes, gentle kind smile, warm golden hooded shawl with green leaf embroidery, cream dress, brown shoes, holding a small brass censer on a chain in right hand, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, green hood"
+  }
+ },
+ "item_merchant": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 33,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1girl, ginger red hair in a side braid, brown eyes, big happy smile, amber orange dress, cream apron, brown shoes, right hand raised holding a small red potion bottle, left hand on hip, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, green clothes",
+   "hand_repaints": [
+    "190,380,445,700=item_merchant_hand_190_380_445_700_202.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 101,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1girl, ginger red hair in a side braid, brown eyes, big happy smile, amber orange dress, cream apron, brown shoes, holding a small red potion bottle in right hand, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, green clothes"
+  }
+ },
+ "gear_merchant": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 11,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1boy, burly adult man, big bushy brown beard, brown eyes, hearty laugh, dark red bandana, thick brown leather apron, rolled up sleeves, brown boots, iron smithing hammer resting on his right shoulder, left hand waving, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, green clothes, armor",
+   "hand_repaints": [
+    "760,170,1020,430=gear_merchant_hand_760_170_1020_430_303.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 303,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1boy, burly adult man, big bushy brown beard, brown eyes, hearty laugh, dark red bandana, thick brown leather apron, rolled up sleeves, brown boots, iron smithing hammer resting on his right shoulder, white background, simple background, fantasy",
+   "negative_extra": "blue clothes, purple clothes, green clothes, armor"
+  }
+ },
+ "storage_keeper": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 33,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1boy, old man, white beard, white hair, round glasses, kind eyes, slate blue long coat, backpack, a ring of brass keys hanging from belt, brown boots, left arm holding a thick ledger book against his side, right hand adjusting his glasses, white background, simple background, fantasy",
+   "negative_extra": "red clothes, purple clothes, green clothes",
+   "hand_repaints": [
+    "620,700,900,980=storage_keeper_hand_620_700_900_980_202.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 202,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1boy, old man, white beard, white hair, round glasses, kind eyes, slate blue long coat, backpack, a ring of brass keys hanging from belt, brown boots, holding a thick ledger book under left arm, white background, simple background, fantasy",
+   "negative_extra": "red clothes, purple clothes, green clothes"
+  }
+ },
+ "teleporter": {
+  "portrait": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 41,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, two-tone shading, clean lineart, thick outline, solo, full body, standing, looking at viewer, 1boy, young man, (short teal hair:1.3), cyan eyes, friendly smile, (small round teal cap:1.2), (teal short cape:1.3), white shirt, dark brown shorts, brown boots, (glowing cyan magic circle floating above his raised right palm:1.3), left hand at his side, white background, simple background, fantasy",
+   "negative_extra": "red clothes, purple clothes, green clothes, black cape, dark blue cape, navy cape, black hair, pink hair, witch hat",
+   "hand_repaints": [
+    "860,520,1140,800=teleporter_hand_860_520_1140_800_303.png"
+   ]
+  },
+  "sprite": {
+   "model": "Illustrious-XL-v0.1.safetensors",
+   "seed": 606,
+   "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, cel shading, flat color, anime coloring, hard shadows, clean lineart, thick outline, chibi, super deformed, big head, three heads tall, solo, full body, standing, straight-on, front view, facing viewer, looking at viewer, symmetrical stance, feet together, 1boy, young man, (short teal hair:1.3), cyan eyes, friendly smile, (small round teal cap:1.2), (teal short cape:1.3), white shirt, dark brown shorts, brown boots, (small glowing cyan magic circle above his right palm:1.2), white background, simple background, fantasy",
+   "negative_extra": "red clothes, purple clothes, green clothes, black cape, dark blue cape, navy cape, black hair, pink hair, witch hat"
+  }
+ }
+}

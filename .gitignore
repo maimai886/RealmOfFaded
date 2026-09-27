@@ -1,0 +1,49 @@
+.godot/
+art_pipeline/_build/
+__pycache__/
+.DS_Store
+server_data/
+*.key
+assets/generated/sprites/placeholder/
+
+# Meshy API 金鑰，絕對不進版本庫
+/meshy
+
+# 第三方素材包，原封不動的下載檔，而且每一包自己還帶著 .git
+# 網址和版本記在 docs/資產清單.json，要重新下載照那份做
+art_source/vendor/
+
+# Meshy 下載回來的原始模型和貼圖，七百多 MB
+# 每個資料夾的 task.json 記著任務編號和完整參數，重跑得回來
+# 清理過、真正在用的模型在 assets/generated/models/，那些有進版本庫
+art_source/meshy/raw/
+
+# 執行期產生的紀錄檔，不進版本庫
+client.log
+server.log
+server.err.log
+
+# 後台管理器打包的存檔備份，裡面有帳號資料和伺服器金鑰，絕對不進版本庫
+server_backups/
+# 後台管理器記在這台電腦上的設定，例如 Godot 裝在哪裡，每台電腦不一樣
+tools/manager/local.json
+
+# 使用者自己放金鑰和私人資料的地方，絕對不進版本庫
+ignore_data/
+
+# 刪除一律改成搬移，搬進這個資料夾留底，隨時可整個清掉，不進版本庫
+_待刪除/
+# Blender 自動存的上一版備份
+*.blend1
+
+# 本機產圖的中間檔：候選圖和總覽圖，挑好的才放進 assets
+art_source/textures/painterly/
+art_source/npcs/volume/_raw/
+art_source/concepts/towns/_sheet_*
+art_source/ui/skill_icons/_raw/
+
+# 道具圖示和大插圖的產圖原始檔，種子固定可以重跑，挑好的已經在 assets/ui
+art_source/ui/item_art/
+
+# Rust 編出來的東西，每台電腦自己編
+rust/target/

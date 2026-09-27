@@ -1,0 +1,23 @@
+{
+  "frame_size": [
+    96,
+    96
+  ],
+  "columns": 6,
+  "pixels_per_meter": 64.0,
+  "anchor": [
+    48.0,
+    48.0
+  ],
+  "directions": [
+    "s"
+  ],
+  "actions": {
+    "play": {
+      "row": 0,
+      "frames": 6,
+      "fps": 12,
+      "loop": false
+    }
+  }
+}

@@ -1,0 +1,7 @@
+jf open 粉圓 jf-openhuninn 2.1
+
+來源：justfont，https://github.com/justfont/open-huninn-font
+授權：SIL Open Font License 1.1，可商用，授權全文見上面的專案
+
+這個檔案只是出處與授權的說明，完整授權條款請以專案裡附的 OFL 為準。
+遊戲內文字型用這一套，設定在 project.godot 的 theme/custom_font 和 src/ui/ui_theme.gd 的 font()。

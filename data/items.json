@@ -1,0 +1,1578 @@
+{
+  "red_potion": {
+    "name": "紅色藥水",
+    "type": "consumable",
+    "weight": 7,
+    "buy_price": 50,
+    "sell_price": 25,
+    "description": "紅色藥草搗碎做成的藥。",
+    "effect": {
+      "heal_hp": 55,
+      "heal_sp": 0
+    },
+    "use_color": "#ff5a4a"
+  },
+  "orange_potion": {
+    "name": "橙色藥水",
+    "type": "consumable",
+    "weight": 10,
+    "buy_price": 200,
+    "sell_price": 100,
+    "description": "紅色和黃色藥草一起熬的藥。顏色好像怪怪的…",
+    "effect": {
+      "heal_hp": 170,
+      "heal_sp": 0,
+      "cooldown_ms": 3000
+    },
+    "use_color": "#ff9a3c"
+  },
+  "blue_potion": {
+    "name": "藍色藥水",
+    "type": "consumable",
+    "weight": 15,
+    "buy_price": 5000,
+    "sell_price": 2500,
+    "description": "藍色藥草提煉的藥，好貴喔！",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 40,
+      "cooldown_ms": 5000
+    },
+    "use_color": "#5aa8ff"
+  },
+  "green_potion": {
+    "name": "綠色藥水",
+    "type": "consumable",
+    "weight": 7,
+    "buy_price": 40,
+    "sell_price": 20,
+    "description": "綠色藥草做的藥，喝起來涼涼的。",
+    "effect": {
+      "heal_hp": 22,
+      "heal_sp": 0
+    },
+    "use_color": "#6fd86a"
+  },
+  "small_apple": {
+    "name": "小蘋果",
+    "type": "consumable",
+    "weight": 2,
+    "buy_price": 15,
+    "sell_price": 7,
+    "description": "草原上撿到的小蘋果，咬起來卡滋卡滋。",
+    "effect": {
+      "heal_hp": 16,
+      "heal_sp": 0
+    },
+    "use_color": "#ff6a5a"
+  },
+  "flower_honey": {
+    "name": "花蜜",
+    "type": "consumable",
+    "weight": 10,
+    "buy_price": 1000,
+    "sell_price": 500,
+    "description": "芽蜂辛苦採來的花蜜。拿走了…芽蜂會不會生氣啊？",
+    "effect": {
+      "heal_hp": 150,
+      "heal_sp": 20,
+      "cooldown_ms": 5000
+    },
+    "use_color": "#ffc94a"
+  },
+  "dew_gel": {
+    "name": "露珠凝膠",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 36,
+    "sell_price": 18,
+    "description": "萊姆掉下來的凝膠，QQ的。這個可以吃嗎？"
+  },
+  "clear_dewdrop": {
+    "name": "澄澈露珠",
+    "type": "consumable",
+    "weight": 1,
+    "buy_price": 1200,
+    "sell_price": 600,
+    "description": "很乾淨的露珠。對著太陽看，哇！有彩虹！",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 180
+    },
+    "use_color": "#9fe8ff"
+  },
+  "soft_moss": {
+    "name": "柔軟苔蘚",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 80,
+    "sell_price": 40,
+    "description": "草原上的怪身上常沾著的苔蘚，軟綿綿的。"
+  },
+  "sprout_seed": {
+    "name": "萌芽種子",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 600,
+    "sell_price": 300,
+    "no_sell": true,
+    "description": "會發芽的種子。會長出什麼？種了才知道。"
+  },
+  "bee_stinger": {
+    "name": "蜂針",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 100,
+    "sell_price": 50,
+    "description": "芽蜂的針，摸到會麻麻的。"
+  },
+  "brittle_bone": {
+    "name": "脆骨",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 48,
+    "sell_price": 24,
+    "description": "枯骨兵的骨頭，一折就斷。"
+  },
+  "ash_dust": {
+    "name": "灰燼塵",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 60,
+    "sell_price": 30,
+    "description": "灰蝕留下的灰色粉末。哈啾！"
+  },
+  "knife": {
+    "name": "初心者小刀",
+    "type": "equipment",
+    "weight": 40,
+    "buy_price": 50,
+    "sell_price": 25,
+    "description": "初心者用的小刀。",
+    "slot": "weapon",
+    "atk": 17,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [],
+    "weapon_type": "dagger",
+    "model_attachment": "Knife"
+  },
+  "sword": {
+    "name": "短劍",
+    "type": "equipment",
+    "weight": 50,
+    "buy_price": 100,
+    "sell_price": 50,
+    "description": "普通的短劍。",
+    "slot": "weapon",
+    "atk": 25,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "novice",
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "sword",
+    "model_attachment": "1H_Sword"
+  },
+  "rusty_blade": {
+    "name": "生鏽短刀",
+    "type": "equipment",
+    "weight": 60,
+    "buy_price": 80,
+    "sell_price": 40,
+    "description": "生鏽的短刀…應該還能用吧？",
+    "slot": "weapon",
+    "atk": 20,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 1
+    },
+    "required_level": 1,
+    "jobs": [
+      "novice",
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "sword",
+    "model_attachment": "1H_Sword"
+  },
+  "long_sword": {
+    "name": "長劍",
+    "type": "equipment",
+    "weight": 100,
+    "buy_price": 1500,
+    "sell_price": 750,
+    "description": "很長的雙手劍，揮起來虎虎生風。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 60,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 1
+    },
+    "required_level": 10,
+    "jobs": [
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "two_hand_sword",
+    "model_attachment": "2H_Sword"
+  },
+  "rod": {
+    "name": "法杖",
+    "type": "equipment",
+    "weight": 40,
+    "buy_price": 1200,
+    "sell_price": 600,
+    "description": "鑲著小寶石的法杖，可以引導魔力。",
+    "slot": "weapon",
+    "atk": 15,
+    "matk": 30,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "int": 1
+    },
+    "required_level": 10,
+    "jobs": [
+      "sorcerer",
+      "wizard",
+      "thaumaturge",
+      "archsage",
+      "onmyoji"
+    ],
+    "weapon_type": "staff",
+    "model_attachment": "1H_Wand"
+  },
+  "elder_rod": {
+    "name": "老枝法杖",
+    "type": "equipment",
+    "weight": 55,
+    "buy_price": 9000,
+    "sell_price": 4500,
+    "description": "老樹的樹枝做的法杖。拿久了好像會變成手的形狀？",
+    "slot": "weapon",
+    "atk": 18,
+    "matk": 66,
+    "def": 0,
+    "mdef": 4,
+    "stat_bonus": {
+      "int": 2
+    },
+    "required_level": 20,
+    "jobs": [
+      "sorcerer",
+      "wizard",
+      "thaumaturge",
+      "archsage",
+      "onmyoji"
+    ],
+    "weapon_type": "staff",
+    "model_attachment": "1H_Wand"
+  },
+  "crescent_rod": {
+    "name": "弦月法杖",
+    "type": "equipment",
+    "weight": 60,
+    "buy_price": 24000,
+    "sell_price": 12000,
+    "description": "杖頭彎成一道弦月的法杖，月彎裡夾著一顆小晶石。",
+    "slot": "weapon",
+    "atk": 20,
+    "matk": 84,
+    "def": 0,
+    "mdef": 5,
+    "stat_bonus": {
+      "int": 3
+    },
+    "required_level": 28,
+    "jobs": [
+      "sorcerer",
+      "wizard",
+      "thaumaturge",
+      "archsage",
+      "onmyoji"
+    ],
+    "weapon_type": "staff",
+    "model_attachment": "1H_Wand"
+  },
+  "dawnspire_rod": {
+    "name": "曦尖法杖",
+    "type": "equipment",
+    "weight": 70,
+    "buy_price": 42000,
+    "sell_price": 21000,
+    "description": "天亮前杖頂會自己亮起來，比公雞還準時。",
+    "slot": "weapon",
+    "atk": 24,
+    "matk": 110,
+    "def": 0,
+    "mdef": 7,
+    "stat_bonus": {
+      "int": 3,
+      "dex": 1
+    },
+    "required_level": 40,
+    "jobs": [
+      "sorcerer",
+      "wizard",
+      "thaumaturge",
+      "archsage",
+      "onmyoji"
+    ],
+    "weapon_type": "staff",
+    "model_attachment": "1H_Wand"
+  },
+  "dawn_censer": {
+    "name": "晨曦提爐",
+    "type": "equipment",
+    "weight": 45,
+    "buy_price": 900,
+    "sell_price": 450,
+    "description": "吊在鏈子上的小銅爐，裡面的火不會熄。甩的時候小心燙！",
+    "slot": "weapon",
+    "atk": 20,
+    "matk": 18,
+    "def": 0,
+    "mdef": 2,
+    "stat_bonus": {
+      "int": 1
+    },
+    "required_level": 1,
+    "jobs": [
+      "devout",
+      "clergy",
+      "ascetic",
+      "oracle",
+      "warsaint"
+    ],
+    "weapon_type": "censer",
+    "model_attachment": "1H_Wand"
+  },
+  "vigil_censer": {
+    "name": "守夜提爐",
+    "type": "equipment",
+    "weight": 90,
+    "buy_price": 9000,
+    "sell_price": 4500,
+    "description": "守夜人提的爐子，灰蝕靠近時火會變白。",
+    "slot": "weapon",
+    "atk": 52,
+    "matk": 58,
+    "def": 0,
+    "mdef": 5,
+    "stat_bonus": {
+      "int": 2
+    },
+    "required_level": 20,
+    "jobs": [
+      "devout",
+      "clergy",
+      "ascetic",
+      "oracle",
+      "warsaint"
+    ],
+    "weapon_type": "censer",
+    "model_attachment": "1H_Wand"
+  },
+  "dawnfire_censer": {
+    "name": "曦火提爐",
+    "type": "equipment",
+    "weight": 110,
+    "buy_price": 42000,
+    "sell_price": 21000,
+    "description": "養著晨曦之火的爐子，甩起來會拖出一道光。",
+    "slot": "weapon",
+    "atk": 82,
+    "matk": 96,
+    "def": 0,
+    "mdef": 8,
+    "stat_bonus": {
+      "int": 3,
+      "vit": 1
+    },
+    "required_level": 40,
+    "jobs": [
+      "devout",
+      "clergy",
+      "ascetic",
+      "oracle",
+      "warsaint"
+    ],
+    "weapon_type": "censer",
+    "model_attachment": "1H_Wand"
+  },
+  "bow": {
+    "name": "弓",
+    "type": "equipment",
+    "weight": 50,
+    "buy_price": 1000,
+    "sell_price": 500,
+    "description": "斥候用的短弓。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "dex": 1
+    },
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ],
+    "weapon_type": "bow",
+    "model_attachment": "2H_Crossbow"
+  },
+  "hunting_bow": {
+    "name": "獵弓",
+    "type": "equipment",
+    "weight": 60,
+    "buy_price": 9000,
+    "sell_price": 4500,
+    "description": "獵戶自己削的弓，上面刻了好多記號。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 62,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "dex": 2
+    },
+    "required_level": 20,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ],
+    "weapon_type": "bow",
+    "model_attachment": "2H_Crossbow"
+  },
+  "ridge_bow": {
+    "name": "稜線長弓",
+    "type": "equipment",
+    "weight": 85,
+    "buy_price": 24000,
+    "sell_price": 12000,
+    "description": "又長又硬的弓，大風裡也射得準。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 86,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "dex": 3
+    },
+    "required_level": 28,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ],
+    "weapon_type": "bow",
+    "model_attachment": "2H_Crossbow"
+  },
+  "dawnwing_bow": {
+    "name": "曦翼弓",
+    "type": "equipment",
+    "weight": 95,
+    "buy_price": 42000,
+    "sell_price": 21000,
+    "description": "拉開的時候，弓上的紋路像翅膀一樣張開。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 95,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "dex": 4,
+      "agi": 1
+    },
+    "required_level": 40,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ],
+    "weapon_type": "bow",
+    "model_attachment": "2H_Crossbow"
+  },
+  "guard": {
+    "name": "木盾",
+    "type": "equipment",
+    "weight": 30,
+    "buy_price": 500,
+    "sell_price": 250,
+    "description": "木頭做的圓盾。",
+    "slot": "shield",
+    "atk": 0,
+    "matk": 0,
+    "def": 20,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [],
+    "model_attachment": "Round_Shield"
+  },
+  "cotton_shirt": {
+    "name": "布衣",
+    "type": "equipment",
+    "weight": 10,
+    "buy_price": 10,
+    "sell_price": 5,
+    "description": "棉布做的上衣，穿起來很舒服。",
+    "slot": "armor",
+    "atk": 0,
+    "matk": 0,
+    "def": 10,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": []
+  },
+  "sandals": {
+    "name": "涼鞋",
+    "type": "equipment",
+    "weight": 20,
+    "buy_price": 400,
+    "sell_price": 200,
+    "description": "透氣的涼鞋，走在草原上很輕快。",
+    "slot": "shoes",
+    "atk": 0,
+    "matk": 0,
+    "def": 5,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": []
+  },
+  "cap": {
+    "name": "帽子",
+    "type": "equipment",
+    "weight": 40,
+    "buy_price": 1000,
+    "sell_price": 500,
+    "description": "擋太陽用的布帽。",
+    "slot": "head",
+    "atk": 0,
+    "matk": 0,
+    "def": 7,
+    "mdef": 1,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": []
+  },
+  "beetle_shell": {
+    "name": "蕨甲殼",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 140,
+    "sell_price": 70,
+    "description": "蕨葉蟲的殼，硬硬的。"
+  },
+  "glow_spore_cap": {
+    "name": "微光菌傘",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 180,
+    "sell_price": 90,
+    "description": "會發光的菇傘。晚上不用點燈了！"
+  },
+  "dry_branch": {
+    "name": "枯枝",
+    "type": "etc",
+    "weight": 2,
+    "buy_price": 200,
+    "sell_price": 100,
+    "description": "乾巴巴的樹枝，拿來生火剛好。"
+  },
+  "wolf_fang": {
+    "name": "灰狼牙",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 200,
+    "sell_price": 100,
+    "description": "灰蝕狼的牙齒，尖尖的。"
+  },
+  "wolf_pelt": {
+    "name": "灰狼皮",
+    "type": "etc",
+    "weight": 3,
+    "buy_price": 400,
+    "sell_price": 200,
+    "description": "灰蝕狼的毛皮，洗乾淨還蠻暖的。"
+  },
+  "snail_shell": {
+    "name": "岩殼",
+    "type": "etc",
+    "weight": 4,
+    "buy_price": 340,
+    "sell_price": 170,
+    "description": "岩殼蝸的殼，好重喔！"
+  },
+  "flint_shard": {
+    "name": "燧石片",
+    "type": "etc",
+    "weight": 2,
+    "buy_price": 240,
+    "sell_price": 120,
+    "description": "敲一敲會冒火花的石頭。"
+  },
+  "rat_tail": {
+    "name": "碎石鼠尾",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 400,
+    "sell_price": 200,
+    "description": "碎石鼠的尾巴…有點臭。"
+  },
+  "vulture_feather": {
+    "name": "禿鷲羽",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 600,
+    "sell_price": 300,
+    "description": "禿鷲的長羽毛，可以拿來做箭羽。"
+  },
+  "bird_meat": {
+    "name": "禽肉",
+    "type": "consumable",
+    "weight": 5,
+    "buy_price": 60,
+    "sell_price": 30,
+    "description": "禿鷲的肉。烤一烤應該可以吃吧？",
+    "effect": {
+      "heal_hp": 120,
+      "heal_sp": 0,
+      "cooldown_ms": 3000
+    },
+    "use_color": "#ffb070"
+  },
+  "bat_wing": {
+    "name": "蝠翼",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 600,
+    "sell_price": 300,
+    "description": "洞窟蝠的翅膀，薄薄的。"
+  },
+  "rotten_cloth": {
+    "name": "腐布",
+    "type": "etc",
+    "weight": 2,
+    "buy_price": 400,
+    "sell_price": 200,
+    "description": "腐朽行屍身上的破布。嗚…好臭！"
+  },
+  "bone_arrowhead": {
+    "name": "骨鏃",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 1100,
+    "sell_price": 550,
+    "description": "骨頭磨成的箭頭。"
+  },
+  "gloom_ember": {
+    "name": "灰蝕餘燼",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 800,
+    "sell_price": 400,
+    "description": "燒剩的餘燼，摸起來竟然是冰的？"
+  },
+  "hollow_plate": {
+    "name": "空殼甲片",
+    "type": "etc",
+    "weight": 5,
+    "buy_price": 1400,
+    "sell_price": 700,
+    "description": "空殼騎士的甲片，敲起來空空的。"
+  },
+  "ash_crown_shard": {
+    "name": "骸冠碎片",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 3000,
+    "sell_price": 1500,
+    "description": "灰蝕骸冠的王冠碎片。"
+  },
+  "sovereign_core": {
+    "name": "灰蝕核",
+    "type": "etc",
+    "weight": 2,
+    "buy_price": 20000,
+    "sell_price": 10000,
+    "description": "灰蝕骸冠身體裡的核心，看久了會頭暈。"
+  },
+  "steel_blade": {
+    "name": "鋼刃劍",
+    "type": "equipment",
+    "weight": 120,
+    "buy_price": 9000,
+    "sell_price": 4500,
+    "description": "鐵匠用燧石回火打的雙手劍。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 95,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 2
+    },
+    "required_level": 20,
+    "jobs": [
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "two_hand_sword",
+    "model_attachment": "2H_Sword"
+  },
+  "ridge_greatsword": {
+    "name": "稜岩大劍",
+    "type": "equipment",
+    "weight": 150,
+    "buy_price": 26000,
+    "sell_price": 13000,
+    "description": "石頭一樣厚的劍身，砍下去地都會震一下。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 130,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 3
+    },
+    "required_level": 28,
+    "jobs": [
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "two_hand_sword",
+    "model_attachment": "2H_Sword"
+  },
+  "ashguard_plate": {
+    "name": "禦灰甲",
+    "type": "equipment",
+    "weight": 90,
+    "buy_price": 7200,
+    "sell_price": 3600,
+    "description": "縫了萌芽種子纖維的甲衣，灰蝕比較不容易滲進來。",
+    "slot": "armor",
+    "atk": 0,
+    "matk": 0,
+    "def": 34,
+    "mdef": 8,
+    "stat_bonus": {
+      "vit": 2
+    },
+    "required_level": 25,
+    "jobs": []
+  },
+  "warden_blade": {
+    "name": "守林劍",
+    "type": "equipment",
+    "weight": 140,
+    "buy_price": 42000,
+    "sell_price": 21000,
+    "description": "守護者傳下來的長劍，靠近灰蝕會發亮。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 150,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 3,
+      "luk": 1
+    },
+    "required_level": 40,
+    "jobs": [
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "two_hand_sword",
+    "model_attachment": "2H_Sword"
+  },
+  "verdant_mail": {
+    "name": "翠生鎧",
+    "type": "equipment",
+    "weight": 120,
+    "buy_price": 36000,
+    "sell_price": 18000,
+    "description": "活藤蔓長成的鎧甲。它…在呼吸嗎？",
+    "slot": "armor",
+    "atk": 0,
+    "matk": 0,
+    "def": 60,
+    "mdef": 18,
+    "stat_bonus": {
+      "vit": 3
+    },
+    "required_level": 40,
+    "jobs": []
+  },
+  "verdant_draught": {
+    "name": "翠生藥劑",
+    "type": "consumable",
+    "weight": 14,
+    "buy_price": 900,
+    "sell_price": 450,
+    "description": "萌芽種子熬的濃綠藥劑。好苦！",
+    "effect": {
+      "heal_hp": 480,
+      "heal_sp": 0
+    },
+    "use_color": "#5fe08a"
+  },
+  "dawn_tonic": {
+    "name": "晨曦露飲",
+    "type": "consumable",
+    "weight": 18,
+    "buy_price": 3200,
+    "sell_price": 1600,
+    "description": "加了澄澈露珠的藥飲，喝完神清氣爽。",
+    "effect": {
+      "heal_hp": 950,
+      "heal_sp": 60
+    },
+    "use_color": "#ffe08a"
+  },
+  "town_scroll": {
+    "name": "回城卷軸",
+    "type": "consumable",
+    "weight": 5,
+    "buy_price": 600,
+    "sell_price": 300,
+    "description": "撕開就能回到存檔點的捲軸。",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 0,
+      "return_town": true,
+      "cooldown_ms": 60000
+    },
+    "use_color": "#fff0b0"
+  },
+  "hourglass_edge": {
+    "name": "沙漏刃",
+    "type": "equipment",
+    "weight": 90,
+    "buy_price": 20000,
+    "sell_price": 10000,
+    "description": "刀身裡的沙子一直在落，被砍到的人動作會變慢。",
+    "slot": "weapon",
+    "atk": 94,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "dex": 2
+    },
+    "required_level": 30,
+    "jobs": [
+      "squire",
+      "holyblade",
+      "scout",
+      "hunter",
+      "sorcerer",
+      "wizard",
+      "novice",
+      "bladesman",
+      "champion",
+      "assassin",
+      "sniper",
+      "thaumaturge",
+      "archsage",
+      "blademaster",
+      "ninja",
+      "onmyoji"
+    ],
+    "weapon_type": "dagger",
+    "model_attachment": "Knife"
+  },
+  "riftcutter": {
+    "name": "裂隙切",
+    "type": "equipment",
+    "weight": 130,
+    "buy_price": 56000,
+    "sell_price": 28000,
+    "description": "砍出去的是一道裂縫，盔甲也擋不住。",
+    "slot": "weapon",
+    "two_handed": true,
+    "atk": 140,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 2
+    },
+    "required_level": 32,
+    "jobs": [
+      "squire",
+      "holyblade",
+      "bladesman",
+      "champion",
+      "blademaster"
+    ],
+    "weapon_type": "two_hand_sword",
+    "model_attachment": "2H_Sword"
+  },
+  "refine_dust": {
+    "name": "精煉砂",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 120,
+    "sell_price": 60,
+    "description": "磨裝備用的細砂。"
+  },
+  "refine_charm": {
+    "name": "萌芽護符",
+    "type": "etc",
+    "weight": 2,
+    "buy_price": 12000,
+    "sell_price": 6000,
+    "no_sell": true,
+    "description": "精煉失敗時會代替裝備碎掉的護符。"
+  },
+  "dawn_seal": {
+    "name": "晨曦封印",
+    "type": "etc",
+    "weight": 3,
+    "buy_price": 40000,
+    "sell_price": 20000,
+    "no_sell": true,
+    "description": "精煉失敗時由它扛下來，裝備一級都不會掉。"
+  },
+  "affix_solvent": {
+    "name": "重鑄溶劑",
+    "type": "etc",
+    "weight": 3,
+    "buy_price": 3600,
+    "sell_price": 1800,
+    "description": "可以把裝備上的詞綴洗掉重來。會變好還是變壞呢？"
+  },
+  "mossweave_robe": {
+    "name": "苔織袍",
+    "type": "equipment",
+    "weight": 45,
+    "buy_price": 1100,
+    "sell_price": 550,
+    "description": "苔蘚織成的長袍，透氣又防蟲。",
+    "slot": "armor",
+    "atk": 0,
+    "matk": 0,
+    "def": 14,
+    "mdef": 4,
+    "stat_bonus": {},
+    "required_level": 8,
+    "jobs": []
+  },
+  "flint_dagger": {
+    "name": "燧刃",
+    "type": "equipment",
+    "weight": 55,
+    "buy_price": 1700,
+    "sell_price": 850,
+    "description": "燧石磨成的短刀，揮起來會冒火花。",
+    "slot": "weapon",
+    "atk": 34,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "dex": 1
+    },
+    "required_level": 12,
+    "jobs": [],
+    "weapon_type": "dagger",
+    "model_attachment": "Knife"
+  },
+  "emberguard_cape": {
+    "name": "燼護披",
+    "type": "equipment",
+    "weight": 35,
+    "buy_price": 6400,
+    "sell_price": 3200,
+    "description": "蝠翼和餘燼縫成的披肩，摸起來暖暖的。",
+    "slot": "garment",
+    "atk": 0,
+    "matk": 0,
+    "def": 12,
+    "mdef": 8,
+    "stat_bonus": {
+      "vit": 1
+    },
+    "required_level": 24,
+    "jobs": []
+  },
+  "travel_cloak": {
+    "name": "旅人斗篷",
+    "type": "equipment",
+    "weight": 20,
+    "buy_price": 480,
+    "sell_price": 240,
+    "description": "旅人的斗篷。",
+    "slot": "garment",
+    "atk": 0,
+    "matk": 0,
+    "def": 4,
+    "mdef": 2,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": []
+  },
+  "guardian_cape": {
+    "name": "守護者披風",
+    "type": "equipment",
+    "weight": 45,
+    "buy_price": 1080,
+    "sell_price": 540,
+    "description": "守護者的披風。",
+    "slot": "garment",
+    "atk": 0,
+    "matk": 0,
+    "def": 9,
+    "mdef": 5,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": []
+  },
+  "tattered_cloak": {
+    "name": "破舊斗篷",
+    "type": "equipment",
+    "weight": 8,
+    "buy_price": 240,
+    "sell_price": 120,
+    "description": "破破爛爛的斗篷…還能穿嗎？",
+    "slot": "garment",
+    "atk": 0,
+    "matk": 0,
+    "def": 2,
+    "mdef": 1,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": []
+  },
+  "dawn_edge": {
+    "name": "晨曦刃",
+    "type": "equipment",
+    "weight": 50,
+    "buy_price": 3600,
+    "sell_price": 1800,
+    "description": "刃口帶著微光的短刀。",
+    "slot": "weapon",
+    "atk": 36,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "luk": 1
+    },
+    "required_level": 12,
+    "jobs": [
+      "novice",
+      "squire",
+      "holyblade",
+      "sorcerer",
+      "wizard",
+      "scout",
+      "hunter",
+      "devout",
+      "clergy",
+      "bladesman",
+      "champion",
+      "thaumaturge",
+      "archsage",
+      "assassin",
+      "sniper",
+      "ascetic",
+      "oracle",
+      "blademaster",
+      "onmyoji",
+      "ninja",
+      "warsaint"
+    ],
+    "weapon_type": "dagger",
+    "model_attachment": "Knife"
+  },
+  "dawnbreak_edge": {
+    "name": "破曉刃",
+    "type": "equipment",
+    "weight": 50,
+    "buy_price": 18000,
+    "sell_price": 9000,
+    "description": "揮過去會留下一道白光的短刀。",
+    "slot": "weapon",
+    "atk": 91,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {
+      "str": 2,
+      "luk": 2
+    },
+    "required_level": 28,
+    "jobs": [
+      "novice",
+      "squire",
+      "holyblade",
+      "sorcerer",
+      "wizard",
+      "scout",
+      "hunter",
+      "devout",
+      "clergy",
+      "bladesman",
+      "champion",
+      "thaumaturge",
+      "archsage",
+      "assassin",
+      "sniper",
+      "ascetic",
+      "oracle",
+      "blademaster",
+      "onmyoji",
+      "ninja",
+      "warsaint"
+    ],
+    "weapon_type": "dagger",
+    "model_attachment": "Knife"
+  },
+  "soul_horn_slime": {
+    "name": "萊姆的色魄",
+    "type": "etc",
+    "weight": 10,
+    "buy_price": 0,
+    "sell_price": 10,
+    "description": "萊姆的色魄，Q彈Q彈的。",
+    "colour_soul": {
+      "slot": "shield",
+      "effect": {
+        "reflect_chance_percent": 10,
+        "reflect_percent": 20
+      }
+    }
+  },
+  "soul_leaf_sprout": {
+    "name": "小樹苗的色魄",
+    "type": "etc",
+    "weight": 10,
+    "buy_price": 0,
+    "sell_price": 10,
+    "description": "小樹苗的色魄，有太陽的味道。",
+    "colour_soul": {
+      "slot": "head",
+      "effect": {
+        "hp_regen": 5
+      }
+    }
+  },
+  "soul_crystal_bunny": {
+    "name": "水晶兔的色魄",
+    "type": "etc",
+    "weight": 10,
+    "buy_price": 0,
+    "sell_price": 10,
+    "description": "水晶兔的色魄，亮晶晶的。",
+    "colour_soul": {
+      "slot": "shoes",
+      "effect": {
+        "flee": 5,
+        "move_speed_percent": 5
+      }
+    }
+  },
+  "soul_stump_king": {
+    "name": "木樁王的色魄",
+    "type": "etc",
+    "weight": 10,
+    "buy_price": 0,
+    "sell_price": 10,
+    "description": "木樁王的色魄，好硬！",
+    "colour_soul": {
+      "slot": "armor",
+      "effect": {
+        "max_hp_percent": 10,
+        "damage_taken_percent": -5
+      }
+    }
+  },
+  "seed_stump_king": {
+    "name": "年輪色種",
+    "type": "etc",
+    "weight": 10,
+    "buy_price": 0,
+    "sell_price": 10,
+    "description": "木樁王的種子，上面有一圈一圈的年輪。",
+    "colour_seed": {
+      "element": "earth",
+      "trait": "rings",
+      "tier": 1
+    }
+  },
+  "paint_blue": {
+    "name": "藍顏料",
+    "type": "consumable",
+    "weight": 2,
+    "buy_price": 0,
+    "sell_price": 1,
+    "description": "從怪物身上搶回來的藍顏料。",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 0,
+      "chroma": 12,
+      "cooldown_ms": 2000
+    },
+    "use_color": "#5aa8ff"
+  },
+  "paint_green_rich": {
+    "name": "濃綠顏料",
+    "type": "consumable",
+    "weight": 2,
+    "buy_price": 0,
+    "sell_price": 3,
+    "description": "花圃裡養濃的綠顏料，黏稠稠的。",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 0,
+      "chroma": 30,
+      "cooldown_ms": 2000
+    },
+    "use_color": "#4fd070"
+  },
+  "paint_blue_rich": {
+    "name": "濃藍顏料",
+    "type": "consumable",
+    "weight": 2,
+    "buy_price": 0,
+    "sell_price": 3,
+    "description": "花圃裡養濃的藍顏料，黏稠稠的。",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 0,
+      "chroma": 30,
+      "cooldown_ms": 2000
+    },
+    "use_color": "#4a90ff"
+  },
+  "paint_green": {
+    "name": "綠顏料",
+    "type": "consumable",
+    "weight": 2,
+    "buy_price": 0,
+    "sell_price": 1,
+    "description": "從怪物身上搶回來的綠顏料。",
+    "effect": {
+      "heal_hp": 0,
+      "heal_sp": 0,
+      "chroma": 12,
+      "cooldown_ms": 2000
+    },
+    "use_color": "#6fd86a"
+  },
+  "twig_straight": {
+    "name": "筆直的嫩枝",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 1,
+    "description": "筆直得可以拿來當尺。"
+  },
+  "twig_bent": {
+    "name": "有點彎的嫩枝",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 1,
+    "description": "有一點點彎，還算堪用。"
+  },
+  "twig_curly": {
+    "name": "很彎的嫩枝",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 1,
+    "description": "彎成這樣…射得出去嗎？"
+  },
+  "twig_knotted": {
+    "name": "打結的嫩枝",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 1,
+    "description": "打了一個結。到底怎麼長的？"
+  },
+  "solution_1": {
+    "name": "一號溶液",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 0,
+    "no_sell": true,
+    "no_trade": true,
+    "description": "一號溶液。聞起來像下過雨的草地。"
+  },
+  "solution_2": {
+    "name": "二號溶液",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 0,
+    "no_sell": true,
+    "no_trade": true,
+    "description": "二號溶液。紅紅的，會冒小泡泡。"
+  },
+  "solution_3": {
+    "name": "三號溶液",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 0,
+    "no_sell": true,
+    "no_trade": true,
+    "description": "三號溶液。藍得發亮，不要喝。"
+  },
+  "solution_4": {
+    "name": "四號溶液",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 0,
+    "no_sell": true,
+    "no_trade": true,
+    "description": "四號溶液。裡面好像有東西在閃。"
+  },
+  "solution_failed": {
+    "name": "失敗的溶液",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 0,
+    "no_sell": true,
+    "no_trade": true,
+    "description": "失敗的溶液。冒著黑煙…還是別碰比較好。"
+  },
+  "solution_mystery": {
+    "name": "神秘的溶液",
+    "type": "etc",
+    "weight": 1,
+    "buy_price": 0,
+    "sell_price": 0,
+    "no_sell": true,
+    "no_trade": true,
+    "description": "紫紫的，會自己冒泡。露娜說不要做，你還是做了。"
+  },
+  "arrow": {
+    "name": "箭矢",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 1,
+    "sell_price": 0,
+    "description": "木頭削的普通箭矢，弓手每天都要用上一大把。",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "neutral",
+    "atk": 25,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  },
+  "fire_arrow": {
+    "name": "火焰箭",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 3,
+    "sell_price": 1,
+    "description": "箭頭抹了會燒的紅色顏料，射出去一路冒火星。",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "fire",
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  },
+  "crystal_arrow": {
+    "name": "水晶箭",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 3,
+    "sell_price": 1,
+    "description": "箭頭是一小塊冰涼的水色結晶。",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "water",
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  },
+  "wind_arrow": {
+    "name": "風之箭",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 3,
+    "sell_price": 1,
+    "description": "尾羽特別輕，射出去會咻地拐一下…",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "wind",
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  },
+  "stone_arrow": {
+    "name": "石頭箭",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 3,
+    "sell_price": 1,
+    "description": "箭頭磨成尖石，沉甸甸的。",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "earth",
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  },
+  "silver_arrow": {
+    "name": "銀箭",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 3,
+    "sell_price": 1,
+    "description": "鍍了一層銀，照到光會亮晶晶喔。",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "light",
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  },
+  "shadow_arrow": {
+    "name": "影子箭",
+    "type": "equipment",
+    "weight": 0.1,
+    "buy_price": 3,
+    "sell_price": 1,
+    "description": "黑漆漆的，拿在手上都看不太清楚。",
+    "slot": "ammo",
+    "ammo_type": "arrow",
+    "element": "dark",
+    "atk": 30,
+    "matk": 0,
+    "def": 0,
+    "mdef": 0,
+    "stat_bonus": {},
+    "required_level": 1,
+    "jobs": [
+      "scout",
+      "hunter",
+      "assassin",
+      "sniper",
+      "ninja"
+    ]
+  }
+}

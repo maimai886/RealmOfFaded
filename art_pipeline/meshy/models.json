@@ -1,0 +1,833 @@
+{
+  "note": "Meshy lite 圖轉 3D 產的城鎮建築和小件。height_m 是整理後的實際高度公尺，texture_px 是貼圖邊長上限；measured 由 import_models.py 量出來寫回，half 是佔地半寬 [x, z] 公尺。概念圖在 art_source/concepts/towns，做法見 docs/城鎮建築產線.md",
+  "models": {
+    "dawn/house_1": {
+      "height_m": 7.0,
+      "texture_px": 2048,
+      "about": "晨曦鎮民房，2026-09-25 第一次試做",
+      "measured": {
+        "half": [
+          2.85,
+          3.03
+        ],
+        "faces": 7967
+      }
+    },
+    "dawn/house_2": {
+      "height_m": 6.0,
+      "texture_px": 2048,
+      "about": "晨曦鎮小屋",
+      "measured": {
+        "half": [
+          3.31,
+          3.05
+        ],
+        "faces": 8051
+      }
+    },
+    "dawn/inn": {
+      "height_m": 8.5,
+      "texture_px": 2048,
+      "about": "旅店",
+      "measured": {
+        "half": [
+          3.81,
+          3.33
+        ],
+        "faces": 7969
+      }
+    },
+    "dawn/smithy": {
+      "height_m": 6.0,
+      "texture_px": 2048,
+      "about": "鐵匠鋪",
+      "measured": {
+        "half": [
+          2.78,
+          3.26
+        ],
+        "faces": 7781
+      }
+    },
+    "dawn/storage": {
+      "height_m": 7.5,
+      "texture_px": 2048,
+      "about": "倉庫",
+      "measured": {
+        "half": [
+          3.54,
+          3.61
+        ],
+        "faces": 7993
+      }
+    },
+    "dawn/town_hall": {
+      "height_m": 11.0,
+      "texture_px": 2048,
+      "about": "市政廳加圓鐘塔",
+      "measured": {
+        "half": [
+          3.78,
+          4.52
+        ],
+        "faces": 8002
+      }
+    },
+    "dawn/windmill": {
+      "height_m": 11.0,
+      "texture_px": 2048,
+      "about": "風車",
+      "measured": {
+        "half": [
+          3.18,
+          3.21
+        ],
+        "faces": 5128
+      }
+    },
+    "magic/academy_tower": {
+      "height_m": 16.0,
+      "texture_px": 2048,
+      "about": "洄潮港學院高塔",
+      "measured": {
+        "half": [
+          2.23,
+          1.72
+        ],
+        "faces": 7718
+      }
+    },
+    "magic/observatory": {
+      "height_m": 8.0,
+      "texture_px": 2048,
+      "about": "觀星台",
+      "measured": {
+        "half": [
+          3.01,
+          2.73
+        ],
+        "faces": 7736
+      }
+    },
+    "magic/academy_hall": {
+      "height_m": 9.0,
+      "texture_px": 2048,
+      "about": "學院大廳",
+      "measured": {
+        "half": [
+          3.84,
+          6.1
+        ],
+        "faces": 7676
+      }
+    },
+    "magic/canal_house": {
+      "height_m": 9.0,
+      "texture_px": 2048,
+      "about": "運河屋",
+      "measured": {
+        "half": [
+          3.82,
+          4.51
+        ],
+        "faces": 7362
+      }
+    },
+    "magic/bridge": {
+      "height_m": 3.0,
+      "texture_px": 1024,
+      "about": "石拱橋",
+      "measured": {
+        "half": [
+          4.02,
+          2.1
+        ],
+        "faces": 3656
+      }
+    },
+    "magic/crystal_well": {
+      "height_m": 3.2,
+      "texture_px": 1024,
+      "about": "水晶噴泉",
+      "measured": {
+        "half": [
+          1.88,
+          1.88
+        ],
+        "faces": 3087
+      }
+    },
+    "japan/inn": {
+      "height_m": 8.0,
+      "texture_px": 2048,
+      "about": "旅館",
+      "measured": {
+        "half": [
+          3.87,
+          4.26
+        ],
+        "faces": 7553
+      }
+    },
+    "japan/pagoda": {
+      "height_m": 16.0,
+      "texture_px": 2048,
+      "about": "五重塔",
+      "measured": {
+        "half": [
+          3.65,
+          3.65
+        ],
+        "faces": 8016
+      }
+    },
+    "japan/shrine": {
+      "height_m": 7.0,
+      "texture_px": 2048,
+      "about": "神社加鳥居",
+      "measured": {
+        "half": [
+          3.15,
+          3.14
+        ],
+        "faces": 7888
+      }
+    },
+    "parts/market_stall": {
+      "height_m": 3.2,
+      "texture_px": 1024,
+      "about": "市集攤位",
+      "measured": {
+        "half": [
+          1.47,
+          1.23
+        ],
+        "faces": 2858
+      }
+    },
+    "parts/awning": {
+      "height_m": 2.8,
+      "texture_px": 1024,
+      "about": "條紋雨棚，貼牆用",
+      "measured": {
+        "half": [
+          1.54,
+          1.25
+        ],
+        "faces": 2761
+      }
+    },
+    "parts/balcony": {
+      "height_m": 1.6,
+      "texture_px": 1024,
+      "about": "木陽台，貼牆用",
+      "measured": {
+        "half": [
+          0.9,
+          0.82
+        ],
+        "faces": 2666
+      }
+    },
+    "parts/stairs": {
+      "height_m": 1.6,
+      "texture_px": 1024,
+      "about": "石階",
+      "measured": {
+        "half": [
+          1.21,
+          1.32
+        ],
+        "faces": 2977
+      }
+    },
+    "parts/well": {
+      "height_m": 3.2,
+      "texture_px": 1024,
+      "about": "水井",
+      "measured": {
+        "half": [
+          1.31,
+          1.25
+        ],
+        "faces": 3055
+      }
+    },
+    "parts/torii": {
+      "height_m": 5.0,
+      "texture_px": 1024,
+      "about": "鳥居",
+      "measured": {
+        "half": [
+          2.54,
+          0.6
+        ],
+        "faces": 2957
+      }
+    },
+    "parts/stone_lantern": {
+      "height_m": 1.8,
+      "texture_px": 1024,
+      "about": "石燈籠",
+      "measured": {
+        "half": [
+          0.7,
+          0.7
+        ],
+        "faces": 2919
+      }
+    },
+    "keep/gatehouse": {
+      "height_m": 10,
+      "texture_px": 2048,
+      "about": "礪岩堡城門",
+      "measured": {
+        "half": [
+          5.33,
+          5.16
+        ],
+        "faces": 7886
+      }
+    },
+    "keep/barracks": {
+      "height_m": 6.5,
+      "texture_px": 2048,
+      "about": "營房",
+      "measured": {
+        "half": [
+          5.72,
+          3.51
+        ],
+        "faces": 7628
+      }
+    },
+    "keep/great_hall": {
+      "height_m": 13,
+      "texture_px": 2048,
+      "about": "團長廳",
+      "measured": {
+        "half": [
+          4.17,
+          4.21
+        ],
+        "faces": 7615
+      }
+    },
+    "keep/watchtower": {
+      "height_m": 13,
+      "texture_px": 2048,
+      "about": "瞭望塔",
+      "measured": {
+        "half": [
+          2.45,
+          2.45
+        ],
+        "faces": 7689
+      }
+    },
+    "keep/forge": {
+      "height_m": 6.5,
+      "texture_px": 2048,
+      "about": "兵器鍛造",
+      "measured": {
+        "half": [
+          2.67,
+          3.26
+        ],
+        "faces": 7863
+      }
+    },
+    "keep/oath_stone": {
+      "height_m": 5,
+      "texture_px": 2048,
+      "about": "誓約石",
+      "measured": {
+        "half": [
+          3.51,
+          3.51
+        ],
+        "faces": 3982
+      }
+    },
+    "highbough/tree_platform": {
+      "height_m": 10,
+      "texture_px": 2048,
+      "about": "樹屋平台",
+      "measured": {
+        "half": [
+          3.6,
+          3.61
+        ],
+        "faces": 6015
+      }
+    },
+    "highbough/lookout": {
+      "height_m": 11,
+      "texture_px": 2048,
+      "about": "瞭望哨",
+      "measured": {
+        "half": [
+          2.62,
+          2.78
+        ],
+        "faces": 6054
+      }
+    },
+    "highbough/stilt_hut": {
+      "height_m": 8,
+      "texture_px": 2048,
+      "about": "高腳獵屋",
+      "measured": {
+        "half": [
+          2.64,
+          2.88
+        ],
+        "faces": 5793
+      }
+    },
+    "highbough/ladder_post": {
+      "height_m": 10,
+      "texture_px": 2048,
+      "about": "爬梯塔",
+      "measured": {
+        "half": [
+          1.46,
+          2.1
+        ],
+        "faces": 6117
+      }
+    },
+    "highbough/rope_bridge": {
+      "height_m": 3,
+      "texture_px": 2048,
+      "about": "繩橋",
+      "measured": {
+        "half": [
+          2.8,
+          1.46
+        ],
+        "faces": 2998
+      }
+    },
+    "lanternford/chapel": {
+      "height_m": 8,
+      "texture_px": 2048,
+      "about": "河邊禮拜堂",
+      "measured": {
+        "half": [
+          3.84,
+          3.97
+        ],
+        "faces": 7677
+      }
+    },
+    "lanternford/almshouse": {
+      "height_m": 6.5,
+      "texture_px": 2048,
+      "about": "長廊安養院",
+      "measured": {
+        "half": [
+          7.42,
+          3.73
+        ],
+        "faces": 7529
+      }
+    },
+    "lanternford/covered_bridge": {
+      "height_m": 5.5,
+      "texture_px": 2048,
+      "about": "有頂長橋",
+      "measured": {
+        "half": [
+          4.55,
+          2.26
+        ],
+        "faces": 8050
+      }
+    },
+    "lanternford/bell_tower": {
+      "height_m": 15,
+      "texture_px": 2048,
+      "about": "鐘樓",
+      "measured": {
+        "half": [
+          2.08,
+          2.08
+        ],
+        "faces": 7731
+      }
+    },
+    "lanternford/boathouse": {
+      "height_m": 5,
+      "texture_px": 2048,
+      "about": "渡船屋",
+      "measured": {
+        "half": [
+          4.67,
+          5.08
+        ],
+        "faces": 7890
+      }
+    },
+    "lanternford/herb_shop": {
+      "height_m": 5.5,
+      "texture_px": 2048,
+      "about": "藥草店",
+      "measured": {
+        "half": [
+          3.05,
+          3.04
+        ],
+        "faces": 7824
+      }
+    },
+    "japan/dojo": {
+      "height_m": 7,
+      "texture_px": 2048,
+      "about": "道場",
+      "measured": {
+        "half": [
+          4.26,
+          3.43
+        ],
+        "faces": 7943
+      }
+    },
+    "japan/onmyo_office": {
+      "height_m": 8,
+      "texture_px": 2048,
+      "about": "陰陽寮",
+      "measured": {
+        "half": [
+          4.52,
+          4.27
+        ],
+        "faces": 7815
+      }
+    },
+    "japan/ninja_house": {
+      "height_m": 6.5,
+      "texture_px": 2048,
+      "about": "忍者屋",
+      "measured": {
+        "half": [
+          3.42,
+          3.45
+        ],
+        "faces": 7552
+      }
+    },
+    "japan/ascetic_hall": {
+      "height_m": 7,
+      "texture_px": 2048,
+      "about": "山伏堂",
+      "measured": {
+        "half": [
+          2.88,
+          2.87
+        ],
+        "faces": 7474
+      }
+    },
+    "japan/forge": {
+      "height_m": 6,
+      "texture_px": 2048,
+      "about": "刀鍛冶",
+      "measured": {
+        "half": [
+          3.21,
+          2.73
+        ],
+        "faces": 7869
+      }
+    },
+    "japan/gate": {
+      "height_m": 7,
+      "texture_px": 2048,
+      "about": "城門",
+      "measured": {
+        "half": [
+          4.03,
+          2.44
+        ],
+        "faces": 7716
+      }
+    },
+    "japan/tea_house": {
+      "height_m": 5,
+      "texture_px": 2048,
+      "about": "茶屋",
+      "measured": {
+        "half": [
+          3.09,
+          3.0
+        ],
+        "faces": 7932
+      }
+    },
+    "furniture/counter": {
+      "height_m": 1.1,
+      "texture_px": 1024,
+      "about": "櫃台",
+      "measured": {
+        "half": [
+          0.7,
+          0.47
+        ],
+        "faces": 2744
+      }
+    },
+    "furniture/shelf": {
+      "height_m": 2.3,
+      "texture_px": 1024,
+      "about": "商店貨架",
+      "measured": {
+        "half": [
+          0.62,
+          0.28
+        ],
+        "faces": 2936
+      }
+    },
+    "furniture/bookshelf": {
+      "height_m": 2.3,
+      "texture_px": 1024,
+      "about": "書架",
+      "measured": {
+        "half": [
+          0.54,
+          0.33
+        ],
+        "faces": 2755
+      }
+    },
+    "furniture/table_set": {
+      "height_m": 1.1,
+      "texture_px": 1024,
+      "about": "圓桌加凳子",
+      "measured": {
+        "half": [
+          0.7,
+          0.7
+        ],
+        "faces": 2964
+      }
+    },
+    "furniture/bed": {
+      "height_m": 1.1,
+      "texture_px": 1024,
+      "about": "床",
+      "measured": {
+        "half": [
+          0.93,
+          1.1
+        ],
+        "faces": 2622
+      }
+    },
+    "furniture/fireplace": {
+      "height_m": 2.4,
+      "texture_px": 1024,
+      "about": "壁爐",
+      "measured": {
+        "half": [
+          0.93,
+          0.6
+        ],
+        "faces": 3057
+      }
+    },
+    "furniture/anvil_set": {
+      "height_m": 1.6,
+      "texture_px": 1024,
+      "about": "鐵砧",
+      "measured": {
+        "half": [
+          1.14,
+          0.82
+        ],
+        "faces": 3084
+      }
+    },
+    "furniture/crates": {
+      "height_m": 1.5,
+      "texture_px": 1024,
+      "about": "木箱麻袋",
+      "measured": {
+        "half": [
+          0.75,
+          0.83
+        ],
+        "faces": 2985
+      }
+    },
+    "furniture/altar": {
+      "height_m": 1.6,
+      "texture_px": 1024,
+      "about": "祭壇",
+      "measured": {
+        "half": [
+          0.8,
+          0.61
+        ],
+        "faces": 2917
+      }
+    },
+    "furniture/desk": {
+      "height_m": 1.5,
+      "texture_px": 1024,
+      "about": "書桌",
+      "measured": {
+        "half": [
+          0.7,
+          0.73
+        ],
+        "faces": 2941
+      }
+    },
+    "furniture/weapon_rack": {
+      "height_m": 2.0,
+      "texture_px": 1024,
+      "about": "兵器架",
+      "measured": {
+        "half": [
+          0.83,
+          0.55
+        ],
+        "faces": 3002
+      }
+    },
+    "furniture/low_table": {
+      "height_m": 0.6,
+      "texture_px": 1024,
+      "about": "日式矮桌",
+      "measured": {
+        "half": [
+          0.8,
+          0.8
+        ],
+        "faces": 2527
+      }
+    },
+    "furniture/kakejiku": {
+      "height_m": 2.2,
+      "texture_px": 1024,
+      "about": "床之間掛軸",
+      "measured": {
+        "half": [
+          0.93,
+          0.52
+        ],
+        "faces": 2701
+      }
+    },
+    "furniture/sword_stand": {
+      "height_m": 1.0,
+      "texture_px": 1024,
+      "about": "刀架",
+      "measured": {
+        "half": [
+          0.41,
+          0.18
+        ],
+        "faces": 2689
+      }
+    },
+    "dawn/item_shop": {
+      "height_m": 6.5,
+      "texture_px": 2048,
+      "about": "道具店",
+      "measured": {
+        "half": [
+          3.45,
+          2.77
+        ],
+        "faces": 7961
+      }
+    },
+    "street/bench": {
+      "height_m": 0.9,
+      "texture_px": 1024,
+      "about": "長椅",
+      "measured": {
+        "half": [
+          0.72,
+          0.36
+        ],
+        "faces": 2715
+      }
+    },
+    "street/barrel": {
+      "height_m": 1.1,
+      "texture_px": 1024,
+      "about": "木桶",
+      "measured": {
+        "half": [
+          0.49,
+          0.49
+        ],
+        "faces": 3002
+      }
+    },
+    "street/barrels": {
+      "height_m": 1.0,
+      "texture_px": 1024,
+      "about": "兩個木桶",
+      "measured": {
+        "half": [
+          0.85,
+          0.43
+        ],
+        "faces": 3065
+      }
+    },
+    "street/cart": {
+      "height_m": 1.6,
+      "texture_px": 1024,
+      "about": "推車",
+      "measured": {
+        "half": [
+          0.85,
+          0.54
+        ],
+        "faces": 3024
+      }
+    },
+    "street/wall": {
+      "height_m": 3.2,
+      "texture_px": 1024,
+      "about": "城牆一段，寬約四倍高",
+      "measured": {
+        "half": [
+          3.99,
+          0.72
+        ],
+        "faces": 2954
+      }
+    },
+    "street/wall_tower": {
+      "height_m": 6.0,
+      "texture_px": 1024,
+      "about": "城牆圓塔",
+      "measured": {
+        "half": [
+          1.96,
+          1.96
+        ],
+        "faces": 3024
+      }
+    },
+    "street/flower_pots": {
+      "height_m": 0.8,
+      "texture_px": 1024,
+      "about": "花盆",
+      "measured": {
+        "half": [
+          0.53,
+          0.45
+        ],
+        "faces": 2476
+      }
+    }
+  }
+}

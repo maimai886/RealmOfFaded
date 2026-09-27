@@ -1,0 +1,90 @@
+{
+ "attack": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "blocked": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "pickup": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "pointer": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "portal": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "talk": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "target": {
+  "design": 32,
+  "hotspot": [
+   48,
+   48
+  ],
+  "size": [
+   96,
+   96
+  ]
+ },
+ "walk": {
+  "design": 32,
+  "hotspot": [
+   3,
+   3
+  ],
+  "size": [
+   96,
+   96
+  ]
+ }
+}

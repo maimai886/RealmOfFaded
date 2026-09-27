@@ -1,0 +1,141 @@
+{
+  "name": "布隆的鐵匠鋪",
+  "scene": "interior",
+  "music": "sunny_town_morning",
+  "safe_zone": true,
+  "level_range": [
+    1,
+    99
+  ],
+  "warp_allowed": false,
+  "world_map": false,
+  "bounds": {
+    "min": [
+      -4.5,
+      -3.5
+    ],
+    "max": [
+      4.5,
+      3.5
+    ]
+  },
+  "interior": {
+    "floor": "stone_floor",
+    "wall": "stone_wall",
+    "wall_height": 3.2,
+    "door": [
+      0.0,
+      3.5
+    ]
+  },
+  "player_spawn": [
+    0.0,
+    1.0
+  ],
+  "npcs": [
+    {
+      "id": "gear_merchant",
+      "position": [
+        0.0,
+        -1.9
+      ],
+      "facing": [
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "door",
+      "position": [
+        0.0,
+        3.2
+      ],
+      "radius": 0.6,
+      "to_map": "town",
+      "to_position": [
+        17.0,
+        11.87
+      ],
+      "label": "晨曦鎮"
+    }
+  ],
+  "props": [
+    {
+      "model": "generated/models/towns/furniture/counter",
+      "position": [
+        -0.72,
+        -0.9
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/counter",
+      "position": [
+        0.72,
+        -0.9
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/fireplace",
+      "position": [
+        2.6,
+        -3.0
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/anvil_set",
+      "position": [
+        2.9,
+        -1.2
+      ],
+      "rotation_y": -20,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/weapon_rack",
+      "position": [
+        -2.4,
+        -3.0
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/weapon_rack",
+      "position": [
+        -4.0,
+        -0.6
+      ],
+      "rotation_y": 90,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        3.5,
+        2.0
+      ],
+      "rotation_y": 15,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        -3.6,
+        2.2
+      ],
+      "rotation_y": -10,
+      "scale": 1.0
+    }
+  ],
+  "blockers": [],
+  "spawns": [],
+  "zones": []
+}

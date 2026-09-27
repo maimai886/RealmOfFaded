@@ -1,0 +1,133 @@
+{
+  "name": "蜜拉的道具店",
+  "scene": "interior",
+  "music": "sunny_town_morning",
+  "safe_zone": true,
+  "level_range": [
+    1,
+    99
+  ],
+  "warp_allowed": false,
+  "world_map": false,
+  "bounds": {
+    "min": [
+      -4.5,
+      -3.5
+    ],
+    "max": [
+      4.5,
+      3.5
+    ]
+  },
+  "interior": {
+    "floor": "wood_floor",
+    "wall": "plaster",
+    "wall_height": 3.2,
+    "door": [
+      0.0,
+      3.5
+    ],
+    "rug": "rug"
+  },
+  "player_spawn": [
+    0.0,
+    1.0
+  ],
+  "npcs": [
+    {
+      "id": "item_merchant",
+      "position": [
+        0.0,
+        -1.9
+      ],
+      "facing": [
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "door",
+      "position": [
+        0.0,
+        3.2
+      ],
+      "radius": 0.6,
+      "to_map": "town",
+      "to_position": [
+        -17.0,
+        11.47
+      ],
+      "label": "晨曦鎮"
+    }
+  ],
+  "props": [
+    {
+      "model": "generated/models/towns/furniture/counter",
+      "position": [
+        -0.72,
+        -0.9
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/counter",
+      "position": [
+        0.72,
+        -0.9
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/shelf",
+      "position": [
+        -2.3,
+        -3.1
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/shelf",
+      "position": [
+        2.3,
+        -3.1
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/shelf",
+      "position": [
+        -4.1,
+        -0.8
+      ],
+      "rotation_y": 90,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        3.6,
+        1.9
+      ],
+      "rotation_y": -20,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/table_set",
+      "position": [
+        -3.1,
+        1.9
+      ],
+      "rotation_y": 15,
+      "scale": 1.0
+    }
+  ],
+  "blockers": [],
+  "spawns": [],
+  "zones": []
+}

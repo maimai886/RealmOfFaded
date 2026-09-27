@@ -1,0 +1,111 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/effects/angel_wings.gd" id="1_qlw71"]
+[ext_resource type="Texture2D" path="res://assets/vfx/wing.png" id="2_wdxt7"]
+[ext_resource type="Texture2D" path="res://assets/vfx/halo.png" id="3_yicju"]
+[ext_resource type="Texture2D" path="res://assets/vfx/feather.png" id="4_wgx1r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cnw8y"]
+transparency = 1
+shading_mode = 0
+disable_fog = true
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("2_wdxt7")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_v6b6f"]
+material = SubResource("StandardMaterial3D_cnw8y")
+size = Vector2(3, 3)
+center_offset = Vector3(1.1015625, 0.5859375, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_citbv"]
+transparency = 1
+shading_mode = 0
+disable_fog = true
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("2_wdxt7")
+uv1_scale = Vector3(-1, 1, 1)
+uv1_offset = Vector3(1, 0, 0)
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_5ogl2"]
+material = SubResource("StandardMaterial3D_citbv")
+size = Vector2(3, 3)
+center_offset = Vector3(-1.1015625, 0.5859375, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kcl2"]
+transparency = 1
+shading_mode = 0
+disable_fog = true
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("3_yicju")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_o8rkh"]
+material = SubResource("StandardMaterial3D_4kcl2")
+size = Vector2(0.62, 0.23)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oi4fa"]
+transparency = 1
+shading_mode = 0
+disable_fog = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(1.5, 1.5, 1.5, 1.5)
+albedo_texture = ExtResource("4_wgx1r")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_tumep"]
+material = SubResource("StandardMaterial3D_oi4fa")
+size = Vector2(0.3, 0.3)
+
+[sub_resource type="Gradient" id="Gradient_e0c8y"]
+offsets = PackedFloat32Array(0, 0.1, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="LevelUpWings" type="Node3D" unique_id=1410384433]
+script = ExtResource("1_qlw71")
+
+[node name="WingRight" type="MeshInstance3D" parent="." unique_id=787452297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.85, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_v6b6f")
+
+[node name="WingLeft" type="MeshInstance3D" parent="." unique_id=209492394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.85, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_5ogl2")
+
+[node name="Halo" type="MeshInstance3D" parent="." unique_id=351842690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_o8rkh")
+
+[node name="Feathers" type="CPUParticles3D" parent="." unique_id=39399337]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53, 0)
+emitting = false
+amount = 22
+lifetime = 2.2
+one_shot = true
+explosiveness = 0.75
+mesh = SubResource("QuadMesh_tumep")
+emission_shape = 1
+emission_sphere_radius = 0.9
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, -0.45, 0)
+initial_velocity_min = 0.8
+initial_velocity_max = 1.6
+angular_velocity_min = -120.0
+angular_velocity_max = 120.0
+damping_min = 1.2
+damping_max = 1.8
+angle_max = 360.0
+scale_amount_min = 0.7
+scale_amount_max = 1.2
+color_ramp = SubResource("Gradient_e0c8y")

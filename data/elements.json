@@ -1,0 +1,129 @@
+{
+  "note": "九種屬性的相剋表，規格在 docs/自有數值系統.md 第 3 節；四元素走水剋火、火剋風、風剋土、土剋水的循環，光暗互為死敵，時間空間互為死敵，無屬性永遠 100",
+  "order": [
+    "neutral",
+    "fire",
+    "water",
+    "wind",
+    "earth",
+    "light",
+    "dark",
+    "time",
+    "space"
+  ],
+  "names": {
+    "neutral": "無屬性",
+    "fire": "火",
+    "water": "水",
+    "wind": "風",
+    "earth": "土",
+    "light": "光",
+    "dark": "暗",
+    "time": "時間",
+    "space": "空間"
+  },
+  "resist_step_percent": 10,
+  "ratio_min_percent": 50,
+  "ratio_max_percent": 175,
+  "affinity": {
+    "neutral": {
+      "neutral": 100,
+      "fire": 100,
+      "water": 100,
+      "wind": 100,
+      "earth": 100,
+      "light": 100,
+      "dark": 100,
+      "time": 100,
+      "space": 100
+    },
+    "fire": {
+      "neutral": 100,
+      "fire": 80,
+      "water": 70,
+      "wind": 150,
+      "earth": 100,
+      "light": 100,
+      "dark": 100,
+      "time": 100,
+      "space": 100
+    },
+    "water": {
+      "neutral": 100,
+      "fire": 150,
+      "water": 80,
+      "wind": 100,
+      "earth": 70,
+      "light": 100,
+      "dark": 100,
+      "time": 100,
+      "space": 100
+    },
+    "wind": {
+      "neutral": 100,
+      "fire": 70,
+      "water": 100,
+      "wind": 80,
+      "earth": 150,
+      "light": 100,
+      "dark": 100,
+      "time": 100,
+      "space": 100
+    },
+    "earth": {
+      "neutral": 100,
+      "fire": 100,
+      "water": 150,
+      "wind": 70,
+      "earth": 80,
+      "light": 100,
+      "dark": 100,
+      "time": 100,
+      "space": 100
+    },
+    "light": {
+      "neutral": 100,
+      "fire": 100,
+      "water": 100,
+      "wind": 100,
+      "earth": 100,
+      "light": 80,
+      "dark": 175,
+      "time": 100,
+      "space": 100
+    },
+    "dark": {
+      "neutral": 100,
+      "fire": 100,
+      "water": 100,
+      "wind": 100,
+      "earth": 100,
+      "light": 175,
+      "dark": 80,
+      "time": 100,
+      "space": 100
+    },
+    "time": {
+      "neutral": 100,
+      "fire": 100,
+      "water": 100,
+      "wind": 100,
+      "earth": 100,
+      "light": 100,
+      "dark": 100,
+      "time": 80,
+      "space": 150
+    },
+    "space": {
+      "neutral": 100,
+      "fire": 100,
+      "water": 100,
+      "wind": 100,
+      "earth": 100,
+      "light": 100,
+      "dark": 100,
+      "time": 150,
+      "space": 80
+    }
+  }
+}

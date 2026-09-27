@@ -1,0 +1,2673 @@
+{
+  "guardian": {
+    "name": "晨曦守護者 艾拉",
+    "portrait": "guardian",
+    "art": {
+      "_comment": "守護者：亮藍，像制服",
+      "tint": "#6fa8dc"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "啊，新來的萌芽者！手背上的葉紋亮亮的，剛醒對吧？要不要我幫你補個血？",
+          "options": [
+            {
+              "text": "請幫我治療",
+              "action": "heal",
+              "next": "healed"
+            },
+            {
+              "text": "在這裡登記存檔點",
+              "action": "save_point",
+              "next": "saved"
+            },
+            {
+              "text": "灰蝕是什麼？",
+              "next": "lore"
+            },
+            {
+              "text": "我剛甦醒，該做什麼？",
+              "condition": "quest_state:tutorial_awaken:ready",
+              "next": "q_awaken"
+            },
+            {
+              "text": "教我冒險的基本功",
+              "condition": "quest_state:tutorial_basic_skill:available",
+              "action": "quest:tutorial_basic_skill",
+              "next": "q_basic_start"
+            },
+            {
+              "text": "基本技能還沒學會",
+              "condition": "quest_state:tutorial_basic_skill:active",
+              "next": "q_basic_wait"
+            },
+            {
+              "text": "基本技能我學會了",
+              "condition": "quest_state:tutorial_basic_skill:ready",
+              "action": "quest_done:tutorial_basic_skill",
+              "next": "q_basic_done"
+            },
+            {
+              "text": "幼苗怎麼把我帶回來？",
+              "condition": "quest_state:tutorial_save_point:available",
+              "action": "quest:tutorial_save_point",
+              "next": "q_save_start"
+            },
+            {
+              "text": "存檔點還沒登記",
+              "condition": "quest_state:tutorial_save_point:active",
+              "next": "q_save_wait"
+            },
+            {
+              "text": "存檔點登記好了",
+              "condition": "quest_state:tutorial_save_point:ready",
+              "action": "quest_done:tutorial_save_point",
+              "next": "q_save_done"
+            },
+            {
+              "text": "我的芽核什麼時候能綻放？",
+              "condition": "quest_state:tutorial_bloom:available",
+              "action": "quest:tutorial_bloom",
+              "next": "q_bloom_start"
+            },
+            {
+              "text": "芽核還在成長",
+              "condition": "quest_state:tutorial_bloom:active",
+              "next": "q_bloom_wait"
+            },
+            {
+              "text": "職業等級到 10 級了",
+              "condition": "quest_state:tutorial_bloom:ready",
+              "action": "quest_done:tutorial_bloom",
+              "next": "q_bloom_done"
+            },
+            {
+              "text": "看看廣場的壁畫",
+              "action": "mural"
+            },
+            {
+              "text": "沒事，再見"
+            },
+            {
+              "text": "有什麼委託嗎？",
+              "condition": "feature:quests",
+              "next": "wq_board"
+            }
+          ]
+        },
+        "healed": {
+          "text": "好了好了！別太常受傷喔。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        },
+        "saved": {
+          "text": "登記好了！下次倒下就會回到這裡。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        },
+        "q_awaken": {
+          "text": "@tutorial_awaken.accept",
+          "options": [
+            {
+              "text": "我記住了",
+              "action": "quest_done:tutorial_awaken",
+              "next": "q_awaken_done"
+            }
+          ]
+        },
+        "q_awaken_done": {
+          "text": "@tutorial_awaken.complete",
+          "options": [
+            {
+              "text": "我去找他們"
+            }
+          ]
+        },
+        "q_basic_start": {
+          "text": "@tutorial_basic_skill.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_basic_wait": {
+          "text": "@tutorial_basic_skill.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_basic_done": {
+          "text": "@tutorial_basic_skill.complete",
+          "options": [
+            {
+              "text": "謝謝艾拉"
+            }
+          ]
+        },
+        "q_save_start": {
+          "text": "@tutorial_save_point.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_save_wait": {
+          "text": "@tutorial_save_point.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_save_done": {
+          "text": "@tutorial_save_point.complete",
+          "options": [
+            {
+              "text": "有你真好"
+            }
+          ]
+        },
+        "q_bloom_start": {
+          "text": "@tutorial_bloom.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_bloom_wait": {
+          "text": "@tutorial_bloom.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_bloom_done": {
+          "text": "@tutorial_bloom.complete",
+          "options": [
+            {
+              "text": "我這就去"
+            }
+          ]
+        },
+        "lore": {
+          "text": "一百年前世界之芽枯掉了，灰色的東西就開始到處吃顏色。顏色被吃掉的怪會變得很兇…所以要靠你們把顏色搶回來啦。職業等級到 10 級，就可以去找導師轉職喔。",
+          "options": [
+            {
+              "text": "那顏色要怎麼搶回來？",
+              "next": "fb_learned"
+            },
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_board": {
+          "text": "有幾件事想拜託你，你看看？",
+          "options": [
+            {
+              "text": "地窟深處有什麼？",
+              "condition": "quest_state:cavern_embers:available",
+              "action": "quest:cavern_embers",
+              "next": "wq_cavern_embers_start"
+            },
+            {
+              "text": "餘燼還不夠",
+              "condition": "quest_state:cavern_embers:active",
+              "next": "wq_cavern_embers_wait"
+            },
+            {
+              "text": "餘燼帶回來了",
+              "condition": "quest_state:cavern_embers:ready",
+              "action": "quest_done:cavern_embers",
+              "next": "wq_cavern_embers_done"
+            },
+            {
+              "text": "骸冠要怎麼打？",
+              "condition": "quest_state:crown_hunt:available",
+              "action": "quest:crown_hunt",
+              "next": "wq_crown_hunt_start"
+            },
+            {
+              "text": "還沒討伐成功",
+              "condition": "quest_state:crown_hunt:active",
+              "next": "wq_crown_hunt_wait"
+            },
+            {
+              "text": "骸冠倒下了",
+              "condition": "quest_state:crown_hunt:ready",
+              "action": "quest_done:crown_hunt",
+              "next": "wq_crown_hunt_done"
+            },
+            {
+              "text": "先不用",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_cavern_embers_start": {
+          "text": "@cavern_embers.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_cavern_embers_wait": {
+          "text": "@cavern_embers.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_cavern_embers_done": {
+          "text": "@cavern_embers.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_crown_hunt_start": {
+          "text": "@crown_hunt.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_crown_hunt_wait": {
+          "text": "@crown_hunt.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_crown_hunt_done": {
+          "text": "@crown_hunt.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "fb_learned": {
+          "condition": "skill_quest:full_colour_burst:learned",
+          "fallback": "fb_ready",
+          "text": "你已經會了喔！彩度滿了就放出去吧！",
+          "options": [
+            {
+              "text": "好"
+            }
+          ]
+        },
+        "fb_ready": {
+          "condition": "skill_quest:full_colour_burst:ready",
+          "fallback": "fb_low",
+          "text": "哇！你身上的顏色好滿！來，照我說的做…吸氣…把顏色全部推出去！",
+          "options": [
+            {
+              "text": "學會全彩爆發",
+              "action": "skill_quest:full_colour_burst",
+              "next": "fb_done"
+            },
+            {
+              "text": "等一下"
+            }
+          ]
+        },
+        "fb_low": {
+          "condition": "skill_quest:full_colour_burst:too_low",
+          "fallback": "fb_skill",
+          "text": "你還太嫩了啦，職業等級 7 級再來！",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "fb_skill": {
+          "condition": "skill_quest:full_colour_burst:need_skill",
+          "fallback": "fb_chroma",
+          "text": "先去找薇恩學急救吧！連自己都照顧不好，怎麼把顏色放出去呢？",
+          "options": [
+            {
+              "text": "我去找她"
+            }
+          ]
+        },
+        "fb_chroma": {
+          "text": "去草原打怪，把彩度條塗到 90 以上，趁還滿著的時候回來給我看！",
+          "options": [
+            {
+              "text": "我去塗顏色"
+            }
+          ]
+        },
+        "fb_done": {
+          "text": "成功了！彩度滿的時候放出去，周圍都會變回彩色喔！",
+          "options": [
+            {
+              "text": "謝謝艾拉"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sword_mentor": {
+    "name": "劍侍導師 蓋爾",
+    "portrait": "sword_mentor",
+    "art": {
+      "_comment": "劍侍導師：暗紅",
+      "tint": "#b04a52"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "哈哈哈！來得好！劍侍就是站最前面挨打的人，你怕痛嗎？",
+          "options": [
+            {
+              "text": "我想成為劍侍",
+              "next": "check_job"
+            },
+            {
+              "text": "我想成為聖劍士",
+              "condition": "job:squire",
+              "next": "holyblade_check"
+            },
+            {
+              "text": "我想成為劍客",
+              "condition": "job:squire",
+              "next": "bladesman_check"
+            },
+            {
+              "text": "我想成為勇者",
+              "condition": "job:holyblade",
+              "next": "champion_check"
+            },
+            {
+              "text": "我想成為劍豪",
+              "condition": "job:bladesman",
+              "next": "blademaster_check"
+            },
+            {
+              "text": "劍侍擅長什麼？",
+              "next": "about"
+            },
+            {
+              "text": "有什麼我幫得上忙的嗎？",
+              "condition": "quest_state:tutorial_first_hunt:available",
+              "action": "quest:tutorial_first_hunt",
+              "next": "q_hunt_start"
+            },
+            {
+              "text": "露珠果凍還沒打完",
+              "condition": "quest_state:tutorial_first_hunt:active",
+              "next": "q_hunt_wait"
+            },
+            {
+              "text": "我做完了",
+              "condition": "quest_state:tutorial_first_hunt:ready",
+              "action": "quest_done:tutorial_first_hunt",
+              "next": "q_hunt_done"
+            },
+            {
+              "text": "再考慮看看"
+            },
+            {
+              "text": "有什麼委託嗎？",
+              "condition": "feature:quests",
+              "next": "wq_board"
+            }
+          ]
+        },
+        "holyblade_check": {
+          "text": "喔喔！你的劍已經夠份量了！要立黎明誓約當聖劍士嗎？",
+          "condition": "min_job_level:30",
+          "fallback": "holyblade_weak",
+          "options": [
+            {
+              "text": "轉職成聖劍士",
+              "action": "job_change:holyblade",
+              "next": "holyblade_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "holyblade_weak": {
+          "text": "停！劍侍職業等級 30 級才能立誓，再去練練！",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "holyblade_done": {
+          "text": "哈哈哈！恭喜！從今天起你是聖劍士了！擋在大家前面吧！",
+          "options": [
+            {
+              "text": "是！"
+            }
+          ]
+        },
+        "about": {
+          "text": "劍侍血最厚，專門近身打。之後可以選立下黎明誓約的「聖劍士」，或只相信自己那把劍的「劍客」。",
+          "options": [
+            {
+              "text": "原來如此",
+              "next": "hello"
+            }
+          ]
+        },
+        "q_hunt_start": {
+          "text": "@tutorial_first_hunt.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_hunt_wait": {
+          "text": "@tutorial_first_hunt.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_hunt_done": {
+          "text": "@tutorial_first_hunt.complete",
+          "options": [
+            {
+              "text": "我會繼續練"
+            }
+          ]
+        },
+        "check_job": {
+          "text": "初心者？好！讓我看看你練到哪了……",
+          "condition": "job:novice",
+          "fallback": "already",
+          "options": [
+            {
+              "text": "請確認",
+              "next": "trial_passed"
+            }
+          ]
+        },
+        "check_basic": {
+          "text": "等級是夠了，基本技能還沒練到 9 級啊！先去練！",
+          "condition": "min_job_level:10",
+          "fallback": "too_weak",
+          "options": [
+            {
+              "text": "我去把基本技能練滿"
+            }
+          ]
+        },
+        "too_weak": {
+          "text": "停！初心者職業等級 10 級才能轉職，先去草原多打幾隻！",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "already": {
+          "text": "轉職？哇哈哈！你已經轉過了啊！",
+          "options": [
+            {
+              "text": "再見"
+            }
+          ]
+        },
+        "done": {
+          "text": "哈哈哈！恭喜！從今天起你就是劍侍了！",
+          "options": [
+            {
+              "text": "是！"
+            }
+          ]
+        },
+        "wq_board": {
+          "text": "有活幹！要不要？",
+          "options": [
+            {
+              "text": "森林的狼群怎麼辦？",
+              "condition": "quest_state:forest_wolf_alpha:available",
+              "action": "quest:forest_wolf_alpha",
+              "next": "wq_forest_wolf_alpha_start"
+            },
+            {
+              "text": "頭狼還沒解決",
+              "condition": "quest_state:forest_wolf_alpha:active",
+              "next": "wq_forest_wolf_alpha_wait"
+            },
+            {
+              "text": "頭狼倒下了",
+              "condition": "quest_state:forest_wolf_alpha:ready",
+              "action": "quest_done:forest_wolf_alpha",
+              "next": "wq_forest_wolf_alpha_done"
+            },
+            {
+              "text": "谷地還有什麼麻煩？",
+              "condition": "quest_state:valley_tyrant:available",
+              "action": "quest:valley_tyrant",
+              "next": "wq_valley_tyrant_start"
+            },
+            {
+              "text": "霸主還在",
+              "condition": "quest_state:valley_tyrant:active",
+              "next": "wq_valley_tyrant_wait"
+            },
+            {
+              "text": "霸主打倒了",
+              "condition": "quest_state:valley_tyrant:ready",
+              "action": "quest_done:valley_tyrant",
+              "next": "wq_valley_tyrant_done"
+            },
+            {
+              "text": "先不用",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_wolf_alpha_start": {
+          "text": "@forest_wolf_alpha.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_wolf_alpha_wait": {
+          "text": "@forest_wolf_alpha.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_wolf_alpha_done": {
+          "text": "@forest_wolf_alpha.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_valley_tyrant_start": {
+          "text": "@valley_tyrant.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_valley_tyrant_wait": {
+          "text": "@valley_tyrant.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_valley_tyrant_done": {
+          "text": "@valley_tyrant.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "bladesman_check": {
+          "text": "不想立誓？也行，那就把劍練到最快！",
+          "condition": "min_job_level:30",
+          "fallback": "bladesman_weak",
+          "options": [
+            {
+              "text": "轉職成劍客",
+              "action": "job_change:bladesman",
+              "next": "bladesman_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "bladesman_weak": {
+          "text": "停！劍侍職業等級 30 級才行。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "bladesman_done": {
+          "text": "好！劍客！以後你的劍只聽你的！",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "champion_check": {
+          "text": "聖劍士也當得夠久了。要不要再往上一步，當勇者？",
+          "condition": "min_job_level:40",
+          "fallback": "champion_weak",
+          "options": [
+            {
+              "text": "轉職成勇者",
+              "action": "job_change:champion",
+              "next": "champion_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "champion_weak": {
+          "text": "還早！聖劍士職業等級要 40 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "champion_done": {
+          "text": "哇哈哈！勇者！以後被人叫勇者可不要害羞！",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "blademaster_check": {
+          "text": "你的劍快到我都看不清楚了！要當劍豪嗎？",
+          "condition": "min_job_level:40",
+          "fallback": "blademaster_weak",
+          "options": [
+            {
+              "text": "轉職成劍豪",
+              "action": "job_change:blademaster",
+              "next": "blademaster_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "blademaster_weak": {
+          "text": "還早！劍客職業等級要 40 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "blademaster_done": {
+          "text": "劍豪！我已經沒東西可以教你了……有點寂寞啊。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "trial_passed": {
+          "condition": "min_job_level:10&unlock:job_change&trial:squire:passed&trial_is:squire:feat_no_pit=yes&trial_is:squire:feat_fast=yes",
+          "fallback": "trial_passed_clean",
+          "text": "哈哈哈！一次都沒掉，還不到一分鐘！你是天生的劍侍！藥水拿去，多教你一招！",
+          "options": [
+            {
+              "text": "轉職成劍侍",
+              "action": "job_change:squire",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_started": {
+          "condition": "min_job_level:10&unlock:job_change&trial:squire:started",
+          "fallback": "trial_offer",
+          "text": "哈哈哈！沒過吧？沒關係！蘋果拿去，再來一次！",
+          "options": [
+            {
+              "text": "再考一次",
+              "action": "trial:retry:squire"
+            },
+            {
+              "text": "今天先不要"
+            }
+          ]
+        },
+        "trial_offer": {
+          "condition": "min_job_level:10&unlock:job_change",
+          "fallback": "check_basic",
+          "text": "劍侍要跑得動！考場裡有看不見的坑，掉下去就從那一段重跑。限時 {trial_minutes} 分鐘，跑到終點就算你過！要考嗎？",
+          "options": [
+            {
+              "text": "考！",
+              "action": "trial:start:squire"
+            },
+            {
+              "text": "再想想"
+            }
+          ]
+        },
+        "trial_passed_clean": {
+          "condition": "min_job_level:10&unlock:job_change&trial:squire:passed&trial_is:squire:feat_no_pit=yes",
+          "fallback": "trial_passed_fast",
+          "text": "一次都沒掉進坑！眼睛很利嘛！藥水拿去，多教你一招！",
+          "options": [
+            {
+              "text": "轉職成劍侍",
+              "action": "job_change:squire",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_passed_fast": {
+          "condition": "min_job_level:10&unlock:job_change&trial:squire:passed&trial_is:squire:feat_fast=yes",
+          "fallback": "trial_passed_digger",
+          "text": "{trial_seconds} 秒？！你是不是偷跑！哈哈哈！藥水拿去，多教你一招！",
+          "options": [
+            {
+              "text": "轉職成劍侍",
+              "action": "job_change:squire",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_passed_digger": {
+          "condition": "min_job_level:10&unlock:job_change&trial:squire:passed&trial_at_least:squire:pits=8",
+          "fallback": "trial_passed_plain",
+          "text": "掉了 {trial_pits} 次…你是去考試還是去挖洞的？哈哈哈！算了，過了就好！",
+          "options": [
+            {
+              "text": "轉職成劍侍",
+              "action": "job_change:squire",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_passed_plain": {
+          "condition": "min_job_level:10&unlock:job_change&trial:squire:passed",
+          "fallback": "trial_started",
+          "text": "哈哈哈！跑完了！好樣的！",
+          "options": [
+            {
+              "text": "轉職成劍侍",
+              "action": "job_change:squire",
+              "next": "done"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "mage_mentor": {
+    "name": "術士導師 露娜",
+    "portrait": "mage_mentor",
+    "art": {
+      "_comment": "術士導師：紫",
+      "tint": "#8f6fd0"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "嗯…？啊，有客人。你聽得到火、水、地、風的聲音嗎？聽不到也沒關係啦…",
+          "options": [
+            {
+              "text": "我想成為術士",
+              "next": "check_job"
+            },
+            {
+              "text": "我想成為巫師",
+              "condition": "job:sorcerer",
+              "next": "wizard_check"
+            },
+            {
+              "text": "我想成為方術士",
+              "condition": "job:sorcerer",
+              "next": "thaumaturge_check"
+            },
+            {
+              "text": "我想成為大賢者",
+              "condition": "job:wizard",
+              "next": "archsage_check"
+            },
+            {
+              "text": "我想成為陰陽師",
+              "condition": "job:thaumaturge",
+              "next": "onmyoji_check"
+            },
+            {
+              "text": "術士擅長什麼？",
+              "next": "about"
+            },
+            {
+              "text": "需要我幫忙收集嗎？",
+              "condition": "quest_state:tutorial_gather:available",
+              "action": "quest:tutorial_gather",
+              "next": "q_gather_start"
+            },
+            {
+              "text": "露珠凝膠還不夠",
+              "condition": "quest_state:tutorial_gather:active",
+              "next": "q_gather_wait"
+            },
+            {
+              "text": "凝膠我收集好了",
+              "condition": "quest_state:tutorial_gather:ready",
+              "action": "quest_done:tutorial_gather",
+              "next": "q_gather_done"
+            },
+            {
+              "text": "再考慮看看"
+            },
+            {
+              "text": "有什麼委託嗎？",
+              "condition": "feature:quests",
+              "next": "wq_board"
+            }
+          ]
+        },
+        "wizard_check": {
+          "text": "元素之靈說它們願意跟你締約了…要當巫師嗎？",
+          "condition": "min_job_level:30",
+          "fallback": "wizard_weak",
+          "options": [
+            {
+              "text": "轉職成巫師",
+              "action": "job_change:wizard",
+              "next": "wizard_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "wizard_weak": {
+          "text": "元素之靈說還不要…術士職業等級 30 級再來吧。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "wizard_done": {
+          "text": "好了，你是巫師了。啊，小心別把自己的眉毛燒掉。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "about": {
+          "text": "術士 SP 很多，站遠遠的用魔法打。之後可以選跟元素之靈締約的「巫師」，或是玩符咒和法陣的「方術士」。",
+          "options": [
+            {
+              "text": "原來如此",
+              "next": "hello"
+            }
+          ]
+        },
+        "q_gather_start": {
+          "text": "@tutorial_gather.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_gather_wait": {
+          "text": "@tutorial_gather.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_gather_done": {
+          "text": "@tutorial_gather.complete",
+          "options": [
+            {
+              "text": "我知道了"
+            }
+          ]
+        },
+        "check_job": {
+          "text": "初心者…嗯…讓我看看……",
+          "condition": "job:novice",
+          "fallback": "already",
+          "options": [
+            {
+              "text": "請確認",
+              "next": "trial_passed"
+            }
+          ]
+        },
+        "check_basic": {
+          "text": "等級夠了…可是基本技能還沒到 9 級喔。",
+          "condition": "min_job_level:10",
+          "fallback": "too_weak",
+          "options": [
+            {
+              "text": "我去把基本技能練滿"
+            }
+          ]
+        },
+        "too_weak": {
+          "text": "初心者職業等級 10 級才能轉職…現在還不行呢。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "already": {
+          "text": "你已經轉過職了喔…我記錯了嗎？沒有吧？",
+          "options": [
+            {
+              "text": "再見"
+            }
+          ]
+        },
+        "done": {
+          "text": "歡迎加入術士…那個…以後請多指教。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "wq_board": {
+          "text": "呃…我記得有幾件事要找人幫忙…啊，在這裡。",
+          "options": [
+            {
+              "text": "森林裡有什麼要採的嗎？",
+              "condition": "quest_state:forest_moss_run:available",
+              "action": "quest:forest_moss_run",
+              "next": "wq_forest_moss_run_start"
+            },
+            {
+              "text": "苔蘚還在採",
+              "condition": "quest_state:forest_moss_run:active",
+              "next": "wq_forest_moss_run_wait"
+            },
+            {
+              "text": "苔蘚採齊了",
+              "condition": "quest_state:forest_moss_run:ready",
+              "action": "quest_done:forest_moss_run",
+              "next": "wq_forest_moss_run_done"
+            },
+            {
+              "text": "先不用",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_moss_run_start": {
+          "text": "@forest_moss_run.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_moss_run_wait": {
+          "text": "@forest_moss_run.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_moss_run_done": {
+          "text": "@forest_moss_run.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "thaumaturge_check": {
+          "text": "除了元素，還有符、咒、陣…想走這條路嗎？",
+          "condition": "min_job_level:30",
+          "fallback": "thaumaturge_weak",
+          "options": [
+            {
+              "text": "轉職成方術士",
+              "action": "job_change:thaumaturge",
+              "next": "thaumaturge_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "thaumaturge_weak": {
+          "text": "還不行…術士職業等級要 30 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "thaumaturge_done": {
+          "text": "方術士。符紙拿在手上會自己燒起來，很正常，別慌。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "archsage_check": {
+          "text": "四種元素都肯聽你的了…要當大賢者嗎？",
+          "condition": "min_job_level:40",
+          "fallback": "archsage_weak",
+          "options": [
+            {
+              "text": "轉職成大賢者",
+              "action": "job_change:archsage",
+              "next": "archsage_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "archsage_weak": {
+          "text": "再等等…巫師職業等級要 40 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "archsage_done": {
+          "text": "大賢者…比我還厲害了呢。呼啊…我先睡一下。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "onmyoji_check": {
+          "text": "陰和陽你都分得很清楚了…要當陰陽師嗎？",
+          "condition": "min_job_level:40",
+          "fallback": "onmyoji_weak",
+          "options": [
+            {
+              "text": "轉職成陰陽師",
+              "action": "job_change:onmyoji",
+              "next": "onmyoji_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "onmyoji_weak": {
+          "text": "還不行…方術士職業等級要 40 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "onmyoji_done": {
+          "text": "陰陽師。式神會一直跟著你…洗澡的時候也是。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "trial_passed": {
+          "condition": "min_job_level:10&unlock:job_change&trial:sorcerer:passed&trial_is:sorcerer:feat_first_try=yes",
+          "fallback": "trial_passed_plain",
+          "text": "…一次就做對了？我當年做了七次耶…藥水送你，我再多教你一點。",
+          "options": [
+            {
+              "text": "轉職成術士",
+              "action": "job_change:sorcerer",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_started": {
+          "condition": "min_job_level:10&unlock:job_change&trial:sorcerer:started",
+          "fallback": "trial_offer",
+          "text": "你要做的是{trial_solution}…配方書和調配台都在我這裡。",
+          "options": [
+            {
+              "text": "交溶液",
+              "condition": "trial_is:sorcerer:ready=yes",
+              "action": "trial:deliver:sorcerer",
+              "next": "trial_passed"
+            },
+            {
+              "text": "翻配方書",
+              "next": "book_1"
+            },
+            {
+              "text": "用調配台",
+              "next": "machine_solvent"
+            },
+            {
+              "text": "等一下再來"
+            }
+          ]
+        },
+        "trial_offer": {
+          "condition": "min_job_level:10&unlock:job_change",
+          "fallback": "check_basic",
+          "text": "術士要會調配…我抽一瓶讓你做。配方在書上，材料要自己去打…要做嗎？",
+          "options": [
+            {
+              "text": "好",
+              "action": "trial:start:sorcerer",
+              "next": "trial_started"
+            },
+            {
+              "text": "算了"
+            }
+          ]
+        },
+        "book_1": {
+          "text": "【一號溶液】露珠凝膠 2、柔軟苔蘚 3、藍顏料 1。溶劑：露水。魔力序號：8472。觸媒：黃色晶石。",
+          "options": [
+            {
+              "text": "下一頁",
+              "next": "book_2"
+            },
+            {
+              "text": "闔上",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "book_2": {
+          "text": "【二號溶液】露珠凝膠 3、柔軟苔蘚 1、綠顏料 1。溶劑：什麼都不加。魔力序號：3735。觸媒：紅色晶石。",
+          "options": [
+            {
+              "text": "下一頁",
+              "next": "book_3"
+            },
+            {
+              "text": "上一頁",
+              "next": "book_1"
+            },
+            {
+              "text": "闔上",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "book_3": {
+          "text": "【三號溶液】露珠凝膠 6、柔軟苔蘚 1。溶劑：露水。魔力序號：2750。觸媒：藍色晶石。",
+          "options": [
+            {
+              "text": "下一頁",
+              "next": "book_4"
+            },
+            {
+              "text": "上一頁",
+              "next": "book_2"
+            },
+            {
+              "text": "闔上",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "book_4": {
+          "text": "【四號溶液】露珠凝膠 2、柔軟苔蘚 3、綠顏料 2。溶劑：井水。魔力序號：5429。觸媒：碎鑽。",
+          "options": [
+            {
+              "text": "…背面好像有字？",
+              "next": "book_secret"
+            },
+            {
+              "text": "上一頁",
+              "next": "book_3"
+            },
+            {
+              "text": "闔上",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "machine_solvent": {
+          "text": "【調配台】先選溶劑。",
+          "options": [
+            {
+              "text": "露水",
+              "action": "trial:set:sorcerer:solvent:dew",
+              "next": "machine_code"
+            },
+            {
+              "text": "井水",
+              "action": "trial:set:sorcerer:solvent:well",
+              "next": "machine_code"
+            },
+            {
+              "text": "什麼都不加",
+              "action": "trial:set:sorcerer:solvent:none",
+              "next": "machine_code"
+            }
+          ]
+        },
+        "machine_code": {
+          "text": "【調配台】輸入魔力序號。",
+          "options": [
+            {
+              "text": "8472",
+              "action": "trial:set:sorcerer:code:8472",
+              "next": "machine_catalyst"
+            },
+            {
+              "text": "3735",
+              "action": "trial:set:sorcerer:code:3735",
+              "next": "machine_catalyst"
+            },
+            {
+              "text": "2750",
+              "action": "trial:set:sorcerer:code:2750",
+              "next": "machine_catalyst"
+            },
+            {
+              "text": "5429",
+              "action": "trial:set:sorcerer:code:5429",
+              "next": "machine_catalyst"
+            },
+            {
+              "text": "0000",
+              "action": "trial:set:sorcerer:code:0000",
+              "next": "machine_catalyst"
+            }
+          ]
+        },
+        "machine_catalyst": {
+          "text": "【調配台】放進觸媒。",
+          "options": [
+            {
+              "text": "黃色晶石",
+              "action": "trial:set:sorcerer:catalyst:yellow",
+              "next": "machine_go"
+            },
+            {
+              "text": "紅色晶石",
+              "action": "trial:set:sorcerer:catalyst:red",
+              "next": "machine_go"
+            },
+            {
+              "text": "藍色晶石",
+              "action": "trial:set:sorcerer:catalyst:blue",
+              "next": "machine_go"
+            },
+            {
+              "text": "碎鑽",
+              "action": "trial:set:sorcerer:catalyst:diamond",
+              "next": "machine_go"
+            }
+          ]
+        },
+        "machine_go": {
+          "condition": "trial_is:sorcerer:materials=yes",
+          "fallback": "machine_short",
+          "text": "【調配台】材料照{trial_solution}的配方放進去了。要按下去嗎？",
+          "options": [
+            {
+              "text": "按下去",
+              "action": "trial:mix:sorcerer",
+              "next": "mixed_right"
+            },
+            {
+              "text": "算了",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "machine_short": {
+          "text": "【調配台】…材料不夠。{trial_solution}要什麼，翻翻配方書吧。",
+          "options": [
+            {
+              "text": "翻配方書",
+              "next": "book_1"
+            },
+            {
+              "text": "我去打材料"
+            }
+          ]
+        },
+        "mixed_right": {
+          "condition": "trial_is:sorcerer:right=yes",
+          "fallback": "mixed_secret",
+          "text": "咕嘟咕嘟…做出來了！是{trial_solution}！【今日格言】{trial_proverb}",
+          "options": [
+            {
+              "text": "拿給露娜",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "mixed_wrong": {
+          "text": "噗…冒出黑煙。好像哪裡弄錯了…【今日格言】{trial_proverb}",
+          "options": [
+            {
+              "text": "翻配方書",
+              "next": "book_1"
+            },
+            {
+              "text": "再試一次",
+              "next": "machine_solvent"
+            },
+            {
+              "text": "先去打材料"
+            }
+          ]
+        },
+        "trial_passed_plain": {
+          "condition": "min_job_level:10&unlock:job_change&trial:sorcerer:passed",
+          "fallback": "trial_started",
+          "text": "嗯…是{trial_solution}沒錯。你可以當術士了。",
+          "options": [
+            {
+              "text": "轉職成術士",
+              "action": "job_change:sorcerer",
+              "next": "done"
+            }
+          ]
+        },
+        "book_secret": {
+          "text": "背面是露娜的字：「零號溶液。露珠凝膠 1、柔軟苔蘚 1。溶劑什麼都不加，魔力序號 0000，觸媒碎鑽。不要做。」",
+          "options": [
+            {
+              "text": "闔上",
+              "next": "trial_started"
+            }
+          ]
+        },
+        "mixed_secret": {
+          "condition": "trial_is:sorcerer:secret=yes",
+          "fallback": "mixed_wrong",
+          "text": "咕嘟…冒出紫色的煙…做出一瓶神秘的溶液。【今日格言】{trial_proverb}",
+          "options": [
+            {
+              "text": "…先收著",
+              "next": "trial_started"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "archer_mentor": {
+    "name": "斥候導師 芬恩",
+    "portrait": "archer_mentor",
+    "art": {
+      "_comment": "斥候導師：綠",
+      "tint": "#4f9e63"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "…風裡有灰蝕的味道。要學射箭？",
+          "options": [
+            {
+              "text": "我想成為斥候",
+              "next": "check_job"
+            },
+            {
+              "text": "我想成為獵人",
+              "condition": "job:scout",
+              "next": "hunter_check"
+            },
+            {
+              "text": "我想成為刺客",
+              "condition": "job:scout",
+              "next": "assassin_check"
+            },
+            {
+              "text": "我想成為神射手",
+              "condition": "job:hunter",
+              "next": "sniper_check"
+            },
+            {
+              "text": "我想成為忍者",
+              "condition": "job:assassin",
+              "next": "ninja_check"
+            },
+            {
+              "text": "斥候擅長什麼？",
+              "next": "about"
+            },
+            {
+              "text": "獵人都怎麼準備？",
+              "condition": "quest_state:tutorial_potion:available",
+              "action": "quest:tutorial_potion",
+              "next": "q_potion_start"
+            },
+            {
+              "text": "藥水還沒買或還沒喝",
+              "condition": "quest_state:tutorial_potion:active",
+              "next": "q_potion_wait"
+            },
+            {
+              "text": "藥水我喝過了",
+              "condition": "quest_state:tutorial_potion:ready",
+              "action": "quest_done:tutorial_potion",
+              "next": "q_potion_done"
+            },
+            {
+              "text": "再考慮看看"
+            },
+            {
+              "text": "有什麼委託嗎？",
+              "condition": "feature:quests",
+              "next": "wq_board"
+            }
+          ]
+        },
+        "hunter_check": {
+          "text": "樹上那隻獵鷹一直在看你。要當獵人嗎？",
+          "condition": "min_job_level:30",
+          "fallback": "hunter_weak",
+          "options": [
+            {
+              "text": "轉職成獵人",
+              "action": "job_change:hunter",
+              "next": "hunter_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "hunter_weak": {
+          "text": "斥候職業等級 30。還差。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "hunter_done": {
+          "text": "牠飛下來了。獵人，以後牠跟你。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        },
+        "about": {
+          "text": "斥候射最遠，靠 DEX 打得準。之後分成跟獵鷹一起的「獵人」，和躲在影子裡的「刺客」。",
+          "options": [
+            {
+              "text": "原來如此",
+              "next": "hello"
+            }
+          ]
+        },
+        "q_potion_start": {
+          "text": "@tutorial_potion.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_potion_wait": {
+          "text": "@tutorial_potion.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_potion_done": {
+          "text": "@tutorial_potion.complete",
+          "options": [
+            {
+              "text": "受教了"
+            }
+          ]
+        },
+        "check_job": {
+          "text": "初心者。讓我看看眼力。",
+          "condition": "job:novice",
+          "fallback": "already",
+          "options": [
+            {
+              "text": "請確認",
+              "next": "trial_passed"
+            }
+          ]
+        },
+        "check_basic": {
+          "text": "基本技能還沒 9 級。練完再來。",
+          "condition": "min_job_level:10",
+          "fallback": "too_weak",
+          "options": [
+            {
+              "text": "我去把基本技能練滿"
+            }
+          ]
+        },
+        "too_weak": {
+          "text": "太嫩了。初心者職業等級 10 級再來。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "already": {
+          "text": "你轉過了。",
+          "options": [
+            {
+              "text": "再見"
+            }
+          ]
+        },
+        "done": {
+          "text": "弓拿好。斥候。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        },
+        "wq_board": {
+          "text": "有事。接不接？",
+          "options": [
+            {
+              "text": "孢菇怎麼對付？",
+              "condition": "quest_state:forest_spore_watch:available",
+              "action": "quest:forest_spore_watch",
+              "next": "wq_forest_spore_watch_start"
+            },
+            {
+              "text": "孢菇還沒打完",
+              "condition": "quest_state:forest_spore_watch:active",
+              "next": "wq_forest_spore_watch_wait"
+            },
+            {
+              "text": "孢菇打完了",
+              "condition": "quest_state:forest_spore_watch:ready",
+              "action": "quest_done:forest_spore_watch",
+              "next": "wq_forest_spore_watch_done"
+            },
+            {
+              "text": "先不用",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_spore_watch_start": {
+          "text": "@forest_spore_watch.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_spore_watch_wait": {
+          "text": "@forest_spore_watch.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_forest_spore_watch_done": {
+          "text": "@forest_spore_watch.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "assassin_check": {
+          "text": "想走影子那條路？",
+          "condition": "min_job_level:30",
+          "fallback": "assassin_weak",
+          "options": [
+            {
+              "text": "轉職成刺客",
+              "action": "job_change:assassin",
+              "next": "assassin_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "assassin_weak": {
+          "text": "斥候職業等級 30。還差。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "assassin_done": {
+          "text": "刺客。…人呢？",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "sniper_check": {
+          "text": "看得夠遠了。要當神射手？",
+          "condition": "min_job_level:40",
+          "fallback": "sniper_weak",
+          "options": [
+            {
+              "text": "轉職成神射手",
+              "action": "job_change:sniper",
+              "next": "sniper_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "sniper_weak": {
+          "text": "獵人職業等級 40。還差。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "sniper_done": {
+          "text": "神射手。一箭就夠。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "ninja_check": {
+          "text": "影子認得你了。要當忍者？",
+          "condition": "min_job_level:40",
+          "fallback": "ninja_weak",
+          "options": [
+            {
+              "text": "轉職成忍者",
+              "action": "job_change:ninja",
+              "next": "ninja_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "ninja_weak": {
+          "text": "刺客職業等級 40。還差。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "ninja_done": {
+          "text": "忍者。…剛剛是不是有人經過？",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "trial_passed": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:passed",
+          "fallback": "trial_started",
+          "text": "嫩枝收到了。{trial_score} 分。",
+          "options": [
+            {
+              "text": "再聽一次評分",
+              "next": "appraised_perfect"
+            },
+            {
+              "text": "轉職成斥候",
+              "action": "job_change:scout",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_started": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:started",
+          "fallback": "trial_offer",
+          "text": "嫩枝呢？筆直的 5 分、有點彎的 3 分、很彎的 2 分、打結的 1 分。湊到 {trial_pass} 分拿來。",
+          "options": [
+            {
+              "text": "給你看",
+              "action": "trial:appraise:scout",
+              "next": "appraised_perfect"
+            },
+            {
+              "text": "再去撿"
+            }
+          ]
+        },
+        "trial_offer": {
+          "condition": "min_job_level:10&unlock:job_change",
+          "fallback": "check_basic",
+          "text": "斥候要眼力。去撿嫩枝，小樹苗身上有。筆直的 5 分、有點彎的 3 分、很彎的 2 分、打結的 1 分。湊到 25 分拿來。",
+          "options": [
+            {
+              "text": "好",
+              "action": "trial:start:scout",
+              "next": "trial_given"
+            },
+            {
+              "text": "算了"
+            }
+          ]
+        },
+        "trial_given": {
+          "text": "去吧。忘了就回來問。",
+          "options": [
+            {
+              "text": "知道了"
+            }
+          ]
+        },
+        "appraised_great": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:passed&trial_at_least:scout:score=40",
+          "fallback": "appraised_good",
+          "text": "…{trial_score} 分？幾乎全部筆直。…很好。藥水拿去，多教你一招。",
+          "options": [
+            {
+              "text": "轉職成斥候",
+              "action": "job_change:scout",
+              "next": "done"
+            }
+          ]
+        },
+        "appraised_good": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:passed&trial_at_least:scout:score=31",
+          "fallback": "appraised_knotted",
+          "text": "{trial_score} 分。不錯。",
+          "options": [
+            {
+              "text": "轉職成斥候",
+              "action": "job_change:scout",
+              "next": "done"
+            }
+          ]
+        },
+        "appraised_barely": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:passed",
+          "fallback": "appraised_fail",
+          "text": "…{trial_score} 分。唉，勉強及格。",
+          "options": [
+            {
+              "text": "轉職成斥候",
+              "action": "job_change:scout",
+              "next": "done"
+            }
+          ]
+        },
+        "appraised_fail": {
+          "text": "{trial_score} 分？不到 {trial_pass}。再去撿。嫩枝先還你。",
+          "options": [
+            {
+              "text": "我再去撿"
+            }
+          ]
+        },
+        "appraised_perfect": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:passed&trial_at_least:scout:score=50",
+          "fallback": "appraised_great",
+          "text": "…{trial_score} 分。我收回剛才嘆的氣。藥水拿去，多教你一招。",
+          "options": [
+            {
+              "text": "轉職成斥候",
+              "action": "job_change:scout",
+              "next": "done"
+            }
+          ]
+        },
+        "appraised_knotted": {
+          "condition": "min_job_level:10&unlock:job_change&trial:scout:passed&trial_is:scout:only_lowest=yes",
+          "fallback": "appraised_barely",
+          "text": "…全部都打結？你是故意的吧。…算你過。",
+          "options": [
+            {
+              "text": "轉職成斥候",
+              "action": "job_change:scout",
+              "next": "done"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "faith_mentor": {
+    "name": "信徒導師 薇恩",
+    "portrait": "faith_mentor",
+    "art": {
+      "_comment": "信徒導師：暖金，提爐吊在手下面，剪影和拿法杖的術士導師分得開",
+      "tint": "#d8b25e"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "前面的人砍，後面的人唸咒，倒下的人誰來扶？…對，就是我們。",
+          "options": [
+            {
+              "text": "我想成為信徒",
+              "next": "check_job"
+            },
+            {
+              "text": "我想學急救",
+              "next": "fa_learned"
+            },
+            {
+              "text": "我想成為神職者",
+              "condition": "job:devout",
+              "next": "clergy_check"
+            },
+            {
+              "text": "我想成為行者",
+              "condition": "job:devout",
+              "next": "ascetic_check"
+            },
+            {
+              "text": "我想成為神諭官",
+              "condition": "job:clergy",
+              "next": "oracle_check"
+            },
+            {
+              "text": "我想成為鬥聖",
+              "condition": "job:ascetic",
+              "next": "warsaint_check"
+            },
+            {
+              "text": "信徒擅長什麼？",
+              "next": "about"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "about": {
+          "text": "信徒提著爐走在隊伍中間，爐裡的火能治傷、解掉身上的壞東西，還能燒暗屬性的怪。之後分成照顧整隊的「神職者」，和用拳頭說話的「行者」。",
+          "options": [
+            {
+              "text": "原來如此",
+              "next": "hello"
+            }
+          ]
+        },
+        "check_job": {
+          "text": "手伸出來我看看。這個爐子很重喔。",
+          "condition": "job:novice",
+          "fallback": "already",
+          "options": [
+            {
+              "text": "請看",
+              "next": "trial_passed"
+            }
+          ]
+        },
+        "check_basic": {
+          "text": "等級夠了，基本技能還沒 9 級喔。",
+          "condition": "min_job_level:10",
+          "fallback": "too_weak",
+          "options": [
+            {
+              "text": "我去把基本技能練滿"
+            }
+          ]
+        },
+        "too_weak": {
+          "text": "還太早了。初心者職業等級 10 級再來吧。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "already": {
+          "text": "你已經選好路了呀。",
+          "options": [
+            {
+              "text": "再見"
+            }
+          ]
+        },
+        "done": {
+          "text": "歡迎歡迎！以後隊友倒了，就靠你囉。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "clergy_check": {
+          "text": "爐子燒得很穩了。要當神職者，照顧整隊人嗎？",
+          "condition": "min_job_level:30",
+          "fallback": "clergy_weak",
+          "options": [
+            {
+              "text": "轉職成神職者",
+              "action": "job_change:clergy",
+              "next": "clergy_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "clergy_weak": {
+          "text": "還不到時候。信徒職業等級要 30 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "clergy_done": {
+          "text": "神職者！別只顧著救人，自己也要記得喝水。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "ascetic_check": {
+          "text": "不想唸經？想用拳頭？…也可以啦。",
+          "condition": "min_job_level:30",
+          "fallback": "ascetic_weak",
+          "options": [
+            {
+              "text": "轉職成行者",
+              "action": "job_change:ascetic",
+              "next": "ascetic_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "ascetic_weak": {
+          "text": "還不到時候。信徒職業等級要 30 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "ascetic_done": {
+          "text": "行者。拳頭打下去的時候…嗯，也算是一種祈禱。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "oracle_check": {
+          "text": "你聽得見晨曦說話了吧？要當神諭官嗎？",
+          "condition": "min_job_level:40",
+          "fallback": "oracle_weak",
+          "options": [
+            {
+              "text": "轉職成神諭官",
+              "action": "job_change:oracle",
+              "next": "oracle_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "oracle_weak": {
+          "text": "再等等。神職者職業等級要 40 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "oracle_done": {
+          "text": "神諭官。以後說話要小心，大家都會當真的。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "warsaint_check": {
+          "text": "你全身上下都沒破綻了呢。要當鬥聖嗎？",
+          "condition": "min_job_level:40",
+          "fallback": "warsaint_weak",
+          "options": [
+            {
+              "text": "轉職成鬥聖",
+              "action": "job_change:warsaint",
+              "next": "warsaint_done"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "warsaint_weak": {
+          "text": "還不夠。行者職業等級要 40 級。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "warsaint_done": {
+          "text": "鬥聖！…下次搬東西就找你了。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "trial_passed": {
+          "condition": "min_job_level:10&unlock:job_change&trial:devout:passed&trial_is:devout:feat_all_greeted=yes",
+          "fallback": "trial_passed_plain",
+          "text": "三個人都去拜訪了？大家都寫信來說你很有禮貌呢…這些藥水帶著，我再多教你一點。",
+          "options": [
+            {
+              "text": "轉職成信徒",
+              "action": "job_change:devout",
+              "next": "done"
+            }
+          ]
+        },
+        "trial_started": {
+          "condition": "min_job_level:10&unlock:job_change&trial:devout:started",
+          "fallback": "trial_offer",
+          "text": "還沒去嗎？你要找的是{trial_target}喔。見到他，說是我叫你去的就好。",
+          "options": [
+            {
+              "text": "我這就去"
+            }
+          ]
+        },
+        "trial_offer": {
+          "condition": "min_job_level:10&unlock:job_change",
+          "fallback": "check_basic",
+          "text": "提得動呢。不過信徒要先去巡禮一趟…我抽一位鎮上的人，你去找他說說話。要去嗎？",
+          "options": [
+            {
+              "text": "好，我去",
+              "action": "trial:start:devout",
+              "next": "trial_given"
+            },
+            {
+              "text": "再考慮看看"
+            }
+          ]
+        },
+        "trial_given": {
+          "text": "你要找的是{trial_target}。見到他，說是薇恩叫你去的。忘記了就回來問我喔。",
+          "options": [
+            {
+              "text": "知道了"
+            }
+          ]
+        },
+        "fa_learned": {
+          "condition": "skill_quest:first_aid:learned",
+          "fallback": "fa_ready",
+          "text": "你已經會急救了呀。受傷的時候記得用喔。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "fa_ready": {
+          "condition": "skill_quest:first_aid:ready",
+          "fallback": "fa_low",
+          "text": "都帶齊了呢！來，手伸出來…苔蘚先墊著，凝膠抹上去，藥水倒一點點…好了！簡單吧？",
+          "options": [
+            {
+              "text": "學會急救",
+              "action": "skill_quest:first_aid",
+              "next": "fa_done"
+            },
+            {
+              "text": "等一下"
+            }
+          ]
+        },
+        "fa_low": {
+          "condition": "skill_quest:first_aid:too_low",
+          "fallback": "fa_items",
+          "text": "你還太嫩了，連繃帶都綁不好呢。職業等級 4 級再來吧。",
+          "options": [
+            {
+              "text": "我會加油"
+            }
+          ]
+        },
+        "fa_items": {
+          "text": "想學急救？好呀！帶 3 個柔軟苔蘚、3 個露珠凝膠，還有 1 瓶紅色藥水來。苔蘚跟凝膠草原上打得到，藥水去蜜拉那邊買就有了。",
+          "options": [
+            {
+              "text": "我去準備"
+            }
+          ]
+        },
+        "fa_done": {
+          "text": "學會了！以後受傷的時候，自己包一包就好囉。",
+          "options": [
+            {
+              "text": "謝謝老師"
+            }
+          ]
+        },
+        "trial_passed_plain": {
+          "condition": "min_job_level:10&unlock:job_change&trial:devout:passed",
+          "fallback": "trial_started",
+          "text": "你去找過{trial_target}了呢，那邊的鴿子已經飛回來了。來，這個爐子給你。",
+          "options": [
+            {
+              "text": "轉職成信徒",
+              "action": "job_change:devout",
+              "next": "done"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "item_merchant": {
+    "name": "道具商人 蜜拉",
+    "portrait": "item_merchant",
+    "art": {
+      "_comment": "道具商人：琥珀，像圍裙",
+      "tint": "#e2a13c"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "歡迎光臨～紅色藥水今天剛熬好的喔！出城前記得多帶幾瓶！",
+          "options": [
+            {
+              "text": "我要買賣道具",
+              "action": "shop:item_shop"
+            },
+            {
+              "text": "看看花圃",
+              "action": "garden"
+            },
+            {
+              "text": "只是看看"
+            },
+            {
+              "text": "有什麼委託嗎？",
+              "condition": "feature:quests",
+              "next": "wq_board"
+            }
+          ]
+        },
+        "wq_board": {
+          "text": "老闆娘有點小事想拜託你～",
+          "options": [
+            {
+              "text": "進地窟該帶什麼？",
+              "condition": "quest_state:cavern_supplies:available",
+              "action": "quest:cavern_supplies",
+              "next": "wq_cavern_supplies_start"
+            },
+            {
+              "text": "還在準備",
+              "condition": "quest_state:cavern_supplies:active",
+              "next": "wq_cavern_supplies_wait"
+            },
+            {
+              "text": "準備好了",
+              "condition": "quest_state:cavern_supplies:ready",
+              "action": "quest_done:cavern_supplies",
+              "next": "wq_cavern_supplies_done"
+            },
+            {
+              "text": "先不用",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_cavern_supplies_start": {
+          "text": "@cavern_supplies.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_cavern_supplies_wait": {
+          "text": "@cavern_supplies.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_cavern_supplies_done": {
+          "text": "@cavern_supplies.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "gear_merchant": {
+    "name": "武器防具商 布隆",
+    "portrait": "gear_merchant",
+    "art": {
+      "_comment": "武器防具商：皮革褐",
+      "tint": "#8a6440"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "劍、法杖、弓、盔甲都在架上。自己挑。",
+          "options": [
+            {
+              "text": "我要買賣裝備",
+              "action": "shop:gear_shop"
+            },
+            {
+              "text": "借一下鍛造爐",
+              "next": "smith"
+            },
+            {
+              "text": "薇恩叫我來找你",
+              "condition": "trial:devout:started",
+              "action": "trial:meet:devout",
+              "next": "pilgrim"
+            },
+            {
+              "text": "薇恩叫我來找你",
+              "condition": "trial:devout:passed",
+              "action": "trial:meet:devout",
+              "next": "pilgrim"
+            },
+            {
+              "text": "下次再來"
+            }
+          ]
+        },
+        "smith": {
+          "text": "爐子借你。敲壞了別來找我哭。",
+          "options": [
+            {
+              "text": "打開鍛造台",
+              "action": "smith"
+            },
+            {
+              "text": "算了",
+              "next": "hello"
+            }
+          ]
+        },
+        "pilgrim": {
+          "text": "…薇恩派你來的？她上次借我的鐵鎚還沒還。好啦，名字我記下了，回去跟她說吧。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ],
+          "condition": "trial_is:devout:target=gear_merchant",
+          "fallback": "pilgrim_wrong"
+        },
+        "pilgrim_wrong": {
+          "text": "不是我。…你說薇恩？她上次借我的鐵鎚還沒還。幫我跟她說。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "storage_keeper": {
+    "name": "倉庫管理員 奧托",
+    "portrait": "storage_keeper",
+    "art": {
+      "_comment": "倉庫管理員：石板灰藍",
+      "tint": "#5f7484"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "這裡是晨曦鎮倉庫。存在這裡的東西，到哪一座城都領得到。要用倉庫嗎？",
+          "options": [
+            {
+              "text": "我要使用倉庫",
+              "next": "open"
+            },
+            {
+              "text": "倉庫怎麼用？",
+              "next": "about"
+            },
+            {
+              "text": "薇恩叫我來找你",
+              "condition": "trial:devout:started",
+              "action": "trial:meet:devout",
+              "next": "pilgrim"
+            },
+            {
+              "text": "薇恩叫我來找你",
+              "condition": "trial:devout:passed",
+              "action": "trial:meet:devout",
+              "next": "pilgrim"
+            },
+            {
+              "text": "不用了"
+            }
+          ]
+        },
+        "open": {
+          "text": "請。存什麼、領什麼，帳冊上都會記一筆。",
+          "condition": "unlock:storage",
+          "fallback": "no_skill",
+          "options": [
+            {
+              "text": "開啟倉庫",
+              "action": "storage"
+            },
+            {
+              "text": "先不用"
+            }
+          ]
+        },
+        "no_skill": {
+          "text": "抱歉，規定是基本技能 3 級才能用倉庫。規定就是規定。",
+          "options": [
+            {
+              "text": "我知道了"
+            }
+          ]
+        },
+        "about": {
+          "text": "帳冊我收著。慢走。",
+          "options": [
+            {
+              "text": "原來如此",
+              "next": "hello"
+            }
+          ]
+        },
+        "pilgrim": {
+          "text": "請在帳冊這一頁簽名。…好，我會轉告薇恩小姐。規定就是規定。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ],
+          "condition": "trial_is:devout:target=storage_keeper",
+          "fallback": "pilgrim_wrong"
+        },
+        "pilgrim_wrong": {
+          "text": "帳冊上沒有你的名字。…不過來都來了，我記一筆「來打過招呼」。",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "teleporter": {
+    "name": "傳送員 希爾",
+    "portrait": "teleporter",
+    "art": {
+      "_comment": "傳送員：青",
+      "tint": "#3fbfc4"
+    },
+    "idle": "Idle",
+    "dialogue": {
+      "start": "hello",
+      "nodes": {
+        "hello": {
+          "text": "要去哪裡？根脈傳送陣只能送你去走過的地方喔，沒去過的我也沒辦法～",
+          "options": [
+            {
+              "text": "晨曦鎮",
+              "condition": "warp:town",
+              "action": "warp:town"
+            },
+            {
+              "text": "萌芽草原",
+              "condition": "warp:meadow",
+              "action": "warp:meadow"
+            },
+            {
+              "text": "低語森林",
+              "condition": "warp:whisper_forest",
+              "action": "warp:whisper_forest"
+            },
+            {
+              "text": "碎石谷",
+              "condition": "warp:stone_valley",
+              "action": "warp:stone_valley"
+            },
+            {
+              "text": "灰蝕地窟入口",
+              "condition": "warp:gloom_cavern_b1",
+              "action": "warp:gloom_cavern_b1"
+            },
+            {
+              "text": "世界是怎麼連起來的？",
+              "next": "guide"
+            },
+            {
+              "text": "要怎麼去草原？",
+              "condition": "quest_state:tutorial_south_gate:available",
+              "action": "quest:tutorial_south_gate",
+              "next": "q_gate_start"
+            },
+            {
+              "text": "我還沒走過南門",
+              "condition": "quest_state:tutorial_south_gate:active",
+              "next": "q_gate_wait"
+            },
+            {
+              "text": "我從草原回來了",
+              "condition": "quest_state:tutorial_south_gate:ready",
+              "action": "quest_done:tutorial_south_gate",
+              "next": "q_gate_done"
+            },
+            {
+              "text": "薇恩叫我來找你",
+              "condition": "trial:devout:started",
+              "action": "trial:meet:devout",
+              "next": "pilgrim"
+            },
+            {
+              "text": "薇恩叫我來找你",
+              "condition": "trial:devout:passed",
+              "action": "trial:meet:devout",
+              "next": "pilgrim"
+            },
+            {
+              "text": "不用了"
+            },
+            {
+              "text": "有什麼委託嗎？",
+              "condition": "feature:quests",
+              "next": "wq_board"
+            }
+          ]
+        },
+        "q_gate_start": {
+          "text": "@tutorial_south_gate.accept",
+          "options": [
+            {
+              "text": "我記住了"
+            }
+          ]
+        },
+        "q_gate_wait": {
+          "text": "@tutorial_south_gate.progress",
+          "options": [
+            {
+              "text": "我再去一趟"
+            }
+          ]
+        },
+        "q_gate_done": {
+          "text": "@tutorial_south_gate.complete",
+          "options": [
+            {
+              "text": "謝謝希爾"
+            }
+          ]
+        },
+        "guide": {
+          "text": "南門出去是萌芽草原，北門出去是低語森林。森林再往北是碎石谷，谷的東邊有條裂縫通到灰蝕地窟。地窟最裡面那隻骸冠啊…連根脈都不敢靠近，你只能自己走下去了。",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_board": {
+          "text": "有幾件跑腿的事，順路的話幫個忙吧！",
+          "options": [
+            {
+              "text": "碎石谷要怎麼去？",
+              "condition": "quest_state:valley_road_open:available",
+              "action": "quest:valley_road_open",
+              "next": "wq_valley_road_open_start"
+            },
+            {
+              "text": "燧石還沒撿完",
+              "condition": "quest_state:valley_road_open:active",
+              "next": "wq_valley_road_open_wait"
+            },
+            {
+              "text": "燧石撿齊了",
+              "condition": "quest_state:valley_road_open:ready",
+              "action": "quest_done:valley_road_open",
+              "next": "wq_valley_road_open_done"
+            },
+            {
+              "text": "先不用",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_valley_road_open_start": {
+          "text": "@valley_road_open.accept",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_valley_road_open_wait": {
+          "text": "@valley_road_open.progress",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "wq_valley_road_open_done": {
+          "text": "@valley_road_open.complete",
+          "options": [
+            {
+              "text": "我知道了",
+              "next": "hello"
+            }
+          ]
+        },
+        "pilgrim": {
+          "text": "薇恩！她人超好的！好好好，我幫你寫信跟她說你來過了～",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ],
+          "condition": "trial_is:devout:target=teleporter",
+          "fallback": "pilgrim_wrong"
+        },
+        "pilgrim_wrong": {
+          "text": "不是我喔～不過你特地跑來，我好開心！要不要順便去草原玩？",
+          "options": [
+            {
+              "text": "謝謝"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

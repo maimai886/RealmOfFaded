@@ -1,0 +1,1193 @@
+{
+  "$schema_note": "形狀取自 .claude/skills/create-game-assets/references/provenance.md 的「每一份出貨資產要記什麼」。技能本身的 assets/asset-manifest.json 範本沒有隨這個專案一起裝，所以欄位是照那份參考文件的清單自己排的。",
+  "project": "Realm of Faded",
+  "generated": "2026-09-24",
+  "generated_by": "2026-09-17 create-game-assets skill 第 4 步第一次做，2026-09-18 補手繪角色圖集、職業圖標和兩張手繪來源；2026-09-23 補本機 3D 算圖產線的工具、模型和角色來源；2026-09-24 清掉沒被載入的素材、管線和原始檔之後更新，清掉的家族標 removed",
+  "granularity": "一筆等於一個資產家族，不是一個檔案。全專案約兩千個檔案，逐檔列會沒有人看。唯一性高或風險高的東西（音樂、字型、立繪）另外逐檔列在 items 裡。",
+  "status_values": {
+    "approved": "使用者看過並接受",
+    "shipping_unreviewed": "在出貨路徑上，但沒有人明確驗收過",
+    "placeholder": "明知是暫時的",
+    "dead": "在磁碟上但程式和資料都沒有引用",
+    "unknown": "來源或授權查不到",
+    "removed": "已經清出版本庫，這一筆只留來源紀錄"
+  },
+  "risk_values": {
+    "none": "授權清楚、來源清楚",
+    "low": "授權清楚，來源紀錄不完整",
+    "medium": "授權可推定但沒有書面證據",
+    "high": "授權未知或有條件而條件沒有被記錄"
+  },
+  "families": [
+    {
+      "id": "vendor.kaykit",
+      "kind": "3d_model",
+      "path": "assets/vendor/kaykit/**",
+      "file_count": 139,
+      "subsets": {
+        "characters": "2 檔，Knight.glb 和它的貼圖，來自 Adventurers；其他角色 2026-09-24 清掉",
+        "dungeon": "62 檔，來自 Dungeon Remastered",
+        "nature": "55 檔，來自 Medieval Hexagon",
+        "town": "13 檔，來自 Medieval Hexagon",
+        "props": "3 檔，來自 Medieval Hexagon",
+        "weapons": "2026-09-24 清掉，3D 角色拿掉之後沒有人用"
+      },
+      "source": {
+        "creator": "Kay Lousberg",
+        "url": "https://kaylousberg.com/game-assets",
+        "store": "https://kaylousberg.itch.io/",
+        "acquired_via": "從 GitHub 的 KayKit-Game-Assets 組織淺層 clone，原始檔在 art_source/vendor/",
+        "acquired_date": "未記錄，clone 是淺層的所以 git 也查不到",
+        "pinned_commits": {
+          "KayKit-Dungeon-Remastered-1.0": "b0ca9bd96a8072ab36a3a5464f00ed1e06a16d07",
+          "KayKit-Medieval-Hexagon-Pack-1.0": "84fa4e91af6a88989be7c99e0891cede11f2ca38",
+          "KayKit-Character-Pack-Adventures-1.0": "672074b73ba276876a19e8816ecdc5241817ab47",
+          "KayKit-Character-Pack-Skeletons-1.0": "15b62b9bad122f72926c10fb14d622c73819fa54"
+        }
+      },
+      "license": {
+        "name": "CC0 1.0 Universal",
+        "url": "http://creativecommons.org/publicdomain/zero/1.0/",
+        "copies_in_repo": [
+          "assets/vendor/kaykit/LICENSE_adventurers.txt",
+          "assets/vendor/kaykit/LICENSE_dungeon_remastered.txt",
+          "assets/vendor/kaykit/LICENSE_medieval_hexagon.txt",
+          "assets/vendor/kaykit/LICENSE_skeletons.txt"
+        ],
+        "attribution_required": false,
+        "attribution_suggested": "Kay Lousberg, www.kaylousberg.com",
+        "commercial_use": true,
+        "modification": true,
+        "redistribution": true,
+        "ai_training": "未限制"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "none",
+      "notes": "紙偶骨架 puppet_rig 經 characters_v3/rig.py 從 kaykit/characters/Knight.glb 拿骨架和動作，所以它不是只有場景在用。2026-09-24 先清掉包裡沒被載入的 91 個檔案，NPC 改 2D 之後再清掉 Knight 以外的角色和整個 weapons，要的話照 pinned_commits 重新 clone。"
+    },
+    {
+      "id": "vendor.kenney_ui_rpg",
+      "kind": "ui_texture",
+      "path": "assets/vendor/kenney_ui_rpg/**",
+      "file_count": 90,
+      "source": {
+        "creator": "Kenney Vleugels",
+        "url": "https://www.kenney.nl",
+        "pack": "UI pack: RPG extension",
+        "version": "未記錄"
+      },
+      "license": {
+        "name": "CC0 1.0 Universal",
+        "copies_in_repo": [
+          "assets/vendor/kenney_ui_rpg/license.txt"
+        ],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": true,
+      "status": "dead",
+      "risk": "none",
+      "notes": "程式、場景、資料全部零引用。介面實際用的是 assets/ui/skin 那一套自製皮膚。90 個檔案白佔出貨包。"
+    },
+    {
+      "id": "vendor.audio.sfx",
+      "kind": "sound",
+      "path": "assets/vendor/audio/{impact-sounds,interface-sounds,rpg-audio}/Audio/**",
+      "file_count": 247,
+      "wired_count": 159,
+      "unused_count": 88,
+      "source": {
+        "creator": "Kenney Vleugels",
+        "url": "https://www.kenney.nl",
+        "packs": [
+          "Impact Sounds 1.0（2019-12-19）",
+          "Interface Sounds 1.0（2020-02-11）",
+          "RPG Audio（無版本）"
+        ]
+      },
+      "license": {
+        "name": "CC0 1.0 Universal",
+        "copies_in_repo": [
+          "assets/vendor/audio/impact-sounds/License.txt",
+          "assets/vendor/audio/interface-sounds/License.txt",
+          "assets/vendor/audio/rpg-audio/License.txt"
+        ],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "none",
+      "mapping": "src/audio/sound_map.gd 的 EVENTS，62 個事件對應 159 個檔案，零個斷掉的引用。對照表在 docs/音效對照.md。",
+      "notes": "88 個沒接的檔案照樣被 export_filter=all_resources 打包進去。2026-09-17 使用者說腳步聲整套移除，35 個 footstep_*.ogg 連同 .import 一起砍掉，原本是 282 個。這些是 Kenney 整包的一部分，來源網址寫在上面，要的話重新下載得回來。"
+    },
+    {
+      "id": "vendor.fonts",
+      "kind": "font",
+      "path": "assets/vendor/fonts/**",
+      "file_count": 4,
+      "license": {
+        "name": "SIL Open Font License 1.1",
+        "copies_in_repo": [
+          "OFL_jf-openhuninn.txt",
+          "OFL_Cinzel.txt",
+          "OFL_NotoSansTC.txt",
+          "OFL_GenWanMin2.txt"
+        ],
+        "commercial_use": true,
+        "reserved_font_name": "NotoSansTC 和 GenWanMin2 兩份都掛 Adobe 的 Source 保留字型名稱，改名散布會受限"
+      },
+      "status": "shipping_unreviewed",
+      "risk": "low",
+      "notes": "四個字型只有 jf-openhuninn 記了來源網址和版本。字型檔合計約 40 MB。沒人載入的 GenWanMin2TW-M 和 LilitaOne 2026-09-24 清掉。",
+      "items": [
+        {
+          "file": "jf-openhuninn-2.1.ttf",
+          "bytes": 4911464,
+          "source_url": "https://github.com/justfont/open-huninn-font",
+          "copyright": "justfont",
+          "used_at": "project.godot 的 gui/theme/custom_font、src/ui/ui_theme.gd",
+          "status": "approved"
+        },
+        {
+          "file": "NotoSansTC-wght.ttf",
+          "bytes": 11941968,
+          "source_url": "未記錄",
+          "copyright": "Adobe 2014-2021",
+          "used_at": "ui_theme.gd 的後備字型",
+          "status": "shipping_unreviewed"
+        },
+        {
+          "file": "GenWanMin2TW-SB.otf",
+          "bytes": 22614524,
+          "source_url": "未記錄",
+          "copyright": "Adobe 2014-2019",
+          "used_at": "ui_theme.gd 的襯線，只有視窗標題用",
+          "status": "shipping_unreviewed"
+        },
+        {
+          "file": "Cinzel-wght.ttf",
+          "bytes": 125468,
+          "source_url": "https://github.com/NDISCOVER/Cinzel",
+          "copyright": "The Cinzel Project Authors 2020",
+          "used_at": "ui_theme.gd 的 Logo",
+          "status": "approved"
+        },
+        {
+          "file": "GenWanMin2TW-M.otf",
+          "bytes": 22710256,
+          "source_url": "未記錄",
+          "copyright": "Adobe 2014-2019",
+          "used_at": "已刪除。2026-09-24 清掉，從來沒有人引用",
+          "status": "removed",
+          "notes": "22.7 MB 零引用，照樣出貨"
+        },
+        {
+          "file": "LilitaOne-Regular.ttf",
+          "bytes": 28092,
+          "source_url": "未記錄",
+          "copyright": "Juan Montoreano 2011",
+          "used_at": "已刪除。2026-09-24 清掉，從來沒有人引用",
+          "status": "removed"
+        }
+      ]
+    },
+    {
+      "id": "vendor.audio.music",
+      "kind": "music",
+      "path": "assets/vendor/audio/music/**",
+      "file_count": 3,
+      "source": {
+        "tool": "Suno",
+        "evidence": "原始下載檔的 ID3 標籤和 C2PA 簽章。出貨的檔案已經用 art_pipeline/audio/strip_tags.py 把標籤整個拿掉，所以證據只存在這份清單裡",
+        "account_shown_in_tag": "restrainedgroupie605",
+        "license_file_in_repo": null,
+        "doc_record": "docs/音效對照.md 第 11 節"
+      },
+      "license": {
+        "name": "Suno 付費訂閱方案",
+        "commercial_use": "可以，2026-09-17 使用者確認四首產生當下都是付費訂閱方案",
+        "confirmed_by": "使用者，2026-09-17"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "ok",
+      "risk": "low",
+      "items": [
+        {
+          "file": "exploration_log.mp3",
+          "title": "Exploration Log",
+          "suno_url": "https://suno.com/song/1f4b585e-0e8e-4284-9723-ae3ff3ec9181",
+          "created": "2026-09-16T10:28:40Z",
+          "used_at": "已刪除。2026-09-17 被 sunny_adventure 換掉之後沒有人引用，同日連 .import 一起刪掉，要用照 suno_url 重新下載"
+        },
+        {
+          "file": "fantasy_town_loop.mp3",
+          "title": "Fantasy Town Loop",
+          "suno_url": "https://suno.com/song/89e2f7fe-f76d-4819-855d-41679eafcee8",
+          "created": "2026-09-16T06:56:35Z",
+          "used_at": "已刪除。2026-09-17 被 welcome_back 換掉之後沒有人引用，同日連 .import 一起刪掉，要用照 suno_url 重新下載"
+        },
+        {
+          "file": "town_square_theme.mp3",
+          "title": "Town Square Theme",
+          "suno_url": "https://suno.com/song/b0bd55ac-8f48-4ad1-9751-e5f1a567a75b",
+          "created": "2026-09-16T10:13:29Z",
+          "used_at": "已刪除。2026-09-17 被 sunny_town_morning 換掉之後沒有人引用，同日連 .import 一起刪掉，要用照 suno_url 重新下載"
+        },
+        {
+          "file": "sunny_town_morning.mp3",
+          "title": "Sunny Town Morning",
+          "suno_url": "https://suno.com/song/c118ebd6-5fba-43dc-bec5-3d0c771de10d",
+          "created": "2026-09-17T08:08:41Z",
+          "used_at": "data/maps/town.json"
+        },
+        {
+          "file": "welcome_back.mp3",
+          "title": "Welcome Back",
+          "suno_url": "https://suno.com/song/be164fd0-1239-4016-a8be-fa3aa74cbfb0",
+          "created": "2026-09-17T08:12:10Z",
+          "used_at": "src/ui/login_flow.gd 的 LOGIN_MUSIC，登入與選角"
+        },
+        {
+          "file": "sunny_adventure.mp3",
+          "title": "Sunny Adventure",
+          "suno_url": "https://suno.com/song/f35ce1a9-4ebe-4502-b6ee-becdd74dac4f",
+          "created": "2026-09-17T08:21:52Z",
+          "used_at": "data/maps/meadow.json"
+        }
+      ],
+      "notes": "本來六首，現在留三首而且每一首都有人用：welcome_back 登入、sunny_town_morning 晨曦鎮、sunny_adventure 露珠草原。fantasy_town_loop、town_square_theme、exploration_log 沒有人引用，2026-09-17 刪掉，items 裡的那三筆留著當來源紀錄，suno_url 還能重新下載。所有檔案的 ID3 和 C2PA 標籤都拿掉了，來源只記在這裡。"
+    },
+    {
+      "id": "generated.models.characters_real",
+      "kind": "3d_model",
+      "path": "assets/generated/models/characters_real/**",
+      "file_count": 23,
+      "contents": "14 具身體（7 職業 × 2 性別）、4 張表情圖集、5 頂髮型",
+      "source": {
+        "tool_chain": [
+          "Meshy meshy-6 產網格",
+          "art_pipeline/characters_v3/rehome_meshy.py 拿掉舊骨架重綁到 humanoid.py 的標準骨架"
+        ],
+        "concept_images": "AI 產圖，產圖工具未記錄，原圖已經不在版本庫",
+        "job_records": "已刪除。art_pipeline/meshy 2026-09-24 清掉",
+        "task_records": "已刪除。art_source/meshy 2ad0f8a 就不在版本庫"
+      },
+      "license": {
+        "name": "Meshy 付費方案產出，著作權歸我們",
+        "confirmed_date": "2026-09-16",
+        "attribution_required": false,
+        "evidence_held": "沒有。Meshy 的說明文件 2026-09-24 跟著產線清掉，發票或方案頁截圖從來沒有存進來"
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "medium",
+      "is_active_set": false,
+      "notes": "2026-09-24 NPC 改成 2D 之後 3D 角色整條拿掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。以前是 NPC 用的 3D 身體，上游 characters_meshy 已經清掉，重做不了。",
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "generated.models.characters_own",
+      "kind": "3d_model",
+      "path": "assets/generated/models/characters/**",
+      "file_count": 18,
+      "contents": "只剩 18 件裝備外觀：armor 3、cape 3、cap/circlet/helm 3、weapon 9。身體、髮型、表情圖集、臉部檢查圖 2026-09-24 清掉",
+      "source": {
+        "tool": "程式化 Blender",
+        "pipeline": "art_pipeline/characters_v3/build.py、weapon.py、gear.py、headgear.py，2026-09-24 跟著 3D 角色一起清掉，要重產得從 git 歷史拿回來",
+        "rig_donor": "assets/vendor/kaykit/characters/Knight.glb（CC0）"
+      },
+      "license": {
+        "name": "自製，骨架衍生自 CC0",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": true,
+      "status": "shipping_unreviewed",
+      "risk": "none",
+      "notes": "只剩裝備網格，遊戲執行時不載入，3D 角色那條 2026-09-24 拿掉了。cbuild.py --layer 算裝備圖層從這裡拿網格，所以留著。匯出設定是 all_resources，所以它照樣進出貨包。"
+    },
+    {
+      "id": "generated.models.characters_mannequin",
+      "kind": "3d_model",
+      "path": "assets/generated/models/characters_mannequin/**",
+      "file_count": 11,
+      "contents": "1 具共用身體、2 張臉、8 件 NPC 配件",
+      "source": {
+        "tool": "程式化 Blender",
+        "pipeline": "art_pipeline/characters_v3/build_mannequin.py"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "none",
+      "notes": "2026-09-24 NPC 改成 2D 之後 3D 角色整條拿掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。以前是灰白人體模型和九個 NPC 的配件。紙偶骨架用的是 characters_v3/mannequin.py 程式化產生的人偶，不是這個資料夾的檔案，拿掉之後 puppet_rig 的 rig.json 一個位元組都沒變。",
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "generated.models.characters_real3",
+      "kind": "3d_model",
+      "path": "assets/generated/models/characters_real3/**",
+      "file_count": 4,
+      "source": {
+        "tool": "art_pipeline/characters_v3/reproportion.py 吃 characters_real 再做一次空間扭曲"
+      },
+      "license": {
+        "name": "衍生自 Meshy 付費方案產出",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "medium",
+      "notes": "2026-09-24 清掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。三頭身女初心者一具的比較組，已經被 4.07 頭身取代。",
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "generated.models.characters_meshy",
+      "kind": "3d_model",
+      "path": "assets/generated/models/characters_meshy/**",
+      "file_count": 27,
+      "source": {
+        "tool": "Meshy meshy-6，assemble.py 組裝，未換綁"
+      },
+      "license": {
+        "name": "Meshy 付費方案產出",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "medium",
+      "notes": "2026-09-24 清掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。characters_real 的上游，characters_real 從此重做不了。",
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "generated.models.meshy_raw",
+      "kind": "3d_model",
+      "path": "assets/generated/models/meshy/**",
+      "file_count": 66,
+      "source": {
+        "tool": "Meshy meshy-6，cleanup.py 清理後的原始輸出"
+      },
+      "license": {
+        "name": "Meshy 付費方案產出",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "medium",
+      "notes": "2026-09-24 清掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。",
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "generated.models.townkit",
+      "kind": "3d_model",
+      "path": "assets/generated/models/townkit/**",
+      "file_count": 42,
+      "source": {
+        "tool": "程式化 Blender",
+        "pipeline": "art_pipeline/props/town_kit.py"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "none",
+      "notes": "晨曦鎮實際用的建築和擺設，20 個模型。footprint 在 data/props.json。"
+    },
+    {
+      "id": "generated.models.town_retex",
+      "kind": "3d_model",
+      "path": "assets/generated/models/town/**",
+      "file_count": 40,
+      "source": {
+        "tool": "art_pipeline/props/town_retex.py，保留 KayKit 幾何只換貼圖",
+        "upstream": "KayKit Medieval Hexagon（CC0）"
+      },
+      "license": {
+        "name": "CC0 的衍生作品",
+        "commercial_use": true,
+        "attribution_required": false
+      },
+      "used_at_runtime": false,
+      "ships": true,
+      "status": "dead",
+      "risk": "none",
+      "notes": "只有 map_environment.gd 的一句註解提到它。data/maps/town.json 用的是 townkit。和 townkit 直接競爭同一個位置。"
+    },
+    {
+      "id": "generated.models.dungeon_retex",
+      "kind": "3d_model",
+      "path": "assets/generated/models/dungeon/**",
+      "file_count": 52,
+      "source": {
+        "tool": "art_pipeline/props/town_retex.py 的 dungeon 那一批",
+        "upstream": "KayKit Dungeon Remastered（CC0）"
+      },
+      "license": {
+        "name": "CC0 的衍生作品",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "none"
+    },
+    {
+      "id": "generated.models.landmarks_and_nature",
+      "kind": "3d_model",
+      "path": "assets/generated/models/{landmarks/**,*.glb,*.gltf}",
+      "file_count": 39,
+      "source": {
+        "tool": "程式化 Blender",
+        "pipeline": "art_pipeline/props/{landmarks,nature,foliage}.py"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "none",
+      "notes": "根目錄的舊樹、灌木、柵欄和地形塊模型，連產生它們的 terrain_tiles.py，2026-09-24 清掉。"
+    },
+    {
+      "id": "generated.textures.terrain",
+      "kind": "texture",
+      "path": "assets/generated/textures/**",
+      "file_count": 20,
+      "source": {
+        "tool": "AI 產圖再用 art_pipeline/textures/tileable.py 處理成無縫可平鋪並統一色階",
+        "raw": "art_source/textures/raw/ 共 30 張",
+        "generator_model": null,
+        "prompt_record": "沒有逐檔的提示詞，只有 docs/美術方向.md 和 docs/開發指令.md 的散文描述"
+      },
+      "license": {
+        "name": "未知",
+        "commercial_use": "取決於產圖工具的條款，而工具是哪一家沒有記錄"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "shipping_unreviewed",
+      "risk": "high",
+      "notes": "地面、樹皮、屋瓦、石牆全部走這條。使用者兩次嫌地面粗糙就是這一組。PNG 裡沒有任何 tEXt、iTXt、eXIf 或 C2PA 中繼資料。",
+      "notes_2026_09_25": "灰泥、屋瓦、木頭、石牆、廣場石板、沙路六張重做：本機 ComfyUI 的 Flux 2 Klein，拿 art_source/textures/reference/provencal_4.webp 當風格參考，產圖腳本和挑選紀錄見 docs/城鎮建築產線.md",
+      "generator_model": "Flux 2 Klein 4B，本機"
+    },
+    {
+      "id": "generated.sprites.monsters",
+      "kind": "sprite_sheet",
+      "path": "assets/generated/sprites/monsters/**",
+      "sheet_count": 4,
+      "file_count": 8,
+      "source": {
+        "tool": "2D 紙偶 art_pipeline/monsters_v2/mpuppet.py：使用者畫的四視圖直接當方向圖，走路分跳搖踏，耳朵角葉子自動切成部位跟著甩",
+        "input": "art_source/monsters/南門/<怪>/views/"
+      },
+      "license": {
+        "name": "自製，長相來自使用者貼的圖",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "shipping_unreviewed",
+      "risk": "low",
+      "format": {
+        "directions": 5,
+        "frame_px": "128 / 192 / 320",
+        "pixels_per_meter_range": "76.2 到 137.1",
+        "policy": "112",
+        "layout": "packed"
+      },
+      "notes": "只剩 data/monsters.json 裡的南門四隻：萊姆、小樹苗、水晶兔、木樁王。其他 31 份舊圖集和程式化、Meshy 兩條舊產線 2026-09-24 清掉。"
+    },
+    {
+      "id": "generated.sprites.npcs",
+      "kind": "sprite_sheet",
+      "path": "assets/generated/sprites/npcs/**",
+      "sheet_count": 8,
+      "file_count": 24,
+      "source": {
+        "tool": "程式化 Blender",
+        "pipeline": "art_pipeline/npcs_v2/nbuild.py"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "none",
+      "format": {
+        "frame_px": 96,
+        "pixels_per_meter": 64,
+        "actions": [
+          "idle",
+          "talk"
+        ]
+      },
+      "notes": "2026-09-24 清掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。96×96、64 px/m 的舊規格。NPC 現在走 3D，改成 2D 圖集是下一件，要照玩家角色的規格重做。",
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "generated.sprites.characters",
+      "kind": "sprite_sheet",
+      "path": "assets/generated/sprites/characters/**",
+      "sheet_count": "1 body 加 1 layer：body/male_novice 男女共用，layers/Knife 初心者小刀",
+      "file_count": 6,
+      "source": {
+        "tool": "2D 紙偶：使用者畫的五張視圖切零件照標準骨架動",
+        "pipeline": "art_pipeline/characters_v5/puppet_rig.py、puppet_poses.py、puppet_sheet.py；圖層是 puppet_layer.py",
+        "input": "art_source/characters_v5/male_base/views"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "shipping_unreviewed",
+      "risk": "none",
+      "format": {
+        "male_novice": {
+          "frame_px": [
+            176,
+            232
+          ],
+          "pixels_per_meter": 96,
+          "directions": 5,
+          "filter": "linear",
+          "layout": "packed"
+        }
+      },
+      "notes": "所有職業、男女都用 male_novice 這一份素體，職業外觀之後做成服裝圖層。小刀圖層的圖暫時拿道具圖示 assets/ui/icons/items/knife.png 做，正式的要換使用者畫的每個方位各一張。舊的 192×192 圖集、3D 算的頭部圖層、female_novice 176 像素舊圖和 Knife_female 2026-09-24 清掉。"
+    },
+    {
+      "id": "generated.sprites.effects",
+      "kind": "sprite_sheet",
+      "path": "assets/generated/sprites/effects/**",
+      "sheet_count": 14,
+      "file_count": 38,
+      "source": {
+        "tool": "程式化 Blender",
+        "pipeline": "art_pipeline/icons_v2/effects.py"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": "部分",
+      "ships": true,
+      "status": "shipping_unreviewed",
+      "risk": "none",
+      "format": {
+        "frame_px": 96,
+        "pixels_per_meter": 64,
+        "directions": 1
+      },
+      "notes": "bolt_fire、bolt_ice、bolt_lightning、meteor 四份有 sheet.png 和 meta.json 但沒有 texture.png，也不在 src/world/skill_effects.gd 的 ART 表裡，所以永遠不會被載入。meteor_fall 是出貨的技能，現在畫的是程式產的佔位圖。"
+    },
+    {
+      "id": "generated.sprites.placeholder",
+      "kind": "sprite_sheet",
+      "path": "assets/generated/sprites/placeholder/**",
+      "sheet_count": 95,
+      "file_count": 249,
+      "source": {
+        "tool": "src/dev/placeholder_sprites.gd 程式產生"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": false,
+      "status": "placeholder",
+      "risk": "high",
+      "notes": "這一筆的 used_at_runtime 是 true 而 ships 是 false，兩者同時成立就是問題本身。sprite_sheet.gd 的 search_roots 把 placeholder 當第二順位，沒有任何 dev 旗標擋著；三個 export preset 全部把它排除；.gitignore 也忽略它。編輯器裡看起來好好的，出貨包裡那 30 份會變成什麼都沒有。"
+    },
+    {
+      "id": "ui.skin",
+      "kind": "ui_texture",
+      "path": "assets/ui/skin/**",
+      "file_count": 33,
+      "source": {
+        "tool": "art_pipeline/ui/skin.py（Pillow）",
+        "raw": "art_source/ui/ 的 AI 產圖材質和裝飾零件",
+        "generator_model": null
+      },
+      "license": {
+        "name": "衍生自未知來源的 AI 產圖",
+        "commercial_use": "取決於產圖工具的條款"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "medium",
+      "notes": "32 張 PNG 加一份 skin.json，全部有被 ui_theme.gd 引用，沒有多餘的。skin.py 只取裝飾零件的 alpha 當遮罩再重新上色，所以 AI 的雜訊沒有帶進來，但來源仍然是 AI 圖。"
+    },
+    {
+      "id": "ui.icons",
+      "kind": "icon",
+      "path": "assets/ui/icons/**",
+      "file_count": 152,
+      "breakdown": {
+        "items": 59,
+        "skills": 60,
+        "jobs": 21,
+        "root": 12
+      },
+      "source": {
+        "current_tool": "art_pipeline/icons_v2/icons.py 和 faith_icons.py，用小型 3D 場景正交算圖再縮到 40×40，完全程式化沒有 AI",
+        "older_tool": "art_pipeline/ui/icons.py 切 art_source/ui/icons_{a..e}_raw.png 那五張 AI 大圖",
+        "which_is_which": "沒有紀錄。兩條管線寫到同一個資料夾，名字對不上的會留著原本的圖",
+        "jobs_tool": "art_pipeline/ui/job_icons.py 切使用者自己畫的 art_source/ui/job_icons_raw.png，白色線稿用亮度反推透明度，64×64",
+        "colour_tool": "art_pipeline/icons_v2/colour_icons.py 在 Blender 算顏料和色種，art_pipeline/icons_v2/soul_cards.py 用 Pillow 把怪物圖集正面那一格合成色魄卡片，2026-09-25"
+      },
+      "license": {
+        "name": "混合：程式化的是自製，切圖的衍生自未知來源的 AI 產圖",
+        "commercial_use": "部分未知"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "shipping_unreviewed",
+      "risk": "medium",
+      "notes": "技能 60 個對 60 個剛好滿。道具 69 個裡有 40 個有圖示、29 個沒有，缺的會退到程式畫的彩色方塊。根目錄那 12 個全部是孤兒，唯一的取用點 UiTheme.icon() 零呼叫。docs/美術方向.md 說共 76 個，實際是 100 個。 2026-09-18 加 jobs/ 21 個職業圖標，使用者自己畫的，授權乾淨，左上狀態板和角色卡在用。 2026-09-25 加奪色的九個道具圖示：四種顏料、年輪色種、四張色魄卡片，全部自製，色魄的卡面來自使用者畫的怪物圖。 同一天再加斥候考試的四種嫩枝，colour_icons.py 算的。 再加術士考試的四瓶溶液和失敗的溶液。 再加術士考試彩蛋的神秘的溶液。"
+    },
+    {
+      "id": "ui.portraits",
+      "kind": "portrait",
+      "path": "assets/ui/portraits/**",
+      "file_count": 9,
+      "source": {
+        "tool": "AI 產圖，直接放進 assets/，沒有中間管線也沒有 raw 原檔",
+        "generator_model": null,
+        "prompt_record": "docs/美術替換指南.md 4.5 節有逐字的固定描述段落，加一張九列的表列出每個 NPC 換掉的那一段和對應的 art.tint"
+      },
+      "license": {
+        "name": "未知",
+        "commercial_use": "取決於產圖工具的條款"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "high",
+      "format": {
+        "source_px": "1024×1536",
+        "shipped_height": 960,
+        "background": "全透明裁到人物"
+      },
+      "notes": "這是全專案 2D 資產裡提示詞紀錄最完整的一組，但產圖工具是哪一家仍然沒有記。九個 NPC 全部有，零孤兒。"
+    },
+    {
+      "id": "ui.worldmap",
+      "kind": "ui_texture",
+      "path": "assets/ui/worldmap/**",
+      "file_count": 20,
+      "source": {
+        "tool": "art_pipeline/ui/worldmap.py（Pillow）",
+        "raw": "art_source/worldmap/raw/ 的 14 張 AI 產圖",
+        "generator_model": null
+      },
+      "license": {
+        "name": "衍生自未知來源的 AI 產圖",
+        "commercial_use": "取決於產圖工具的條款"
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "medium"
+    },
+    {
+      "id": "ui.cursors",
+      "kind": "ui_texture",
+      "path": "assets/ui/cursors/**",
+      "file_count": 8,
+      "source": {
+        "tool": "art_pipeline/ui/cursors.py，百分之百程式畫的，沒有 AI 也沒有 Blender"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "approved",
+      "risk": "none"
+    },
+    {
+      "id": "source.meshy_concepts",
+      "kind": "concept_art",
+      "path": "art_source/meshy/concepts/**",
+      "file_count": 40,
+      "source": {
+        "tool": "AI 產圖",
+        "generator_model": null,
+        "prompt_record": "art_pipeline/meshy/prompt.py 加 jobs_*.json 的 subject 和 extra 欄位；每個 task.json 指名用了哪一張"
+      },
+      "license": {
+        "name": "未知",
+        "commercial_use": "取決於產圖工具的條款"
+      },
+      "ships": false,
+      "status": "removed",
+      "risk": "high",
+      "notes": "2ad0f8a 使用者整理時就已經不在版本庫，2026-09-24 連 Meshy 產線一起作廢。這一筆留著當來源紀錄。概念圖要是我們自己的這條規矩對任何生成工具照樣有效。",
+      "removed": "2ad0f8a",
+      "used_at_runtime": false
+    },
+    {
+      "id": "source.characters_v4_design",
+      "kind": "source_image",
+      "path": "art_source/characters_v4/design/**",
+      "file_count": 2,
+      "source": {
+        "creator": "使用者手繪",
+        "tool": "未記錄",
+        "acquired_date": "2026-09-18"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "removed",
+      "risk": "none",
+      "notes": "使用者在 2ad0f8a 刪掉設定圖，切設定圖的 characters_v4 管線 2026-09-24 清掉。這一筆留著當來源紀錄；使用者刪的不救回。",
+      "removed": "2ad0f8a"
+    },
+    {
+      "id": "source.ui.job_icons",
+      "kind": "source_image",
+      "path": "art_source/ui/job_icons_raw.png",
+      "file_count": 1,
+      "source": {
+        "creator": "使用者手繪",
+        "tool": "未記錄",
+        "acquired_date": "2026-09-18"
+      },
+      "license": {
+        "name": "自製",
+        "commercial_use": true
+      },
+      "used_at_runtime": false,
+      "ships": false,
+      "status": "approved",
+      "risk": "none",
+      "notes": "二十一個職業圖標的白色線稿總表，排法就是職業樹。下游是 assets/ui/icons/jobs/。"
+    },
+    {
+      "id": "tools.local_generation",
+      "kind": "tool",
+      "path": "art_pipeline/comfy/**",
+      "status": "removed",
+      "risk": "low",
+      "note": "本機 ComfyUI 產線 art_pipeline/comfy，3D 算圖失敗之後 2026-09-24 清掉。下面的模型授權紀錄留著，以後再用同一批模型時查這裡。ComfyUI 本身和模型檔在 D:\\ComfyUI，不在版本庫。",
+      "models": {
+        "Qwen-Image-Edit-2511 (GGUF Q3_K_M)": {
+          "use": "定裝圖轉方向、小圖重畫",
+          "license": "Apache 2.0",
+          "source": "Qwen 官方權重的 GGUF 量化"
+        },
+        "Qwen-Image-Edit-2511-Lightning 4 步 LoRA": {
+          "use": "加速",
+          "license": "Apache 2.0",
+          "source": "lightx2v"
+        },
+        "qwen-image-edit-2511-multiple-angles LoRA": {
+          "use": "轉方向",
+          "license": "Apache 2.0",
+          "source": "fal，281 MB"
+        },
+        "Qwen-Image InstantX ControlNet Union": {
+          "use": "姿勢鎖定：3D 人偶算出的深度圖或輪廓線圖進 ControlNet，Qwen-Image-Edit 照定裝圖畫那一格",
+          "license": "Apache 2.0",
+          "source": "InstantX，Comfy-Org 轉的 ComfyUI 格式，3.5 GB，使用者 2026-09-23 同意下載"
+        },
+        "FLUX.2 [klein] 4B fp8": {
+          "use": "四視圖",
+          "license": "Apache 2.0",
+          "source": "Black Forest Labs"
+        },
+        "Pixal3D int8": {
+          "use": "多視角轉 3D 形狀",
+          "license": "未查到書面，要查",
+          "source": "ComfyUI 內建範本"
+        },
+        "TRELLIS.2 int8 加兩個 VAE": {
+          "use": "單圖轉 3D、貼圖烘焙",
+          "license": "MIT",
+          "source": "Microsoft"
+        },
+        "DINOv3 ViT-L": {
+          "use": "3D 條件的視覺編碼",
+          "license": "DINOv3 License，商用條款要查",
+          "source": "Meta"
+        },
+        "BiRefNet": {
+          "use": "去背",
+          "license": "MIT",
+          "source": "ZhengPeng7"
+        },
+        "MoGe-2": {
+          "use": "估視角",
+          "license": "MIT",
+          "source": "Microsoft"
+        },
+        "KayKit Adventurers 動作": {
+          "use": "角色 76 套動作",
+          "license": "CC0",
+          "source": "見 vendor.kaykit"
+        }
+      },
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "source.characters_v5",
+      "kind": "source_image_and_model",
+      "path": "art_source/characters_v5/**",
+      "status": "approved",
+      "risk": "none",
+      "note": "每個身體一個資料夾，views/ 是 s、sw、w、nw、n 五張視圖，紙偶從 male_base/views 切零件。mesh.glb 是 2026-09-23 本機四視圖轉 3D 的試作，現在只給 cbuild.py 算裝備圖層時當陪算的身體。",
+      "provenance": {
+        "tool": "視圖來自使用者的定裝圖；轉 3D 的 art_pipeline/comfy 2026-09-24 清掉",
+        "first": "male_novice 2026-09-23"
+      }
+    },
+    {
+      "id": "source.characters_base_anim",
+      "kind": "source_image",
+      "path": "art_source/characters/base_anim/**",
+      "status": "removed",
+      "risk": "low",
+      "note": "AetherAI 生的男生素體畫格，2026-09-23 深夜使用者看了說太糊，正式身體改成紙偶；2026-09-24 清掉，檔案搬到本機 _待刪除/。這一筆留著當來源紀錄。",
+      "provenance": {
+        "tool": "AetherAI 雲端服務，使用者 2026-09-22 生成；切格 D:/ComfyUI/split_aether_raw.py",
+        "license": "AetherAI 產出歸使用者，服務條款要查"
+      },
+      "removed": "2026-09-24"
+    },
+    {
+      "id": "source.monsters_south_gate",
+      "kind": "concept_art",
+      "path": "art_source/monsters/南門/**",
+      "status": "approved",
+      "risk": "low",
+      "note": "南門四隻怪的概念圖：使用者 2026-09-22 給的序列圖和總覽，2026-09-23 貼的四張正面圖存成各資料夾的 正面_使用者2026-09-23.*，圖集全部照這四張做。四視圖在各自的 views/，描述檔在 描述/。蘑菇/ 是拿掉的紅傘菇，留著當紀錄。",
+      "provenance": {
+        "tool": "概念圖產圖工具未記錄；四視圖當時用 art_pipeline/comfy/turnaround.py 畫，那支 2026-09-24 清掉，之後的四視圖由使用者自己畫"
+      }
+    },
+    {
+      "id": "source.monsters_south_gate.views5",
+      "kind": "concept_art",
+      "path": "art_source/monsters/南門/*/views5/*",
+      "status": "active",
+      "risk": "low",
+      "note": "南門四隻怪的五方向圖，使用者自己畫，2026-09-24 放在下載資料夾 萊姆、小樹苗、水晶兔子、木樁王 底下的 1.jpg 到 5.jpg，2026-09-27 複製進來改名成方向：1 正面 s、2 左前斜 sw、3 左側 w、4 左後斜 nw、5 背面 n，從上往下一點的角度，看得到頭頂；組合圖另存成 組合_使用者2026-09-24.png。白底 jpg 沒有透明，mpuppet.py 的 cut_on_white 去背。對應資料夾：小樹苗→草葉，萊姆→史萊姆，水晶兔子→水晶兔，木樁王→樹樁王。2026-09-27 小樹苗、萊姆、水晶兔已複製並逐張確認方向，只有小樹苗接進圖集；木樁王的 3 和 4 看起來幾乎一樣、側面看不到臉，方向還沒確認，先不複製",
+      "provenance": {
+        "tool": "使用者自己畫",
+        "license": "專案自有"
+      }
+    },
+    {
+      "id": "vendor.binbun_vfx_vol2",
+      "kind": "vfx",
+      "path": "assets/vendor/binbun_vfx_vol2/**",
+      "file_count": 189,
+      "source": {
+        "creator": "Binbun3D",
+        "url": "https://bun3d.com",
+        "packs": "Battle FX、Dark Magic FX、Elemental Magic FX、Explosion FX、Flame FX、Stylized Hit FX、Status FX 的免費版",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "CC0 1.0 Universal",
+        "copies_in_repo": [
+          "assets/vendor/binbun_vfx_vol2/BattleFX/license.txt"
+        ],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res://assets/BinbunVFX 或 res://addons 改到 assets/vendor 底下；展示用場景、示範模型、環境貼圖拿掉；場景裡指向腳本和著色器的 uid 拿掉改用路徑；特效自帶的點光在 src/world/vfx_library.gd 一律關掉；共用的 VFXControllerBB.gd 各包版本不同，留沒有除錯輸出的那一版；2026-09-27 柔邊粒子讀深度貼圖反推座標改用 CURRENT_RENDERER 分開相容渲染器，原本只照 Vulkan 寫或拿 OUTPUT_IS_SRGB 猜，這一包 20 個"
+    },
+    {
+      "id": "vendor.binbun_vfx",
+      "kind": "vfx",
+      "path": "assets/vendor/binbun_vfx/**",
+      "file_count": 293,
+      "source": {
+        "creator": "Binbun3D",
+        "url": "https://bun3d.com",
+        "packs": "Magic Projectiles、Beam、Loot、Muzzle Flash、Portal",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "使用者確認下載頁寫免費、個人和商業都能用、不用標示作者；包裡沒附授權檔",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res://assets/BinbunVFX 或 res://addons 改到 assets/vendor 底下；展示用場景、示範模型、環境貼圖拿掉；場景裡指向腳本和著色器的 uid 拿掉改用路徑；特效自帶的點光在 src/world/vfx_library.gd 一律關掉；共用的 vfx_controller.gd 用 Muzzle Flash 那一版，執行中改得了 one_shot；2026-09-27 柔邊粒子讀深度貼圖反推座標改用 CURRENT_RENDERER 分開相容渲染器，原本只照 Vulkan 寫或拿 OUTPUT_IS_SRGB 猜，這一包 6 個"
+    },
+    {
+      "id": "vendor.magic_cast_vfx_lite",
+      "kind": "vfx",
+      "path": "assets/vendor/magic_cast_vfx_lite/**",
+      "file_count": 29,
+      "source": {
+        "creator": "Sean Elovirta",
+        "packs": "Magic Cast VFX Lite 1.2.1",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "MIT",
+        "copies_in_repo": [
+          "assets/vendor/magic_cast_vfx_lite/LICENSE"
+        ],
+        "attribution_required": "MIT 要保留授權文字，出貨包帶著 LICENSE",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res://assets/BinbunVFX 或 res://addons 改到 assets/vendor 底下；展示用場景、示範模型、環境貼圖拿掉；場景裡指向腳本和著色器的 uid 拿掉改用路徑；特效自帶的點光在 src/world/vfx_library.gd 一律關掉"
+    },
+    {
+      "id": "vendor.elemental_impacts_lite",
+      "kind": "vfx",
+      "path": "assets/vendor/elemental_impacts_lite/**",
+      "file_count": 29,
+      "source": {
+        "creator": "Sean Elovirta",
+        "packs": "Elemental Impact VFX Lite",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "MIT",
+        "copies_in_repo": [
+          "assets/vendor/elemental_impacts_lite/LICENSE"
+        ],
+        "attribution_required": "MIT 要保留授權文字，出貨包帶著 LICENSE",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res://assets/BinbunVFX 或 res://addons 改到 assets/vendor 底下；展示用場景、示範模型、環境貼圖拿掉；場景裡指向腳本和著色器的 uid 拿掉改用路徑；特效自帶的點光在 src/world/vfx_library.gd 一律關掉"
+    },
+    {
+      "id": "vendor.buff_pickup_vfx_lite",
+      "kind": "vfx",
+      "path": "assets/vendor/buff_pickup_vfx_lite/**",
+      "file_count": 29,
+      "source": {
+        "creator": "Sean Elovirta",
+        "packs": "Pickup Buff Heal VFX Lite",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "MIT",
+        "copies_in_repo": [
+          "assets/vendor/buff_pickup_vfx_lite/LICENSE"
+        ],
+        "attribution_required": "MIT 要保留授權文字，出貨包帶著 LICENSE",
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res://assets/BinbunVFX 或 res://addons 改到 assets/vendor 底下；展示用場景、示範模型、環境貼圖拿掉；場景裡指向腳本和著色器的 uid 拿掉改用路徑；特效自帶的點光在 src/world/vfx_library.gd 一律關掉"
+    },
+    {
+      "id": "vendor.free_hit_vfx",
+      "kind": "vfx",
+      "path": "assets/vendor/free_hit_vfx/**",
+      "file_count": 18,
+      "source": {
+        "packs": "Free Hit VFX Slash Crimson，Hit VFX Pack 的免費樣品",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "README 寫可用於個人和商業專案、可修改、不用標示作者，沒有正式授權檔",
+        "copies_in_repo": [
+          "assets/vendor/free_hit_vfx/README.md"
+        ],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res://assets/BinbunVFX 或 res://addons 改到 assets/vendor 底下；展示用場景、示範模型、環境貼圖拿掉；場景裡指向腳本和著色器的 uid 拿掉改用路徑；特效自帶的點光在 src/world/vfx_library.gd 一律關掉；2048 的斬痕貼圖縮成 512，照顯示記憶體預算"
+    },
+    {
+      "id": "vendor.shield_vfx",
+      "kind": "vfx",
+      "path": "assets/vendor/shield_vfx/**",
+      "file_count": 9,
+      "source": {
+        "packs": "shield-vfx，三種護盾泡泡",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "使用者確認下載頁寫免費、個人和商業都能用、不用標示作者；包裡沒附授權檔",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res:// 根目錄改到 assets/vendor 底下；原本是一個展示場景並排三種，拆成 shield_basic、shield_basic_2、shield_basic_3 三個場景，攝影機和環境拿掉"
+    },
+    {
+      "id": "vendor.tornado_vfx",
+      "kind": "vfx",
+      "path": "assets/vendor/tornado_vfx/**",
+      "file_count": 20,
+      "source": {
+        "packs": "tornado vfx，藍、火、毒三種龍捲",
+        "acquired_via": "2026-09-26 使用者提供，放在 C:/Users/h1243/Downloads/資產/3d/skill 的壓縮檔，要求直接套進遊戲"
+      },
+      "license": {
+        "name": "使用者確認下載頁寫免費、個人和商業都能用、不用標示作者；包裡沒附授權檔",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "路徑從 res:// 根目錄改到 assets/vendor 底下；原本是一個展示場景並排三種，拆成 tornado_blue、tornado_fire、tornado_poison 三個場景"
+    },
+    {
+      "id": "vfx.self_made",
+      "kind": "vfx",
+      "path": "assets/vfx/*",
+      "file_count": 8,
+      "source": {
+        "tool": "art_pipeline/vfx/ 底下的 wing.py、crack.py、rock_chunk.py、paint_splat.py、impact_flash.py 用 Pillow 和 numpy 畫，level_up_wings.tscn 由 build_level_up_scene.gd 產生",
+        "reference": "使用者 2026-09-26 給的 RO 升級天使截圖，只參考構圖：展開白翅膀、頭上光環、四周飄羽毛；impact_flash.png 只參考 roBrowserLegacy 的 EffectTable.js 和 RO 客戶端重製版 .str 的層數、格數、大小、時間這些數字，沒有拿任何一張 Gravity 的圖，程式從零畫"
+      },
+      "license": {
+        "name": "專案自製",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "wing.png 右翼、feather.png 飄落羽毛、halo.png 光環、level_up_wings.tscn 升級特效；crack.png 崩岩落的地面裂痕；rock_chunk.png 岩膚聚身的碎石；重畫翅膀要把腳本印出的肩膀像素填回 SHOULDER_PX；paint_splat.png 全彩爆發甩到地上的顏料，遊戲裡照八色上色；impact_flash.png 技能命中的衝擊閃光，四格，通道是光、白芯、深邊、主色比重，資料不是顏色，匯入不修透明邊"
+    },
+    {
+      "id": "vendor.audio.tommusic",
+      "kind": "audio",
+      "path": "assets/vendor/audio/tommusic/*.ogg",
+      "file_count": 25,
+      "source": {
+        "packs": "Free Fantasy 200 SFX Pack by TomMusic",
+        "url": "https://tommusic.itch.io/free-fantasy-200-sfx-pack",
+        "acquired_via": "2026-09-27 使用者同意後從 itch.io 免費下載整包 317 MB，放在 C:/Users/h1243/Downloads/資產/audio，只挑用到的 25 個 ogg 複製進專案"
+      },
+      "license": {
+        "name": "作者頁面寫明免版稅，可用於商業和非商業專案，標示作者不強制；不可轉賣或單獨散布素材本身",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "劍揮、劍命中、弓射、箭命中、火球、冰、岩石、法術命中；對照在 src/audio/sound_map.gd。版本庫是私有的，素材只隨遊戲出貨，不另外公開散布"
+    },
+    {
+      "id": "ui.icons.arrows",
+      "kind": "ui_icon",
+      "path": "assets/ui/icons/items/*_arrow.png, assets/ui/icons/items/arrow.png",
+      "file_count": 7,
+      "source": {
+        "tool": "art_pipeline/ui/arrow_icons.py 用 Pillow 畫",
+        "reference": "照 assets/ui/icons/items 其他手繪圖示的斜放、描邊、受光和落影"
+      },
+      "license": {
+        "name": "專案自製",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "active",
+      "risk": "low",
+      "notes": "七種箭矢的道具圖示；其他道具圖示是 art_pipeline/ui/icons.py 從手繪大圖切的，箭矢不在大圖裡"
+    },
+    {
+      "id": "vfx.arrow_flight",
+      "kind": "vfx_texture",
+      "path": "assets/vfx/arrow_flight.png",
+      "file_count": 1,
+      "source": {
+        "tool": "art_pipeline/vfx/arrow_flight.py 用 Pillow 畫",
+        "reference": "配色照 art_pipeline/ui/arrow_icons.py 的七種箭；做法參考 roBrowserLegacy 的 ef_arrow_projectile 只看數字，沒有用任何一張 RO 的圖"
+      },
+      "license": {
+        "name": "專案自製",
+        "copies_in_repo": [],
+        "attribution_required": false,
+        "commercial_use": true
+      },
+      "used_at_runtime": true,
+      "ships": true,
+      "status": "review",
+      "risk": "low",
+      "notes": "飛行中的箭，七列對七種箭矢，src/effects/arrow_flight.gd 播；尾跡是著色器畫的，沒有另外的圖"
+    }
+  ],
+  "not_recorded_anywhere": [
+    "AI 產圖用的是哪一家工具、哪一個模型、哪一個版本。整個版本庫沒有任何一處寫出來，檔案裡也沒有中繼資料。",
+    "三首音樂的 Suno 方案等級，那是商用權利的唯一判準。",
+    "四個字型家族的下載網址和取得日期。",
+    "KayKit 四個包的 clone 日期。",
+    "assets/ui/icons 底下哪些圖示是程式化產的、哪些是從 AI 大圖切下來的。"
+  ],
+  "no_credits_file": {
+    "state": "版本庫裡沒有任何 CREDITS、NOTICE 或致謝檔案，遊戲裡也沒有致謝畫面。",
+    "why_it_matters": "CC0 的致謝是選擇性的，所以現在沒有違約。但 OFL 的保留字型名稱條款是有條件的，而且一旦之後買了任何需要標示的素材，現在就沒有地方可以放。"
+  }
+}

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://assets/vendor/buff_pickup_vfx_lite/core/free_buff_fx.gd" id="1_script"]
+[ext_resource type="Resource" path="res://assets/vendor/buff_pickup_vfx_lite/presets/buff_levelup.tres" id="2_preset"]
+
+[node name="FreeBuffFxLevelUp" type="Node3D"]
+script = ExtResource("1_script")
+preset = ExtResource("2_preset")

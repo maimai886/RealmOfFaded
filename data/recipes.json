@@ -1,0 +1,141 @@
+{
+  "note": "製作配方，規格在 docs/裝備成長.md 第 4 節；材料全部來自怪物掉落和商店，做出來的裝備會擲詞綴",
+  "categories": [
+    {"id": "consumable", "name": "消耗品"},
+    {"id": "material", "name": "精煉材料"},
+    {"id": "equipment", "name": "裝備"}
+  ],
+  "recipes": {
+    "green_potion": {
+      "name": "綠色藥水",
+      "category": "consumable",
+      "result": "green_potion",
+      "result_count": 2,
+      "gold": 30,
+      "materials": [
+        {"item": "soft_moss", "count": 2},
+        {"item": "small_apple", "count": 1}
+      ]
+    },
+    "verdant_draught": {
+      "name": "翠生藥劑",
+      "category": "consumable",
+      "result": "verdant_draught",
+      "result_count": 1,
+      "gold": 400,
+      "materials": [
+        {"item": "sprout_seed", "count": 2},
+        {"item": "glow_spore_cap", "count": 3},
+        {"item": "flower_honey", "count": 1}
+      ]
+    },
+    "dawn_tonic": {
+      "name": "晨曦露飲",
+      "category": "consumable",
+      "result": "dawn_tonic",
+      "result_count": 1,
+      "gold": 1500,
+      "materials": [
+        {"item": "clear_dewdrop", "count": 1},
+        {"item": "verdant_draught", "count": 1},
+        {"item": "gloom_ember", "count": 2}
+      ]
+    },
+    "town_scroll": {
+      "name": "回城卷軸",
+      "category": "consumable",
+      "result": "town_scroll",
+      "result_count": 2,
+      "gold": 200,
+      "materials": [
+        {"item": "rotten_cloth", "count": 2},
+        {"item": "ash_dust", "count": 3}
+      ]
+    },
+    "refine_dust": {
+      "name": "精煉砂",
+      "category": "material",
+      "result": "refine_dust",
+      "result_count": 3,
+      "gold": 100,
+      "materials": [
+        {"item": "flint_shard", "count": 3},
+        {"item": "snail_shell", "count": 2}
+      ]
+    },
+    "refine_charm": {
+      "name": "萌芽護符",
+      "category": "material",
+      "result": "refine_charm",
+      "result_count": 1,
+      "gold": 8000,
+      "materials": [
+        {"item": "sprout_seed", "count": 2},
+        {"item": "gloom_ember", "count": 4},
+        {"item": "clear_dewdrop", "count": 2}
+      ]
+    },
+    "dawn_seal": {
+      "name": "晨曦封印",
+      "category": "material",
+      "result": "dawn_seal",
+      "result_count": 1,
+      "gold": 25000,
+      "materials": [
+        {"item": "sovereign_core", "count": 1},
+        {"item": "ash_crown_shard", "count": 2},
+        {"item": "clear_dewdrop", "count": 3}
+      ]
+    },
+    "affix_solvent": {
+      "name": "重鑄溶劑",
+      "category": "material",
+      "result": "affix_solvent",
+      "result_count": 1,
+      "gold": 2000,
+      "materials": [
+        {"item": "gloom_ember", "count": 4},
+        {"item": "ash_dust", "count": 10}
+      ]
+    },
+    "mossweave_robe": {
+      "name": "苔織袍",
+      "category": "equipment",
+      "result": "mossweave_robe",
+      "result_count": 1,
+      "tier": "uncommon",
+      "gold": 900,
+      "materials": [
+        {"item": "soft_moss", "count": 10},
+        {"item": "rotten_cloth", "count": 2},
+        {"item": "bee_stinger", "count": 4}
+      ]
+    },
+    "flint_dagger": {
+      "name": "燧刃",
+      "category": "equipment",
+      "result": "flint_dagger",
+      "result_count": 1,
+      "tier": "uncommon",
+      "gold": 1400,
+      "materials": [
+        {"item": "flint_shard", "count": 8},
+        {"item": "dry_branch", "count": 4},
+        {"item": "wolf_fang", "count": 3}
+      ]
+    },
+    "emberguard_cape": {
+      "name": "燼護披",
+      "category": "equipment",
+      "result": "emberguard_cape",
+      "result_count": 1,
+      "tier": "rare",
+      "gold": 5200,
+      "materials": [
+        {"item": "bat_wing", "count": 6},
+        {"item": "gloom_ember", "count": 3},
+        {"item": "rotten_cloth", "count": 5}
+      ]
+    }
+  }
+}

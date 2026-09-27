@@ -1,0 +1,642 @@
+{
+  "note": "技能特效：effects 是每一個特效場景怎麼放，scale 是大小、lift 是離地多高；skills 是每一招 tint 顏色、ahead_m 地面特效往前幾公尺、 cast 施放、travel 飛行、hit 命中、target 落在同伴身上、ground 地面炸開各用哪一個；沒寫的招照 kinds 的施放種類；travel 寫 arrow 是射一支真的箭，由 src/effects/arrow_flight.gd 畫，不走特效包；travel_by_element 是挑了屬性時飛彈換哪一顆；特效自帶的燈一律關掉，不然白天會把草地照白；來源和授權記在 docs/資產清單.json",
+  "effects": {
+    "hit_01": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StylizedHitFX/effects/hit/vfx_hit_01.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "hit_02": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StylizedHitFX/effects/hit/vfx_hit_02.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "impact_01": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StylizedHitFX/effects/impact/vfx_impact_01.tscn",
+      "scale": 0.35,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "impact_02": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StylizedHitFX/effects/impact/vfx_impact_02.tscn",
+      "scale": 0.35,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "big_impact_01": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StylizedHitFX/effects/big_impact/vfx_big_impact_01.tscn",
+      "scale": 0.3,
+      "lifetime_s": 1.5,
+      "lift": 1.0
+    },
+    "big_impact_02": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StylizedHitFX/effects/big_impact/vfx_big_impact_02.tscn",
+      "scale": 0.3,
+      "lifetime_s": 1.5,
+      "lift": 1.0
+    },
+    "slash": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/BattleFX/effects/slash/vfx_blank_slash.tscn",
+      "scale": 0.5,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "swing": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/BattleFX/effects/swing/vfx_blank_swing.tscn",
+      "scale": 1.0,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "claw": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/BattleFX/effects/claw/vfx_blank_claw.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.2,
+      "lift": 1.0
+    },
+    "charge": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/BattleFX/effects/charge/vfx_blank_charge.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0
+    },
+    "shield": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/BattleFX/effects/shield/vfx_blank_shield_01.tscn",
+      "scale": 0.45,
+      "lifetime_s": 1.5
+    },
+    "evil_area": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/DarkMagicFX/effects/area/vfx_evil_area_01.tscn",
+      "scale": 0.5,
+      "lifetime_s": 2.0
+    },
+    "evil_ball": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/DarkMagicFX/effects/ball/vfx_ball_evil_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 2.0,
+      "lift": 1.0
+    },
+    "evil_projectile": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/DarkMagicFX/effects/projectile/vfx_evil_projectile_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 2.0,
+      "lift": 1.0
+    },
+    "fire_area": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/ElementalMagicFX/effects/area/vfx_fire_area_01.tscn",
+      "scale": 0.5,
+      "lifetime_s": 2.0
+    },
+    "fire_cast": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/ElementalMagicFX/effects/cast/vfx_fire_cast_01.tscn",
+      "scale": 0.3,
+      "lifetime_s": 1.5
+    },
+    "fire_projectile": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/ElementalMagicFX/effects/projectile/vfx_fire_projectile_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 2.0,
+      "lift": 1.0
+    },
+    "air_explosion": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/ExplosionFX/effects/air/vfx_air_explosion_01.tscn",
+      "scale": 0.25,
+      "lifetime_s": 2.0,
+      "lift": 1.0
+    },
+    "ground_explosion": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/ExplosionFX/effects/ground/vfx_ground_explosion_01.tscn",
+      "scale": 0.22,
+      "lifetime_s": 2.0
+    },
+    "nuke_explosion": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/ExplosionFX/effects/nuke/vfx_nuke_explosion_01.tscn",
+      "scale": 0.12,
+      "lifetime_s": 3.0
+    },
+    "basic_fire": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/FlameFX/effects/fire/vfx_basic_fire_01.tscn",
+      "scale": 0.5,
+      "lifetime_s": 2.0
+    },
+    "shatter": {
+      "scene": "res://assets/vendor/binbun_vfx_vol2/StatusFX/effects/status/vfx_status_shatter.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.5,
+      "lift": 1.0
+    },
+    "bolt_basic_01": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_basic/mprojectile_basic_vfx_01.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "bolt_basic_02": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_basic/mprojectile_basic_vfx_02.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "bolt_basic_03": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_basic/mprojectile_basic_vfx_03.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "bolt_basic_04": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_basic/mprojectile_basic_vfx_04.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "javelin_01": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_javelin/mprojectile_javelin_vfx_01.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "javelin_02": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_javelin/mprojectile_javelin_vfx_02.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "javelin_03": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_javelin/mprojectile_javelin_vfx_03.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "javelin_04": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_javelin/mprojectile_javelin_vfx_04.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "wave_01": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_wave/mprojectile_wave_vfx_01.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "wave_02": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_wave/mprojectile_wave_vfx_02.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "wave_03": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_wave/mprojectile_wave_vfx_03.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "wave_04": {
+      "scene": "res://assets/vendor/binbun_vfx/magic_projectiles/effects/mprojectile_wave/mprojectile_wave_vfx_04.tscn",
+      "scale": 0.8,
+      "lifetime_s": 1.5,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "flash_big_01": {
+      "scene": "res://assets/vendor/binbun_vfx/muzzle_flash/effects/big_flash/big_flash_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.0,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "flash_short_01": {
+      "scene": "res://assets/vendor/binbun_vfx/muzzle_flash/effects/short_flash/short_flash_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.0,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "flash_wide_01": {
+      "scene": "res://assets/vendor/binbun_vfx/muzzle_flash/effects/wide_flash/wide_flash_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.0,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "flash_muzzle_01": {
+      "scene": "res://assets/vendor/binbun_vfx/muzzle_flash/effects/muzzle_flash/muzzle_flash_01.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.0,
+      "lift": 1.0,
+      "forward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "beam": {
+      "scene": "res://assets/vendor/binbun_vfx/beam_vfx/effects/base/base_beam_vfx.tscn",
+      "scale": 0.6,
+      "lifetime_s": 2.0
+    },
+    "portal": {
+      "scene": "res://assets/vendor/binbun_vfx/portal_vfx/effects/simple/simple_portal_vfx.tscn",
+      "scale": 0.35,
+      "lifetime_s": 0.9
+    },
+    "loot_rare": {
+      "scene": "res://assets/vendor/binbun_vfx/loot_effects/effects/ground/ground_loot_vfx_rare.tscn",
+      "scale": 0.6,
+      "lifetime_s": 3.0
+    },
+    "loot_epic": {
+      "scene": "res://assets/vendor/binbun_vfx/loot_effects/effects/ground/ground_loot_vfx_epic.tscn",
+      "scale": 0.6,
+      "lifetime_s": 3.0
+    },
+    "rune_circle": {
+      "scene": "res://assets/vendor/magic_cast_vfx_lite/scenes/cast_rune_circle.tscn",
+      "scale": 0.8,
+      "lifetime_s": 2.0
+    },
+    "fire_impact": {
+      "scene": "res://assets/vendor/elemental_impacts_lite/scenes/elem_fire.tscn",
+      "scale": 0.5,
+      "lifetime_s": 2.0,
+      "lift": 1.0
+    },
+    "level_up": {
+      "scene": "res://assets/vendor/buff_pickup_vfx_lite/scenes/buff_levelup.tscn",
+      "scale": 1.0,
+      "lifetime_s": 2.5
+    },
+    "slash_crimson": {
+      "scene": "res://assets/vendor/free_hit_vfx/scenes/hit_slash_crimson.tscn",
+      "scale": 0.6,
+      "lifetime_s": 1.5,
+      "lift": 1.0
+    },
+    "bubble_1": {
+      "scene": "res://assets/vendor/shield_vfx/shield_basic.tscn",
+      "scale": 2.4,
+      "lifetime_s": 1.6,
+      "lift": 0.9
+    },
+    "bubble_2": {
+      "scene": "res://assets/vendor/shield_vfx/shield_basic_2.tscn",
+      "scale": 2.4,
+      "lifetime_s": 1.6,
+      "lift": 0.9
+    },
+    "bubble_3": {
+      "scene": "res://assets/vendor/shield_vfx/shield_basic_3.tscn",
+      "scale": 2.4,
+      "lifetime_s": 1.6,
+      "lift": 0.9
+    },
+    "tornado_blue": {
+      "scene": "res://assets/vendor/tornado_vfx/tornado_blue.tscn",
+      "scale": 0.12,
+      "lifetime_s": 2.5
+    },
+    "tornado_fire": {
+      "scene": "res://assets/vendor/tornado_vfx/tornado_fire.tscn",
+      "scale": 0.12,
+      "lifetime_s": 2.5
+    },
+    "tornado_poison": {
+      "scene": "res://assets/vendor/tornado_vfx/tornado_poison.tscn",
+      "scale": 0.12,
+      "lifetime_s": 2.5
+    }
+  },
+  "skills": {
+    "first_aid": {
+      "target": "level_up",
+      "tint": "#9dffb0",
+      "sound": "heal"
+    },
+    "rock_crash": {
+      "cast": "swing",
+      "ground": "big_impact_01",
+      "hit": "none",
+      "tint": "#d49a4a",
+      "sound": "quake",
+      "crack_m": 2.6
+    },
+    "wind_pierce": {
+      "cast": "slash_crimson",
+      "hit": "hit_02",
+      "tint": "#bff08a",
+      "sound": "thrust"
+    },
+    "rush_step": {
+      "hit": "big_impact_01",
+      "tint": "#e0b060",
+      "sound": "dash"
+    },
+    "halt_shout": {
+      "tint": "#ffb070",
+      "sound": "shout",
+      "fx": "shout_wave"
+    },
+    "stone_skin": {
+      "tint": "none",
+      "sound": "stone",
+      "fx": "stone_skin"
+    },
+    "magic_bolt": {
+      "travel": "bolt_basic_03",
+      "hit": "fire_impact",
+      "tint": "#a07bff",
+      "sound": "arcane"
+    },
+    "blast_glyph": {
+      "ground": "ground_explosion",
+      "tint": "#ff8a3a",
+      "sound": "glyph"
+    },
+    "zone_glyph": {
+      "ground": "ground_explosion",
+      "tint": "#ff6a3a",
+      "sound": "glyph"
+    },
+    "detonate": {
+      "cast": "charge",
+      "tint": "#ff9a4a",
+      "sound": "detonate"
+    },
+    "bind_glyph": {
+      "ground": "shatter",
+      "tint": "#7fd8ff",
+      "sound": "glyph"
+    },
+    "glyph_step": {
+      "cast": "portal",
+      "tint": "#b08cff",
+      "sound": "warp"
+    },
+    "mark_shot": {
+      "travel": "arrow",
+      "hit": "hit_01",
+      "tint": "#ffe07a",
+      "sound": "arrow"
+    },
+    "mark_chase": {
+      "travel": "arrow",
+      "hit": "hit_01",
+      "tint": "#ffd04a",
+      "sound": "arrow"
+    },
+    "mark_burst": {
+      "travel": "javelin_04",
+      "hit": "air_explosion",
+      "tint": "#ffc03a",
+      "sound": "mark"
+    },
+    "back_shot": {
+      "travel": "arrow",
+      "hit": "hit_01",
+      "tint": "#a8f0a0",
+      "sound": "arrow"
+    },
+    "soothe": {
+      "target": "level_up",
+      "tint": "#b8ffb0",
+      "sound": "heal"
+    },
+    "prayer_guard": {
+      "target": "bubble_2",
+      "tint": "#bfe3ff",
+      "sound": "buff"
+    },
+    "cleanse": {
+      "target": "shatter",
+      "tint": "#c8f6ff",
+      "sound": "heal"
+    },
+    "dawn_ray": {
+      "travel": "bolt_basic_01",
+      "hit": "hit_01",
+      "tint": "#ffe7a0",
+      "sound": "holy"
+    },
+    "dawn_step": {
+      "cast": "portal",
+      "tint": "#ffe08a",
+      "sound": "warp"
+    },
+    "censer_strike": {
+      "cast": "swing",
+      "hit": "impact_02",
+      "tint": "#ffab4a",
+      "sound": "heavy"
+    },
+    "sanctuary": {
+      "ground": "fire_area",
+      "tint": "#ffd76a",
+      "sound": "holy"
+    },
+    "whirl_slash": {
+      "cast": "swing",
+      "hit": "hit_02",
+      "tint": "#ffe6a0",
+      "sound": "heavy"
+    },
+    "meteor_fall": {
+      "ground": "nuke_explosion",
+      "tint": "#ff6a2a",
+      "sound": "fire"
+    },
+    "storm_judgement": {
+      "ground": "tornado_blue",
+      "tint": "none",
+      "sound": "wind"
+    },
+    "thunder_orb": {
+      "travel": "wave_01",
+      "hit": "impact_02",
+      "tint": "#9fd8ff",
+      "sound": "thunder"
+    },
+    "blizzard_call": {
+      "ground": "shatter",
+      "tint": "#bfeaff",
+      "sound": "ice"
+    },
+    "mire_field": {
+      "ground": "evil_area",
+      "tint": "#8fbf5a",
+      "sound": "dark"
+    },
+    "full_colour_burst": {
+      "sound": "detonate"
+    },
+    "pierce_thrust": {
+      "sound": "thrust"
+    },
+    "battle_haste": {
+      "sound": "buff"
+    },
+    "counter_stance": {
+      "sound": "buff"
+    },
+    "falcon_dive": {
+      "sound": "thrust"
+    },
+    "blast_trap": {
+      "sound": "none"
+    },
+    "snare_trap": {
+      "sound": "none"
+    },
+    "frost_trap": {
+      "sound": "none"
+    },
+    "resurrection": {
+      "sound": "holy"
+    },
+    "dawn_circle": {
+      "sound": "holy"
+    },
+    "aegis_chant": {
+      "sound": "buff"
+    },
+    "oath_of_dawn": {
+      "sound": "buff"
+    },
+    "dawn_judgement": {
+      "sound": "holy"
+    },
+    "radiant_lance": {
+      "sound": "holy"
+    },
+    "purge_gloom": {
+      "sound": "holy"
+    },
+    "grace_of_dawn": {
+      "sound": "heal"
+    },
+    "guardian_oath": {
+      "sound": "buff"
+    },
+    "bell_of_waking": {
+      "sound": "holy"
+    },
+    "dawn_procession": {
+      "sound": "holy"
+    },
+    "last_light": {
+      "sound": "holy"
+    },
+    "steady_breath": {
+      "sound": "heal"
+    },
+    "gather_breath": {
+      "sound": "buff"
+    },
+    "dawn_body": {
+      "sound": "buff"
+    }
+  },
+  "kinds": {
+    "slash": {
+      "cast": "swing",
+      "hit": "impact_01",
+      "sound": "slash"
+    },
+    "bolt": {
+      "travel": "bolt_basic_03",
+      "hit": "impact_02",
+      "sound": "arcane"
+    },
+    "burst": {
+      "ground": "ground_explosion",
+      "sound": "detonate"
+    }
+  },
+  "travel_by_element": {
+    "fire": "bolt_basic_04",
+    "water": "bolt_basic_02",
+    "wind": "bolt_basic_01",
+    "light": "bolt_basic_01",
+    "dark": "bolt_basic_03"
+  },
+  "sound_by_element": {
+    "fire": "fire",
+    "water": "ice",
+    "wind": "wind",
+    "earth": "quake",
+    "light": "holy",
+    "dark": "dark",
+    "neutral": "arcane"
+  }
+}

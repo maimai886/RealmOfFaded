@@ -1,0 +1,1704 @@
+{
+  "name": "萌芽草原",
+  "scene": "meadow",
+  "music": "sunny_adventure",
+  "safe_zone": false,
+  "paths": [
+    [
+      [
+        4.0,
+        -42.0
+      ],
+      [
+        3.0,
+        -34.0
+      ],
+      [
+        -2.0,
+        -24.0
+      ],
+      [
+        -4.0,
+        -12.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        2.0,
+        14.0
+      ],
+      [
+        -2.0,
+        24.0
+      ],
+      [
+        0.0,
+        31.0
+      ]
+    ]
+  ],
+  "ground": {
+    "areas": [
+      {
+        "layer": "stone",
+        "shape": "circle",
+        "center": [
+          0.0,
+          0.0
+        ],
+        "radius": 4.5,
+        "edge": 0.5
+      },
+      {
+        "layer": "dirt",
+        "shape": "circle",
+        "center": [
+          0.0,
+          33.5
+        ],
+        "radius": 3.2,
+        "edge": 0.8
+      }
+    ],
+    "relief": {
+      "edge_height": 0.0,
+      "edge_span": 13.0,
+      "edge_start": 1.5
+    },
+    "outside": "dark"
+  },
+  "level_range": [
+    1,
+    5
+  ],
+  "bounds": {
+    "min": [
+      -48.0,
+      -48.0
+    ],
+    "max": [
+      48.0,
+      48.0
+    ]
+  },
+  "player_spawn": [
+    4.0,
+    -39.0
+  ],
+  "spawns": [
+    {
+      "monster": "horn_slime",
+      "count": 10,
+      "center": [
+        -18.0,
+        -26.0
+      ],
+      "radius": 9.0
+    },
+    {
+      "monster": "horn_slime",
+      "count": 10,
+      "center": [
+        18.0,
+        -24.0
+      ],
+      "radius": 9.0
+    },
+    {
+      "monster": "leaf_sprout",
+      "count": 8,
+      "center": [
+        -22.0,
+        0.0
+      ],
+      "radius": 9.0
+    },
+    {
+      "monster": "leaf_sprout",
+      "count": 8,
+      "center": [
+        22.0,
+        2.0
+      ],
+      "radius": 9.0
+    },
+    {
+      "monster": "crystal_bunny",
+      "count": 6,
+      "center": [
+        -20.0,
+        25.0
+      ],
+      "radius": 7.0
+    },
+    {
+      "monster": "crystal_bunny",
+      "count": 6,
+      "center": [
+        20.0,
+        25.0
+      ],
+      "radius": 7.0
+    },
+    {
+      "monster": "stump_king",
+      "position": [
+        0.0,
+        35.0
+      ]
+    }
+  ],
+  "colour_secrets": [
+    {
+      "id": "stump_hollow",
+      "position": [
+        2.8,
+        34.2
+      ],
+      "reveal_at": 0.9,
+      "hidden_below": 0.5,
+      "rewards": [
+        {
+          "item": "paint_green",
+          "amount": 5
+        },
+        {
+          "item": "orange_potion",
+          "amount": 1
+        }
+      ]
+    }
+  ],
+  "npcs": [],
+  "portals": [
+    {
+      "id": "north_road",
+      "position": [
+        4.0,
+        -43.0
+      ],
+      "radius": 1.5,
+      "to_map": "town",
+      "to_position": [
+        0.0,
+        20.5
+      ]
+    }
+  ],
+  "zones": [
+    {
+      "id": "north_road",
+      "name": "北邊小徑",
+      "center": [
+        4.0,
+        -38.0
+      ],
+      "radius": 6.0,
+      "hint": "往晨曦鎮的路，沒什麼怪。"
+    },
+    {
+      "id": "dew_pools",
+      "name": "露珠水窪",
+      "center": [
+        0.0,
+        -26.0
+      ],
+      "radius": 15.0,
+      "hint": "一整片都是萊姆。"
+    },
+    {
+      "id": "bone_field",
+      "name": "樹苗坡",
+      "center": [
+        0.0,
+        0.0
+      ],
+      "radius": 15.0,
+      "hint": "小樹苗成群走來走去。"
+    },
+    {
+      "id": "moss_rise",
+      "name": "水晶草叢",
+      "center": [
+        20.0,
+        25.0
+      ],
+      "radius": 9.0,
+      "hint": "水晶兔的地盤，靠太近會被撞。"
+    },
+    {
+      "id": "bee_meadow",
+      "name": "花蜂草地",
+      "center": [
+        -20.0,
+        25.0
+      ],
+      "radius": 9.0,
+      "hint": "開滿花的草地，草叢裡也住著水晶兔。"
+    },
+    {
+      "id": "stump_end",
+      "name": "老樹樁",
+      "center": [
+        0.0,
+        34.0
+      ],
+      "radius": 5.0,
+      "hint": "草原盡頭的老樹樁。咦？剛剛是不是動了一下？"
+    },
+    {
+      "id": "sunken_hollow",
+      "name": "落霞窪地",
+      "center": [
+        39.0,
+        -2.0
+      ],
+      "radius": 3.0,
+      "hint": "草原東邊被草蓋住的小凹地。",
+      "hidden": true
+    }
+  ],
+  "props": [
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        11.92,
+        -32.81
+      ],
+      "rotation_y": 323.1,
+      "scale": 0.91
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -17.87,
+        -10.32
+      ],
+      "rotation_y": 359.3,
+      "scale": 1.05
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        29.74,
+        15.02
+      ],
+      "rotation_y": 70.8,
+      "scale": 0.92
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        35.37,
+        26.93
+      ],
+      "rotation_y": 336.8,
+      "scale": 0.98
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -35.58,
+        22.99
+      ],
+      "rotation_y": 199.8,
+      "scale": 1.11
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -40.55,
+        -18.25
+      ],
+      "rotation_y": 56.6,
+      "scale": 0.94
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -8.14,
+        12.93
+      ],
+      "rotation_y": 284.8,
+      "scale": 0.96
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -23.43,
+        -8.99
+      ],
+      "rotation_y": 88.8,
+      "scale": 1.01
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        21.41,
+        7.07
+      ],
+      "rotation_y": 314.6,
+      "scale": 0.95
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -22.56,
+        34.64
+      ],
+      "rotation_y": 26.1,
+      "scale": 1.12
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -33.42,
+        36.62
+      ],
+      "rotation_y": 228.9,
+      "scale": 0.97
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        10.84,
+        25.28
+      ],
+      "rotation_y": 110.3,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        23.42,
+        -33.1
+      ],
+      "rotation_y": 94.1,
+      "scale": 0.89
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -2.87,
+        -34.19
+      ],
+      "rotation_y": 61.4,
+      "scale": 1.08
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        37.57,
+        6.17
+      ],
+      "rotation_y": 6.2,
+      "scale": 1.06
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        20.06,
+        -23.23
+      ],
+      "rotation_y": 12.5,
+      "scale": 1.12
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -37.37,
+        -4.25
+      ],
+      "rotation_y": 319.6,
+      "scale": 0.88
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        2.17,
+        22.9
+      ],
+      "rotation_y": 24.9,
+      "scale": 1.03
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -16.13,
+        11.7
+      ],
+      "rotation_y": 266.8,
+      "scale": 0.9
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -12.17,
+        -5.08
+      ],
+      "rotation_y": 101.9,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -29.02,
+        -40.65
+      ],
+      "rotation_y": 247.2,
+      "scale": 0.86
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        27.33,
+        -6.29
+      ],
+      "rotation_y": 351.7,
+      "scale": 1.14
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -19.75,
+        -28.74
+      ],
+      "rotation_y": 342.9,
+      "scale": 0.85
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        20.21,
+        27.2
+      ],
+      "rotation_y": 202.7,
+      "scale": 0.96
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        12.31,
+        -7.49
+      ],
+      "rotation_y": 116.6,
+      "scale": 0.9
+    },
+    {
+      "model": "generated/models/tree_broadleaf",
+      "position": [
+        -26.07,
+        -1.63
+      ],
+      "rotation_y": 159.9,
+      "scale": 0.88
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        30.12,
+        -26.56
+      ],
+      "rotation_y": 322.2,
+      "scale": 0.93
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -30.19,
+        7.78
+      ],
+      "rotation_y": 31.0,
+      "scale": 1.11
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        0.85,
+        -21.22
+      ],
+      "rotation_y": 315.5,
+      "scale": 1.18
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        20.92,
+        -6.53
+      ],
+      "rotation_y": 276.7,
+      "scale": 1.13
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        33.02,
+        13.6
+      ],
+      "rotation_y": 340.0,
+      "scale": 0.84
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -32.51,
+        -8.92
+      ],
+      "rotation_y": 171.9,
+      "scale": 1.18
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -10.4,
+        -30.14
+      ],
+      "rotation_y": 283.3,
+      "scale": 0.92
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -29.24,
+        -32.24
+      ],
+      "rotation_y": 99.5,
+      "scale": 0.93
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        33.33,
+        37.66
+      ],
+      "rotation_y": 129.1,
+      "scale": 0.92
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        7.73,
+        3.16
+      ],
+      "rotation_y": 321.4,
+      "scale": 0.96
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -8.11,
+        -1.55
+      ],
+      "rotation_y": 82.1,
+      "scale": 1.04
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -21.6,
+        30.9
+      ],
+      "rotation_y": 338.2,
+      "scale": 1.23
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -38.12,
+        18.13
+      ],
+      "rotation_y": 290.6,
+      "scale": 1.21
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        22.54,
+        32.44
+      ],
+      "rotation_y": 113.7,
+      "scale": 1.1
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        -33.0,
+        10.84
+      ],
+      "rotation_y": 345.3,
+      "scale": 0.81
+    },
+    {
+      "model": "generated/models/boulder",
+      "position": [
+        27.59,
+        28.31
+      ],
+      "rotation_y": 42.9,
+      "scale": 0.97
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -32.3,
+        -2.73
+      ],
+      "rotation_y": 16.2,
+      "scale": 0.88
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -17.47,
+        30.53
+      ],
+      "rotation_y": 321.5,
+      "scale": 1.08
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -35.62,
+        1.92
+      ],
+      "rotation_y": 278.3,
+      "scale": 0.86
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -19.77,
+        -18.27
+      ],
+      "rotation_y": 216.0,
+      "scale": 0.87
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        27.15,
+        23.24
+      ],
+      "rotation_y": 184.2,
+      "scale": 0.83
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        16.63,
+        15.85
+      ],
+      "rotation_y": 51.1,
+      "scale": 0.99
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        12.2,
+        0.32
+      ],
+      "rotation_y": 323.3,
+      "scale": 1.05
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -26.95,
+        2.77
+      ],
+      "rotation_y": 46.4,
+      "scale": 0.8
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        3.15,
+        26.49
+      ],
+      "rotation_y": 224.8,
+      "scale": 1.12
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        34.17,
+        -1.27
+      ],
+      "rotation_y": 328.1,
+      "scale": 1.1
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -27.11,
+        -8.5
+      ],
+      "rotation_y": 292.3,
+      "scale": 1.14
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        16.5,
+        -13.08
+      ],
+      "rotation_y": 237.6,
+      "scale": 1.1
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        30.51,
+        -9.3
+      ],
+      "rotation_y": 232.2,
+      "scale": 1.1
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -25.03,
+        -23.72
+      ],
+      "rotation_y": 249.0,
+      "scale": 0.91
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -15.86,
+        -19.84
+      ],
+      "rotation_y": 294.4,
+      "scale": 1.1
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        6.92,
+        22.32
+      ],
+      "rotation_y": 213.8,
+      "scale": 0.8
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        10.22,
+        9.44
+      ],
+      "rotation_y": 5.3,
+      "scale": 0.81
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        14.89,
+        35.37
+      ],
+      "rotation_y": 180.1,
+      "scale": 0.83
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        12.83,
+        -16.72
+      ],
+      "rotation_y": 346.0,
+      "scale": 0.87
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        39.0,
+        30.13
+      ],
+      "rotation_y": 309.6,
+      "scale": 1.06
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        31.33,
+        -18.94
+      ],
+      "rotation_y": 148.9,
+      "scale": 0.88
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -11.38,
+        -19.99
+      ],
+      "rotation_y": 190.2,
+      "scale": 0.8
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        31.48,
+        8.65
+      ],
+      "rotation_y": 210.8,
+      "scale": 0.93
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -7.13,
+        16.01
+      ],
+      "rotation_y": 229.5,
+      "scale": 1.06
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        -41.65,
+        15.09
+      ],
+      "rotation_y": 61.2,
+      "scale": 0.83
+    },
+    {
+      "model": "generated/models/shrub",
+      "position": [
+        25.23,
+        -27.86
+      ],
+      "rotation_y": 103.5,
+      "scale": 0.85
+    }
+  ],
+  "blockers": [
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -48.0
+      ],
+      "max": [
+        -41.28,
+        -41.53
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -41.48,
+        -48.0
+      ],
+      "max": [
+        -37.99,
+        -41.64
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -38.19,
+        -48.0
+      ],
+      "max": [
+        -32.26,
+        -44.76
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -32.46,
+        -48.0
+      ],
+      "max": [
+        -26.61,
+        -45.47
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -26.81,
+        -48.0
+      ],
+      "max": [
+        -22.2,
+        -41.94
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -22.4,
+        -48.0
+      ],
+      "max": [
+        -16.69,
+        -45.45
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -16.89,
+        -48.0
+      ],
+      "max": [
+        -11.67,
+        -41.78
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -11.87,
+        -48.0
+      ],
+      "max": [
+        -7.54,
+        -43.79
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -7.74,
+        -48.0
+      ],
+      "max": [
+        -2.85,
+        -38.97
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -3.05,
+        -48.0
+      ],
+      "max": [
+        2.93,
+        -45.5
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        2.73,
+        -48.0
+      ],
+      "max": [
+        7.55,
+        -45.5
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        7.35,
+        -48.0
+      ],
+      "max": [
+        11.06,
+        -45.5
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        10.86,
+        -48.0
+      ],
+      "max": [
+        18.04,
+        -45.39
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        17.84,
+        -48.0
+      ],
+      "max": [
+        24.99,
+        -40.17
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        24.79,
+        -48.0
+      ],
+      "max": [
+        28.42,
+        -40.1
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        28.22,
+        -48.0
+      ],
+      "max": [
+        33.52,
+        -38.3
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        33.32,
+        -48.0
+      ],
+      "max": [
+        36.87,
+        -45.37
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        36.67,
+        -48.0
+      ],
+      "max": [
+        41.1,
+        -42.22
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        40.9,
+        -48.0
+      ],
+      "max": [
+        48.0,
+        -45.41
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        43.58
+      ],
+      "max": [
+        -41.83,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -42.03,
+        42.68
+      ],
+      "max": [
+        -36.91,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -37.11,
+        41.91
+      ],
+      "max": [
+        -31.05,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -31.25,
+        45.18
+      ],
+      "max": [
+        -24.1,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -24.3,
+        44.21
+      ],
+      "max": [
+        -20.66,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -20.86,
+        38.52
+      ],
+      "max": [
+        -15.2,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -15.4,
+        40.21
+      ],
+      "max": [
+        -8.94,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -9.14,
+        42.45
+      ],
+      "max": [
+        -3.1,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -3.3,
+        43.94
+      ],
+      "max": [
+        1.9,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        1.7,
+        42.63
+      ],
+      "max": [
+        7.65,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        7.45,
+        43.36
+      ],
+      "max": [
+        14.17,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        13.97,
+        38.69
+      ],
+      "max": [
+        20.21,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        20.01,
+        38.99
+      ],
+      "max": [
+        25.03,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        24.83,
+        44.34
+      ],
+      "max": [
+        30.28,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        30.08,
+        43.27
+      ],
+      "max": [
+        33.41,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        33.21,
+        42.68
+      ],
+      "max": [
+        38.03,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        37.83,
+        43.88
+      ],
+      "max": [
+        43.18,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        42.98,
+        42.81
+      ],
+      "max": [
+        48.0,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -48.0
+      ],
+      "max": [
+        -43.34,
+        -44.87
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -45.07
+      ],
+      "max": [
+        -41.77,
+        -40.68
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -40.88
+      ],
+      "max": [
+        -43.47,
+        -33.98
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -34.18
+      ],
+      "max": [
+        -44.14,
+        -28.72
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -28.92
+      ],
+      "max": [
+        -44.91,
+        -22.07
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -22.27
+      ],
+      "max": [
+        -44.06,
+        -15.78
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -15.98
+      ],
+      "max": [
+        -45.05,
+        -12.55
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -12.75
+      ],
+      "max": [
+        -39.97,
+        -6.19
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -6.39
+      ],
+      "max": [
+        -44.02,
+        -2.21
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        -2.41
+      ],
+      "max": [
+        -45.05,
+        2.34
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        2.14
+      ],
+      "max": [
+        -44.97,
+        7.27
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        7.07
+      ],
+      "max": [
+        -43.07,
+        12.89
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        12.69
+      ],
+      "max": [
+        -45.27,
+        19.08
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        18.88
+      ],
+      "max": [
+        -42.17,
+        22.39
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        22.19
+      ],
+      "max": [
+        -44.26,
+        27.66
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        27.46
+      ],
+      "max": [
+        -43.89,
+        32.2
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        32.0
+      ],
+      "max": [
+        -44.66,
+        37.39
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        37.19
+      ],
+      "max": [
+        -42.57,
+        43.16
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        -48.0,
+        42.96
+      ],
+      "max": [
+        -38.37,
+        48.0
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        39.63,
+        -48.0
+      ],
+      "max": [
+        48.0,
+        -42.81
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        41.83,
+        -43.01
+      ],
+      "max": [
+        48.0,
+        -39.22
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        43.35,
+        -39.42
+      ],
+      "max": [
+        48.0,
+        -33.93
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        44.86,
+        -34.13
+      ],
+      "max": [
+        48.0,
+        -27.32
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        43.12,
+        -27.52
+      ],
+      "max": [
+        48.0,
+        -22.25
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        44.27,
+        -22.45
+      ],
+      "max": [
+        48.0,
+        -15.28
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        42.25,
+        -15.48
+      ],
+      "max": [
+        48.0,
+        -10.55
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        45.0,
+        -10.75
+      ],
+      "max": [
+        48.0,
+        -4.64
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        45.0,
+        -4.84
+      ],
+      "max": [
+        48.0,
+        2.27
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        45.0,
+        2.07
+      ],
+      "max": [
+        48.0,
+        5.28
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        42.74,
+        5.08
+      ],
+      "max": [
+        48.0,
+        11.8
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        38.6,
+        11.6
+      ],
+      "max": [
+        48.0,
+        18.14
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        43.07,
+        17.94
+      ],
+      "max": [
+        48.0,
+        22.33
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        44.83,
+        22.13
+      ],
+      "max": [
+        48.0,
+        26.11
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        45.05,
+        25.91
+      ],
+      "max": [
+        48.0,
+        31.34
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        45.43,
+        31.14
+      ],
+      "max": [
+        48.0,
+        35.54
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        45.27,
+        35.34
+      ],
+      "max": [
+        48.0,
+        40.77
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        41.98,
+        40.57
+      ],
+      "max": [
+        48.0,
+        43.84
+      ]
+    },
+    {
+      "type": "rect",
+      "min": [
+        43.86,
+        43.64
+      ],
+      "max": [
+        48.0,
+        48.0
+      ]
+    }
+  ]
+}

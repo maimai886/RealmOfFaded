@@ -1,0 +1,178 @@
+{
+  "note": "轉職考試，照 RO 一轉的考試，每個一轉職業一種，規則在 src/core/job_trial.gd，玩法說明在 docs/轉職考試.md。mentor 是報名和交考的導師；pilgrimage 的 targets 是可能被抽到的鎮民和對話裡顯示的名字。bonus_feats 是超過預期的事，做到任何一件，轉職時導師給一份 bonus，做到幾件都只給一次：藥水加一次升基本等級 base_levels 級、新職業的職業等級 job_levels 級",
+  "source": "rAthena npc/pre-re/jobs/1-1 的 acolyte、archer、mage、swordman 轉職腳本",
+  "trials": {
+    "devout": {
+      "kind": "pilgrimage",
+      "mentor": "faith_mentor",
+      "targets": {
+        "gear_merchant": "武器防具商 布隆",
+        "storage_keeper": "倉庫管理員 奧托",
+        "teleporter": "傳送員 希爾"
+      },
+      "bonus_feats": [
+        "all_greeted"
+      ],
+      "bonus": {
+        "items": {
+          "red_potion": 5
+        },
+        "base_levels": 2,
+        "job_levels": 1
+      }
+    },
+    "scout": {
+      "kind": "appraise",
+      "mentor": "archer_mentor",
+      "points": {
+        "twig_straight": 5,
+        "twig_bent": 3,
+        "twig_curly": 2,
+        "twig_knotted": 1
+      },
+      "pass": 25,
+      "great_scores": [
+        40,
+        50
+      ],
+      "bonus_feats": [
+        "score_40",
+        "score_50"
+      ],
+      "bonus": {
+        "items": {
+          "red_potion": 5
+        },
+        "base_levels": 2,
+        "job_levels": 1
+      }
+    },
+    "sorcerer": {
+      "kind": "mix",
+      "mentor": "mage_mentor",
+      "fail_item": "solution_failed",
+      "solutions": {
+        "1": {
+          "name": "一號溶液",
+          "item": "solution_1",
+          "materials": {
+            "dew_gel": 2,
+            "soft_moss": 3,
+            "paint_blue": 1
+          },
+          "solvent": "dew",
+          "code": "8472",
+          "catalyst": "yellow"
+        },
+        "2": {
+          "name": "二號溶液",
+          "item": "solution_2",
+          "materials": {
+            "dew_gel": 3,
+            "soft_moss": 1,
+            "paint_green": 1
+          },
+          "solvent": "none",
+          "code": "3735",
+          "catalyst": "red"
+        },
+        "3": {
+          "name": "三號溶液",
+          "item": "solution_3",
+          "materials": {
+            "dew_gel": 6,
+            "soft_moss": 1
+          },
+          "solvent": "dew",
+          "code": "2750",
+          "catalyst": "blue"
+        },
+        "4": {
+          "name": "四號溶液",
+          "item": "solution_4",
+          "materials": {
+            "dew_gel": 2,
+            "soft_moss": 3,
+            "paint_green": 2
+          },
+          "solvent": "well",
+          "code": "5429",
+          "catalyst": "diamond"
+        }
+      },
+      "choices": {
+        "solvent": [
+          "dew",
+          "well",
+          "none"
+        ],
+        "code": [
+          "8472",
+          "3735",
+          "2750",
+          "5429",
+          "0000"
+        ],
+        "catalyst": [
+          "yellow",
+          "red",
+          "blue",
+          "diamond"
+        ]
+      },
+      "secret": {
+        "name": "神秘的溶液",
+        "item": "solution_mystery",
+        "materials": {
+          "dew_gel": 1,
+          "soft_moss": 1
+        },
+        "solvent": "none",
+        "code": "0000",
+        "catalyst": "diamond"
+      },
+      "proverbs": [
+        "一鳥在手，勝過兩鳥在林。不過手會被啄。",
+        "早起的蟲子會被鳥吃掉。",
+        "失敗為成功之母。成功的爸爸是誰沒人知道。",
+        "滾石不生苔，所以柔軟苔蘚很貴。",
+        "欲速則不達。慢慢來也不一定會到。",
+        "三個臭皮匠，還是三個臭皮匠。",
+        "今天的溶液，明天的抹布。",
+        "調配台很累了，請溫柔地按。"
+      ],
+      "bonus_feats": [
+        "first_try"
+      ],
+      "bonus": {
+        "items": {
+          "red_potion": 5
+        },
+        "base_levels": 2,
+        "job_levels": 1
+      }
+    },
+    "squire": {
+      "kind": "course",
+      "mentor": "sword_mentor",
+      "map": "sword_trial",
+      "limit_seconds": 300,
+      "warn_seconds": 60,
+      "retry_items": {
+        "small_apple": 5
+      },
+      "fast_seconds": 60,
+      "bonus_feats": [
+        "no_pit",
+        "fast"
+      ],
+      "bonus": {
+        "items": {
+          "red_potion": 5
+        },
+        "base_levels": 2,
+        "job_levels": 1
+      }
+    }
+  }
+}

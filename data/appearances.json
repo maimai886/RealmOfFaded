@@ -1,0 +1,363 @@
+{
+  "novice": {
+    "idle": "Idle",
+    "attack": "1H_Melee_Attack_Stab",
+    "attack_impact_ratio": 0.42
+  },
+  "squire": {
+    "idle": "Idle",
+    "attack": "1H_Melee_Attack_Slice_Diagonal",
+    "attack_impact_ratio": 0.4
+  },
+  "sorcerer": {
+    "idle": "Idle",
+    "attack": "Spellcast_Shoot",
+    "attack_impact_ratio": 0.45
+  },
+  "scout": {
+    "idle": "2H_Ranged_Aiming",
+    "attack": "2H_Ranged_Shoot",
+    "attack_impact_ratio": 0.35
+  },
+  "devout": {
+    "idle": "Idle",
+    "attack": "1H_Melee_Attack_Chop",
+    "cast": "Spellcast_Shoot",
+    "attack_impact_ratio": 0.5
+  },
+  "options": {
+    "_comment": "捏臉選項，捏臉介面、伺服器驗證、精靈圖換色都讀這裡，項目順序照 avatar.gd 的 OPTION_KEYS。依性別分的表用 female、male 分開，其他共用；索引對應精靈圖資料夾 <gender>_h<hair_style>_e<eye_style>。色階照 docs/RO配色參考.md，暗到亮",
+    "keys": [
+      "hair_style",
+      "hair_color",
+      "skin_tone",
+      "eye_style",
+      "outfit_style",
+      "outfit_color"
+    ],
+    "labels": {
+      "hair_style": "髮型",
+      "hair_color": "髮色",
+      "skin_tone": "膚色",
+      "eye_style": "眼型",
+      "outfit_style": "服裝",
+      "outfit_color": "服裝顏色"
+    },
+    "hair_style": {
+      "female": [
+        {
+          "name": "及肩長髮"
+        },
+        {
+          "name": "旅人兜帽"
+        },
+        {
+          "name": "長髮魔女帽"
+        },
+        {
+          "name": "長髮熊耳帽"
+        },
+        {
+          "name": "盤髮"
+        }
+      ],
+      "male": [
+        {
+          "name": "清爽短髮"
+        },
+        {
+          "name": "服貼短髮"
+        },
+        {
+          "name": "光頭落腮鬍"
+        },
+        {
+          "name": "短髮巫師帽"
+        }
+      ]
+    },
+    "hair_color": [
+      {
+        "name": "栗棕",
+        "ramp": [
+          "#4e2e1c",
+          "#6e4634",
+          "#8a5b49",
+          "#a6705d",
+          "#ba8a75",
+          "#d7aa91",
+          "#e5b59c",
+          "#ffd3a1",
+          "#ffdebf"
+        ]
+      },
+      {
+        "name": "墨黑",
+        "ramp": [
+          "#3b2331",
+          "#543640",
+          "#6d494f",
+          "#835e5f",
+          "#99726f",
+          "#af867f",
+          "#c39b8f",
+          "#d4b994",
+          "#ffe5a8"
+        ]
+      },
+      {
+        "name": "金色",
+        "ramp": [
+          "#673429",
+          "#8d4e39",
+          "#b26947",
+          "#cf855c",
+          "#eba171",
+          "#ffc08c",
+          "#ffdeac",
+          "#ffffcb",
+          "#ffffff"
+        ]
+      },
+      {
+        "name": "赤紅",
+        "ramp": [
+          "#6e252d",
+          "#8c353e",
+          "#b24651",
+          "#cb6266",
+          "#e97e7a",
+          "#f49892",
+          "#fabbab",
+          "#f5dbd7",
+          "#ffedc4"
+        ]
+      },
+      {
+        "name": "銀白",
+        "ramp": [
+          "#7a5c5f",
+          "#89676b",
+          "#947a78",
+          "#b8a39b",
+          "#cab7af",
+          "#dccbc3",
+          "#eedfd7",
+          "#ffffeb",
+          "#fffffb"
+        ]
+      },
+      {
+        "name": "櫻粉",
+        "ramp": [
+          "#5e2338",
+          "#84324e",
+          "#a84767",
+          "#c66381",
+          "#e2869a",
+          "#f4a6b0",
+          "#ffc7c2",
+          "#ffe3d4",
+          "#ffedc6"
+        ]
+      },
+      {
+        "name": "湛藍",
+        "ramp": [
+          "#474359",
+          "#5c576e",
+          "#716b83",
+          "#817a91",
+          "#aba3bf",
+          "#afa7c1",
+          "#cecce0",
+          "#e1ede9",
+          "#ffedc8"
+        ]
+      },
+      {
+        "name": "嫩綠",
+        "ramp": [
+          "#162b43",
+          "#314a54",
+          "#4c6864",
+          "#668674",
+          "#80a387",
+          "#9abf94",
+          "#b8d8a5",
+          "#e5f0c8",
+          "#f8daaa"
+        ]
+      }
+    ],
+    "skin_tone": [
+      {
+        "name": "自然",
+        "ramp": [
+          "#bd736b",
+          "#dc9084",
+          "#f6ae9f",
+          "#ffc6b2",
+          "#ffe1b6"
+        ]
+      },
+      {
+        "name": "白皙",
+        "ramp": [
+          "#cc9084",
+          "#e8a99a",
+          "#ffc2b1",
+          "#ffceba",
+          "#ffe4ba"
+        ]
+      },
+      {
+        "name": "小麥",
+        "ramp": [
+          "#9e4644",
+          "#c4685f",
+          "#e48d80",
+          "#f3b09c",
+          "#f9d8ab"
+        ]
+      },
+      {
+        "name": "深棕",
+        "ramp": [
+          "#6b2525",
+          "#9b4742",
+          "#c57065",
+          "#de9b88",
+          "#efcda0"
+        ]
+      }
+    ],
+    "eye_style": [
+      {
+        "name": "標準"
+      },
+      {
+        "name": "圓亮大眼"
+      },
+      {
+        "name": "瞇瞇眼"
+      },
+      {
+        "name": "上揚眼"
+      },
+      {
+        "name": "溫柔垂眼"
+      }
+    ],
+    "outfit_color": [
+      {
+        "name": "原色"
+      },
+      {
+        "name": "暖陽",
+        "ramp": [
+          "#5a2413",
+          "#7d3a1b",
+          "#a25226",
+          "#c26c33",
+          "#df8a46",
+          "#f4a765",
+          "#ffc48e",
+          "#ffdfb2",
+          "#fff0c8"
+        ]
+      },
+      {
+        "name": "森林",
+        "ramp": [
+          "#162b43",
+          "#314a54",
+          "#4c6864",
+          "#668674",
+          "#80a387",
+          "#9abf94",
+          "#b8d8a5",
+          "#e5f0c8",
+          "#f8daaa"
+        ]
+      },
+      {
+        "name": "湖水",
+        "ramp": [
+          "#394d63",
+          "#4b5c77",
+          "#5e6b8b",
+          "#6d7498",
+          "#9399c5",
+          "#9a9bc6",
+          "#bfc5e4",
+          "#d7f0e3",
+          "#ffe1bf"
+        ]
+      },
+      {
+        "name": "星夜",
+        "ramp": [
+          "#29273b",
+          "#474359",
+          "#645e77",
+          "#7a6f8c",
+          "#958ba7",
+          "#afa7c1",
+          "#cecce0",
+          "#ededff"
+        ]
+      },
+      {
+        "name": "莓果",
+        "ramp": [
+          "#5e2338",
+          "#84324e",
+          "#a84767",
+          "#c66381",
+          "#e2869a",
+          "#f4a6b0",
+          "#ffc7c2",
+          "#ffe3d4",
+          "#ffedc6"
+        ]
+      }
+    ],
+    "outfit_style": {
+      "female": [
+        {
+          "name": "冒險短衣"
+        },
+        {
+          "name": "見習長袍"
+        }
+      ],
+      "male": [
+        {
+          "name": "毛皮背心"
+        },
+        {
+          "name": "冒險短衣"
+        }
+      ]
+    },
+    "defaults": {
+      "female": {
+        "hair_style": 2,
+        "hair_color": 0,
+        "skin_tone": 1,
+        "eye_style": 1,
+        "outfit_style": 0,
+        "outfit_color": 0
+      },
+      "male": {
+        "hair_style": 1,
+        "hair_color": 2,
+        "skin_tone": 0,
+        "eye_style": 0,
+        "outfit_style": 0,
+        "outfit_color": 0
+      }
+    }
+  }
+}

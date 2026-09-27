@@ -1,0 +1,58 @@
+{
+  "frame_size": [
+    192,
+    192
+  ],
+  "columns": 8,
+  "pixels_per_meter": 137.14285714285714,
+  "anchor": [
+    96.0,
+    178.0
+  ],
+  "directions": [
+    "s",
+    "sw",
+    "w",
+    "nw",
+    "n"
+  ],
+  "layout": "packed",
+  "actions": {
+    "idle": {
+      "frames": 4,
+      "fps": 6,
+      "loop": true,
+      "start": 0
+    },
+    "walk": {
+      "frames": 8,
+      "fps": 12,
+      "loop": true,
+      "start": 20
+    },
+    "attack": {
+      "frames": 6,
+      "fps": 12,
+      "loop": false,
+      "start": 60,
+      "hit_frame": 3
+    },
+    "hit": {
+      "frames": 3,
+      "fps": 12,
+      "loop": false,
+      "start": 90
+    },
+    "die": {
+      "frames": 6,
+      "fps": 10,
+      "loop": false,
+      "start": 105
+    }
+  },
+  "motion": "hop",
+  "source": {
+    "pipeline": "art_pipeline/monsters_v2/mpuppet.py",
+    "views": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\art_source\\monsters\\南門\\史萊姆\\views"
+  }
+}

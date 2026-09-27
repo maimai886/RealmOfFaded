@@ -1,0 +1,58 @@
+{
+  "frame_size": [
+    320,
+    320
+  ],
+  "columns": 8,
+  "pixels_per_meter": 76.19047619047619,
+  "anchor": [
+    160.0,
+    306.0
+  ],
+  "directions": [
+    "s",
+    "sw",
+    "w",
+    "nw",
+    "n"
+  ],
+  "layout": "packed",
+  "actions": {
+    "idle": {
+      "frames": 4,
+      "fps": 6,
+      "loop": true,
+      "start": 0
+    },
+    "walk": {
+      "frames": 6,
+      "fps": 12,
+      "loop": true,
+      "start": 20
+    },
+    "attack": {
+      "frames": 6,
+      "fps": 12,
+      "loop": false,
+      "start": 50,
+      "hit_frame": 3
+    },
+    "hit": {
+      "frames": 2,
+      "fps": 12,
+      "loop": false,
+      "start": 80
+    },
+    "die": {
+      "frames": 5,
+      "fps": 10,
+      "loop": false,
+      "start": 90
+    }
+  },
+  "motion": "stomp",
+  "source": {
+    "pipeline": "art_pipeline/monsters_v2/mpuppet.py",
+    "views": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\art_source\\monsters\\南門\\樹樁王\\views"
+  }
+}

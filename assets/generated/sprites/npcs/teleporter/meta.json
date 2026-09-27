@@ -1,0 +1,42 @@
+{
+  "frame_size": [
+    176,
+    232
+  ],
+  "columns": 8,
+  "pixels_per_meter": 96,
+  "anchor": [
+    88,
+    208
+  ],
+  "directions": [
+    "s",
+    "sw",
+    "w",
+    "nw",
+    "n"
+  ],
+  "filter": "linear",
+  "layout": "packed",
+  "head_layer": false,
+  "head_width": 0,
+  "actions": {
+    "idle": {
+      "start": 0,
+      "frames": 4,
+      "fps": 4,
+      "loop": true
+    },
+    "talk": {
+      "start": 20,
+      "frames": 4,
+      "fps": 8,
+      "loop": true
+    }
+  },
+  "source": {
+    "pipeline": "art_pipeline/npcs/npc_sheet.py",
+    "image": "art_source/npcs/volume/teleporter.png",
+    "height_px": 165
+  }
+}

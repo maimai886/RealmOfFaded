@@ -1,0 +1,150 @@
+{
+  "name": "奧托的倉庫",
+  "scene": "interior",
+  "music": "sunny_town_morning",
+  "safe_zone": true,
+  "level_range": [
+    1,
+    99
+  ],
+  "warp_allowed": false,
+  "world_map": false,
+  "bounds": {
+    "min": [
+      -4.5,
+      -3.5
+    ],
+    "max": [
+      4.5,
+      3.5
+    ]
+  },
+  "interior": {
+    "floor": "wood_floor",
+    "wall": "wood_panel",
+    "wall_height": 3.2,
+    "door": [
+      0.0,
+      3.5
+    ]
+  },
+  "player_spawn": [
+    0.0,
+    1.0
+  ],
+  "npcs": [
+    {
+      "id": "storage_keeper",
+      "position": [
+        0.0,
+        -1.9
+      ],
+      "facing": [
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "door",
+      "position": [
+        0.0,
+        3.2
+      ],
+      "radius": 0.6,
+      "to_map": "town",
+      "to_position": [
+        18.5,
+        -0.84
+      ],
+      "label": "晨曦鎮"
+    }
+  ],
+  "props": [
+    {
+      "model": "generated/models/towns/furniture/counter",
+      "position": [
+        -0.72,
+        -0.9
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/counter",
+      "position": [
+        0.72,
+        -0.9
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        -3.4,
+        -2.7
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        -2.0,
+        -2.8
+      ],
+      "rotation_y": 20,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        3.4,
+        -2.7
+      ],
+      "rotation_y": -15,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/shelf",
+      "position": [
+        2.1,
+        -3.1
+      ],
+      "rotation_y": 0,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        3.6,
+        1.8
+      ],
+      "rotation_y": 40,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/crates",
+      "position": [
+        -3.6,
+        1.6
+      ],
+      "rotation_y": -30,
+      "scale": 1.0
+    },
+    {
+      "model": "generated/models/towns/furniture/desk",
+      "position": [
+        -3.4,
+        -0.4
+      ],
+      "rotation_y": 90,
+      "scale": 1.0
+    }
+  ],
+  "blockers": [],
+  "spawns": [],
+  "zones": []
+}

@@ -1,0 +1,18 @@
+{
+  "note": "奪色：色種花園，道具商人蜜拉幫你顧的小花圃，規則在 src/core/garden.gd 和 docs/奪色世界規劃書.md 第 10 節。plots 是幾格；recipes 是哪種顏料種幾個、過幾分鐘現實時間收成幾個什麼。濃的顏料回 30 彩度，普通的 12，種五個收三個是 60 換 90，種一輪多五成，不然等兩小時沒有意義",
+  "plots": 3,
+  "recipes": {
+    "paint_green": {
+      "count": 5,
+      "harvest": "paint_green_rich",
+      "amount": 3,
+      "minutes": 120
+    },
+    "paint_blue": {
+      "count": 5,
+      "harvest": "paint_blue_rich",
+      "amount": 3,
+      "minutes": 120
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "note": "精煉的曲線、費用和失敗規則，規格在 docs/裝備成長.md 第 2 節；程式不寫死數字",
+  "max_level": 10,
+  "safe_level": 4,
+  "destroy_level": 5,
+  "value_permille": {
+    "atk": 50,
+    "matk": 50,
+    "def": 70,
+    "mdef": 70
+  },
+  "min_gain": 1,
+  "rarity_max_level": {
+    "common": 6,
+    "uncommon": 8,
+    "rare": 10,
+    "epic": 10
+  },
+  "protections": [
+    {"item": "refine_charm", "outcome": "downgrade"},
+    {"item": "dawn_seal", "outcome": "stall"}
+  ],
+  "levels": [
+    {"to": 1, "success_percent": 100, "material": "refine_dust", "material_count": 1, "gold": 100, "price_permille": 60},
+    {"to": 2, "success_percent": 100, "material": "refine_dust", "material_count": 1, "gold": 150, "price_permille": 100},
+    {"to": 3, "success_percent": 100, "material": "refine_dust", "material_count": 2, "gold": 250, "price_permille": 160},
+    {"to": 4, "success_percent": 100, "material": "refine_dust", "material_count": 2, "gold": 400, "price_permille": 240},
+    {"to": 5, "success_percent": 92, "material": "refine_dust", "material_count": 3, "gold": 600, "price_permille": 360},
+    {"to": 6, "success_percent": 84, "material": "hollow_plate", "material_count": 2, "gold": 900, "price_permille": 520},
+    {"to": 7, "success_percent": 76, "material": "hollow_plate", "material_count": 3, "gold": 1400, "price_permille": 760},
+    {"to": 8, "success_percent": 68, "material": "gloom_ember", "material_count": 3, "gold": 2200, "price_permille": 1100},
+    {"to": 9, "success_percent": 58, "material": "gloom_ember", "material_count": 5, "gold": 3400, "price_permille": 1600},
+    {"to": 10, "success_percent": 48, "material": "ash_crown_shard", "material_count": 1, "gold": 5200, "price_permille": 2400}
+  ]
+}

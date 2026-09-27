@@ -1,0 +1,65 @@
+{
+  "note": "奪色：從調色盤挑了屬性的技能，打中時照屬性多一個效果，規格在 docs/奪色世界規劃書.md 第 4.0 節。時間的遲滯和空間的推開是屬性本身就有的，在 balance.json 的 element_effects，不在這裡。form_scale_percent 是形的類型乘在效果強度上的比例，近戰和飛彈是基準，範圍打折、持續地帶再打折",
+  "form_scale_percent": {
+    "melee": 100,
+    "projectile": 100,
+    "area": 60,
+    "zone": 40,
+    "support": 100
+  },
+  "effects": {
+    "fire": {
+      "kind": "burn",
+      "tick_percent_of_hit": 12,
+      "interval_ms": 1000,
+      "duration_ms": 3000
+    },
+    "water": {
+      "kind": "slow",
+      "move_speed_percent": -30,
+      "duration_ms": 3000,
+      "freeze_chance_percent": 10,
+      "freeze_ms": 1500
+    },
+    "wind": {
+      "kind": "chain",
+      "damage_percent_of_hit": 50,
+      "radius_mm": 3500
+    },
+    "earth": {
+      "kind": "armor_break",
+      "def_percent": -20,
+      "duration_ms": 5000
+    },
+    "light": {
+      "kind": "ally_heal",
+      "heal_percent_of_hit": 15,
+      "radius_mm": 5000
+    },
+    "dark": {
+      "kind": "lifesteal",
+      "heal_percent_of_hit": 15
+    }
+  },
+  "support_effects": {
+    "note": "治療與輔助挑了屬性換附帶效果，規格在 docs/奪色世界規劃書.md 第 4.0 節和 docs/技能與流派.md 第 5.5 節",
+    "water": {
+      "kind": "cleanse",
+      "count": 1
+    },
+    "earth": {
+      "kind": "shield",
+      "percent_of_heal": 60,
+      "duration_ms": 8000
+    },
+    "fire": {
+      "kind": "atk_up",
+      "atk_percent": 10,
+      "duration_ms": 8000
+    },
+    "light": {
+      "kind": "heal_up",
+      "heal_percent": 30
+    }
+  }
+}

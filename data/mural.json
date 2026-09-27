@@ -1,0 +1,40 @@
+{
+  "note": "奪色：晨曦鎮廣場的全服壁畫，全服捐顏料一起完成，規則在 src/core/mural.gd 和 docs/奪色世界規劃書.md 第 10 節。segments 照順序一塊一塊畫，前一塊畫完才輪到下一塊；needs 是這一塊要幾個哪種顏料；bonus 是畫完之後全服永久拿到的加成，百分比；emblem 是這一塊用哪張地圖徽記畫",
+  "segments": [
+    {
+      "id": "dawn",
+      "name": "晨光",
+      "emblem": "town",
+      "needs": {
+        "paint_green": 150,
+        "paint_blue": 150
+      },
+      "bonus": {
+        "exp_percent": 5
+      }
+    },
+    {
+      "id": "sprout",
+      "name": "新芽",
+      "emblem": "meadow",
+      "needs": {
+        "paint_green": 400
+      },
+      "bonus": {
+        "drop_percent": 10
+      }
+    },
+    {
+      "id": "whisper",
+      "name": "低語",
+      "emblem": "forest",
+      "needs": {
+        "paint_blue": 400,
+        "paint_green": 200
+      },
+      "bonus": {
+        "chroma_gain_percent": 20
+      }
+    }
+  ]
+}

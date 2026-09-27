@@ -1,0 +1,66 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://assets/vendor/shield_vfx/shield_basic.tres" id="1_5ryp5"]
+[ext_resource type="Shader" path="res://assets/vendor/shield_vfx/shield_ring.tres" id="2_n0gyd"]
+
+[sub_resource type="Gradient" id="Gradient_4x80b"]
+offsets = PackedFloat32Array(0.0245902, 0.147541, 0.54918)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kr6k6"]
+gradient = SubResource("Gradient_4x80b")
+use_hdr = true
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_kr6k6"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.139344, 0.286885, 0.647541, 0.885246)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8wba7"]
+noise_type = 3
+frequency = 0.0057
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n8kht"]
+noise = SubResource("FastNoiseLite_8wba7")
+color_ramp = SubResource("Gradient_kr6k6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kr6k6"]
+render_priority = 0
+shader = ExtResource("1_5ryp5")
+shader_parameter/Intensity = 6.0
+shader_parameter/Color = Color(0.6, 0.455, 0.096, 1)
+shader_parameter/direction = Vector2(0.01, -0.1)
+shader_parameter/scale = Vector2(0, 2)
+shader_parameter/transparent_texture = SubResource("NoiseTexture2D_n8kht")
+shader_parameter/fresnel_color = Color(3, 2, 5, 1)
+shader_parameter/fresnel_power = 10.0
+shader_parameter/gradient = SubResource("GradientTexture2D_kr6k6")
+
+[sub_resource type="SphereMesh" id="SphereMesh_4x80b"]
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0rf4"]
+render_priority = 0
+shader = ExtResource("2_n0gyd")
+shader_parameter/color = Color(1, 0.87451, 0.290196, 1)
+shader_parameter/speed2 = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8wba7"]
+bottom_radius = 0.0
+height = 0.001
+cap_top = false
+cap_bottom = false
+
+[node name="shield_basic" type="Node3D" unique_id=1202312008]
+
+[node name="shield" type="MeshInstance3D" parent="." unique_id=1354684094]
+material_override = SubResource("ShaderMaterial_kr6k6")
+mesh = SubResource("SphereMesh_4x80b")
+
+[node name="ring" type="MeshInstance3D" parent="." unique_id=1060229326]
+material_override = SubResource("ShaderMaterial_j0rf4")
+mesh = SubResource("CylinderMesh_8wba7")

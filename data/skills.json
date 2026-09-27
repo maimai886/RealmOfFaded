@@ -1,0 +1,4980 @@
+{
+  "source": "數值參考 RO Renewal：rAthena db/re/skill_db.yml、db/re/skill_tree.yml、src/map/skills/，以及 iRO Wiki 各技能頁面",
+  "cell_meters": 0.75,
+  "notes": "距離單位是公尺，RO 的 1 格約換算 0.75 公尺；range 是施放距離，weapon_range 為 true 時改用角色普攻距離；時間單位毫秒；damage_percent 是每段傷害百分比；status 是命中後附加的狀態，ground 是留在地上的火牆、陷阱、範圍效果，欄位說明在 docs/技能規劃.md；revive 區塊代表這是復活術，目標只能是倒下的同伴，每一級補回的 HP 寫在 revive_hp_percent，程式不看職業，只看 revive 區塊",
+  "skills": {
+    "novice_basic": {
+      "name": "基本技能",
+      "job": "novice",
+      "max_level": 9,
+      "type": "passive",
+      "targets": "self",
+      "levels": [
+        {
+          "unlocks": [
+            "trade"
+          ]
+        },
+        {
+          "unlocks": [
+            "emote"
+          ]
+        },
+        {
+          "unlocks": [
+            "sit"
+          ]
+        },
+        {
+          "unlocks": [
+            "chat_room"
+          ]
+        },
+        {
+          "unlocks": [
+            "join_party"
+          ]
+        },
+        {
+          "unlocks": [
+            "storage"
+          ]
+        },
+        {
+          "unlocks": [
+            "create_party"
+          ]
+        },
+        {},
+        {
+          "unlocks": [
+            "job_change"
+          ]
+        }
+      ],
+      "description": "冒險的基本功。",
+      "source": "https://irowiki.org/wiki/Basic_Skill、https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml NV_BASIC、https://github.com/rathena/rathena/blob/master/src/map/clif.cpp basic_skill_check"
+    },
+    "first_aid": {
+      "name": "急救",
+      "job": "novice",
+      "max_level": 1,
+      "type": "self_buff",
+      "targets": "self",
+      "quest": true,
+      "levels": [
+        {
+          "sp_cost": 3,
+          "heal": 5
+        }
+      ],
+      "description": "替自己包紮傷口。",
+      "source": "https://irowiki.org/wiki/First_Aid、https://github.com/rathena/rathena/blob/master/src/map/skills/novice/firstaid.cpp、https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml NV_FIRSTAID"
+    },
+    "full_colour_burst": {
+      "name": "全彩爆發",
+      "job": "novice",
+      "max_level": 1,
+      "type": "active_ground",
+      "targets": "enemy",
+      "area_center": "self",
+      "aoe_radius": 4.0,
+      "damage_type": "adaptive",
+      "quest": true,
+      "colour_burst": true,
+      "levels": [
+        {
+          "sp_cost": 0,
+          "cast_ms": 300,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 800,
+          "damage_percent": 500
+        }
+      ],
+      "description": "彩度九成以上才能放，把身上的彩度一次全部放出去，周圍的地面變回彩色。",
+      "source": "原創，規格在 docs/奪色世界規劃書.md 第 6.3 節；倍率 500% 到 700% 放在 balance.json 的 chroma"
+    },
+    "sword_mastery": {
+      "name": "執劍",
+      "job": "squire",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "sword",
+        "two_hand_sword"
+      ],
+      "tree": {
+        "column": 0,
+        "row": 0
+      },
+      "levels": [
+        {
+          "bonus": {
+            "atk": 8
+          }
+        },
+        {
+          "bonus": {
+            "atk": 16
+          }
+        },
+        {
+          "bonus": {
+            "atk": 24
+          }
+        },
+        {
+          "bonus": {
+            "atk": 32
+          }
+        },
+        {
+          "bonus": {
+            "atk": 40
+          }
+        }
+      ],
+      "description": "劍握久了，手就知道怎麼使力。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；ATK 照 RO 劍術修練每級 4 的兩倍，因為上限從 10 級收到 5 級"
+    },
+    "rock_crash": {
+      "name": "崩岩落",
+      "job": "squire",
+      "max_level": 10,
+      "type": "active_target",
+      "weapon_range": true,
+      "targets": "enemy",
+      "damage_type": "physical",
+      "area_center": "target",
+      "aoe_radius": 2.0,
+      "form": "area",
+      "colour_slots": 2,
+      "knockback_m": 1.5,
+      "finisher": {
+        "per_stack_percent": 6
+      },
+      "paint": true,
+      "tree": {
+        "column": 2,
+        "row": 2
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 10,
+          "damage_percent": 200,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 11,
+          "damage_percent": 224,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 12,
+          "damage_percent": 249,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 13,
+          "damage_percent": 273,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 14,
+          "damage_percent": 298,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 15,
+          "damage_percent": 322,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 347,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 17,
+          "damage_percent": 371,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 18,
+          "damage_percent": 396,
+          "after_cast_delay_ms": 500
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 420,
+          "after_cast_delay_ms": 500
+        }
+      ],
+      "description": "把累積的劍勢往目標一劍砸下去，牠和身邊的敵人連同地上的線稿一起震開。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；0 層也能放，滿級 420% 加劍勢每層 6 個百分點，劍勢 5 層 450%，在一轉有前置爆發 450% 的線上；2026-09-27 使用者要改成指定技：砸指定的那一隻，周圍 2 公尺一起吃",
+      "requires": {
+        "wind_pierce": 5,
+        "momentum": 1
+      }
+    },
+    "wind_pierce": {
+      "name": "風穿",
+      "job": "squire",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "range": 3.5,
+      "form": "area",
+      "colour_slots": 2,
+      "finisher": {
+        "per_stack_percent": 6
+      },
+      "dash": {
+        "through": true,
+        "behind_m": 1.2,
+        "max_m": 4.7,
+        "hit_width_m": 0.9
+      },
+      "tree": {
+        "column": 2,
+        "row": 0
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 10,
+          "damage_percent": 150,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 11,
+          "damage_percent": 170,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 12,
+          "damage_percent": 190,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 13,
+          "damage_percent": 210,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 14,
+          "damage_percent": 230,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 15,
+          "damage_percent": 250,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 270,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 17,
+          "damage_percent": 290,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 18,
+          "damage_percent": 310,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 330,
+          "after_cast_delay_ms": 300
+        }
+      ],
+      "description": "帶著劍勢穿過目標，落在牠背後，途中擋路的都挨一劍。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；位移靠劍勢擋改成靠 SP，0 層也能放，滿級 330% 加劍勢每層 6 個百分點，劍勢 5 層 360%"
+    },
+    "blade_breath": {
+      "name": "息劍",
+      "job": "squire",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "tree": {
+        "column": 1,
+        "row": 1
+      },
+      "levels": [
+        {
+          "bonus": {
+            "hit_sp": 1,
+            "hit_hp_permille": 10,
+            "finisher_sp": 2
+          }
+        },
+        {
+          "bonus": {
+            "hit_sp": 1,
+            "hit_hp_permille": 15,
+            "finisher_sp": 3
+          }
+        },
+        {
+          "bonus": {
+            "hit_sp": 2,
+            "hit_hp_permille": 20,
+            "finisher_sp": 4
+          }
+        },
+        {
+          "bonus": {
+            "hit_sp": 2,
+            "hit_hp_permille": 25,
+            "finisher_sp": 5
+          }
+        },
+        {
+          "bonus": {
+            "hit_sp": 3,
+            "hit_hp_permille": 30,
+            "finisher_sp": 6
+          }
+        }
+      ],
+      "description": "每揮一劍就順一口氣。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；普攻命中回 SP 1 到 3、回造成傷害的 1% 到 3% HP，收尾放出時多回 SP 2 到 6",
+      "requires": {
+        "sword_mastery": 3
+      }
+    },
+    "momentum": {
+      "name": "劍勢",
+      "job": "squire",
+      "max_level": 3,
+      "type": "passive",
+      "targets": "self",
+      "job_level": 5,
+      "tree": {
+        "column": 0,
+        "row": 1
+      },
+      "levels": [
+        {
+          "bonus": {
+            "momentum_max": 1,
+            "momentum_hold_ms": 500
+          }
+        },
+        {
+          "bonus": {
+            "momentum_max": 1,
+            "momentum_hold_ms": 1000
+          }
+        },
+        {
+          "bonus": {
+            "momentum_max": 2,
+            "momentum_hold_ms": 1500
+          }
+        }
+      ],
+      "description": "劍勢攢得更多，也放得更久。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；劍勢上限 3 到 5、保留 2.5 到 4 秒，基本值在 data/balance.json 的 momentum",
+      "requires": {
+        "sword_mastery": 1
+      }
+    },
+    "stone_skin": {
+      "name": "岩膚",
+      "job": "squire",
+      "max_level": 3,
+      "type": "self_buff",
+      "targets": "self",
+      "job_level": 5,
+      "dodge_breaks": true,
+      "tree": {
+        "column": 3,
+        "row": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "duration_ms": 10000,
+          "after_cast_delay_ms": 200,
+          "bonus": {
+            "def_percent": 10,
+            "no_flinch_hits": 9999,
+            "move_speed_percent": -15
+          }
+        },
+        {
+          "sp_cost": 13,
+          "duration_ms": 15000,
+          "after_cast_delay_ms": 200,
+          "bonus": {
+            "def_percent": 20,
+            "no_flinch_hits": 9999,
+            "move_speed_percent": -15
+          }
+        },
+        {
+          "sp_cost": 16,
+          "duration_ms": 20000,
+          "after_cast_delay_ms": 200,
+          "bonus": {
+            "def_percent": 30,
+            "no_flinch_hits": 9999,
+            "move_speed_percent": -15
+          }
+        }
+      ],
+      "description": "全身繃得像石頭，挨打也不退一步，就是走得慢。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；取代 RO 的忍耐，翻滾就解除",
+      "requires": {
+        "halt_shout": 3
+      }
+    },
+    "rush_step": {
+      "name": "踏破",
+      "job": "squire",
+      "max_level": 3,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "area_center": "self",
+      "form": "melee",
+      "job_level": 10,
+      "momentum_gain": 1,
+      "dash": {
+        "distance_m": 4.0,
+        "stop_at_first": true,
+        "hit_width_m": 0.9
+      },
+      "tree": {
+        "column": 2,
+        "row": 1
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 12,
+          "damage_percent": 120,
+          "cooldown_ms": 8000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 160,
+          "cooldown_ms": 8000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 21,
+          "damage_percent": 200,
+          "cooldown_ms": 8000,
+          "after_cast_delay_ms": 400
+        }
+      ],
+      "description": "往前衝一段，撞上第一個敵人就給牠一劍。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；位移技一律零格，命中加 1 層劍勢",
+      "requires": {
+        "wind_pierce": 3
+      }
+    },
+    "halt_shout": {
+      "name": "喝止",
+      "job": "squire",
+      "max_level": 3,
+      "type": "active_ground",
+      "targets": "enemy",
+      "no_damage": true,
+      "area_center": "self",
+      "shape": "fan",
+      "fan_degrees": 120,
+      "aoe_radius": 3.0,
+      "job_level": 10,
+      "tree": {
+        "column": 3,
+        "row": 0
+      },
+      "status": {
+        "id": "halted",
+        "kind": "debuff",
+        "aggro": true,
+        "immune_boss": true
+      },
+      "levels": [
+        {
+          "sp_cost": 8,
+          "duration_ms": 5000,
+          "cooldown_ms": 12000,
+          "after_cast_delay_ms": 300,
+          "status_bonus": {
+            "move_speed_percent": -20
+          },
+          "status_bonus_monster": {
+            "move_speed_percent": -20
+          }
+        },
+        {
+          "sp_cost": 12,
+          "duration_ms": 5500,
+          "cooldown_ms": 12000,
+          "after_cast_delay_ms": 300,
+          "status_bonus": {
+            "move_speed_percent": -25
+          },
+          "status_bonus_monster": {
+            "move_speed_percent": -25
+          }
+        },
+        {
+          "sp_cost": 17,
+          "duration_ms": 6000,
+          "cooldown_ms": 12000,
+          "after_cast_delay_ms": 300,
+          "status_bonus": {
+            "move_speed_percent": -30
+          },
+          "status_bonus_monster": {
+            "move_speed_percent": -30
+          }
+        }
+      ],
+      "description": "大喝一聲，前面的敵人全轉過來找你，腳步也慢了。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.2 節；Boss 不受影響"
+    },
+    "staff_mastery": {
+      "name": "執杖",
+      "job": "sorcerer",
+      "max_level": 3,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "staff"
+      ],
+      "tree": {
+        "column": 0,
+        "row": 0
+      },
+      "levels": [
+        {
+          "bonus": {
+            "matk": 14,
+            "sp_regen": 10
+          }
+        },
+        {
+          "bonus": {
+            "matk": 27,
+            "sp_regen": 20
+          }
+        },
+        {
+          "bonus": {
+            "matk": 40,
+            "sp_regen": 30
+          }
+        }
+      ],
+      "description": "杖握順了，魔力流得比較穩。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；拿法杖 MATK +14 到 +40，每 10 秒 SP +10 到 +30，取代 RO 的靈息恢復"
+    },
+    "magic_bolt": {
+      "name": "魔力彈",
+      "job": "sorcerer",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "adaptive",
+      "element": "neutral",
+      "range": 7.0,
+      "form": "projectile",
+      "colour_slots": 1,
+      "element_names": {
+        "fire": "火球",
+        "water": "冰球",
+        "wind": "雷球",
+        "earth": "岩彈",
+        "light": "光球",
+        "dark": "暗球"
+      },
+      "levels": [
+        {
+          "sp_cost": 8,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 120,
+          "hits": 1
+        },
+        {
+          "sp_cost": 9,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 140,
+          "hits": 1
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 160,
+          "hits": 1
+        },
+        {
+          "sp_cost": 11,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 180,
+          "hits": 1
+        },
+        {
+          "sp_cost": 12,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 200,
+          "hits": 1
+        },
+        {
+          "sp_cost": 13,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 220,
+          "hits": 1
+        },
+        {
+          "sp_cost": 14,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 240,
+          "hits": 1
+        },
+        {
+          "sp_cost": 15,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 260,
+          "hits": 1
+        },
+        {
+          "sp_cost": 16,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 280,
+          "hits": 1
+        },
+        {
+          "sp_cost": 17,
+          "cast_ms": 300,
+          "fixed_cast_ms": 0,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 300,
+          "hits": 1
+        }
+      ],
+      "description": "射出一顆魔力彈。打中站在自己符上的敵人，那張符當場炸開。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；滿級 300% 在一轉沒前置 300% 的線上；彩度照形吃單體 6",
+      "glyph_trigger": true,
+      "tree": {
+        "column": 1,
+        "row": 0
+      },
+      "colour_elements": [
+        "fire",
+        "water",
+        "wind",
+        "earth"
+      ]
+    },
+    "blast_glyph": {
+      "name": "爆符",
+      "job": "sorcerer",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "range": 7.0,
+      "form": "area",
+      "colour_slots": 2,
+      "tree": {
+        "column": 2,
+        "row": 0
+      },
+      "ground": {
+        "kind": "glyph",
+        "radius": 1.5,
+        "fuse_ms": 1000
+      },
+      "levels": [
+        {
+          "sp_cost": 12,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 150,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 14,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 176,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 16,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 201,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 18,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 227,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 20,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 252,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 22,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 278,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 24,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 303,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 26,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 329,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 28,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 354,
+          "ground_lifetime_ms": 1000
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 380,
+          "ground_lifetime_ms": 1000
+        }
+      ],
+      "description": "在地上畫一張符，一秒後炸開。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；引信 1 秒就是它的前置，滿級 380% 在一轉有前置 450% 的線內"
+    },
+    "zone_glyph": {
+      "name": "留地符",
+      "job": "sorcerer",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "range": 7.0,
+      "form": "zone",
+      "colour_slots": 1,
+      "job_level": 5,
+      "paint": true,
+      "tree": {
+        "column": 3,
+        "row": 1
+      },
+      "ground": {
+        "kind": "glyph",
+        "radius": 1.5,
+        "fuse_ms": 1200,
+        "then_zone": {
+          "interval_ms": 500,
+          "waves": 12
+        },
+        "max_same": 2
+      },
+      "levels": [
+        {
+          "sp_cost": 14,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 60,
+          "zone_damage_percent": 30,
+          "ground_lifetime_ms": 1200
+        },
+        {
+          "sp_cost": 18,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 70,
+          "zone_damage_percent": 42,
+          "ground_lifetime_ms": 1200
+        },
+        {
+          "sp_cost": 23,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 80,
+          "zone_damage_percent": 55,
+          "ground_lifetime_ms": 1200
+        },
+        {
+          "sp_cost": 28,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 90,
+          "zone_damage_percent": 68,
+          "ground_lifetime_ms": 1200
+        },
+        {
+          "sp_cost": 32,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 100,
+          "zone_damage_percent": 80,
+          "ground_lifetime_ms": 1200
+        }
+      ],
+      "description": "炸完之後那塊地還燒著，站在上面的敵人一直掉血，地上的線稿也塗回來。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；每 0.5 秒 30% 到 80% 共 12 波，滿級總量 1060%，在持續型地面技 800 到 1200% 之間",
+      "requires": {
+        "blast_glyph": 3
+      }
+    },
+    "detonate": {
+      "name": "引爆",
+      "job": "sorcerer",
+      "max_level": 3,
+      "type": "self_buff",
+      "targets": "self",
+      "job_level": 5,
+      "requires": {
+        "blast_glyph": 1
+      },
+      "tree": {
+        "column": 2,
+        "row": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 300,
+          "detonate_percent": 80
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 300,
+          "detonate_percent": 90
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 300,
+          "detonate_percent": 100
+        }
+      ],
+      "description": "不等了，自己畫的符現在全部炸。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；倍率打 80 到 100%"
+    },
+    "spirit_gather": {
+      "name": "聚靈",
+      "job": "sorcerer",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "tree": {
+        "column": 1,
+        "row": 1
+      },
+      "levels": [
+        {
+          "bonus": {
+            "sp_regen_percent": 5,
+            "cast_percent": -2
+          }
+        },
+        {
+          "bonus": {
+            "sp_regen_percent": 10,
+            "cast_percent": -4
+          }
+        },
+        {
+          "bonus": {
+            "sp_regen_percent": 15,
+            "cast_percent": -6
+          }
+        },
+        {
+          "bonus": {
+            "sp_regen_percent": 20,
+            "cast_percent": -8
+          }
+        },
+        {
+          "bonus": {
+            "sp_regen_percent": 25,
+            "cast_percent": -10
+          }
+        }
+      ],
+      "description": "呼吸跟著魔力走，回得快、畫得也快。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；SP 自然回復 +5% 到 +25%，預備時間 −2% 到 −10%",
+      "requires": {
+        "magic_bolt": 5
+      }
+    },
+    "bind_glyph": {
+      "name": "縛符",
+      "job": "sorcerer",
+      "max_level": 3,
+      "type": "active_ground",
+      "targets": "enemy",
+      "no_damage": true,
+      "range": 7.0,
+      "job_level": 10,
+      "requires": {
+        "zone_glyph": 1
+      },
+      "tree": {
+        "column": 3,
+        "row": 2
+      },
+      "ground": {
+        "kind": "glyph",
+        "radius": 1.5,
+        "fuse_ms": 800
+      },
+      "status": {
+        "id": "snare",
+        "kind": "snare",
+        "immune_boss": true
+      },
+      "levels": [
+        {
+          "sp_cost": 15,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 300,
+          "cooldown_ms": 12000,
+          "duration_ms": 1000,
+          "ground_lifetime_ms": 800
+        },
+        {
+          "sp_cost": 15,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 300,
+          "cooldown_ms": 10000,
+          "duration_ms": 1500,
+          "ground_lifetime_ms": 800
+        },
+        {
+          "sp_cost": 15,
+          "cast_ms": 400,
+          "after_cast_delay_ms": 300,
+          "cooldown_ms": 8000,
+          "duration_ms": 2000,
+          "ground_lifetime_ms": 800
+        }
+      ],
+      "description": "一張絆腳的符，踩在上面的敵人動不了。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；Boss 免疫"
+    },
+    "glyph_step": {
+      "name": "符遁",
+      "job": "sorcerer",
+      "max_level": 3,
+      "type": "self_buff",
+      "targets": "self",
+      "job_level": 10,
+      "tree": {
+        "column": 3,
+        "row": 3
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 200,
+          "cooldown_ms": 10000,
+          "blink_m": 3.0
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 200,
+          "cooldown_ms": 8000,
+          "blink_m": 4.0
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 200,
+          "cooldown_ms": 6000,
+          "blink_m": 5.0
+        }
+      ],
+      "description": "化成一道符光，朝面前閃過去。撞到牆就停。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.3 和 5.3 節；術士的位移，零格不能上色",
+      "requires": {
+        "bind_glyph": 1
+      }
+    },
+    "archery": {
+      "name": "弓術",
+      "job": "scout",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "bow",
+        "dagger"
+      ],
+      "tree": {
+        "column": 0,
+        "row": 0
+      },
+      "levels": [
+        {
+          "bonus": {
+            "atk": 8,
+            "hit": 4
+          }
+        },
+        {
+          "bonus": {
+            "atk": 16,
+            "hit": 8
+          }
+        },
+        {
+          "bonus": {
+            "atk": 24,
+            "hit": 12
+          }
+        },
+        {
+          "bonus": {
+            "atk": 32,
+            "hit": 16
+          }
+        },
+        {
+          "bonus": {
+            "atk": 40,
+            "hit": 20
+          }
+        }
+      ],
+      "description": "弓拉得穩、短劍握得順，出手就比較準。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；拿弓或短劍 ATK +8 到 +40、命中 +4 到 +20，併掉舊的準心和輕兵"
+    },
+    "mark_shot": {
+      "name": "標記射",
+      "job": "scout",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "form": "single",
+      "colour_slots": 1,
+      "mark_apply": 1,
+      "tree": {
+        "column": 1,
+        "row": 0
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 8,
+          "damage_percent": 100,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 9,
+          "damage_percent": 118,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 10,
+          "damage_percent": 136,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 11,
+          "damage_percent": 153,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 12,
+          "damage_percent": 171,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 13,
+          "damage_percent": 189,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 14,
+          "damage_percent": 207,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 15,
+          "damage_percent": 224,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 242,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 17,
+          "damage_percent": 260,
+          "after_cast_delay_ms": 400
+        }
+      ],
+      "description": "射出一支刻了記號的箭，射中的地方留下一道印記。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；滿級 260% 在一轉沒前置 300% 的線內，預備加收尾 0.4 秒每秒 650%",
+      "ammo": 1
+    },
+    "colour_seek": {
+      "name": "尋色",
+      "job": "scout",
+      "max_level": 3,
+      "type": "passive",
+      "targets": "self",
+      "job_level": 5,
+      "tree": {
+        "column": 3,
+        "row": 0
+      },
+      "levels": [
+        {
+          "bonus": {
+            "secret_sense_m": 15
+          }
+        },
+        {
+          "bonus": {
+            "secret_sense_m": 25
+          }
+        },
+        {
+          "bonus": {
+            "secret_sense_m": 35,
+            "secret_reward_percent": 20
+          }
+        }
+      ],
+      "description": "線稿底下藏著什麼，斥候老遠就聞得出來。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；小地圖標出 15 到 35 公尺內藏在線稿裡的秘密，3 級塗回秘密時每樣獎勵兩成機會多一份"
+    },
+    "light_step": {
+      "name": "輕步",
+      "job": "scout",
+      "max_level": 3,
+      "type": "passive",
+      "targets": "self",
+      "job_level": 5,
+      "tree": {
+        "column": 0,
+        "row": 1
+      },
+      "levels": [
+        {
+          "bonus": {
+            "flee": 7,
+            "move_speed_percent": 3
+          }
+        },
+        {
+          "bonus": {
+            "flee": 14,
+            "move_speed_percent": 6
+          }
+        },
+        {
+          "bonus": {
+            "flee": 20,
+            "move_speed_percent": 10
+          }
+        }
+      ],
+      "description": "腳步放輕，躲得開、跑得快。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；迴避 +7 到 +20，移動 +3% 到 +10%",
+      "requires": {
+        "archery": 3
+      }
+    },
+    "back_shot": {
+      "name": "退身射",
+      "job": "scout",
+      "max_level": 3,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "form": "single",
+      "job_level": 10,
+      "requires": {
+        "mark_shot": 1
+      },
+      "dash": {
+        "backward": true,
+        "distance_m": 2.0
+      },
+      "tree": {
+        "column": 2,
+        "row": 1
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 10,
+          "damage_percent": 200,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 14,
+          "damage_percent": 250,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 300,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400
+        }
+      ],
+      "description": "往後一跳，人還在半空就放箭。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；往後跳 2 公尺同時射 200% 到 300%，位移靠 5 秒冷卻擋，零格不能上色",
+      "ammo": 1
+    },
+    "mark_chase": {
+      "name": "追印",
+      "job": "scout",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "form": "single",
+      "colour_slots": 1,
+      "job_level": 5,
+      "requires": {
+        "mark_shot": 3
+      },
+      "marked": {
+        "sure_hit": true
+      },
+      "tree": {
+        "column": 1,
+        "row": 1
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 10,
+          "damage_percent": 100,
+          "marked_damage_percent": 150,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 11,
+          "damage_percent": 111,
+          "marked_damage_percent": 167,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 12,
+          "damage_percent": 122,
+          "marked_damage_percent": 183,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 13,
+          "damage_percent": 133,
+          "marked_damage_percent": 200,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 14,
+          "damage_percent": 144,
+          "marked_damage_percent": 217,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 15,
+          "damage_percent": 156,
+          "marked_damage_percent": 233,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 167,
+          "marked_damage_percent": 250,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 17,
+          "damage_percent": 178,
+          "marked_damage_percent": 267,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 18,
+          "damage_percent": 189,
+          "marked_damage_percent": 283,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 200,
+          "marked_damage_percent": 300,
+          "after_cast_delay_ms": 400
+        }
+      ],
+      "description": "順著印記再補一箭，有印記的躲不掉。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；有印記時 150% 到 300% 而且必中，每秒 750% 比標記射多 15%",
+      "ammo": 1
+    },
+    "mark_burst": {
+      "name": "印爆",
+      "job": "scout",
+      "max_level": 5,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "form": "single",
+      "colour_slots": 2,
+      "job_level": 10,
+      "requires": {
+        "mark_chase": 1
+      },
+      "mark_consume": {
+        "splash_radius": 2.0,
+        "splash_percent": 50
+      },
+      "tree": {
+        "column": 1,
+        "row": 2
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 14,
+          "mark_per_stack_percent": 50,
+          "after_cast_delay_ms": 600
+        },
+        {
+          "sp_cost": 18,
+          "mark_per_stack_percent": 60,
+          "after_cast_delay_ms": 600
+        },
+        {
+          "sp_cost": 23,
+          "mark_per_stack_percent": 70,
+          "after_cast_delay_ms": 600
+        },
+        {
+          "sp_cost": 28,
+          "mark_per_stack_percent": 80,
+          "after_cast_delay_ms": 600
+        },
+        {
+          "sp_cost": 32,
+          "mark_per_stack_percent": 90,
+          "after_cast_delay_ms": 600
+        }
+      ],
+      "description": "把印記一口氣引爆，連旁邊的也跟著炸開。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；吃掉目標所有印記，每層 50% 到 90%，5 層滿級 450%；2 公尺內的敵人照自己的印記層數吃一半，自己沒有印記的照目標的層數吃一半，身上的印記也一起吃掉"
+    },
+    "deep_mark": {
+      "name": "深印",
+      "job": "scout",
+      "max_level": 3,
+      "type": "passive",
+      "targets": "self",
+      "job_level": 15,
+      "requires": {
+        "mark_shot": 3
+      },
+      "tree": {
+        "column": 3,
+        "row": 1
+      },
+      "levels": [
+        {
+          "bonus": {
+            "mark_hold_ms": 3000
+          }
+        },
+        {
+          "bonus": {
+            "mark_hold_ms": 6500
+          }
+        },
+        {
+          "bonus": {
+            "mark_hold_ms": 10000,
+            "mark_max": 2
+          }
+        }
+      ],
+      "description": "印記刻得更深，洗不掉也疊得更多。",
+      "source": "原創，規格在 docs/技能與流派.md 第 3.4 和 5.4 節；印記時間 +3 到 +10 秒，3 級印記上限 3 到 5"
+    },
+    "greatsword_mastery": {
+      "name": "巨劍修練",
+      "job": "holyblade",
+      "max_level": 10,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "two_hand_sword"
+      ],
+      "levels": [
+        {
+          "bonus": {
+            "atk": 4
+          }
+        },
+        {
+          "bonus": {
+            "atk": 8
+          }
+        },
+        {
+          "bonus": {
+            "atk": 12
+          }
+        },
+        {
+          "bonus": {
+            "atk": 16
+          }
+        },
+        {
+          "bonus": {
+            "atk": 20
+          }
+        },
+        {
+          "bonus": {
+            "atk": 24
+          }
+        },
+        {
+          "bonus": {
+            "atk": 28
+          }
+        },
+        {
+          "bonus": {
+            "atk": 32
+          }
+        },
+        {
+          "bonus": {
+            "atk": 36
+          }
+        },
+        {
+          "bonus": {
+            "atk": 40
+          }
+        }
+      ],
+      "description": "熟練雙手劍。",
+      "source": "https://github.com/rathena/rathena/blob/master/src/map/battle.cpp battle_addmastery KN_TWOHANDSWORD damage+=lv×4、https://irowiki.org/wiki/Two-Handed_Sword_Mastery"
+    },
+    "pierce_thrust": {
+      "name": "貫穿刺",
+      "job": "holyblade",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "range": 1.6,
+      "hits_by_size": true,
+      "requires": {
+        "greatsword_mastery": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 7,
+          "damage_percent": 110,
+          "hit_rate_percent": 5
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 120,
+          "hit_rate_percent": 10
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 130,
+          "hit_rate_percent": 15
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 140,
+          "hit_rate_percent": 20
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 150,
+          "hit_rate_percent": 25
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 160,
+          "hit_rate_percent": 30
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 170,
+          "hit_rate_percent": 35
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 180,
+          "hit_rate_percent": 40
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 190,
+          "hit_rate_percent": 45
+        },
+        {
+          "sp_cost": 7,
+          "damage_percent": 200,
+          "hit_rate_percent": 50
+        }
+      ],
+      "description": "刺穿敵人的要害，目標體型越大段數越多。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml KN_PIERCE、https://github.com/rathena/rathena/blob/master/src/map/skills/swordman/pierce.cpp 倍率 +10lv、div=體型+1、命中 +5lv%、https://irowiki.org/wiki/Pierce"
+    },
+    "battle_haste": {
+      "name": "戰意加速",
+      "job": "holyblade",
+      "max_level": 10,
+      "type": "self_buff",
+      "targets": "self",
+      "requires": {
+        "greatsword_mastery": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 14,
+          "duration_ms": 30000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 2,
+            "cri": 3
+          }
+        },
+        {
+          "sp_cost": 18,
+          "duration_ms": 60000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 4,
+            "cri": 4
+          }
+        },
+        {
+          "sp_cost": 22,
+          "duration_ms": 90000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 6,
+            "cri": 5
+          }
+        },
+        {
+          "sp_cost": 26,
+          "duration_ms": 120000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 8,
+            "cri": 6
+          }
+        },
+        {
+          "sp_cost": 30,
+          "duration_ms": 150000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 10,
+            "cri": 7
+          }
+        },
+        {
+          "sp_cost": 34,
+          "duration_ms": 180000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 12,
+            "cri": 8
+          }
+        },
+        {
+          "sp_cost": 38,
+          "duration_ms": 210000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 14,
+            "cri": 9
+          }
+        },
+        {
+          "sp_cost": 42,
+          "duration_ms": 240000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 16,
+            "cri": 10
+          }
+        },
+        {
+          "sp_cost": 46,
+          "duration_ms": 270000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 18,
+            "cri": 11
+          }
+        },
+        {
+          "sp_cost": 50,
+          "duration_ms": 300000,
+          "bonus": {
+            "aspd_fixed": 7,
+            "hit": 20,
+            "cri": 12
+          }
+        }
+      ],
+      "description": "燃起戰意。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml KN_TWOHANDQUICKEN、https://github.com/rathena/rathena/blob/master/src/map/status.cpp status_calc_aspd bonus=7、status_calc_hit +2lv、status_calc_critical +(2+lv)×10、https://irowiki.org/wiki/Two-Hand_Quicken"
+    },
+    "counter_stance": {
+      "name": "反擊架式",
+      "job": "holyblade",
+      "max_level": 5,
+      "type": "self_buff",
+      "targets": "self",
+      "requires": {
+        "greatsword_mastery": 1
+      },
+      "counter": {
+        "damage_percent": 100,
+        "hit_rate_percent": 20,
+        "crit": true
+      },
+      "levels": [
+        {
+          "sp_cost": 3,
+          "duration_ms": 400,
+          "bonus": {
+            "counter_hits": 1,
+            "no_move": 1
+          }
+        },
+        {
+          "sp_cost": 3,
+          "duration_ms": 800,
+          "bonus": {
+            "counter_hits": 1,
+            "no_move": 1
+          }
+        },
+        {
+          "sp_cost": 3,
+          "duration_ms": 1200,
+          "bonus": {
+            "counter_hits": 1,
+            "no_move": 1
+          }
+        },
+        {
+          "sp_cost": 3,
+          "duration_ms": 1600,
+          "bonus": {
+            "counter_hits": 1,
+            "no_move": 1
+          }
+        },
+        {
+          "sp_cost": 3,
+          "duration_ms": 2000,
+          "bonus": {
+            "counter_hits": 1,
+            "no_move": 1
+          }
+        }
+      ],
+      "description": "擺出反擊架式，架式中不能移動；擋下近身敵人的第一次普攻並必定暴擊反擊。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml KN_AUTOCOUNTER、https://github.com/rathena/rathena/blob/master/src/map/battle.cpp battle_calc_weapon_attack SC_AUTOCOUNTER 距離判定和 cri×2、https://github.com/rathena/rathena/blob/master/src/map/skills/swordman/counterattack.cpp 命中 +20%、https://irowiki.org/wiki/Counter_Attack"
+    },
+    "whirl_slash": {
+      "name": "迴旋斬",
+      "job": "holyblade",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "range": 1.6,
+      "area_center": "target",
+      "aoe_radius": 1.5,
+      "hits": 2,
+      "hit_interval_ms": 150,
+      "requires": {
+        "greatsword_mastery": 5,
+        "battle_haste": 10,
+        "counter_stance": 5,
+        "rock_crash": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 13,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 140,
+          "knockback_m": 0.75
+        },
+        {
+          "sp_cost": 14,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 180,
+          "knockback_m": 0.75
+        },
+        {
+          "sp_cost": 15,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 220,
+          "knockback_m": 1.5
+        },
+        {
+          "sp_cost": 16,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 260,
+          "knockback_m": 1.5
+        },
+        {
+          "sp_cost": 17,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 300,
+          "knockback_m": 2.25
+        },
+        {
+          "sp_cost": 18,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 340,
+          "knockback_m": 2.25
+        },
+        {
+          "sp_cost": 19,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 380,
+          "knockback_m": 3.0
+        },
+        {
+          "sp_cost": 20,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 420,
+          "knockback_m": 3.0
+        },
+        {
+          "sp_cost": 21,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 460,
+          "knockback_m": 3.75
+        },
+        {
+          "sp_cost": 22,
+          "cooldown_ms": 1000,
+          "after_cast_delay_ms": 300,
+          "fixed_cast_ms": 350,
+          "damage_percent": 500,
+          "knockback_m": 3.75
+        }
+      ],
+      "description": "橫掃一圈，目標周圍的敵人都被打到並擊退。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml KN_BOWLINGBASH、https://github.com/rathena/rathena/blob/master/src/map/skills/swordman/bowlingbash.cpp 倍率 +40lv、HitCount 2、Knockback 1～5、https://irowiki.org/wiki/Bowling_Bash"
+    },
+    "thunder_orb": {
+      "name": "雷球",
+      "job": "wizard",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "element": "wind",
+      "range": 6.75,
+      "requires": {
+        "magic_bolt": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 20,
+          "cast_ms": 2000,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 3,
+          "knockback_m": 1.5
+        },
+        {
+          "sp_cost": 23,
+          "cast_ms": 2200,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 4,
+          "knockback_m": 2.25
+        },
+        {
+          "sp_cost": 26,
+          "cast_ms": 2400,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 5,
+          "knockback_m": 2.25
+        },
+        {
+          "sp_cost": 29,
+          "cast_ms": 2600,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 6,
+          "knockback_m": 3.0
+        },
+        {
+          "sp_cost": 32,
+          "cast_ms": 2800,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 7,
+          "knockback_m": 3.0
+        },
+        {
+          "sp_cost": 35,
+          "cast_ms": 3000,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 8,
+          "knockback_m": 3.75
+        },
+        {
+          "sp_cost": 38,
+          "cast_ms": 3200,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 9,
+          "knockback_m": 3.75
+        },
+        {
+          "sp_cost": 41,
+          "cast_ms": 3400,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 10,
+          "knockback_m": 4.5
+        },
+        {
+          "sp_cost": 44,
+          "cast_ms": 3600,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 11,
+          "knockback_m": 4.5
+        },
+        {
+          "sp_cost": 47,
+          "cast_ms": 3800,
+          "fixed_cast_ms": 500,
+          "damage_percent": 100,
+          "hits": 12,
+          "knockback_m": 5.25
+        }
+      ],
+      "description": "射出一顆雷球，命中時連續放電並把目標擊退。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml WZ_JUPITEL HitCount 3～12、Knockback 2～7、CastTime 2000+200(lv−1)、https://irowiki.org/wiki/Jupitel_Thunder"
+    },
+    "meteor_fall": {
+      "name": "隕星雨",
+      "job": "wizard",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "element": "fire",
+      "range": 6.75,
+      "area_center": "ground",
+      "requires": {
+        "blast_glyph": 5
+      },
+      "ground": {
+        "kind": "meteor",
+        "spread_m": 1.5,
+        "radius": 1.5,
+        "interval_ms": 1000
+      },
+      "status": {
+        "id": "stun",
+        "kind": "stun",
+        "immune_boss": true
+      },
+      "levels": [
+        {
+          "sp_cost": 20,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 2500,
+          "damage_percent": 125,
+          "ground_count": 2,
+          "status_chance_percent": 3,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 24,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 3000,
+          "damage_percent": 125,
+          "ground_count": 3,
+          "status_chance_percent": 6,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 3500,
+          "damage_percent": 125,
+          "ground_count": 3,
+          "status_chance_percent": 9,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 34,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 4000,
+          "damage_percent": 125,
+          "ground_count": 4,
+          "status_chance_percent": 12,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 4500,
+          "damage_percent": 125,
+          "ground_count": 4,
+          "status_chance_percent": 15,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 44,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 125,
+          "ground_count": 5,
+          "status_chance_percent": 18,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 50,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5500,
+          "damage_percent": 125,
+          "ground_count": 5,
+          "status_chance_percent": 21,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 54,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 125,
+          "ground_count": 6,
+          "status_chance_percent": 24,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6500,
+          "damage_percent": 125,
+          "ground_count": 6,
+          "status_chance_percent": 27,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 64,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 7000,
+          "damage_percent": 125,
+          "ground_count": 7,
+          "status_chance_percent": 30,
+          "status_duration_ms": 4500
+        }
+      ],
+      "description": "呼喚隕石砸向指定地點，落點會先出現預告圈。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml WZ_METEOR Duration1/Interval 決定顆數、SplashArea 3、Cooldown 2500+500(lv−1)、https://github.com/rathena/rathena/blob/master/src/map/skills/mage/meteorstorm.cpp 倍率 +25、暈眩 3lv%、https://irowiki.org/wiki/Meteor_Storm"
+    },
+    "blizzard_call": {
+      "name": "暴風雪",
+      "job": "wizard",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "element": "water",
+      "range": 6.75,
+      "area_center": "ground",
+      "requires": {
+        "thunder_orb": 3,
+        "bind_glyph": 1
+      },
+      "ground": {
+        "kind": "zone",
+        "radius": 2.25,
+        "interval_ms": 450,
+        "waves": 10,
+        "knockback_m": 1.5,
+        "knockback_random": true
+      },
+      "status": {
+        "id": "freeze",
+        "kind": "freeze",
+        "immune_boss": true,
+        "immune_elements": [
+          "dark"
+        ]
+      },
+      "levels": [
+        {
+          "sp_cost": 78,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 120,
+          "status_chance_percent": 60,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 4700,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 170,
+          "status_chance_percent": 55,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 4900,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 220,
+          "status_chance_percent": 50,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 5100,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 270,
+          "status_chance_percent": 45,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 5300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 320,
+          "status_chance_percent": 40,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 5500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 370,
+          "status_chance_percent": 35,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 5700,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 420,
+          "status_chance_percent": 30,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 5900,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 470,
+          "status_chance_percent": 25,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 6100,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 520,
+          "status_chance_percent": 20,
+          "status_duration_ms": 27000
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 6000,
+          "damage_percent": 570,
+          "status_chance_percent": 15,
+          "status_duration_ms": 27000
+        }
+      ],
+      "description": "在指定地點捲起暴風雪，敵人被吹散並可能冰凍。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml WZ_STORMGUST Duration1 4500 Interval 450、https://github.com/rathena/rathena/blob/master/src/map/skills/mage/stormgust.cpp 倍率 −30+50lv、冰凍率 65−5lv、https://irowiki.org/wiki/Storm_Gust"
+    },
+    "mire_field": {
+      "name": "泥沼",
+      "job": "wizard",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "no_damage": true,
+      "element": "earth",
+      "range": 6.75,
+      "area_center": "ground",
+      "requires": {
+        "thunder_orb": 1
+      },
+      "ground": {
+        "kind": "zone",
+        "radius": 1.5,
+        "interval_ms": 200,
+        "max_active": 3,
+        "replace_oldest": true
+      },
+      "status": {
+        "id": "quagmire",
+        "kind": "debuff",
+        "immune_boss": true,
+        "linger_ms": 300
+      },
+      "levels": [
+        {
+          "sp_cost": 5,
+          "after_cast_delay_ms": 1000,
+          "ground_lifetime_ms": 5000,
+          "status_bonus": {
+            "agi_percent": -5,
+            "dex_percent": -5,
+            "move_speed_percent": -50
+          },
+          "status_bonus_monster": {
+            "flee_percent": -10,
+            "hit_percent": -10,
+            "aspd_percent": -10,
+            "move_speed_percent": -50
+          }
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 1000,
+          "ground_lifetime_ms": 10000,
+          "status_bonus": {
+            "agi_percent": -10,
+            "dex_percent": -10,
+            "move_speed_percent": -50
+          },
+          "status_bonus_monster": {
+            "flee_percent": -20,
+            "hit_percent": -20,
+            "aspd_percent": -20,
+            "move_speed_percent": -50
+          }
+        },
+        {
+          "sp_cost": 15,
+          "after_cast_delay_ms": 1000,
+          "ground_lifetime_ms": 15000,
+          "status_bonus": {
+            "agi_percent": -15,
+            "dex_percent": -15,
+            "move_speed_percent": -50
+          },
+          "status_bonus_monster": {
+            "flee_percent": -30,
+            "hit_percent": -30,
+            "aspd_percent": -30,
+            "move_speed_percent": -50
+          }
+        },
+        {
+          "sp_cost": 20,
+          "after_cast_delay_ms": 1000,
+          "ground_lifetime_ms": 20000,
+          "status_bonus": {
+            "agi_percent": -20,
+            "dex_percent": -20,
+            "move_speed_percent": -50
+          },
+          "status_bonus_monster": {
+            "flee_percent": -40,
+            "hit_percent": -40,
+            "aspd_percent": -40,
+            "move_speed_percent": -50
+          }
+        },
+        {
+          "sp_cost": 25,
+          "after_cast_delay_ms": 1000,
+          "ground_lifetime_ms": 25000,
+          "status_bonus": {
+            "agi_percent": -25,
+            "dex_percent": -25,
+            "move_speed_percent": -50
+          },
+          "status_bonus_monster": {
+            "flee_percent": -50,
+            "hit_percent": -50,
+            "aspd_percent": -50,
+            "move_speed_percent": -50
+          }
+        }
+      ],
+      "description": "把指定地點變成泥沼，踩在裡面的敵人變慢變弱。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml WZ_QUAGMIRE ActiveInstance 3、Duration 5000lv、https://github.com/rathena/rathena/blob/master/src/map/status.cpp SC_QUAGMIRE val2=(玩家5:怪物10)×lv、status_calc_speed 泥沼速度 50%、https://irowiki.org/wiki/Quagmire"
+    },
+    "storm_judgement": {
+      "name": "雷霆審判",
+      "job": "wizard",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "element": "wind",
+      "range": 6.75,
+      "area_center": "ground",
+      "requires": {
+        "thunder_orb": 5
+      },
+      "ground": {
+        "kind": "zone",
+        "radius": 2.25,
+        "interval_ms": 500,
+        "waves": 4
+      },
+      "levels": [
+        {
+          "sp_cost": 60,
+          "cast_ms": 6300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 150
+        },
+        {
+          "sp_cost": 64,
+          "cast_ms": 6100,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 175
+        },
+        {
+          "sp_cost": 68,
+          "cast_ms": 5900,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 200
+        },
+        {
+          "sp_cost": 72,
+          "cast_ms": 5700,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 225
+        },
+        {
+          "sp_cost": 76,
+          "cast_ms": 5500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 250
+        },
+        {
+          "sp_cost": 80,
+          "cast_ms": 5300,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 275
+        },
+        {
+          "sp_cost": 84,
+          "cast_ms": 5100,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 300
+        },
+        {
+          "sp_cost": 88,
+          "cast_ms": 4900,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 325
+        },
+        {
+          "sp_cost": 92,
+          "cast_ms": 4700,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 350
+        },
+        {
+          "sp_cost": 96,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "cooldown_ms": 5000,
+          "damage_percent": 375
+        }
+      ],
+      "description": "召喚雷霆連續劈落指定地點。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml WZ_VERMILION、https://github.com/rathena/rathena/blob/master/src/map/skills/mage/lordofvermilion.cpp 玩家倍率 +300+100lv 拆成 4 波、https://irowiki.org/wiki/Lord_of_Vermilion"
+    },
+    "condense": {
+      "name": "凝縮",
+      "job": "wizard",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "staff"
+      ],
+      "levels": [
+        {
+          "bonus": {
+            "matk": 10,
+            "cast_percent": -6
+          }
+        },
+        {
+          "bonus": {
+            "matk": 20,
+            "cast_percent": -12
+          }
+        },
+        {
+          "bonus": {
+            "matk": 30,
+            "cast_percent": -18
+          }
+        },
+        {
+          "bonus": {
+            "matk": 40,
+            "cast_percent": -24
+          }
+        },
+        {
+          "bonus": {
+            "matk": 50,
+            "cast_percent": -30
+          }
+        }
+      ],
+      "description": "魔力全收進杖頭，放出去又快又重。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.3 節；巫師的熟練技能，拿法杖 MATK +10 到 +50、預備時間 −6% 到 −30%。MATK 照 rAthena battle.cpp battle_addmastery KN_TWOHANDSWORD 每級 +4 的形狀，二轉熟練滿級 +50 和巨劍執、長弓執、短刃執一致"
+    },
+    "beast_bane": {
+      "name": "獸類剋星",
+      "job": "hunter",
+      "max_level": 10,
+      "type": "passive",
+      "targets": "self",
+      "levels": [
+        {
+          "bonus": {
+            "atk_vs_brute": 4,
+            "atk_vs_insect": 4
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 8,
+            "atk_vs_insect": 8
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 12,
+            "atk_vs_insect": 12
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 16,
+            "atk_vs_insect": 16
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 20,
+            "atk_vs_insect": 20
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 24,
+            "atk_vs_insect": 24
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 28,
+            "atk_vs_insect": 28
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 32,
+            "atk_vs_insect": 32
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 36,
+            "atk_vs_insect": 36
+          }
+        },
+        {
+          "bonus": {
+            "atk_vs_brute": 40,
+            "atk_vs_insect": 40
+          }
+        }
+      ],
+      "description": "熟悉野獸和昆蟲的弱點。",
+      "source": "https://github.com/rathena/rathena/blob/master/src/map/battle.cpp battle_addmastery HT_BEASTBANE damage+=lv×4 對 RC_BRUTE、RC_INSECT、https://irowiki.org/wiki/Beast_Bane"
+    },
+    "falcon_dive": {
+      "name": "獵鷹突襲",
+      "job": "hunter",
+      "max_level": 5,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "misc",
+      "misc_formula": "falcon",
+      "ignore_flee": true,
+      "weapon_range": true,
+      "range": 3.75,
+      "area_center": "target",
+      "aoe_radius": 1.2,
+      "requires": {
+        "beast_bane": 1
+      },
+      "auto_proc": {
+        "chance": "luk",
+        "on": "normal_attack",
+        "delay_ms": 100
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "cast_ms": 800,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "hits": 1
+        },
+        {
+          "sp_cost": 13,
+          "cast_ms": 800,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "hits": 2
+        },
+        {
+          "sp_cost": 16,
+          "cast_ms": 800,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "hits": 3
+        },
+        {
+          "sp_cost": 19,
+          "cast_ms": 800,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "hits": 4
+        },
+        {
+          "sp_cost": 22,
+          "cast_ms": 800,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "hits": 5
+        }
+      ],
+      "description": "命令獵鷹俯衝攻擊目標和周圍的敵人，無視迴避；學會後普通攻擊有機率讓獵鷹自動追擊。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml HT_BLITZBEAT HitCount 1～5、https://github.com/rathena/rathena/blob/master/src/map/battle.cpp battle_calc_misc_attack HT_BLITZBEAT renewal 20lv+AGI+DEX/5、https://github.com/rathena/rathena/blob/master/src/map/skill.cpp skill_additional_effect 自動發動 rnd%1000 ≤ luk×10/3+1 等級 ≤ (joblv+9)/10、https://irowiki.org/wiki/Blitz_Beat"
+    },
+    "blast_trap": {
+      "name": "爆裂陷阱",
+      "job": "hunter",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "misc",
+      "misc_formula": "trap",
+      "ignore_flee": true,
+      "element": "earth",
+      "range": 2.25,
+      "area_center": "ground",
+      "ground": {
+        "kind": "trap",
+        "trigger_radius": 0.75,
+        "max_active": 3,
+        "no_overlap_m": 0.75
+      },
+      "status": {
+        "id": "stun",
+        "kind": "stun",
+        "immune_boss": true
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "cast_ms": 500,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "ground_lifetime_ms": 200000,
+          "status_chance_percent": 10,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 500,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "ground_lifetime_ms": 160000,
+          "status_chance_percent": 10,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 500,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "ground_lifetime_ms": 120000,
+          "status_chance_percent": 10,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 500,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "ground_lifetime_ms": 80000,
+          "status_chance_percent": 10,
+          "status_duration_ms": 4500
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 500,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 1000,
+          "damage_percent": 100,
+          "ground_lifetime_ms": 40000,
+          "status_chance_percent": 10,
+          "status_duration_ms": 4500
+        }
+      ],
+      "description": "在地面埋一個陷阱，敵人踩到就爆炸，無視迴避。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml HT_LANDMINE Duration1 200000−40000(lv−1)、https://github.com/rathena/rathena/blob/master/src/map/battle.cpp battle_calc_misc_attack HT_LANDMINE lv×(dex+75)×(100+int)/100、https://github.com/rathena/rathena/blob/master/src/map/skills/archer/landmine.cpp 暈眩 10%、https://irowiki.org/wiki/Land_Mine"
+    },
+    "snare_trap": {
+      "name": "絆索陷阱",
+      "job": "hunter",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "no_damage": true,
+      "range": 2.25,
+      "area_center": "ground",
+      "requires": {
+        "blast_trap": 1
+      },
+      "ground": {
+        "kind": "trap",
+        "trigger_radius": 0.75,
+        "max_active": 3,
+        "no_overlap_m": 0.75
+      },
+      "status": {
+        "id": "snare",
+        "kind": "snare",
+        "immune_boss": true,
+        "agi_reduces": true
+      },
+      "levels": [
+        {
+          "sp_cost": 12,
+          "ground_lifetime_ms": 250000,
+          "status_duration_ms": 4000
+        },
+        {
+          "sp_cost": 12,
+          "ground_lifetime_ms": 200000,
+          "status_duration_ms": 8000
+        },
+        {
+          "sp_cost": 12,
+          "ground_lifetime_ms": 150000,
+          "status_duration_ms": 12000
+        },
+        {
+          "sp_cost": 12,
+          "ground_lifetime_ms": 100000,
+          "status_duration_ms": 16000
+        },
+        {
+          "sp_cost": 12,
+          "ground_lifetime_ms": 50000,
+          "status_duration_ms": 20000
+        }
+      ],
+      "description": "埋一個絆索陷阱，踩到的敵人不能移動，但還是能攻擊。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml HT_ANKLESNARE Duration2 4000lv、https://github.com/rathena/rathena/blob/master/src/map/skill.cpp UNT_ANKLESNARE sec×agi/−200+sec 最短 30×(lv+100)、https://irowiki.org/wiki/Ankle_Snare"
+    },
+    "frost_trap": {
+      "name": "冰霜陷阱",
+      "job": "hunter",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "element": "water",
+      "ignore_flee": true,
+      "range": 2.25,
+      "area_center": "ground",
+      "requires": {
+        "blast_trap": 1
+      },
+      "ground": {
+        "kind": "trap",
+        "trigger_radius": 0.75,
+        "splash_radius": 1.2,
+        "max_active": 3,
+        "no_overlap_m": 0.75
+      },
+      "status": {
+        "id": "freeze",
+        "kind": "freeze",
+        "immune_boss": true,
+        "immune_elements": [
+          "dark"
+        ]
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "ground_lifetime_ms": 150000,
+          "damage_percent": 100,
+          "status_chance_percent": 100,
+          "status_duration_ms": 3000
+        },
+        {
+          "sp_cost": 10,
+          "ground_lifetime_ms": 120000,
+          "damage_percent": 100,
+          "status_chance_percent": 100,
+          "status_duration_ms": 6000
+        },
+        {
+          "sp_cost": 10,
+          "ground_lifetime_ms": 90000,
+          "damage_percent": 100,
+          "status_chance_percent": 100,
+          "status_duration_ms": 9000
+        },
+        {
+          "sp_cost": 10,
+          "ground_lifetime_ms": 60000,
+          "damage_percent": 100,
+          "status_chance_percent": 100,
+          "status_duration_ms": 12000
+        },
+        {
+          "sp_cost": 10,
+          "ground_lifetime_ms": 30000,
+          "damage_percent": 100,
+          "status_chance_percent": 100,
+          "status_duration_ms": 15000
+        }
+      ],
+      "description": "埋一個冰霜陷阱，踩到的敵人被冰凍，無視迴避。",
+      "source": "https://github.com/rathena/rathena/blob/master/db/re/skill_db.yml HT_FREEZINGTRAP Type Weapon、SplashArea 1、Duration2 3000lv、https://github.com/rathena/rathena/blob/master/src/map/skills/archer/freezingtrap.cpp 冰凍 100%、https://irowiki.org/wiki/Freezing_Trap"
+    },
+    "faith": {
+      "name": "信念",
+      "job": "devout",
+      "max_level": 3,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "censer"
+      ],
+      "tree": {
+        "column": 0,
+        "row": 0
+      },
+      "levels": [
+        {
+          "bonus": {
+            "matk": 14,
+            "mdef": 3
+          }
+        },
+        {
+          "bonus": {
+            "matk": 27,
+            "mdef": 6
+          }
+        },
+        {
+          "bonus": {
+            "matk": 40,
+            "mdef": 10
+          }
+        }
+      ],
+      "description": "提爐的煙一路往上飄，心也跟著定下來。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；拿提爐 MATK +14 到 +40、MDEF +3 到 +10，併掉舊的提爐修習和信念護持"
+    },
+    "soothe": {
+      "name": "撫傷",
+      "job": "devout",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "ally",
+      "no_damage": true,
+      "range": 7.5,
+      "form": "heal",
+      "colour_slots": 1,
+      "colour_elements": [
+        "water",
+        "earth",
+        "fire",
+        "light"
+      ],
+      "tree": {
+        "column": 2,
+        "row": 0
+      },
+      "levels": [
+        {
+          "sp_cost": 12,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 20,
+          "heal_matk_percent": 60,
+          "heal_chroma": 2
+        },
+        {
+          "sp_cost": 15,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 30,
+          "heal_matk_percent": 70,
+          "heal_chroma": 2
+        },
+        {
+          "sp_cost": 18,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 40,
+          "heal_matk_percent": 80,
+          "heal_chroma": 3
+        },
+        {
+          "sp_cost": 21,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 50,
+          "heal_matk_percent": 90,
+          "heal_chroma": 3
+        },
+        {
+          "sp_cost": 24,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 60,
+          "heal_matk_percent": 100,
+          "heal_chroma": 4
+        },
+        {
+          "sp_cost": 27,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 70,
+          "heal_matk_percent": 110,
+          "heal_chroma": 4
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 80,
+          "heal_matk_percent": 120,
+          "heal_chroma": 5
+        },
+        {
+          "sp_cost": 33,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 90,
+          "heal_matk_percent": 130,
+          "heal_chroma": 5
+        },
+        {
+          "sp_cost": 36,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 100,
+          "heal_matk_percent": 140,
+          "heal_chroma": 6
+        },
+        {
+          "sp_cost": 39,
+          "cast_ms": 700,
+          "fixed_cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "heal": 110,
+          "heal_matk_percent": 150,
+          "heal_chroma": 6
+        }
+      ],
+      "description": "手按在傷口上唸幾句，痛就退了，身上的顏色也回來一點。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；回 20 到 110 再加 MATK 60% 到 150%，並回目標彩度 2 到 6，可對自己；挑水解一個負面狀態、土加護盾、火加攻擊、光補更多"
+    },
+    "dawn_ray": {
+      "name": "晨曦之光",
+      "job": "devout",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "range": 6.75,
+      "levels": [
+        {
+          "sp_cost": 8,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 120
+        },
+        {
+          "sp_cost": 9,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 140
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 160
+        },
+        {
+          "sp_cost": 11,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 180
+        },
+        {
+          "sp_cost": 12,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 200
+        },
+        {
+          "sp_cost": 13,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 220
+        },
+        {
+          "sp_cost": 14,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 240
+        },
+        {
+          "sp_cost": 15,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 260
+        },
+        {
+          "sp_cost": 16,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 280
+        },
+        {
+          "sp_cost": 17,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 300
+        }
+      ],
+      "description": "從提爐引出一道晨曦射向敵人，造成光屬性魔法傷害。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；滿級 300% 在一轉沒前置 300% 的線上，預備加收尾 0.9 秒每秒 333%，信徒固定屬性光從調色盤挑",
+      "form": "single",
+      "colour_slots": 2,
+      "tree": {
+        "column": 3,
+        "row": 0
+      }
+    },
+    "dawn_step": {
+      "name": "曦步",
+      "job": "devout",
+      "max_level": 3,
+      "type": "self_buff",
+      "targets": "self",
+      "job_level": 5,
+      "dash": {
+        "to_ally": true,
+        "cone_degrees": 120.0,
+        "fallback_m": 3.0,
+        "stop_short_m": 0.8
+      },
+      "tree": {
+        "column": 3,
+        "row": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 200,
+          "cooldown_ms": 12000,
+          "dash_max_m": 5.0
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 200,
+          "cooldown_ms": 10000,
+          "dash_max_m": 6.0
+        },
+        {
+          "sp_cost": 10,
+          "after_cast_delay_ms": 200,
+          "cooldown_ms": 8000,
+          "dash_max_m": 7.0
+        }
+      ],
+      "description": "一步踏進晨光裡，下一刻已經站在同伴身邊。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；衝到面向那一邊最近的隊友身邊，最遠 5 到 7 公尺，沒有隊友就朝面向衝 3 公尺；信徒的位移，零格不能上色",
+      "requires": {
+        "dawn_ray": 1
+      }
+    },
+    "prayer_guard": {
+      "name": "守禱",
+      "job": "devout",
+      "max_level": 5,
+      "type": "active_target",
+      "targets": "ally",
+      "no_damage": true,
+      "range": 7.5,
+      "job_level": 5,
+      "tree": {
+        "column": 0,
+        "row": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 20,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 40000,
+          "bonus": {
+            "mdef": 2,
+            "def_percent": 4,
+            "mdef_percent": 4,
+            "heal_received_percent": 4
+          }
+        },
+        {
+          "sp_cost": 27,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 62000,
+          "bonus": {
+            "mdef": 4,
+            "def_percent": 8,
+            "mdef_percent": 8,
+            "heal_received_percent": 8
+          }
+        },
+        {
+          "sp_cost": 34,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 85000,
+          "bonus": {
+            "mdef": 6,
+            "def_percent": 12,
+            "mdef_percent": 12,
+            "heal_received_percent": 12
+          }
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 108000,
+          "bonus": {
+            "mdef": 8,
+            "def_percent": 16,
+            "mdef_percent": 16,
+            "heal_received_percent": 16
+          }
+        },
+        {
+          "sp_cost": 47,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 130000,
+          "bonus": {
+            "mdef": 10,
+            "def_percent": 20,
+            "mdef_percent": 20,
+            "heal_received_percent": 20
+          }
+        }
+      ],
+      "description": "替同伴唸一段守護的禱詞，挨打沒那麼痛，補起來也比較多。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；同伴 MDEF +2 到 +10、裝備 DEF 和 MDEF +4% 到 +20%、受到的治療 +4% 到 +20%，40 到 130 秒",
+      "requires": {
+        "faith": 3
+      }
+    },
+    "cleanse": {
+      "name": "解厄",
+      "job": "devout",
+      "max_level": 3,
+      "type": "active_target",
+      "targets": "ally",
+      "no_damage": true,
+      "range": 7.5,
+      "job_level": 10,
+      "requires": {
+        "soothe": 3
+      },
+      "cleanse": {
+        "kinds": [
+          "freeze",
+          "stun",
+          "snare",
+          "debuff"
+        ]
+      },
+      "tree": {
+        "column": 2,
+        "row": 1
+      },
+      "levels": [
+        {
+          "sp_cost": 20,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "cleanse_count": 1
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "cleanse_count": 2
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "cleanse_count": 3
+        }
+      ],
+      "description": "把纏在同伴身上的壞東西一個一個解開。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；解 1 到 3 個狀態"
+    },
+    "censer_strike": {
+      "name": "爐擊",
+      "job": "devout",
+      "max_level": 3,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "weapon_range": true,
+      "form": "melee",
+      "colour_slots": 1,
+      "job_level": 10,
+      "requires": {
+        "faith": 1
+      },
+      "tree": {
+        "column": 1,
+        "row": 1
+      },
+      "hits": 1,
+      "levels": [
+        {
+          "sp_cost": 6,
+          "after_cast_delay_ms": 800,
+          "damage_percent": 180,
+          "heal": 18
+        },
+        {
+          "sp_cost": 9,
+          "after_cast_delay_ms": 800,
+          "damage_percent": 220,
+          "heal": 27
+        },
+        {
+          "sp_cost": 12,
+          "after_cast_delay_ms": 800,
+          "damage_percent": 260,
+          "heal": 36
+        }
+      ],
+      "description": "提爐掄圓了砸下去，爐火順勢暖回自己身上。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；180% 到 260% 物理，回自己 18 到 36 HP，預備加收尾 0.8 秒每秒 325%"
+    },
+    "sanctuary": {
+      "name": "聖域",
+      "job": "devout",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "range": 6.75,
+      "area_center": "ground",
+      "form": "zone",
+      "colour_slots": 1,
+      "paint": true,
+      "job_level": 15,
+      "requires": {
+        "dawn_ray": 3
+      },
+      "tree": {
+        "column": 3,
+        "row": 2
+      },
+      "ground": {
+        "kind": "zone",
+        "radius": 2.0,
+        "interval_ms": 700,
+        "max_active": 2,
+        "replace_oldest": true
+      },
+      "levels": [
+        {
+          "sp_cost": 22,
+          "cast_ms": 500,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 4400,
+          "damage_percent": 40
+        },
+        {
+          "sp_cost": 31,
+          "cast_ms": 500,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 5300,
+          "damage_percent": 54
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 500,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 6200,
+          "damage_percent": 67
+        },
+        {
+          "sp_cost": 49,
+          "cast_ms": 500,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 7100,
+          "damage_percent": 80
+        },
+        {
+          "sp_cost": 58,
+          "cast_ms": 500,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 8000,
+          "damage_percent": 94
+        }
+      ],
+      "description": "腳下畫出一圈晨光，站在裡面的怪一直被燒，灰掉的地也亮回來。",
+      "source": "原創，規格在 docs/技能與流派.md 第 5.5 節；半徑 2 公尺，每 0.7 秒 40% 到 94%，4.4 到 8 秒共約 11 波，總量約 1030%，同時 2 塊"
+    },
+    "dawn_circle": {
+      "name": "晨曦圓陣",
+      "job": "clergy",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "ally",
+      "no_damage": true,
+      "area_center": "self",
+      "aoe_radius": 3.0,
+      "form": "heal",
+      "colour_slots": 1,
+      "colour_elements": [
+        "water",
+        "earth",
+        "fire",
+        "light"
+      ],
+      "requires": {
+        "soothe": 3
+      },
+      "tree": {
+        "column": 1,
+        "row": 0
+      },
+      "description": "腳邊畫一圈晨光，圈裡的人傷口一起收了口。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；自身半徑 3 公尺同伴回 35 到 170 再加 MATK 48% 到 120%；挑了屬性照撫傷的附帶效果，水解狀態、土加護盾、火加攻擊、光補更多；2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 30,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 35,
+          "heal_matk_percent": 48
+        },
+        {
+          "sp_cost": 36,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 50,
+          "heal_matk_percent": 56
+        },
+        {
+          "sp_cost": 42,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 65,
+          "heal_matk_percent": 64
+        },
+        {
+          "sp_cost": 48,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 80,
+          "heal_matk_percent": 72
+        },
+        {
+          "sp_cost": 54,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 95,
+          "heal_matk_percent": 80
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 110,
+          "heal_matk_percent": 88
+        },
+        {
+          "sp_cost": 66,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 125,
+          "heal_matk_percent": 96
+        },
+        {
+          "sp_cost": 72,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 140,
+          "heal_matk_percent": 104
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 155,
+          "heal_matk_percent": 112
+        },
+        {
+          "sp_cost": 84,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "heal": 170,
+          "heal_matk_percent": 120
+        }
+      ]
+    },
+    "aegis_chant": {
+      "name": "曦盾詠唱",
+      "job": "clergy",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "ally",
+      "no_damage": true,
+      "area_center": "self",
+      "aoe_radius": 3.0,
+      "job_level": 5,
+      "requires": {
+        "prayer_guard": 3
+      },
+      "tree": {
+        "column": 2,
+        "row": 0
+      },
+      "description": "唱完這一段，身邊的人都罩上一層薄薄的光。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；自身半徑 3 公尺同伴 DEF 和 MDEF +3% 到 +30%、迴避 +1 到 +10，18 到 45 秒；2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 33,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 18000,
+          "bonus": {
+            "def_percent": 3,
+            "mdef_percent": 3,
+            "flee": 1
+          }
+        },
+        {
+          "sp_cost": 38,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 21000,
+          "bonus": {
+            "def_percent": 6,
+            "mdef_percent": 6,
+            "flee": 2
+          }
+        },
+        {
+          "sp_cost": 43,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 24000,
+          "bonus": {
+            "def_percent": 9,
+            "mdef_percent": 9,
+            "flee": 3
+          }
+        },
+        {
+          "sp_cost": 48,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 27000,
+          "bonus": {
+            "def_percent": 12,
+            "mdef_percent": 12,
+            "flee": 4
+          }
+        },
+        {
+          "sp_cost": 53,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 30000,
+          "bonus": {
+            "def_percent": 15,
+            "mdef_percent": 15,
+            "flee": 5
+          }
+        },
+        {
+          "sp_cost": 58,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 33000,
+          "bonus": {
+            "def_percent": 18,
+            "mdef_percent": 18,
+            "flee": 6
+          }
+        },
+        {
+          "sp_cost": 63,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 36000,
+          "bonus": {
+            "def_percent": 21,
+            "mdef_percent": 21,
+            "flee": 7
+          }
+        },
+        {
+          "sp_cost": 68,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 39000,
+          "bonus": {
+            "def_percent": 24,
+            "mdef_percent": 24,
+            "flee": 8
+          }
+        },
+        {
+          "sp_cost": 73,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 42000,
+          "bonus": {
+            "def_percent": 27,
+            "mdef_percent": 27,
+            "flee": 9
+          }
+        },
+        {
+          "sp_cost": 78,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "duration_ms": 45000,
+          "bonus": {
+            "def_percent": 30,
+            "mdef_percent": 30,
+            "flee": 10
+          }
+        }
+      ]
+    },
+    "oath_of_dawn": {
+      "name": "晨誓",
+      "job": "clergy",
+      "max_level": 10,
+      "type": "active_target",
+      "targets": "ally",
+      "no_damage": true,
+      "range": 7.5,
+      "job_level": 5,
+      "requires": {
+        "prayer_guard": 3
+      },
+      "tree": {
+        "column": 0,
+        "row": 1
+      },
+      "description": "和同伴對上眼，一起唸完晨間的誓詞。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；同伴 ATK 和 MATK +1% 到 +10%、命中 +2 到 +20、攻速 +2% 到 +20%、暴擊 +1% 到 +10%，72 到 180 秒；曦佑併進來",
+      "levels": [
+        {
+          "sp_cost": 24,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 72000,
+          "bonus": {
+            "atk_percent": 1,
+            "matk_percent": 1,
+            "hit": 2,
+            "aspd_percent": 2,
+            "cri": 1
+          }
+        },
+        {
+          "sp_cost": 29,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 84000,
+          "bonus": {
+            "atk_percent": 2,
+            "matk_percent": 2,
+            "hit": 4,
+            "aspd_percent": 4,
+            "cri": 2
+          }
+        },
+        {
+          "sp_cost": 34,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 96000,
+          "bonus": {
+            "atk_percent": 3,
+            "matk_percent": 3,
+            "hit": 6,
+            "aspd_percent": 6,
+            "cri": 3
+          }
+        },
+        {
+          "sp_cost": 39,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 108000,
+          "bonus": {
+            "atk_percent": 4,
+            "matk_percent": 4,
+            "hit": 8,
+            "aspd_percent": 8,
+            "cri": 4
+          }
+        },
+        {
+          "sp_cost": 44,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 120000,
+          "bonus": {
+            "atk_percent": 5,
+            "matk_percent": 5,
+            "hit": 10,
+            "aspd_percent": 10,
+            "cri": 5
+          }
+        },
+        {
+          "sp_cost": 49,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 132000,
+          "bonus": {
+            "atk_percent": 6,
+            "matk_percent": 6,
+            "hit": 12,
+            "aspd_percent": 12,
+            "cri": 6
+          }
+        },
+        {
+          "sp_cost": 54,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 144000,
+          "bonus": {
+            "atk_percent": 7,
+            "matk_percent": 7,
+            "hit": 14,
+            "aspd_percent": 14,
+            "cri": 7
+          }
+        },
+        {
+          "sp_cost": 59,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 156000,
+          "bonus": {
+            "atk_percent": 8,
+            "matk_percent": 8,
+            "hit": 16,
+            "aspd_percent": 16,
+            "cri": 8
+          }
+        },
+        {
+          "sp_cost": 64,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 168000,
+          "bonus": {
+            "atk_percent": 9,
+            "matk_percent": 9,
+            "hit": 18,
+            "aspd_percent": 18,
+            "cri": 9
+          }
+        },
+        {
+          "sp_cost": 69,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 180000,
+          "bonus": {
+            "atk_percent": 10,
+            "matk_percent": 10,
+            "hit": 20,
+            "aspd_percent": 20,
+            "cri": 10
+          }
+        }
+      ]
+    },
+    "dawn_judgement": {
+      "name": "晨曦裁決",
+      "job": "clergy",
+      "max_level": 10,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "range": 6.75,
+      "area_center": "ground",
+      "aoe_radius": 2.25,
+      "form": "area",
+      "colour_slots": 2,
+      "job_level": 10,
+      "requires": {
+        "dawn_ray": 1
+      },
+      "tree": {
+        "column": 3,
+        "row": 0
+      },
+      "description": "唸完長長一段禱詞，一整片晨光從天上壓下來。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；半徑 2.25 公尺 140% 到 500%，預備 2.4 秒就是它的前置，在二轉有前置 1000% 的線內；屬性照調色盤，不再寫死光；2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 28,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 140
+        },
+        {
+          "sp_cost": 33,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 180
+        },
+        {
+          "sp_cost": 38,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 220
+        },
+        {
+          "sp_cost": 43,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 260
+        },
+        {
+          "sp_cost": 48,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 300
+        },
+        {
+          "sp_cost": 53,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 340
+        },
+        {
+          "sp_cost": 58,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 380
+        },
+        {
+          "sp_cost": 63,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 420
+        },
+        {
+          "sp_cost": 68,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 460
+        },
+        {
+          "sp_cost": 73,
+          "cast_ms": 1800,
+          "fixed_cast_ms": 600,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 500
+        }
+      ]
+    },
+    "unbroken_faith": {
+      "name": "不渝",
+      "job": "clergy",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "tree": {
+        "column": 0,
+        "row": 0
+      },
+      "description": "唸了幾千遍的禱詞，現在閉著眼也不會唸錯。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；治療 +8% 到 +40%，每 10 秒 SP +6 到 +30；殘光的治療加成和它重疊，殘光刪掉",
+      "levels": [
+        {
+          "bonus": {
+            "heal_power_percent": 8,
+            "sp_regen": 6
+          }
+        },
+        {
+          "bonus": {
+            "heal_power_percent": 16,
+            "sp_regen": 12
+          }
+        },
+        {
+          "bonus": {
+            "heal_power_percent": 24,
+            "sp_regen": 18
+          }
+        },
+        {
+          "bonus": {
+            "heal_power_percent": 32,
+            "sp_regen": 24
+          }
+        },
+        {
+          "bonus": {
+            "heal_power_percent": 40,
+            "sp_regen": 30
+          }
+        }
+      ]
+    },
+    "radiant_lance": {
+      "name": "曦矛",
+      "job": "clergy",
+      "max_level": 5,
+      "type": "active_target",
+      "targets": "enemy",
+      "damage_type": "magic",
+      "range": 7.5,
+      "form": "single",
+      "colour_slots": 1,
+      "job_level": 20,
+      "requires": {
+        "dawn_judgement": 3
+      },
+      "tree": {
+        "column": 3,
+        "row": 1
+      },
+      "description": "把晨光擰成一根長矛，蓄滿了才擲出去。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；400% 到 750%，預備 3 秒就是它的前置；屬性照調色盤；2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 30,
+          "cast_ms": 2200,
+          "fixed_cast_ms": 800,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 400
+        },
+        {
+          "sp_cost": 44,
+          "cast_ms": 2200,
+          "fixed_cast_ms": 800,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 488
+        },
+        {
+          "sp_cost": 57,
+          "cast_ms": 2200,
+          "fixed_cast_ms": 800,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 575
+        },
+        {
+          "sp_cost": 71,
+          "cast_ms": 2200,
+          "fixed_cast_ms": 800,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 663
+        },
+        {
+          "sp_cost": 84,
+          "cast_ms": 2200,
+          "fixed_cast_ms": 800,
+          "after_cast_delay_ms": 400,
+          "damage_percent": 750
+        }
+      ]
+    },
+    "guardian_oath": {
+      "name": "護誓",
+      "job": "clergy",
+      "max_level": 5,
+      "type": "active_target",
+      "targets": "ally",
+      "no_damage": true,
+      "range": 7.5,
+      "job_level": 15,
+      "requires": {
+        "aegis_chant": 3
+      },
+      "tree": {
+        "column": 2,
+        "row": 1
+      },
+      "description": "替擋在前面的同伴立個誓：這一場你站得住。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；同伴 4 到 10 下不硬直、DEF +7 到 +20、MDEF +4 到 +10，30 到 54 秒；2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 25,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 30000,
+          "bonus": {
+            "no_flinch_hits": 4,
+            "def": 7,
+            "mdef": 4
+          }
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 36000,
+          "bonus": {
+            "no_flinch_hits": 6,
+            "def": 10,
+            "mdef": 6
+          }
+        },
+        {
+          "sp_cost": 35,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 42000,
+          "bonus": {
+            "no_flinch_hits": 7,
+            "def": 14,
+            "mdef": 7
+          }
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 48000,
+          "bonus": {
+            "no_flinch_hits": 9,
+            "def": 17,
+            "mdef": 9
+          }
+        },
+        {
+          "sp_cost": 45,
+          "cast_ms": 200,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 54000,
+          "bonus": {
+            "no_flinch_hits": 10,
+            "def": 20,
+            "mdef": 10
+          }
+        }
+      ]
+    },
+    "bell_of_waking": {
+      "name": "醒鐘",
+      "job": "clergy",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "ally",
+      "no_damage": true,
+      "area_center": "self",
+      "aoe_radius": 3.0,
+      "job_level": 10,
+      "requires": {
+        "dawn_circle": 3
+      },
+      "cleanse": {
+        "kinds": [
+          "freeze",
+          "stun",
+          "snare",
+          "debuff"
+        ]
+      },
+      "tree": {
+        "column": 1,
+        "row": 1
+      },
+      "description": "噹——！一聲鐘響，身邊的人全醒過來了。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；自身半徑 3 公尺同伴各解 1 到 4 個狀態；前置從一轉的解厄改成晨曦圓陣 3，一轉必點前置才壓得到 7 點；2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 28,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "cleanse_count": 1
+        },
+        {
+          "sp_cost": 37,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "cleanse_count": 2
+        },
+        {
+          "sp_cost": 46,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "cleanse_count": 3
+        },
+        {
+          "sp_cost": 55,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "cleanse_count": 3
+        },
+        {
+          "sp_cost": 64,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "cleanse_count": 4
+        }
+      ]
+    },
+    "ascetic_body": {
+      "name": "行身",
+      "job": "ascetic",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "weapon_types": [
+        "censer",
+        "none"
+      ],
+      "requires": {
+        "faith": 1
+      },
+      "tree": {
+        "column": 0,
+        "row": 0
+      },
+      "description": "天沒亮就起來打樁，拳頭和提爐都練成了身體的一部分。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；空手或拿提爐 ATK +8 到 +40，照一轉執劍、弓術同一條熟練線；前置照第 5.6 節從提爐修習改成信念",
+      "levels": [
+        {
+          "bonus": {
+            "atk": 8
+          }
+        },
+        {
+          "bonus": {
+            "atk": 16
+          }
+        },
+        {
+          "bonus": {
+            "atk": 24
+          }
+        },
+        {
+          "bonus": {
+            "atk": 32
+          }
+        },
+        {
+          "bonus": {
+            "atk": 40
+          }
+        }
+      ]
+    },
+    "dawn_flurry": {
+      "name": "曦連拳",
+      "job": "ascetic",
+      "max_level": 10,
+      "type": "active_target",
+      "weapon_range": true,
+      "targets": "enemy",
+      "damage_type": "physical",
+      "form": "melee",
+      "colour_slots": 1,
+      "requires": {
+        "ascetic_body": 1
+      },
+      "tree": {
+        "column": 2,
+        "row": 1
+      },
+      "hits": 3,
+      "hit_interval_ms": 120,
+      "description": "左、右、左，三拳連著打出去。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；3 段各 60% 到 130%，加總 390%，在二轉沒前置 400% 的線內；段間 0.12 秒",
+      "levels": [
+        {
+          "sp_cost": 10,
+          "damage_percent": 60,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 11,
+          "damage_percent": 68,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 12,
+          "damage_percent": 76,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 13,
+          "damage_percent": 83,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 14,
+          "damage_percent": 91,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 15,
+          "damage_percent": 99,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 107,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 17,
+          "damage_percent": 114,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 18,
+          "damage_percent": 122,
+          "after_cast_delay_ms": 300
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 130,
+          "after_cast_delay_ms": 300
+        }
+      ]
+    },
+    "dawn_palm": {
+      "name": "曦掌",
+      "job": "ascetic",
+      "max_level": 10,
+      "type": "active_target",
+      "weapon_range": true,
+      "targets": "enemy",
+      "damage_type": "physical",
+      "form": "melee",
+      "colour_slots": 1,
+      "job_level": 20,
+      "requires": {
+        "dawn_flurry": 3,
+        "dawn_ray": 3
+      },
+      "tree": {
+        "column": 2,
+        "row": 2
+      },
+      "hits": 1,
+      "description": "掌心貼上去再一吐勁，喝！",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；200% 到 400%，2026-09-25 拿掉冷卻從 500% 壓到二轉沒前置的 400%",
+      "levels": [
+        {
+          "sp_cost": 15,
+          "damage_percent": 200,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 17,
+          "damage_percent": 222,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 244,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 21,
+          "damage_percent": 267,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 23,
+          "damage_percent": 289,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 25,
+          "damage_percent": 311,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 27,
+          "damage_percent": 333,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 29,
+          "damage_percent": 356,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 31,
+          "damage_percent": 378,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 33,
+          "damage_percent": 400,
+          "after_cast_delay_ms": 400
+        }
+      ]
+    },
+    "dawn_break": {
+      "name": "曦破",
+      "job": "ascetic",
+      "max_level": 10,
+      "type": "active_target",
+      "weapon_range": true,
+      "targets": "enemy",
+      "damage_type": "physical",
+      "form": "melee",
+      "colour_slots": 2,
+      "job_level": 30,
+      "requires": {
+        "dawn_palm": 3,
+        "gather_breath": 3
+      },
+      "requires_buff": "gather_breath",
+      "consumes_buff": "gather_breath",
+      "self_debuff": {
+        "duration_ms": 3000,
+        "bonus": {
+          "def_percent": -30
+        }
+      },
+      "tree": {
+        "column": 1,
+        "row": 3
+      },
+      "hits": 1,
+      "description": "把凝住的那口氣整個灌進一拳裡，喝啊！",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；凝息開著才放得出來、放出去凝息結束，400% 到 1000% 是二轉有前置爆發 1000% 的線；放完自己 DEF −30% 3 秒，同伴解不掉；預備 0.8 秒是近戰預備的上限，照 rAthena re/skill_db.yml MO_EXTREMITYFIST 5 級變動和固定詠唱各 1000 毫秒各半，拆成 400 加 400",
+      "levels": [
+        {
+          "sp_cost": 30,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 400
+        },
+        {
+          "sp_cost": 33,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 467
+        },
+        {
+          "sp_cost": 37,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 533
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 600
+        },
+        {
+          "sp_cost": 43,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 667
+        },
+        {
+          "sp_cost": 47,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 733
+        },
+        {
+          "sp_cost": 50,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 800
+        },
+        {
+          "sp_cost": 53,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 867
+        },
+        {
+          "sp_cost": 57,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 933
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 400,
+          "fixed_cast_ms": 400,
+          "after_cast_delay_ms": 500,
+          "damage_percent": 1000
+        }
+      ]
+    },
+    "steady_breath": {
+      "name": "調息",
+      "job": "ascetic",
+      "max_level": 10,
+      "type": "self_buff",
+      "targets": "self",
+      "form": "heal",
+      "colour_slots": 1,
+      "colour_elements": [
+        "water",
+        "earth",
+        "fire",
+        "light"
+      ],
+      "job_level": 5,
+      "requires": {
+        "soothe": 3
+      },
+      "tree": {
+        "column": 3,
+        "row": 0
+      },
+      "description": "站定了深吸一口氣，再慢慢吐掉。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；回自己 60 到 400 HP；一格，挑水、土、火、光照信線治療的附帶效果，和撫傷走同一條治療，彩度照治療的價",
+      "levels": [
+        {
+          "sp_cost": 8,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 60
+        },
+        {
+          "sp_cost": 9,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 98
+        },
+        {
+          "sp_cost": 10,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 136
+        },
+        {
+          "sp_cost": 11,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 173
+        },
+        {
+          "sp_cost": 12,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 211
+        },
+        {
+          "sp_cost": 13,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 249
+        },
+        {
+          "sp_cost": 14,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 287
+        },
+        {
+          "sp_cost": 15,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 324
+        },
+        {
+          "sp_cost": 16,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 362
+        },
+        {
+          "sp_cost": 17,
+          "cast_ms": 400,
+          "fixed_cast_ms": 100,
+          "after_cast_delay_ms": 0,
+          "heal": 400
+        }
+      ]
+    },
+    "gather_breath": {
+      "name": "凝息",
+      "job": "ascetic",
+      "max_level": 5,
+      "type": "self_buff",
+      "targets": "self",
+      "job_level": 5,
+      "requires": {
+        "ascetic_body": 3
+      },
+      "tree": {
+        "column": 1,
+        "row": 1
+      },
+      "description": "把氣沉到丹田，下一拳就是全身的份量。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；ATK +4% 到 +20%，30 到 90 秒",
+      "levels": [
+        {
+          "sp_cost": 15,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 30000,
+          "bonus": {
+            "atk_percent": 4
+          }
+        },
+        {
+          "sp_cost": 19,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 45000,
+          "bonus": {
+            "atk_percent": 8
+          }
+        },
+        {
+          "sp_cost": 23,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 60000,
+          "bonus": {
+            "atk_percent": 12
+          }
+        },
+        {
+          "sp_cost": 26,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 75000,
+          "bonus": {
+            "atk_percent": 16
+          }
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 90000,
+          "bonus": {
+            "atk_percent": 20
+          }
+        }
+      ]
+    },
+    "dawn_body": {
+      "name": "曦身",
+      "job": "ascetic",
+      "max_level": 5,
+      "type": "self_buff",
+      "targets": "self",
+      "job_level": 15,
+      "dodge_breaks": true,
+      "requires": {
+        "ascetic_body": 3
+      },
+      "tree": {
+        "column": 0,
+        "row": 2
+      },
+      "description": "咬緊牙關，把全身繃成一塊鐵。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；裝備 DEF +12% 到 +60%、5 到 25 下不硬直、移動 −20%，15 到 25 秒；翻滾解除，照第 3.1 節第 6 條",
+      "levels": [
+        {
+          "sp_cost": 20,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 15000,
+          "bonus": {
+            "def_percent": 12,
+            "no_flinch_hits": 5,
+            "move_speed_percent": -20
+          }
+        },
+        {
+          "sp_cost": 25,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 17500,
+          "bonus": {
+            "def_percent": 24,
+            "no_flinch_hits": 10,
+            "move_speed_percent": -20
+          }
+        },
+        {
+          "sp_cost": 30,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 20000,
+          "bonus": {
+            "def_percent": 36,
+            "no_flinch_hits": 15,
+            "move_speed_percent": -20
+          }
+        },
+        {
+          "sp_cost": 35,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 22500,
+          "bonus": {
+            "def_percent": 48,
+            "no_flinch_hits": 20,
+            "move_speed_percent": -20
+          }
+        },
+        {
+          "sp_cost": 40,
+          "cast_ms": 300,
+          "after_cast_delay_ms": 0,
+          "duration_ms": 25000,
+          "bonus": {
+            "def_percent": 60,
+            "no_flinch_hits": 25,
+            "move_speed_percent": -20
+          }
+        }
+      ]
+    },
+    "quake_stride": {
+      "name": "震行",
+      "job": "ascetic",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "area_center": "self",
+      "aoe_radius": 1.5,
+      "form": "area",
+      "job_level": 10,
+      "requires": {
+        "dawn_flurry": 3
+      },
+      "tree": {
+        "column": 3,
+        "row": 2
+      },
+      "hits": 1,
+      "status": {
+        "id": "stun",
+        "kind": "stun",
+        "immune_boss": true
+      },
+      "description": "一腳跺下去，四周的地面跟著一震。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；自身半徑 1.5 公尺 220% 到 350%，暈眩 18% 到 30% 1.5 秒；暈眩是控場，零格有冷卻；Boss 免疫暈眩，PVP 秒數減半等 PVP 做時再接",
+      "levels": [
+        {
+          "sp_cost": 18,
+          "damage_percent": 220,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400,
+          "status_chance_percent": 18,
+          "status_duration_ms": 1500
+        },
+        {
+          "sp_cost": 23,
+          "damage_percent": 253,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400,
+          "status_chance_percent": 21,
+          "status_duration_ms": 1500
+        },
+        {
+          "sp_cost": 27,
+          "damage_percent": 285,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400,
+          "status_chance_percent": 24,
+          "status_duration_ms": 1500
+        },
+        {
+          "sp_cost": 32,
+          "damage_percent": 318,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400,
+          "status_chance_percent": 27,
+          "status_duration_ms": 1500
+        },
+        {
+          "sp_cost": 36,
+          "damage_percent": 350,
+          "cooldown_ms": 5000,
+          "after_cast_delay_ms": 400,
+          "status_chance_percent": 30,
+          "status_duration_ms": 1500
+        }
+      ]
+    },
+    "dawn_leap": {
+      "name": "曦躍",
+      "job": "ascetic",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "damage_type": "physical",
+      "area_center": "self",
+      "form": "melee",
+      "job_level": 10,
+      "dash": {
+        "distance_m": 5.0,
+        "stop_at_first": true,
+        "hit_width_m": 0.9
+      },
+      "requires": {
+        "censer_strike": 1
+      },
+      "tree": {
+        "column": 3,
+        "row": 1
+      },
+      "hits": 1,
+      "description": "往前一躍，落地順勢踢在擋路的傢伙身上！",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；朝面向飛 5 公尺，碰到的第一個敵人吃 260% 到 420% 踢；位移技零格、6 秒冷卻，和劍侍踏破同一套衝刺",
+      "levels": [
+        {
+          "sp_cost": 14,
+          "damage_percent": 260,
+          "cooldown_ms": 6000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 16,
+          "damage_percent": 300,
+          "cooldown_ms": 6000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 19,
+          "damage_percent": 340,
+          "cooldown_ms": 6000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 21,
+          "damage_percent": 380,
+          "cooldown_ms": 6000,
+          "after_cast_delay_ms": 400
+        },
+        {
+          "sp_cost": 23,
+          "damage_percent": 420,
+          "cooldown_ms": 6000,
+          "after_cast_delay_ms": 400
+        }
+      ]
+    },
+    "dawn_breath": {
+      "name": "曦息",
+      "job": "ascetic",
+      "max_level": 5,
+      "type": "passive",
+      "targets": "self",
+      "job_level": 10,
+      "requires": {
+        "ascetic_body": 3
+      },
+      "tree": {
+        "column": 0,
+        "row": 1
+      },
+      "description": "出一拳吐一口氣，打得越久氣越順。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.8 節；普攻命中回造成傷害的 2% 到 5% HP、SP +1，DEF +8 到 +20；剛身併進來",
+      "levels": [
+        {
+          "bonus": {
+            "hit_hp_permille": 20,
+            "hit_sp": 1,
+            "def": 8
+          }
+        },
+        {
+          "bonus": {
+            "hit_hp_permille": 28,
+            "hit_sp": 1,
+            "def": 11
+          }
+        },
+        {
+          "bonus": {
+            "hit_hp_permille": 35,
+            "hit_sp": 1,
+            "def": 14
+          }
+        },
+        {
+          "bonus": {
+            "hit_hp_permille": 43,
+            "hit_sp": 1,
+            "def": 17
+          }
+        },
+        {
+          "bonus": {
+            "hit_hp_permille": 50,
+            "hit_sp": 1,
+            "def": 20
+          }
+        }
+      ]
+    },
+    "haven": {
+      "name": "庇護所",
+      "job": "clergy",
+      "max_level": 5,
+      "type": "active_ground",
+      "targets": "enemy",
+      "no_damage": true,
+      "range": 6.75,
+      "area_center": "ground",
+      "job_level": 25,
+      "requires": {
+        "aegis_chant": 3
+      },
+      "tree": {
+        "column": 2,
+        "row": 2
+      },
+      "ground": {
+        "kind": "zone",
+        "radius": 3.5,
+        "interval_ms": 500,
+        "max_active": 1,
+        "replace_oldest": true
+      },
+      "status": {
+        "id": "haven_awe",
+        "kind": "debuff",
+        "immune_boss": false,
+        "linger_ms": 600
+      },
+      "description": "在地上劃出一塊庇護所，闖進來的怪物手都軟了。",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；半徑 3.5 公尺裡的敵人 ATK −10% 到 −30%，12 到 20 秒，同時 1 塊；站在裡面才有，離開 0.6 秒就沒了；降攻不在第 5.0.3 節的控場表裡，Boss 照樣吃；舊的曦行刪掉，這一顆是新加的",
+      "levels": [
+        {
+          "sp_cost": 30,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 12000,
+          "status_bonus": {
+            "atk_percent": -10
+          },
+          "status_bonus_monster": {
+            "atk_percent": -10
+          }
+        },
+        {
+          "sp_cost": 38,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 14000,
+          "status_bonus": {
+            "atk_percent": -15
+          },
+          "status_bonus_monster": {
+            "atk_percent": -15
+          }
+        },
+        {
+          "sp_cost": 46,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 16000,
+          "status_bonus": {
+            "atk_percent": -20
+          },
+          "status_bonus_monster": {
+            "atk_percent": -20
+          }
+        },
+        {
+          "sp_cost": 54,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 18000,
+          "status_bonus": {
+            "atk_percent": -25
+          },
+          "status_bonus_monster": {
+            "atk_percent": -25
+          }
+        },
+        {
+          "sp_cost": 62,
+          "cast_ms": 400,
+          "fixed_cast_ms": 200,
+          "after_cast_delay_ms": 400,
+          "ground_lifetime_ms": 20000,
+          "status_bonus": {
+            "atk_percent": -30
+          },
+          "status_bonus_monster": {
+            "atk_percent": -30
+          }
+        }
+      ]
+    },
+    "resurrection": {
+      "name": "曦返",
+      "job": "clergy",
+      "max_level": 5,
+      "type": "active_target",
+      "targets": "dead_ally",
+      "no_damage": true,
+      "range": 6.75,
+      "job_level": 20,
+      "requires": {
+        "dawn_circle": 3
+      },
+      "revive": {
+        "hp_percent": 10
+      },
+      "tree": {
+        "column": 1,
+        "row": 2
+      },
+      "description": "對著倒下的同伴唸回魂的禱詞，喂，快起來！",
+      "source": "原創，規格在 docs/技能與流派.md 第 6.7 節；救起倒下的同伴，回最大 HP 10% 到 80%，照 rAthena AL_RESURRECTION 的 10、30、50、80% 拉成 5 級線性；RO 的復活術改名曦返，代號不動；預備 6 秒加 60 SP 就是限制，2026-09-25 拿掉冷卻",
+      "levels": [
+        {
+          "sp_cost": 60,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "revive_hp_percent": 10
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "revive_hp_percent": 28
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "revive_hp_percent": 45
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "revive_hp_percent": 63
+        },
+        {
+          "sp_cost": 60,
+          "cast_ms": 4500,
+          "fixed_cast_ms": 1500,
+          "after_cast_delay_ms": 1000,
+          "revive_hp_percent": 80
+        }
+      ]
+    }
+  }
+}

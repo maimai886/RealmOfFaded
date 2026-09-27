@@ -1,0 +1,24 @@
+{
+  "note": "新手技能任務，照 RO 的急救和裝死：沒有任務視窗，找 NPC 講話，條件都到就教你，不佔技能點。規則在 src/core/skill_quest.gd。npc 是教這招的 NPC；min_job_level 職業等級，or_min_base_level 基本等級到了也算；items 要帶來交的東西；skills 要先會的技能；min_chroma 講話當下彩度要到多少",
+  "source": "rAthena npc/quests/skills/novice_skills.txt：急救找護士娜米，職業 4 級或基本 12 級，帶紅色藥草 3、幸運草 3、消毒繃帶 1；裝死找騎士，職業 7 級而且會急救",
+  "quests": {
+    "first_aid": {
+      "npc": "faith_mentor",
+      "min_job_level": 4,
+      "or_min_base_level": 12,
+      "items": {
+        "soft_moss": 3,
+        "dew_gel": 3,
+        "red_potion": 1
+      }
+    },
+    "full_colour_burst": {
+      "npc": "guardian",
+      "min_job_level": 7,
+      "skills": [
+        "first_aid"
+      ],
+      "min_chroma": 90
+    }
+  }
+}

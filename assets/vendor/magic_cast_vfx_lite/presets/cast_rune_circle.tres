@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="FreeMagicFxPreset" format=3]
+
+[ext_resource type="Script" path="res://assets/vendor/magic_cast_vfx_lite/core/free_magic_fx_layer.gd" id="layer_script"]
+[ext_resource type="Texture2D" path="res://assets/vendor/magic_cast_vfx_lite/textures/t_smokepuff.png" id="tex_0"]
+[ext_resource type="Texture2D" path="res://assets/vendor/magic_cast_vfx_lite/textures/t_runecircle.png" id="tex_1"]
+[ext_resource type="Texture2D" path="res://assets/vendor/magic_cast_vfx_lite/textures/t_sparkglint.png" id="tex_2"]
+[ext_resource type="Script" path="res://assets/vendor/magic_cast_vfx_lite/core/free_magic_fx_preset.gd" id="preset_script"]
+
+[sub_resource type="Resource" id="layer_0"]
+script = ExtResource("layer_script")
+texture = ExtResource("tex_0")
+size = 2.6
+delay = 0.05
+lifetime = 0.9
+spin = 0.1
+random_angle = true
+scale_from = 0.4
+scale_to = 1.2
+overshoot = 0.4
+use_hot_start = false
+dissolve_amount = 1.0
+distortion = 0.0
+stretch = Vector2(1.0, 1.0)
+emission_energy = 0.35
+
+[sub_resource type="Resource" id="layer_1"]
+script = ExtResource("layer_script")
+texture = ExtResource("tex_1")
+size = 2.4
+delay = 0.0
+lifetime = 0.9
+spin = 0.5
+random_angle = false
+scale_from = 0.2
+scale_to = 1.0
+overshoot = 0.8
+use_hot_start = true
+dissolve_amount = 0.8
+distortion = 0.0
+stretch = Vector2(1.0, 1.0)
+emission_energy = 0.78
+
+[sub_resource type="Resource" id="layer_2"]
+script = ExtResource("layer_script")
+texture = ExtResource("tex_2")
+size = 1.5
+delay = 0.0
+lifetime = 0.22
+spin = 0.0
+random_angle = true
+scale_from = 0.2
+scale_to = 1.2
+overshoot = 2.0
+use_hot_start = true
+dissolve_amount = 0.9
+distortion = 0.0
+stretch = Vector2(1.0, 1.0)
+emission_energy = 0.8
+
+[resource]
+script = ExtResource("preset_script")
+fx_name = "rune_circle"
+color_core = Color(2.2, 2.0, 2.6, 1)
+color_main = Color(1.0, 0.7, 2.6, 1)
+color_accent = Color(0.5, 0.3, 1.8, 1)
+duration = 1.0
+layers = Array[ExtResource("layer_script")]([SubResource("layer_0"), SubResource("layer_1"), SubResource("layer_2")])
+flash_size = 0.2
+ring_size = 2.4
+ring_lifetime = 0.6
+sparks_amount = 26
+spark_texture = ExtResource("tex_2")
+spark_speed = 1.8
+spark_lifetime = 1.1
+spark_gravity = 1.6
+light_energy = 6.0
+light_range = 5.0

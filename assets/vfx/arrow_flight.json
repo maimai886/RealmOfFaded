@@ -1,0 +1,24 @@
+{
+  "filter": "linear",
+  "pixels_per_meter": 192.0,
+  "cell": [
+    192,
+    36
+  ],
+  "row_pitch": 37,
+  "atlas": [
+    192,
+    260
+  ],
+  "tip_x": 184.0,
+  "length_m": 0.85,
+  "rows": [
+    "neutral",
+    "fire",
+    "water",
+    "wind",
+    "earth",
+    "light",
+    "dark"
+  ]
+}

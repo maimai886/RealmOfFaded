@@ -1,0 +1,322 @@
+{
+	"enabled": false,
+	"enabled_note": "任務系統的總開關。false 時整套任務當作不存在：不能接、不能交、NPC 對話沒有任務選項、不推送 quest.state、客戶端不建任務視窗和任務追蹤、Alt+U 沒有作用。使用者 2026-09-16 要求「暫時不需要任務」，要原版 RO 那樣不教也不限制，所以程式和任務資料全部留著，改回 true 就整套回來",
+	"source": "rAthena db/re/quest_db.yml 的欄位和 npc/re/jobs/novice/academy.txt、npc/pre-re/jobs/novice/novice.txt 的新手教學流程，說明見 docs/任務規格.md",
+	"notes": [
+		"giver 是發任務的 NPC，turn_in 是交任務的 NPC，沒寫時和 giver 相同",
+		"objectives 的種類：talk 找 NPC 說話、kill 打倒怪物、collect 身上要有道具、buy 向商店買、use_item 使用道具、learn_skill 學技能、save_point 登記存檔點、reach_map 走到地圖、job_level 職業等級",
+		"collect 的道具交任務時會收走；kill、buy、use_item、talk、save_point、reach_map 的進度由伺服器從真實事件累計",
+		"tutorial 為 true 的任務不能放棄；auto 為 true 的任務條件符合時進入遊戲就自動接下",
+		"經驗和金幣依 docs/任務規格.md 第 3 節調整，讓新手做完教學大約 Base Lv 5、金幣夠買兩瓶以上的藥水",
+		"野外任務接在教學之後，每一個都對應一種新機制：收集材料、看預告圈、成群怪、回城道具、小 Boss、Boss"
+	],
+	"quests": {
+		"tutorial_awaken": {
+			"name": "甦醒的芽核",
+			"giver": "guardian",
+			"tutorial": true,
+			"auto": true,
+			"summary": "去找晨曦守護者艾拉，聽她說話。",
+			"objectives": [
+				{
+					"type": "talk",
+					"npc": "guardian",
+					"text": "和晨曦守護者 艾拉 說話"
+				}
+			],
+			"rewards": {
+				"base_exp": 300,
+				"job_exp": 20,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "醒了醒了！你手背上的葉紋在發光呢。要走路的話點地面，或按 W、A、S、D 都可以。先聽我說完喔！",
+				"progress": "還沒說完啦，先聽我說！",
+				"complete": "晨曦鎮有幾位導師和鎮民會幫你，去跟他們聊聊吧。迷路的話按 Alt+U 看任務紀錄喔。"
+			}
+		},
+		"tutorial_first_hunt": {
+			"name": "第一次狩獵",
+			"giver": "sword_mentor",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_awaken"
+				]
+			},
+			"summary": "走出南門到萌芽草原，打倒 5 隻萊姆再回來找劍侍導師蓋爾。",
+			"objectives": [
+				{
+					"type": "kill",
+					"monster": "horn_slime",
+					"count": 5
+				}
+			],
+			"rewards": {
+				"base_exp": 1200,
+				"job_exp": 60,
+				"items": [
+					{
+						"item_id": "red_potion",
+						"amount": 3
+					}
+				]
+			},
+			"dialogue": {
+				"accept": "想變強就先去打！南門外的草原有萊姆，動作慢又不會先動手。點牠一下就會衝過去打，打 5 隻回來！",
+				"progress": "才這樣？萊姆泡在草原的水窪那邊，5 隻！快去！",
+				"complete": "哈哈哈！手感不錯！這幾瓶紅色藥水拿去，血少了就按快捷列喝！"
+			}
+		},
+		"tutorial_gather": {
+			"name": "露珠凝膠",
+			"giver": "mage_mentor",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_awaken"
+				]
+			},
+			"summary": "萊姆倒下時會掉露珠凝膠，撿 3 個回來給術士導師露娜。",
+			"objectives": [
+				{
+					"type": "collect",
+					"item": "dew_gel",
+					"count": 3
+				}
+			],
+			"rewards": {
+				"base_exp": 1200,
+				"job_exp": 60,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "萊姆身體裡的凝膠…水元素很乾淨…我想要 3 個。打倒牠之後地上會掉東西，點一下就撿起來了。",
+				"progress": "還不夠喔…掉在地上的東西，打倒牠的人可以先撿，放太久會不見。",
+				"complete": "謝謝…QQ的。用不到的材料可以拿去賣給道具商人蜜拉喔。"
+			}
+		},
+		"tutorial_potion": {
+			"name": "藥水的用法",
+			"giver": "archer_mentor",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_awaken"
+				]
+			},
+			"summary": "向道具商人蜜拉買一瓶紅色藥水，然後喝掉它。",
+			"objectives": [
+				{
+					"type": "buy",
+					"item": "red_potion",
+					"count": 1
+				},
+				{
+					"type": "use_item",
+					"item": "red_potion",
+					"count": 1
+				}
+			],
+			"rewards": {
+				"base_exp": 600,
+				"job_exp": 30,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "在外面撐得久的人都會帶水。去廣場西邊找蜜拉買一瓶紅色藥水，喝掉。藥水放快捷列第一格，按 1。",
+				"progress": "買了？喝了？拿在手上不會回血。",
+				"complete": "對。這些錢拿去，出城前補貨。"
+			}
+		},
+		"tutorial_basic_skill": {
+			"name": "基本功",
+			"giver": "guardian",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_awaken"
+				]
+			},
+			"summary": "打開技能視窗，把基本技能學到 1 級。",
+			"objectives": [
+				{
+					"type": "learn_skill",
+					"skill": "novice_basic",
+					"level": 1
+				}
+			],
+			"rewards": {
+				"base_exp": 500,
+				"job_exp": 30,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "職業等級升上去會拿到技能點喔。按 Alt+S 打開技能視窗，把基本技能學到 1 級。倉庫、組隊、轉職都要用到它！",
+				"progress": "還沒學嗎？技能視窗裡，基本技能旁邊有個加號，按下去就好～",
+				"complete": "很好很好！基本技能練到 9 級就可以轉職囉。"
+			}
+		},
+		"tutorial_save_point": {
+			"name": "幼苗的守護",
+			"giver": "guardian",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_awaken"
+				]
+			},
+			"summary": "請晨曦守護者艾拉登記存檔點。",
+			"objectives": [
+				{
+					"type": "save_point",
+					"text": "在艾拉這裡登記存檔點"
+				}
+			],
+			"rewards": {
+				"base_exp": 300,
+				"job_exp": 20,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "在外面倒下的話，幼苗會把你帶回登記過的地方。選「在這裡登記存檔點」就好！",
+				"progress": "還沒登記喔，選「在這裡登記存檔點」～",
+				"complete": "登記好了！倒下的話就會回到這裡。"
+			}
+		},
+		"tutorial_south_gate": {
+			"name": "南門之外",
+			"giver": "teleporter",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_awaken"
+				]
+			},
+			"summary": "走出南門的傳送陣到萌芽草原，再回來找傳送員希爾。",
+			"objectives": [
+				{
+					"type": "reach_map",
+					"map": "meadow"
+				}
+			],
+			"rewards": {
+				"base_exp": 600,
+				"job_exp": 40,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "廣場一直往南走就是南門，踩進發光的圓圈就會到萌芽草原喔。自己走過一次，以後我就能直接送你過去！",
+				"progress": "南門在廣場正南邊，踩進圓圈就好～",
+				"complete": "根脈記住你了！以後想去草原找我就行！"
+			}
+		},
+		"tutorial_bloom": {
+			"name": "綻放之時",
+			"giver": "guardian",
+			"tutorial": true,
+			"prerequisites": {
+				"quests_done": [
+					"tutorial_first_hunt"
+				]
+			},
+			"summary": "把初心者的職業等級練到 10 級，回來找晨曦守護者艾拉。",
+			"objectives": [
+				{
+					"type": "job_level",
+					"level": 10
+				}
+			],
+			"rewards": {
+				"base_exp": 1000,
+				"job_exp": 0,
+				"items": [
+					{
+						"item_id": "red_potion",
+						"amount": 5
+					}
+				]
+			},
+			"dialogue": {
+				"accept": "職業等級練到 10 級，就可以轉職了！去草原多打幾隻，練好再回來找我。",
+				"progress": "職業等級還沒到 10 級喔。草原上的小樹苗和水晶兔經驗比較多！",
+				"complete": "可以轉職了！去找劍侍導師蓋爾、術士導師露娜、斥候導師芬恩或信徒導師薇恩，選一個吧。啊，基本技能要先練到 9 級喔！"
+			}
+		},
+		"valley_road_open": {
+			"name": "通往谷地",
+			"giver": "teleporter",
+			"summary": "親自走一趟碎石谷，順便在河床撿 5 片燧石回來。",
+			"prerequisites": {
+				"base_level": 13,
+				"quests_done": [
+					"tutorial_south_gate"
+				]
+			},
+			"objectives": [
+				{
+					"type": "reach_map",
+					"map": "stone_valley"
+				},
+				{
+					"type": "collect",
+					"item": "flint_shard",
+					"count": 5,
+					"text": "收集燧石片"
+				}
+			],
+			"rewards": {
+				"base_exp": 7000,
+				"job_exp": 2600,
+				"items": []
+			},
+			"dialogue": {
+				"accept": "森林最北邊接著碎石谷，谷裡只有乾河床走得通。河床附近的岩殼蝸和碎石鼠身上有燧石片，幫我帶 5 片回來，傳送陣要用！",
+				"progress": "燧石片還不夠喔，岩殼蝸和碎石鼠身上都有～",
+				"complete": "謝謝！根脈記住谷地了，以後可以直接送你去。往東邊山壁的裂縫走，就是灰蝕地窟囉。"
+			}
+		},
+		"cavern_supplies": {
+			"name": "出發前的準備",
+			"giver": "item_merchant",
+			"summary": "買一張回城卷軸並且用掉它，再親自走進灰蝕地窟。",
+			"prerequisites": {
+				"base_level": 15,
+				"quests_done": [
+					"valley_road_open"
+				]
+			},
+			"objectives": [
+				{
+					"type": "buy",
+					"item": "town_scroll",
+					"count": 1
+				},
+				{
+					"type": "use_item",
+					"item": "town_scroll",
+					"count": 1
+				},
+				{
+					"type": "reach_map",
+					"map": "gloom_cavern_b1"
+				}
+			],
+			"rewards": {
+				"base_exp": 9000,
+				"job_exp": 3300,
+				"items": [
+					{
+						"item_id": "town_scroll",
+						"amount": 3
+					}
+				]
+			},
+			"dialogue": {
+				"accept": "要去地窟？那要先想好怎麼出來呀！買一張回城卷軸，撕開就會回到存檔點，一分鐘能用一次。先在外面試試看，別到裡面才手忙腳亂～",
+				"progress": "買了嗎？撕了嗎？地窟進去看過了嗎？三件都要喔！",
+				"complete": "做得好～這幾張送你。血剩一半就撕，別等到剩一點點！"
+			}
+		}
+	}
+}

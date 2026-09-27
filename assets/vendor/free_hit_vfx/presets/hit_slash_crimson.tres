@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="FreeHitFxPreset" format=3]
+
+[ext_resource type="Script" path="res://assets/vendor/free_hit_vfx/core/free_hit_fx_layer.gd" id="1_layer"]
+[ext_resource type="Texture2D" path="res://assets/vendor/free_hit_vfx/textures/t_stylizedhit_1.png" id="2_tex"]
+[ext_resource type="Script" path="res://assets/vendor/free_hit_vfx/core/free_hit_fx_preset.gd" id="3_preset"]
+
+[sub_resource type="Resource" id="layer_slash"]
+script = ExtResource("1_layer")
+texture = ExtResource("2_tex")
+size = 1.8
+delay = 0.0
+lifetime = 0.42
+spin = -0.3
+random_angle = true
+scale_from = 0.4
+scale_to = 1.0
+overshoot = 2.2
+use_hot_start = true
+dissolve_amount = 1.0
+distortion = 0.06
+stretch = Vector2(1.25, 0.85)
+emission_energy = 0.754
+
+[resource]
+script = ExtResource("3_preset")
+fx_name = "slash_crimson"
+color_core = Color(3, 1.7, 1.1, 1)
+color_main = Color(2.4, 0.4, 0.28, 1)
+color_accent = Color(1.6, 0.12, 0.35, 1)
+duration = 0.7
+layers = Array[ExtResource("1_layer")]([SubResource("layer_slash")])
+flash_size = 0.9
+ring_size = 0.0
+ring_lifetime = 0.45
+sparks_amount = 0
+spark_speed = 5.0
+spark_lifetime = 0.6
+light_energy = 6.0
+light_range = 5.0

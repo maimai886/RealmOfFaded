@@ -1,0 +1,320 @@
+{
+  "note": "Realm of Faded 自有數值系統的全部常數，規格在 docs/自有數值系統.md，程式不寫死數字",
+  "attributes": {
+    "start_points": 60,
+    "points_per_level_base": 3,
+    "points_per_level_divisor": 5,
+    "cost_step": 10,
+    "cost_base": 1,
+    "max": 99
+  },
+  "levels": {
+    "base_max": 60,
+    "job_max": {
+      "0": 10,
+      "1": 50,
+      "2": 70,
+      "3": 70
+    },
+    "job_change_level": {
+      "0": 10,
+      "1": 30,
+      "2": 40
+    },
+    "skill_point_per_job_level": 1,
+    "skill_point_bonus_every": 5,
+    "skill_point_bonus_extra": 1,
+    "skill_point_bonus_from_tier": 1,
+    "novice_starting_skill_points": 1
+  },
+  "exp": {
+    "curve_scale": 30.0,
+    "curve_power": 1.85,
+    "curve_linear": 70.0,
+    "kills_per_level_base": 8.0,
+    "kills_per_level_slope": 0.17,
+    "job_exp_ratio_permille": 550,
+    "death_exp_permille": 10,
+    "death_exempt_base_level": 10
+  },
+  "power": {
+    "level_permille": 500,
+    "sub_stat_permille": 250,
+    "luk_permille": 200,
+    "weapon_main_permille": 10,
+    "matk_int_permille": 1500,
+    "matk_level_permille": 500,
+    "matk_dex_permille": 250,
+    "weapon_int_permille": 10,
+    "variance_min_percent": 80,
+    "variance_max_percent": 120
+  },
+  "defense": {
+    "toughness_vit_permille": 800,
+    "toughness_level_permille": 400,
+    "ward_int_permille": 500,
+    "ward_level_permille": 300,
+    "physical_base": 50,
+    "physical_per_level": 10,
+    "magic_base": 40,
+    "magic_per_level": 8
+  },
+  "accuracy": {
+    "accuracy_base": 20,
+    "accuracy_level_permille": 1000,
+    "accuracy_dex_permille": 1500,
+    "evasion_base": 20,
+    "evasion_level_permille": 1000,
+    "evasion_agi_permille": 1500,
+    "evasion_luk_permille": 300,
+    "hit_scale_percent": 160,
+    "hit_min_percent": 10,
+    "hit_max_percent": 95
+  },
+  "crit": {
+    "base_per_mille": 20,
+    "luk_per_mille": 3,
+    "level_divisor": 2,
+    "target_luk_per_mille": 3,
+    "damage_base_percent": 150,
+    "damage_luk_permille": 1000,
+    "dodge_luk_per_mille": 2
+  },
+  "luck": {
+    "note": "幸運在戰鬥之外的三個出口，曲線一律是 LUK / (LUK + soft) 千分比再夾上限，見 docs/自有數值系統.md 第 2.6 節",
+    "refine_soft": 300,
+    "refine_max_permille": 200,
+    "craft_soft": 200,
+    "craft_max_permille": 350,
+    "affix_soft": 60,
+    "affix_max_permille": 650
+  },
+  "crafting": {
+    "note": "只有做裝備會失敗，藥水和材料一律成功；失敗退一半材料，金幣不退",
+    "success_common": 100,
+    "success_uncommon": 92,
+    "success_rare": 84,
+    "success_epic": 76,
+    "material_refund_percent": 50
+  },
+  "attack_speed": {
+    "agi_permille": 1500,
+    "ranged_dex_permille": 750,
+    "aps_max_permille": 2500,
+    "aps_max_awakened_permille": 2800,
+    "aps_min_permille": 250,
+    "aps_base_default_permille": 250,
+    "amotion_numerator_ms": 500,
+    "amotion_max_ms": 4000,
+    "aspd_fixed_permille_per_point": 20
+  },
+  "dodge": {
+    "note": "閃避翻滾，規格在 docs/打擊感規格.md 的「閃避」那一節；無敵窗刻意比位移短",
+    "distance_mm": 2400,
+    "travel_ms": 300,
+    "iframe_start_ms": 40,
+    "iframe_ms": 200,
+    "recovery_ms": 120,
+    "cooldown_ms": 900
+  },
+  "vitality": {
+    "hp_start": 40,
+    "hp_vit_permille": 15,
+    "hp_curve_divisor": 100,
+    "sp_start": 15,
+    "sp_int_permille": 20,
+    "sp_curve_divisor": 100
+  },
+  "cast": {
+    "dex_soft": 120,
+    "max_reduction_percent": 80
+  },
+  "misc_damage": {
+    "trap_base": 20,
+    "trap_dex_multiplier": 2,
+    "falcon_level_multiplier": 15,
+    "falcon_agi_permille": 1000,
+    "falcon_dex_permille": 500
+  },
+  "support": {
+    "_comment": "支援技能的常數，公式在 src/core/grace.gd，規格在 docs/技能規劃.md",
+    "cleanse_max_default": 1
+  },
+  "element_effects": {
+    "note": "時間和空間兩種屬性的機制，規格在 docs/自有數值系統.md 第 3.2 節",
+    "time_element": "time",
+    "space_element": "space",
+    "drag_status_id": "drag",
+    "drag_aspd_percent_per_stack": -8,
+    "drag_max_stacks": 3,
+    "drag_duration_ms": 4000,
+    "drag_buff_extend_ms": 1000,
+    "space_defense_ignore_percent": 30,
+    "space_knockback_m": 60
+  },
+  "loot_value": {
+    "note": "一隻一般怪身上的戰利品賣給商人的期望值，規格在 docs/自有數值系統.md 第 8 節；怪物不掉金幣，錢只有賣戰利品一條路，data/monsters.json 的掉落表要對得上這條曲線",
+    "base": 14.0,
+    "per_level": 2.0,
+    "quadratic": 0.3
+  },
+  "monster_curve": {
+    "hp_base": 90.0,
+    "hp_per_level": 30.0,
+    "hp_quadratic": 0.2,
+    "atk_base": 5.0,
+    "atk_per_level": 2.4,
+    "def_base": 17.0,
+    "def_per_level": 3.33,
+    "mdef_base": 10.0,
+    "mdef_per_level": 2.0,
+    "accuracy_base": 24.0,
+    "accuracy_per_level": 2.6,
+    "evasion_base": 20.0,
+    "evasion_per_level": 2.5,
+    "luk_base": 1.0,
+    "luk_per_level": 0.3,
+    "attack_delay_default": 2.0
+  },
+  "monster_profiles": {
+    "horn_slime": {
+      "hp": 0.85,
+      "atk": 0.8,
+      "def": 0.5,
+      "mdef": 0.6,
+      "accuracy": 1.0,
+      "evasion": 0.9,
+      "attack_delay": 2.0
+    },
+    "leaf_sprout": {
+      "hp": 0.9,
+      "atk": 0.95,
+      "def": 0.7,
+      "mdef": 0.7,
+      "accuracy": 1.0,
+      "evasion": 1.05,
+      "attack_delay": 1.6
+    },
+    "crystal_bunny": {
+      "hp": 0.95,
+      "atk": 1.0,
+      "def": 0.85,
+      "mdef": 1.2,
+      "accuracy": 1.05,
+      "evasion": 1.25,
+      "attack_delay": 1.5
+    },
+    "stump_king": {
+      "hp": 1.4,
+      "atk": 1.2,
+      "def": 1.5,
+      "mdef": 0.8,
+      "accuracy": 1.0,
+      "evasion": 0.7,
+      "attack_delay": 1.8
+    }
+  },
+  "boss_rules": {
+    "note": "王和小王的共同規則，規格在 docs/自有數值系統.md 第 7.3 節：資料寫 boss 或 mini_boss 的怪等級不低於 min_level，照 RO 天使波利、惡魔波利那種放在低等地圖、新手打不贏的野外王；tests/test_boss_rules.gd 守著",
+    "min_level": 30
+  },
+  "colour": {
+    "note": "奪色：地面一公尺一格的彩度，規則在 docs/奪色世界規劃書.md 第 7、8 節；permille 是千分之幾，mm 是毫米。地圖上沒人時怪吃顏色只剩 eat_empty_percent，eat_full_players 個人以上照全速；地圖越灰，掉落機率最多多 grey_drop_bonus_percent、怪物傷害最多多 grey_monster_damage_percent，全灰時拿滿；城裡的商店看 shops.json 的 colour_maps 那幾張圖的平均上色度，上色度超過 shop_discount_from_permille 開始打折，全彩時折 shop_discount_max_percent；上色度掉到 alarm_below_permille 以下全服廣播、這張圖寫 colour_release map 的王立刻醒來，回到 alarm_clear_permille 以上再廣播一次顏色回來了；全灰的格子每秒把上下左右的鄰格推掉 spread_per_second_permille，越灰推越多，不看人數，整張圖上色度低於 spread_floor_permille 就停。模擬過萌芽草原：沒人時三個半小時左右掉到警報線，一個玩家在打能守在八成五上下",
+    "tick_ms": 500,
+    "eat_per_second_permille": 150,
+    "eat_radius_mm": 1500,
+    "release_radius_mm": 3500,
+    "recover_per_second_permille": 2,
+    "spread_per_second_permille": 3,
+    "spread_floor_permille": 300,
+    "eat_empty_percent": 25,
+    "eat_full_players": 4,
+    "grey_drop_bonus_percent": 100,
+    "grey_monster_damage_percent": 50,
+    "shop_discount_max_percent": 10,
+    "shop_discount_from_permille": 500,
+    "alarm_below_permille": 350,
+    "alarm_clear_permille": 600
+  },
+  "chroma": {
+    "note": "奪色：彩度條，規則在 docs/奪色世界規劃書.md 第 6 節；permille 是千分之幾，mm 是毫米。數字是第一版，照實際打起來調；每招的彩度消耗照技能的 form 吃 cost_single、cost_area、cost_zone、cost_heal，二格兩色都挑乘 dual_cost_permille，推算在 docs/技能與流派.md 第 5.0.1 節",
+    "gain_per_hit": 2,
+    "gain_on_kill": 5,
+    "kill_radius_mm": 8000,
+    "drain_per_second_permille": 2000,
+    "grey_threshold_permille": 500,
+    "regen_per_second_permille": 500,
+    "grey_hp_permille_per_second": 10,
+    "default_skill_cost": 8,
+    "burst_min": 90,
+    "force_multiplier_permille": 1500,
+    "force_multiplier_step_permille": 500,
+    "force_streak_ms": 5000,
+    "burst_percent_min": 500,
+    "burst_percent_max": 700,
+    "gain_per_heal_tenth": 2,
+    "cost_single": 6,
+    "cost_area": 8,
+    "cost_zone": 12,
+    "cost_heal": 6,
+    "dual_cost_permille": 1500
+  },
+  "seed_traits": {
+    "note": "奪色：色種的特性，跟著那個屬性走，見 docs/奪色世界規劃書.md 第 5.2 節；by_tier 是第一階到第五階",
+    "rings": {
+      "percent_per_stack_by_tier": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "max_stacks": 5,
+      "keep_ms": 6000
+    }
+  },
+  "adaptation": {
+    "note": "奪色：菁英和王會吃掉最常用的屬性，同一屬性打中牠每 hits_per_step 下抗性加 step_percent，最多 max_percent，脫離戰鬥歸零，見 docs/奪色世界規劃書.md 第 9 節",
+    "hits_per_step": 20,
+    "step_percent": 10,
+    "max_percent": 40
+  },
+  "colour_soul": {
+    "note": "奪色：色魄是卡片，插在裝備上，格數跟著稀有度，見 docs/奪色世界規劃書.md 第 5.1 節和 docs/裝備成長.md",
+    "slots_by_rarity": {
+      "common": 0,
+      "uncommon": 1,
+      "rare": 2,
+      "epic": 3
+    }
+  },
+  "farming_watch": {
+    "window_minutes": 60,
+    "kills_per_window": 2400,
+    "boss_kills_per_window": 6,
+    "note": "抓掛機刷怪刷王：同一個角色 window_minutes 分鐘內打倒超過 kills_per_window 隻怪、或超過 boss_kills_per_window 隻王和小王，寫一筆 suspect.farming 稽核，不自動處罰。木樁王十五分鐘重生一次，一小時最多四隻"
+  },
+  "momentum": {
+    "note": "劍侍的劍勢：普攻命中加一層、踏破命中加一層、翻滾歸零，過了保留時間沒再命中就歸零；劍勢被動加上限和保留時間，規格在 docs/技能與流派.md 第 5.2 節",
+    "base_max": 3,
+    "hold_ms": 2500
+  },
+  "mark": {
+    "note": "斥候的印記：掛在目標身上，誰標的都能用；上限和持續時間照 docs/技能與流派.md 第 3.4 節，深印加上限和時間",
+    "base_max": 3,
+    "hold_ms": 8000
+  },
+  "pathfinding": {
+    "note": "點地移動的尋路，規則在 src/core/path_finder.gd 和 docs/伺服器架構.md 第 4 節；一格 0.5 公尺是 RO 一格用走路速度換算的大小，搜尋上限參考 rAthena path.cpp 的 MAX_WALKPATH；chase_ 開頭的是怪物追擊、回家和鎖定攻擊走近被擋住時算路，map_tick_budget 是一張地圖每個 tick 所有怪物算路共用的格子數",
+    "cell_mm": 500,
+    "max_search_nodes": 2048,
+    "max_path_cells": 96,
+    "nearest_rings": 32,
+    "budget_per_second": 4096,
+    "budget_max": 4096,
+    "chase_repath_ms": 400,
+    "chase_repath_mm": 1000,
+    "chase_search_nodes": 1024,
+    "map_tick_budget": 512
+  }
+}

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://assets/vendor/free_hit_vfx/core/free_hit_fx.gd" id="1_script"]
+[ext_resource type="Resource" path="res://assets/vendor/free_hit_vfx/presets/hit_slash_crimson.tres" id="2_preset"]
+
+[node name="FreeHitFxSlashCrimson" type="Node3D"]
+script = ExtResource("1_script")
+preset = ExtResource("2_preset")

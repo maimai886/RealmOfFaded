@@ -1,0 +1,339 @@
+{
+  "frame_size": [
+    176,
+    232
+  ],
+  "columns": 8,
+  "pixels_per_meter": 96.0,
+  "anchor": [
+    88,
+    208
+  ],
+  "directions": [
+    "s",
+    "sw",
+    "w",
+    "nw",
+    "n"
+  ],
+  "layout": "packed",
+  "filter": "linear",
+  "head_layer": false,
+  "actions": {
+    "idle": {
+      "start": 0,
+      "frames": 3,
+      "fps": 5,
+      "loop": true
+    },
+    "walk": {
+      "start": 15,
+      "frames": 8,
+      "fps": 12,
+      "loop": true
+    },
+    "attack": {
+      "start": 55,
+      "frames": 6,
+      "fps": 14,
+      "loop": false,
+      "hit_frame": 3
+    },
+    "cast": {
+      "start": 85,
+      "frames": 4,
+      "fps": 8,
+      "loop": true
+    },
+    "hit": {
+      "start": 105,
+      "frames": 2,
+      "fps": 10,
+      "loop": false
+    },
+    "die": {
+      "start": 115,
+      "frames": 4,
+      "fps": 7,
+      "loop": false
+    },
+    "sit": {
+      "start": 135,
+      "frames": 1,
+      "fps": 1,
+      "loop": true
+    },
+    "pickup": {
+      "start": 140,
+      "frames": 2,
+      "fps": 8,
+      "loop": false
+    }
+  },
+  "order": {
+    "idle": {
+      "s": [
+        1,
+        1,
+        1
+      ],
+      "sw": [
+        1,
+        1,
+        1
+      ],
+      "w": [
+        1,
+        1,
+        1
+      ],
+      "nw": [
+        1,
+        1,
+        1
+      ],
+      "n": [
+        -1,
+        -1,
+        -1
+      ]
+    },
+    "walk": {
+      "s": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "sw": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "w": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "nw": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "n": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    "attack": {
+      "s": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "sw": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "w": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "nw": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "n": [
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        -1
+      ]
+    },
+    "cast": {
+      "s": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sw": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "w": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "nw": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "n": [
+        -1,
+        -1,
+        -1,
+        -1
+      ]
+    },
+    "hit": {
+      "s": [
+        1,
+        1
+      ],
+      "sw": [
+        1,
+        1
+      ],
+      "w": [
+        1,
+        1
+      ],
+      "nw": [
+        1,
+        1
+      ],
+      "n": [
+        -1,
+        -1
+      ]
+    },
+    "die": {
+      "s": [
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "sw": [
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "w": [
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "nw": [
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "n": [
+        -1,
+        1,
+        -1,
+        -1
+      ]
+    },
+    "sit": {
+      "s": [
+        1
+      ],
+      "sw": [
+        1
+      ],
+      "w": [
+        1
+      ],
+      "nw": [
+        1
+      ],
+      "n": [
+        -1
+      ]
+    },
+    "pickup": {
+      "s": [
+        1,
+        1
+      ],
+      "sw": [
+        1,
+        1
+      ],
+      "w": [
+        1,
+        1
+      ],
+      "nw": [
+        1,
+        1
+      ],
+      "n": [
+        -1,
+        -1
+      ]
+    }
+  },
+  "source": {
+    "pipeline": "art_pipeline/characters_v5/puppet_layer.py",
+    "image": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\assets\\ui\\icons\\items\\knife.png",
+    "rig": "C:\\Users\\h1243\\AppData\\Local\\Temp\\claude\\C--Users-h1243-Desktop-workspace-Sproutia\\60a7716e-1edd-4276-87d4-10feb835fa1e\\scratchpad\\puppet_rig_male30",
+    "body": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\assets\\generated\\sprites\\characters\\body\\male_novice",
+    "socket": "hand_r",
+    "per_direction_views": false,
+    "defaults": {
+      "grip": [
+        0.18,
+        0.9
+      ],
+      "axis": -52.0,
+      "angle": 0.0,
+      "length": 0.35
+    },
+    "shared": "男女共用，2026-09-24 使用者說男女共用身體只差髮型和裝備"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "source": "商品清單參考 RO 普隆德拉道具商人和武器防具商，rAthena npc/merchants/shops.txt 的 prt_in Tool Dealer、Weapon Dealer、Armor Dealer；售價用 data/items.json 的 buy_price，賣回給商人是 sell_price",
+  "notes": "npc 是開這家店的 NPC id，對話選項用 shop:商店id 開店；只有清單裡而且有定價的道具才會上架；colour_maps 是這家店看哪幾張地圖的上色度打折，規則在 src/core/colour_map.gd 的 shop_discount_percent",
+  "shops": {
+    "item_shop": {
+      "name": "蜜拉的道具店",
+      "npc": "item_merchant",
+      "items": [
+        "red_potion",
+        "orange_potion",
+        "green_potion",
+        "blue_potion",
+        "town_scroll",
+        "flower_honey"
+      ],
+      "colour_maps": [
+        "meadow"
+      ]
+    },
+    "gear_shop": {
+      "name": "布隆的武器防具店",
+      "npc": "gear_merchant",
+      "items": [
+        "knife",
+        "sword",
+        "long_sword",
+        "rod",
+        "elder_rod",
+        "crescent_rod",
+        "dawn_censer",
+        "dawn_edge",
+        "bow",
+        "hunting_bow",
+        "ridge_bow",
+        "arrow",
+        "fire_arrow",
+        "crystal_arrow",
+        "wind_arrow",
+        "stone_arrow",
+        "silver_arrow",
+        "shadow_arrow",
+        "guard",
+        "cotton_shirt",
+        "sandals",
+        "cap"
+      ],
+      "colour_maps": [
+        "meadow"
+      ]
+    }
+  }
+}

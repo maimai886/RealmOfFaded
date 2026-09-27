@@ -14,6 +14,7 @@ const ORBIT_SPEED := 0.03
 const SLOTS := 3
 const START_JOB := "novice"
 const JOB_ICON_SIZE := 16
+const INFO_HEIGHT := 80
 const STATUS_COLORS := {"smooth": UiTheme.INK_GOOD, "busy": UiTheme.INK_WARN, "full": UiTheme.INK_BAD}
 const SERVER_COLUMNS := [["name", 0], ["population", 108], ["status", 64], ["latency", 64], ["characters", 52]]
 const GROWS := [Control.GROW_DIRECTION_END, Control.GROW_DIRECTION_BOTH, Control.GROW_DIRECTION_BEGIN]
@@ -23,13 +24,13 @@ const BOXES := {
 		[[Vector2(0.5, 0.5), Vector2(360, 240), Vector2(0, 12)]]],
 	"servers": [[[Vector2(0.5, 0.5), Vector2(520, 330), Vector2(0, 30)]],
 		[[Vector2(0.5, 0.5), Vector2(520, 330), Vector2.ZERO]]],
-	"characters": [[[Vector2(0.5, 0.5), Vector2(700, 496), Vector2.ZERO]],
-		[[Vector2(0.5, 0.5), Vector2(720, 384), Vector2.ZERO]]],
+	"characters": [[[Vector2(0.5, 0.5), Vector2(700, 0), Vector2.ZERO]],
+		[[Vector2(0.5, 0.5), Vector2(720, 0), Vector2.ZERO]]],
 	"create": [
-		[[Vector2(0.5, 0), Vector2(384, 434), Vector2(40, 66)], [Vector2(0, 0.5), Vector2(330, 392), Vector2(36, -14)],
-			[Vector2(0.5, 1), Vector2(660, 112), Vector2(0, -24)]],
-		[[Vector2(1, 0), Vector2(232, 200), Vector2(-12, 10)], [Vector2(0, 0.5), Vector2(288, 336), Vector2(12, -8)],
-			[Vector2(1, 1), Vector2(516, 176), Vector2(-12, -10)]]],
+		[[Vector2(0.5, 0), Vector2(384, 434), Vector2(40, 66)], [Vector2(0, 0.5), Vector2(330, 0), Vector2(36, -14)],
+			[Vector2(0.5, 1), Vector2(660, 0), Vector2(0, -24)]],
+		[[Vector2(1, 0), Vector2(232, 200), Vector2(-12, 10)], [Vector2(0, 0.5), Vector2(288, 0), Vector2(12, -8)],
+			[Vector2(1, 1), Vector2(516, 0), Vector2(-12, -10)]]],
 }
 
 @onready var _rof: Node = get_node_or_null("/root/Rof")
@@ -66,8 +67,6 @@ var _character_message: Label
 var _enter_button: Button
 var _create_stage: PreviewStage
 var _gender_buttons := {}
-var _create_options: VBoxContainer
-var _option_values := {}
 var _name_edit: LineEdit
 var _name_message: Label
 
@@ -245,7 +244,7 @@ func _window(title_key: String, width: int) -> Array:
 	var bar_row := HBoxContainer.new()
 	bar_row.add_theme_constant_override("separation", 6)
 	bar.add_child(bar_row)
-	bar_row.add_child(_icon(UiTheme.skin_texture("emblem"), 16, Color(UiTheme.ACCENT, 0.95)))
+	bar_row.add_child(_icon(UiTheme.skin_texture("emblem"), 16, UiTheme.ACCENT_SOFT))
 	var title := Label.new()
 	title.text = Texts.text(title_key)
 	title.label_settings = LabelSettings.new()
@@ -327,7 +326,6 @@ func _icon(texture: Texture2D, size: int, color: Color) -> TextureRect:
 func _spacer() -> Control:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	return spacer
 
 
@@ -546,6 +544,8 @@ func _build_character_page() -> Control:
 		pager.add_child(button)
 	var info_frame := PanelContainer.new()
 	info_frame.add_theme_stylebox_override("panel", UiTheme.style("inset"))
+	# 撐到有角色時三列的高度，建第一隻角色時面板才不會跳
+	info_frame.custom_minimum_size.y = INFO_HEIGHT
 	body.add_child(info_frame)
 	_character_info = GridContainer.new()
 	_character_info.add_theme_constant_override("h_separation", 10)
@@ -553,11 +553,9 @@ func _build_character_page() -> Control:
 	info_frame.add_child(_character_info)
 	_character_message = _text("", UiTheme.FONT_SMALL, UiTheme.INK_DIM)
 	body.add_child(_character_message)
-	body.add_child(_spacer())
 	var buttons := _row(body)
 	buttons.add_child(_button("character.back", _show_page.bind("servers"), 128))
 	buttons.add_child(_spacer())
-	buttons.add_child(_button("character.create", _open_create, 88))
 	_enter_button = _button("character.enter", _enter_game, 112, true)
 	buttons.add_child(_enter_button)
 	_place(parts[0], page, 0)
@@ -607,7 +605,7 @@ func _side_button(key: String, direction: int, height: float) -> Button:
 func _character_slot(index: int, slot_size: Vector2) -> Control:
 	var slot := PanelContainer.new()
 	slot.custom_minimum_size = slot_size
-	slot.add_theme_stylebox_override("panel", UiTheme.style("select" if index == _selected else "slot"))
+	slot.add_theme_stylebox_override("panel", UiTheme.style("select" if index == _selected and index < _characters.size() else "slot"))
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 4)
 	slot.add_child(column)
@@ -616,7 +614,7 @@ func _character_slot(index: int, slot_size: Vector2) -> Control:
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		empty.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		column.add_child(empty)
-		column.add_child(_button("character.create_slot", _open_create))
+		column.add_child(_button("character.create", _open_create))
 		return slot
 	var summary: Dictionary = _characters[index]
 	var stage := PreviewStage.new(Vector2(140, 88) if _phone else Vector2(196, 160))
@@ -721,11 +719,7 @@ func _build_create_page() -> Control:
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		gender_row.add_child(button)
 		_gender_buttons[gender] = button
-	_create_options = VBoxContainer.new()
-	_create_options.add_theme_constant_override("separation", UiTheme.GAP)
-	options.add_child(_create_options)
-	options.add_child(_spacer())
-	options.add_child(_button("create.random", _randomize_appearance))
+	# 髮型、髮色這些外觀選項等圖層美術做好再接回來，清單在 data/appearances.json
 	_place(option_parts[0], page, 1)
 
 	var name_parts := _window("create.name_title", 516 if _phone else 660)
@@ -756,7 +750,7 @@ func _open_create() -> void:
 	_show_page("create")
 
 
-## 換性別整組選項重建，男女的髮型和服裝不一樣
+## 外觀先照性別的預設值
 func _set_gender(gender: String) -> void:
 	_gender = gender
 	_appearance = _integers(_options["defaults"][gender], _options["keys"])
@@ -769,45 +763,6 @@ func _set_gender(gender: String) -> void:
 				button.remove_theme_stylebox_override(state)
 			for state in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
 				button.remove_theme_color_override(state)
-	_clear(_create_options)
-	_option_values.clear()
-	for key in _options["keys"]:
-		if _option_names(key).size() <= 1:
-			continue
-		var row := _row(_create_options)
-		var label := _text(_options["labels"][key], UiTheme.FONT_SMALL, UiTheme.INK_DIM)
-		label.custom_minimum_size = Vector2(68, 28)
-		row.add_child(label)
-		row.add_child(_button("ui.previous", _step_option.bind(key, -1), 34))
-		var value := _text("")
-		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		value.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		row.add_child(value)
-		row.add_child(_button("ui.next", _step_option.bind(key, 1), 34))
-		_option_values[key] = value
-	_refresh_create()
-
-
-## 分性別的項目取該性別那組
-func _option_names(key: String) -> Array:
-	var list = _options[key]
-	return (list[_gender] if list is Dictionary else list).map(func(option): return option["name"])
-
-
-func _step_option(key: String, direction: int) -> void:
-	_appearance[key] = posmod(_appearance[key] + direction, _option_names(key).size())
-	_refresh_create()
-
-
-func _randomize_appearance() -> void:
-	for key in _option_values:
-		_appearance[key] = randi() % _option_names(key).size()
-	_refresh_create()
-
-
-func _refresh_create() -> void:
-	for key in _option_values:
-		_option_values[key].text = _option_names(key)[_appearance[key]]
 	_create_stage.show_character(_gender, _appearance)
 
 

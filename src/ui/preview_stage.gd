@@ -3,9 +3,9 @@ extends PanelContainer
 
 const UiTheme := preload("res://src/ui/ui_theme.gd")
 const DRAG_PIXELS := 42.0
-# 長焦看全身，角色約 1.75 公尺高
+# 長焦看全身；看身體中段偏下，腳底和頭頂在格子裡各留一點空
 const CAMERA_FOV := 24.0
-const LOOK_HEIGHT := 0.92
+const LOOK_HEIGHT := 0.85
 # 過了轉身門檻、不到走路門檻，站著面向那一方
 const FACING_SPEED := 0.1
 

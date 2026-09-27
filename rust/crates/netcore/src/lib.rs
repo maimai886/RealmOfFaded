@@ -6,7 +6,7 @@ mod snapshot;
 
 pub use clock::{INTERPOLATION_DELAY_MS, ServerClock};
 pub use prediction::{Correction, Prediction};
-pub use rof_core::TICK_MS;
+pub use rof_core::{MOVE_SPEED, MapCollision, TICK_MS};
 pub use snapshot::{Sample, SnapshotBuffer};
 
 #[cfg(test)]

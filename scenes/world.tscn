@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[node name="World" type="RofWorld"]
+
+[node name="Camera" type="RofCamera" parent="."]
+
+[node name="Picker" type="GroundPicker" parent="."]
+
+[node name="ShotTaker" type="ShotTaker" parent="."]

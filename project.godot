@@ -6,6 +6,10 @@ config/name="Realm of Faded"
 run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 
+[autoload]
+
+Rof="*res://scenes/rof.tscn"
+
 [display]
 
 window/size/viewport_width=1280

@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="Environment" id="Environment_day"]
+background_mode = 1
+background_color = Color(0.6, 0.75, 0.92, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.725, 0.796, 0.902, 1)
+tonemap_mode = 4
+tonemap_exposure = 1.08
+glow_enabled = true
+glow_intensity = 0.3
+glow_bloom = 0.0
+glow_blend_mode = 1
+glow_hdr_threshold = 2.05
+fog_enabled = true
+fog_light_color = Color(0.86, 0.93, 1, 1)
+fog_density = 0.0009
+adjustment_enabled = true
+adjustment_contrast = 1.04
+adjustment_saturation = 1.1
+
+[sub_resource type="StandardMaterial3D" id="Material_ground"]
+albedo_color = Color(0.62, 0.58, 0.52, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+material = SubResource("Material_ground")
+size = Vector2(60, 60)
+
+[node name="ActorPreview" type="ActorPreview"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_day")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.663225, -0.610865, 0)
+light_color = Color(1, 0.91, 0.72, 1)
+light_energy = 2.0
+light_angular_distance = 2.6
+shadow_enabled = true
+shadow_opacity = 0.7
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(0, 36.7696, 36.7696)
+rotation = Vector3(-0.785398, 0, 0)
+fov = 15.0
+near = 1.0
+far = 300.0
+
+[node name="ShotTaker" type="ShotTaker" parent="."]

@@ -830,7 +830,11 @@ def main():
     sheet_output.write_import(mask_path, PROJECT_ROOT, pixel=PIXEL_MODE)
     head_attach = {action: {direction: [[row["head"][0], row["head"][1]] for row in rig["actions"][action]["dirs"][direction]]
                             for direction in directions} for action in actions}
+    import paperdoll  # 它在檔頭 import 這支，放這裡才不會繞圈
+    first = np.asarray(cells[actions["idle"]["start"]].crop((pad, pad, pad + frame_size[0], pad + frame_size[1])))
+    first_rows = np.nonzero((first[..., 3] > 127).any(axis=1))[0]
     meta = {"frame_size": list(frame_size), "columns": columns, "pixels_per_meter": 96, "anchor": list(rig["anchor"]),
+            "top_row": int(first_rows.min()), "luma_ranges": paperdoll.luma_ranges(first),
             "directions": directions, "filter": "nearest" if PIXEL_MODE else "linear", "layout": "packed", "head_layer": False, "head_width": 0,
             "actions": actions, "head_attach": head_attach,
             "source": {"pipeline": "art_pipeline/characters_v5/puppet_sheet.py", "views": os.path.relpath(args.views, PROJECT_ROOT).replace(os.sep, "/")}}

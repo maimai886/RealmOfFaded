@@ -22,6 +22,12 @@ ORDER = ["torso", "pelvis", "head", "upper_arm_l", "upper_arm_r", "forearm_l", "
 FACING = {"s": "front", "n": "back", "w": "side", "sw": "diag", "nw": "diag"}
 # 斜向看到的擺幅比側面小
 DIAG_SCALE = 0.75
+# 斜向走路兩條腿的髖往中間收幾成
+DIAG_LEG_GATHER = 0.6
+# 走路大腿前後各擺幾度：側面兩腳最開 0.47 個身高，和 RO 初心者走路量到的一樣
+WALK_THIGH_DEG = 30.0
+# 和 cbuild.CAMERA_ELEVATION_DEG 同一個，骨架是照這個俯角投影的
+CAMERA_ELEVATION_DEG = 30.0
 
 
 def _rot(theta_deg, vx, vy):
@@ -35,6 +41,7 @@ def apply_pose(rest, pose):
     rot = pose.get("rot", {})
     length = pose.get("len", {})
     depth_override = pose.get("depth", {})
+    shift = pose.get("shift", {})
     dx, dy = pose.get("dx", 0.0), pose.get("dy", 0.0)
     transforms = {"root": (0.0, (0.0, 0.0), (dx, dy))}
     rows = {}
@@ -45,7 +52,7 @@ def apply_pose(rest, pose):
         parent_theta, parent_rest_start, parent_new_start = transforms[PARENT[name]]
         # 起點跟著父零件走
         rx, ry = _rot(parent_theta, ax - parent_rest_start[0], ay - parent_rest_start[1])
-        sx, sy = parent_new_start[0] + rx, parent_new_start[1] + ry
+        sx, sy = parent_new_start[0] + rx + shift.get(name, 0.0), parent_new_start[1] + ry
         theta = parent_theta + rot.get(name, 0.0)
         vx, vy = _rot(theta, bx - ax, by - ay)
         scale = length.get(name, 1.0)
@@ -80,17 +87,28 @@ def side_idle(frames):
     return out
 
 
-def side_walk(frames):
+def _hip_drop(rest, s):
+    """兩腳前後張開時髖往下沉，伸直的那隻腳才踩得到地：RO 初心者走路頭的錨點在兩腳最開那格最低、交錯那格最高，差 3 像素"""
+    return _leg_length(rest) * (1.0 - math.cos(math.radians(WALK_THIGH_DEG * abs(s))))
+
+
+def _toward_camera(theta_deg):
+    """腿往鏡頭前後擺 theta 度，畫面上的長度倍率：30 度俯角看，往前伸變長、往後收變短"""
+    e = math.radians(CAMERA_ELEVATION_DEG)
+    return math.cos(math.radians(theta_deg) - e) / math.cos(e)
+
+
+def side_walk(rest, frames):
     out = []
     for f in range(frames):
         t = f / float(frames)
         s = _sine(t)
         back_l = max(0.0, -s)
         back_r = max(0.0, s)
-        out.append({"dy": -2.5 * abs(s), "rot": {
+        out.append({"dy": _hip_drop(rest, s), "rot": {
             "torso": -4.0,
-            "thigh_l": 30.0 * s, "shin_l": -45.0 * back_l, "foot_l": -10.0 * back_l,
-            "thigh_r": -30.0 * s, "shin_r": -45.0 * back_r, "foot_r": -10.0 * back_r,
+            "thigh_l": WALK_THIGH_DEG * s, "shin_l": -45.0 * back_l, "foot_l": -10.0 * back_l,
+            "thigh_r": -WALK_THIGH_DEG * s, "shin_r": -45.0 * back_r, "foot_r": -10.0 * back_r,
             "upper_arm_l": -22.0 * s, "forearm_l": 18.0,
             "upper_arm_r": 22.0 * s, "forearm_r": 18.0}})
     return out
@@ -169,18 +187,36 @@ def front_idle(rest, frames):
     return out
 
 
-def front_walk(rest, frames):
+def front_walk(rest, frames, toward=1.0):
+    """正面往前踏的腳往鏡頭伸，畫面上往下、變長；後腳往後收、變短。以前把前腳的小腿縮短，腳反而往上抬，像原地踏步。
+    toward 是 1 正面、-1 背面，背面往前踏是離鏡頭遠、變短"""
     out = []
     for f in range(frames):
         t = f / float(frames)
         s = _sine(t)
-        fwd_l = max(0.0, s)
-        fwd_r = max(0.0, -s)
-        out.append({"dy": -2.5 * abs(s), "rot": {
-            "thigh_l": 5.0 * fwd_l * _side_of(rest, "thigh_l"), "thigh_r": 5.0 * fwd_r * _side_of(rest, "thigh_r"),
+        ratio_l = _toward_camera(toward * WALK_THIGH_DEG * s)
+        ratio_r = _toward_camera(-toward * WALK_THIGH_DEG * s)
+        out.append({"dy": _hip_drop(rest, s), "rot": {
             "upper_arm_l": 9.0 * s * _side_of(rest, "upper_arm_l"), "upper_arm_r": -9.0 * s * _side_of(rest, "upper_arm_r"),
             "forearm_l": 8.0, "forearm_r": 8.0},
-            "len": {"shin_l": 1.0 - 0.28 * fwd_l, "shin_r": 1.0 - 0.28 * fwd_r, "foot_l": 1.0 + 0.25 * fwd_l, "foot_r": 1.0 + 0.25 * fwd_r}})
+            "len": {"thigh_l": ratio_l, "shin_l": ratio_l, "thigh_r": ratio_r, "shin_r": ratio_r}})
+    return out
+
+
+def diag_walk(rest, frames, toward):
+    """斜向往前是橫著走一半、往鏡頭前後一半：畫面上的擺角和長度變化各取一部分，兩腳前後才一樣開。
+    以前只拿側面縮 0.75 倍，一半的步子兩腳疊在一起、另一半張到 0.5 個身高"""
+    side = _resolve_near_far(rest, side_walk(rest, frames))
+    # 斜向兩條腿在畫面上左右隔將近 30 像素，往前踏的那條會橫越另一條、疊成一條腿；RO 斜向兩腳幾乎從同一點出發，前腳每一步都在前面
+    mid = (rest["thigh_l"][0] + rest["thigh_r"][0]) / 2.0
+    gather = {k: (mid - rest[k][0]) * DIAG_LEG_GATHER for k in ("thigh_l", "thigh_r")}
+    depth = front_walk(rest, frames, toward)
+    out = []
+    for a, b in zip(side, depth):
+        pose = {"dx": 0.0, "dy": a["dy"], "rot": {k: v * DIAG_SCALE for k, v in a["rot"].items()}, "len": {}, "shift": gather}
+        for k, v in b["len"].items():
+            pose["len"][k] = 1.0 + (v - 1.0) * DIAG_SCALE
+        out.append(pose)
     return out
 
 
@@ -283,8 +319,10 @@ def poses_for(rest, action, frames, direction):
     kind = FACING[direction]
     if action == "die":
         return None
+    if kind == "diag" and action == "walk":
+        return _damp_far_arm(rest, diag_walk(rest, frames, 1.0 if direction == "sw" else -1.0))
     if kind in ("side", "diag"):
-        table = {"idle": lambda: side_idle(frames), "walk": lambda: side_walk(frames), "attack": lambda: side_attack(frames),
+        table = {"idle": lambda: side_idle(frames), "walk": lambda: side_walk(rest, frames), "attack": lambda: side_attack(frames),
                  "cast": lambda: side_cast(frames), "hit": lambda: side_hit(frames), "pickup": lambda: side_pickup(rest, frames),
                  "sit": lambda: side_sit(rest, frames)}
         poses = _resolve_near_far(rest, table[action]())
@@ -292,7 +330,8 @@ def poses_for(rest, action, frames, direction):
             poses = _damp_far_arm(rest, poses)
         # 斜向擺幅縮小只用在會動的動作；坐和撿的下沉量是照角度算的，縮了腳會掉到地下
         return _scaled(poses, DIAG_SCALE) if kind == "diag" and action not in ("sit", "pickup") else poses
-    table = {"idle": lambda: front_idle(rest, frames), "walk": lambda: front_walk(rest, frames), "attack": lambda: front_attack(rest, frames),
+    table = {"idle": lambda: front_idle(rest, frames), "walk": lambda: front_walk(rest, frames, 1.0 if direction == "s" else -1.0),
+             "attack": lambda: front_attack(rest, frames),
              "cast": lambda: front_cast(rest, frames), "hit": lambda: front_hit(rest, frames), "pickup": lambda: front_pickup(rest, frames),
              "sit": lambda: front_sit(rest, frames)}
     return table[action]()

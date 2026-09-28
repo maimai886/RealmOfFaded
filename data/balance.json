@@ -2,6 +2,7 @@
   "note": "Realm of Faded 自有數值系統的全部常數，規格在 docs/自有數值系統.md，程式不寫死數字",
   "attributes": {
     "start_points": 60,
+    "rebirth_start_points": 109,
     "points_per_level_base": 3,
     "points_per_level_divisor": 5,
     "cost_step": 10,
@@ -9,21 +10,18 @@
     "max": 99
   },
   "levels": {
-    "base_max": 60,
+    "base_max": 99,
     "job_max": {
       "0": 10,
-      "1": 50,
-      "2": 70,
+      "1": 30,
+      "2": 50,
       "3": 70
     },
     "job_change_level": {
       "0": 10,
-      "1": 30,
-      "2": 40
+      "1": 30
     },
     "skill_point_per_job_level": 1,
-    "skill_point_bonus_every": 5,
-    "skill_point_bonus_extra": 1,
     "skill_point_bonus_from_tier": 1,
     "novice_starting_skill_points": 1
   },
@@ -31,6 +29,9 @@
     "curve_scale": 30.0,
     "curve_power": 1.85,
     "curve_linear": 70.0,
+    "rebirth_curve_scale": 36.0,
+    "rebirth_curve_power": 1.9,
+    "rebirth_curve_linear": 84.0,
     "kills_per_level_base": 8.0,
     "kills_per_level_slope": 0.17,
     "job_exp_ratio_permille": 550,
@@ -123,7 +124,9 @@
     "hp_curve_divisor": 100,
     "sp_start": 15,
     "sp_int_permille": 20,
-    "sp_curve_divisor": 100
+    "sp_curve_divisor": 100,
+    "rebirth_hp_permille": 1250,
+    "rebirth_sp_permille": 1250
   },
   "cast": {
     "dex_soft": 120,

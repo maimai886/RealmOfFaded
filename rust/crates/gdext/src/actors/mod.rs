@@ -131,6 +131,10 @@ impl Actor {
             godot_error!("讀不到初心者底板圖集：{gender}");
             return;
         };
+        self.setup_sheet(sheet, gender);
+    }
+
+    fn setup_sheet(&mut self, sheet: Rc<Sheet>, gender: GString) {
         let mut body = self.part(sheet, String::new());
         let mut caster = Sprite3D::new_alloc();
         caster.set_region_enabled(true);
@@ -426,7 +430,27 @@ impl INode3D for ActorPreview {
         let map = crate::map::build("meadow");
         self.base_mut().add_child(&map);
         Actor::light_from(map.upcast());
-        let yaw = self.base().get_viewport().and_then(|v| v.get_camera_3d()).map_or(0.0, |c| c.get_global_rotation().y);
+        let camera = self.base().get_viewport().and_then(|v| v.get_camera_3d());
+        let yaw = camera.as_ref().map_or(0.0, |c| c.get_global_rotation().y);
+        // --body=圖集資料夾：只放一個站著一個走路、都面向 sw；--at=x,z 挪到那塊地，--cam= 鏡頭距離
+        if let Some(dir) = crate::shot::arg("--body=") {
+            let Some(sheet) = Sheet::cached(&dir) else { return godot_error!("讀不到圖集：{dir}") };
+            let at: Vec<f32> = crate::shot::arg("--at=").unwrap_or_default().split(',').filter_map(|n| n.parse().ok()).collect();
+            let at = Vector3::new(at.first().copied().unwrap_or(0.0), 0.0, at.get(1).copied().unwrap_or(0.0));
+            let distance = crate::shot::arg("--cam=").and_then(|n| n.parse().ok()).unwrap_or(52.0_f32);
+            if let Some(mut camera) = camera {
+                camera.set_global_position(at + Vector3::new(0.0, 1.0, 1.0) * distance * FRAC_PI_4.sin());
+            }
+            let facing = yaw - FRAC_PI_4;
+            for (offset, speed) in [(-0.6, 0.1), (0.6, 3.5)] {
+                let mut actor = Actor::new_alloc();
+                actor.set_position(at + Vector3::new(offset, 0.0, 0.0));
+                actor.bind_mut().setup_sheet(sheet.clone(), "male".into());
+                self.base_mut().add_child(&actor);
+                self.actors.push((actor, Vector2::new(facing.sin(), facing.cos()) * speed));
+            }
+            return;
+        }
         let mut layers = VarDictionary::new();
         layers.set("weapon", "Knife");
         // 玩家移動速度 3.5；0.1 過了轉身門檻、不到走路門檻，站著面向那一方

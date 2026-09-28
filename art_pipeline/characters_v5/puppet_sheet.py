@@ -54,7 +54,13 @@ ORDER = ["idle", "walk", "attack", "cast", "hit", "die", "sit", "pickup"]
 def cut_view(path, bbox_target, frame_size):
     """視圖去背、切到外框，縮到人偶剪影的外框大小，腳底對齊；回傳工作解析度的 RGBA 畫布"""
     image = Image.open(path).convert("RGB")
-    figure = aether_sheet.trim(aether_sheet.cut(image))
+    cut = aether_sheet.cut(image)
+    if PIXEL_MODE:
+        # 像素圖的邊是一格墨線不是墨和白紙混色，反算會把邊上的膚色算成半透明的紅
+        rgb = np.asarray(image)
+        paper = (np.asarray(cut)[..., 3] == 0) & (rgb.min(2) > aether_sheet.WHITE)
+        cut = Image.fromarray(np.dstack([rgb, np.where(paper, 0, 255).astype(np.uint8)]), "RGBA")
+    figure = aether_sheet.trim(cut)
     x0, y0, x1, y1 = bbox_target
     target_h = (y1 - y0) * WORK_SCALE
     scale = target_h / float(figure.height)

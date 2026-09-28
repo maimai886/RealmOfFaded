@@ -237,7 +237,7 @@
     "alarm_clear_permille": 600
   },
   "chroma": {
-    "note": "奪色：彩度條，規則在 docs/奪色世界規劃書.md 第 6 節；permille 是千分之幾，mm 是毫米。數字是第一版，照實際打起來調；每招的彩度消耗照技能的 form 吃 cost_single、cost_area、cost_zone、cost_heal，二格兩色都挑乘 dual_cost_permille，推算在 docs/技能與流派.md 第 5.0.1 節",
+    "note": "奪色：彩度條，規則在 docs/奪色世界規劃書.md 第 6 節；permille 是千分之幾，mm 是毫米。數字是第一版，照實際打起來調；每招的彩度消耗照技能的 form 吃 cost_single、cost_area、cost_zone、cost_heal，二格兩色都挑乘 dual_cost_permille，推算在 docs/技能與流派.md 第 5.0 節",
     "gain_per_hit": 2,
     "gain_on_kill": 5,
     "kill_radius_mm": 8000,

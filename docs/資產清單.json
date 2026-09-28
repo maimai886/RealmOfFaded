@@ -206,7 +206,7 @@
         "evidence": "原始下載檔的 ID3 標籤和 C2PA 簽章。出貨的檔案已經用 art_pipeline/audio/strip_tags.py 把標籤整個拿掉，所以證據只存在這份清單裡",
         "account_shown_in_tag": "restrainedgroupie605",
         "license_file_in_repo": null,
-        "doc_record": "docs/音效對照.md 第 11 節"
+        "doc_record": "docs/音效對照.md 第 7 節"
       },
       "license": {
         "name": "Suno 付費訂閱方案",

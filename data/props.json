@@ -1,5 +1,5 @@
 {
-  "source": "每一種擺設模型的碰撞footprint。地圖檔只寫 props，不可行走區由 src/core/prop_footprints.gd 從這裡算出來，所以任何產生器擺的東西都自動是實心的。規則見 docs/世界地圖規劃.md 第 12 節",
+  "source": "每一種擺設模型的碰撞footprint。地圖檔只寫 props，不可行走區由 src/core/prop_footprints.gd 從這裡算出來，所以任何產生器擺的東西都自動是實心的。規則見 docs/世界地圖規劃.md 第 3.3 節",
   "notes": [
     "blocks 為 false 的是不擋路的裝飾，仍然要列出來，沒列到的模型測試會抓出來",
     "shape 是 circle 配 radius，或 rect 配 half [半寬, 半深]；數值是 scale 1.0 時的公尺，實際乘上 prop 的 scale",

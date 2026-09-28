@@ -42,7 +42,7 @@
     }
   },
   "support_effects": {
-    "note": "治療與輔助挑了屬性換附帶效果，規格在 docs/奪色世界規劃書.md 第 4.0 節和 docs/技能與流派.md 第 5.5 節",
+    "note": "治療與輔助挑了屬性換附帶效果，規格在 docs/奪色世界規劃書.md 第 4.0 節和 docs/技能與流派.md 第 5.2 節",
     "water": {
       "kind": "cleanse",
       "count": 1

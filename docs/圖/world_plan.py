@@ -1,6 +1,6 @@
 # 整個世界的地圖清單和示意圖，一份資料同時出文件表格和圖
 from PIL import Image, ImageDraw, ImageFont
-import sys
+import os, sys
 
 # kind: city 城、field 野外、dungeon 地城
 # cell: 世界地圖格子，x 往東、y 往南，晨曦鎮在 (0,0)
@@ -61,10 +61,10 @@ LONG = set()
 
 PHASE_COLOR = {0: (92, 148, 88), 1: (214, 146, 48), 2: (84, 128, 190), 3: (150, 104, 182), 4: (178, 84, 84),
                5: (70, 70, 70)}
-PHASE_NAME = {0: "已有", 1: "第一批，這次蓋", 2: "第二批 Lv 8-38", 3: "第三批 Lv 38-58", 4: "第四批 Lv 58-82",
+PHASE_NAME = {0: "已有", 1: "第一批，蓋好還沒接", 2: "第二批 Lv 8-38", 3: "第三批 Lv 38-58", 4: "第四批 Lv 58-82",
               5: "第五批 Lv 80-99"}
 
-FONT = "/home/user/RealmOfFaded/assets/vendor/fonts/NotoSansTC-wght.ttf"
+FONT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../assets/vendor/fonts/NotoSansTC-wght.ttf")
 
 
 def draw(path):

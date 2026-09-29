@@ -7,7 +7,7 @@
 所以出來的樣子和既有的圖示是同一種質感。
 
 用法：
-    blender -b --factory-startup --python-exit-code 1 -P art_pipeline/icons_v2/faith_icons.py
+    blender -b --factory-startup --python-exit-code 1 -P art_pipeline/icons/faith_icons.py
 """
 
 import math
@@ -17,7 +17,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 # common 是用套件名稱 import 的，所以 art_pipeline 本身也要在路徑上
-for sub in ("", "characters_v2", "monsters_v2", "icons_v2"):
+for sub in ("", "common", "monsters", "icons"):
     path = os.path.join(ROOT, sub) if sub else ROOT
     if path not in sys.path:
         sys.path.insert(0, path)

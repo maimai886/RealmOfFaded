@@ -23,8 +23,9 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-if HERE not in sys.path:
-    sys.path.insert(0, HERE)
+for _path in (HERE, os.path.join(os.path.dirname(HERE), "common")):
+    if _path not in sys.path:
+        sys.path.insert(0, _path)
 
 import bmesh  # noqa: E402
 import bpy  # noqa: E402
@@ -1088,7 +1089,7 @@ def build_all():
     """重跑整套 real：十四具身體加五頂髮型，每一項都當場驗一次
 
     用法：blender -b --factory-startup --python-exit-code 1 \
-              -P art_pipeline/characters_v3/rehome_meshy.py -- [bodies|hair]
+              -P art_pipeline/characters/rehome_meshy.py -- [bodies|hair]
     驗不過就丟例外，不要讓壞掉的模型安靜地覆蓋掉好的
     """
     what = "all"

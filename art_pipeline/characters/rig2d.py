@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 """紙偶骨架，不用 Blender：照 cbuild 同一組比例和同一顆 30 度正交相機，把站直的標準骨架投影到畫格上，寫成 rig.json。
 
-puppet_rig.py 要在 Blender 裡跑，輸出放在沒進版本庫的 art_pipeline/_build；沒有 Blender 的機器接不下去。
-動作早就改由 puppet_poses.py 在畫面上設計，骨架只剩兩個用途：切零件的參考姿勢、每個方向的站姿，
+動作由 puppet_poses.py 在畫面上設計，骨架只有兩個用途：切零件的參考姿勢、每個方向的站姿，
 兩個都是站直手垂下，用比例算得出來，不需要 KayKit 的動作檔。
 
-跟 puppet_rig.py 的差別：
 - rest 和 reference 是同一份。站姿第 0 格本來就是使用者的原圖，rest 只是動作的起點
 - 頭的圓和視圖放在哪裡照使用者的視圖量，不照人偶：視圖等比縮到 figure_height，兩腳腳底的中點對到錨點，
   軀幹中線對到畫格中線；頭頂到脖子最窄那一列量出頭的圓
 - 骨架先照比例投影，再上下拉到視圖的頭頂和錨點，頭用量到的圓
 
 用法：
-  python art_pipeline/characters_v5/rig2d.py <視圖資料夾> <輸出資料夾> [--figure-height 180] [--body-meta 身體 meta.json]
-輸出資料夾裡是 rig.json，格式和 puppet_rig.py 一樣，多一個 head_circle_fitted。
+  python art_pipeline/characters/rig2d.py <視圖資料夾> <輸出資料夾> [--figure-height 180] [--body-meta 身體 meta.json]
 """
 
 import argparse
@@ -27,9 +24,8 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
-sys.path.insert(0, os.path.join(HERE, "..", "characters_v3"))
 sys.path.insert(0, HERE)
-import aether_sheet  # noqa: E402
+from common import cutout  # noqa: E402
 import proportions  # noqa: E402
 import rigspec  # noqa: E402
 
@@ -42,7 +38,7 @@ DIRECTIONS = ["s", "sw", "w", "nw", "n"]
 CARD_SPEC = {"head_ratio": 2.83, "head_width_per_head": 0.99, "shoulder_per_head_width": 1.085,
              "shoulder_per_height": 0.556, "crotch_per_height": 0.317, "stance_per_head_width": 0.595,
              "leg_width_per_head_width": 0.323}
-# 手臂垂下時往外張一點，和 puppet_rig.REFERENCE_AIM 一樣
+# 手臂垂下時往外張一點
 ARM_AIM = (0.10, 0.0, -1.0)
 FOREARM_AIM = (0.04, 0.0, -1.0)
 PELVIS_FRACTION = 0.55
@@ -141,7 +137,7 @@ def _components(mask):
 
 def measure_view(path, scale):
     """視圖去背、等比縮放之後量：外框、兩腳腳底中點、軀幹中線、頭的圓。座標是縮放後圖的像素"""
-    figure = aether_sheet.trim(aether_sheet.cut(Image.open(path).convert("RGB")))
+    figure = cutout.trim(cutout.cut(Image.open(path).convert("RGB")))
     w, h = max(1, int(round(figure.width * scale))), max(1, int(round(figure.height * scale)))
     small = figure.resize((w, h), Image.LANCZOS)
     alpha = np.asarray(small)[..., 3] > 128
@@ -179,7 +175,7 @@ def landmarks(views, scale, anchor=ANCHOR):
     """正面視圖量高度的地標，換成畫格座標：頭頂、脖子、肩線、胯、兩腳中點，和兩腿中心的半距。
     五張視圖同一個比例、腳底同一條地面，所以正面量到的高度每個方向都用"""
     m = measure_view(os.path.join(views, "s.png"), scale)
-    figure = aether_sheet.trim(aether_sheet.cut(Image.open(os.path.join(views, "s.png")).convert("RGB")))
+    figure = cutout.trim(cutout.cut(Image.open(os.path.join(views, "s.png")).convert("RGB")))
     small = figure.resize(m["size"], Image.LANCZOS)
     alpha = np.asarray(small)[..., 3] > 128
     top_shift = anchor[1] - m["feet_mid"]
@@ -216,7 +212,7 @@ HAND_REACH = 0.9
 
 def build(views, figure_height=180.0, actions=None, frame_size=FRAME_SIZE, anchor=ANCHOR):
     joints, radii, spec = skeleton_3d(figure_height / PIXELS_PER_METER)
-    first = aether_sheet.trim(aether_sheet.cut(Image.open(os.path.join(views, "s.png")).convert("RGB")))
+    first = cutout.trim(cutout.cut(Image.open(os.path.join(views, "s.png")).convert("RGB")))
     scale = figure_height / float(first.height)
     marks = landmarks(views, scale, anchor)
     # 高度照地標分段對：地面、胯、肩、脖子各自對到視圖量到的那一列，中間線性；比例和畫的圖不一樣時骨頭才落在圖的肢體裡
@@ -231,7 +227,7 @@ def build(views, figure_height=180.0, actions=None, frame_size=FRAME_SIZE, ancho
     rig = {"frame_size": list(frame_size), "anchor": list(anchor), "directions": DIRECTIONS,
            "parts": [name for name, _, _ in PARTS] + ["head"], "radii": {k: round(v * PIXELS_PER_METER * hscale, 2) for k, v in radii.items()},
            "reference": {}, "rest": {}, "actions": {}, "head_circle_fitted": True, "view_scale": scale, "landmarks": marks,
-           "source": {"pipeline": "art_pipeline/characters_v5/rig2d.py", "views": os.path.relpath(views, os.path.join(HERE, "..", ".."))}}
+           "source": {"pipeline": "art_pipeline/characters/rig2d.py", "views": os.path.relpath(views, os.path.join(HERE, "..", ".."))}}
     arm_joints = ("elbow_l", "hand_l", "elbow_r", "hand_r")
     for index, direction in enumerate(DIRECTIONS):
         m = measure_view(os.path.join(views, direction + ".png"), scale)
@@ -288,7 +284,7 @@ def build(views, figure_height=180.0, actions=None, frame_size=FRAME_SIZE, ancho
 def cut_to_bbox(path, bbox, work_scale, frame_size):
     """視圖放進工作解析度的畫布，位置和大小照 rig 的 bbox；取代 puppet_sheet.cut_view，那支會照 bbox 高度重算縮放"""
     image = Image.open(path).convert("RGB")
-    figure = aether_sheet.trim(aether_sheet.cut(image))
+    figure = cutout.trim(cutout.cut(image))
     x0, y0, x1, y1 = bbox
     w, h = int(round((x1 - x0) * work_scale)), int(round((y1 - y0) * work_scale))
     figure = figure.resize((max(1, w), max(1, h)), Image.LANCZOS)

@@ -6,7 +6,7 @@
 e、ne、se 由引擎鏡射。四張的大小照 front 的高度統一縮到 data/monsters.json 的 art.height。
 
 用法：
-  python art_pipeline/monsters_v2/mpuppet.py <怪物代號> <視圖資料夾> [--candidate]
+  python art_pipeline/monsters/mpuppet.py <怪物代號> <視圖資料夾> [--candidate]
 輸出到 assets/generated/sprites/monsters/<art.sheet>/，和 mbuild.py 的格式一樣。
 """
 
@@ -21,9 +21,9 @@ from PIL import Image, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
-sys.path.insert(0, os.path.join(HERE, "..", "characters_v5"))
+sys.path.insert(0, os.path.join(HERE, "..", "characters"))
 from common import sheet_output  # noqa: E402
-import aether_sheet  # noqa: E402
+from common import cutout  # noqa: E402
 import mswing  # noqa: E402
 
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -353,7 +353,7 @@ def _grow(mask, pixels):
 def load_view(path, target_h, width_scale, scale=None):
     """讀一張視圖去背縮放。scale 沒給時整隻縮到 target_h 高；五方向圖要五張同一個比例，由呼叫的人照正面算好給進來"""
     image = Image.open(path).convert("RGB")
-    figure = aether_sheet.trim(cut_on_white(image) if path.lower().endswith(".jpg") else aether_sheet.cut(image))
+    figure = cutout.trim(cut_on_white(image) if path.lower().endswith(".jpg") else cutout.cut(image))
     if scale is None:
         scale = target_h / float(figure.height)
     size = (max(1, int(round(figure.width * scale * width_scale))), max(1, int(round(figure.height * scale))))
@@ -375,7 +375,7 @@ ENCLOSED_MIN_WHITE = 242.0
 def cut_on_white(image):
     """五方向圖是白底 jpg，沒有透明。從四邊往內淹水找背景，背景旁邊那一圈照混色公式把白反算掉：
     看到的顏色 = 墨色 × α + 白 × (1 - α)，所以 α = (白 - 亮度) / (白 - 墨)、墨色 = (看到的 - 白 × (1 - α)) / α。
-    這樣描邊外面不會留一圈半透明的白或灰，aether_sheet.cut 是把那圈直接調淡，顏色還是灰的"""
+    這樣描邊外面不會留一圈半透明的白或灰，cutout.cut 是把那圈直接調淡，顏色還是灰的"""
     rgb = np.asarray(image.convert("RGB")).astype(np.float64)
     light = (rgb.min(2) >= BACKGROUND_MIN) & (rgb.max(2) - rgb.min(2) <= BACKGROUND_SPREAD)
     seeds = np.zeros(light.shape, dtype=bool)
@@ -517,15 +517,15 @@ def main():
     common_scale = None
     if five:
         # 五張是同一個比例畫的，側面的芽比正面高，一張一張各自縮到同高會把側面整隻縮小；全部照正面的比例縮
-        front = aether_sheet.trim(cut_on_white(Image.open(paths["s"][0]).convert("RGB"))
-                                  if paths["s"][0].lower().endswith(".jpg") else aether_sheet.cut(Image.open(paths["s"][0])))
+        front = cutout.trim(cut_on_white(Image.open(paths["s"][0]).convert("RGB"))
+                                  if paths["s"][0].lower().endswith(".jpg") else cutout.cut(Image.open(paths["s"][0])))
         common_scale = height_px * WORK_SCALE / float(front.height)
         print("五方向圖，全部照正面的比例縮")
     swing = None
     if args.swing:
         spec = mswing.load_spec(args.views)
         if not five or spec is None:
-            raise SystemExit("--swing 要五方向圖和 %s，見 art_pipeline/monsters_v2/mswing.py" % mswing.SPEC_FILE)
+            raise SystemExit("--swing 要五方向圖和 %s，見 art_pipeline/monsters/mswing.py" % mswing.SPEC_FILE)
         swing = {"parts": {}, "bodies": {}}
     for direction in DIRECTIONS:
         path, width_scale = paths[direction]
@@ -562,7 +562,7 @@ def main():
                     pose = motion(spec_action["name"], t, facing, height_px, style)
                     # 身體這一格：部位已經拿掉、底下補好了，整隻描邊，部位另外疊
                     cell, _, placed, scale = compose(body, frame_px, anchor, *pose, points=pivots)
-                    cells.append(aether_sheet.draw_outline(cell))
+                    cells.append(cutout.draw_outline(cell))
                     row = [round(pose[0], 3), round(scale[0], 4), round(scale[1], 4)]
                     for x, y in placed:
                         row += [round(x, 2), round(y, 2)]
@@ -576,10 +576,10 @@ def main():
                 rotation, sx, sy, dx, dy = motion(spec_action["name"], t, facing, height_px, style)
                 figure = assemble(body, parts, swings[frame]) if parts else figures[direction]
                 cell = compose(figure, frame_px, anchor, rotation, sx, sy, dx, dy)
-                cells.append(aether_sheet.draw_outline(cell))
+                cells.append(cutout.draw_outline(cell))
         print("%s：%d 格 × %d 方向" % (spec_action["name"], spec_action["frames"], len(DIRECTIONS)))
     columns = 8
-    pad = aether_sheet.OUTLINE_PX
+    pad = cutout.OUTLINE_PX
     swing_meta, placements = None, []
     if swing:
         swing_meta, placements, reserved = build_swing_block(swing, frame_px, columns, len(cells), height_px)
@@ -602,7 +602,7 @@ def main():
     sheet_output.write_import(sheet_path, PROJECT_ROOT)
     meta = {"frame_size": [frame_px, frame_px], "columns": columns, "pixels_per_meter": ppm, "anchor": list(anchor),
             "directions": DIRECTIONS, "layout": "packed", "actions": actions, "motion": style,
-            "source": {"pipeline": "art_pipeline/monsters_v2/mpuppet.py",
+            "source": {"pipeline": "art_pipeline/monsters/mpuppet.py",
                        "views": os.path.relpath(os.path.abspath(args.views), PROJECT_ROOT).replace(os.sep, "/")}}
     if swing_meta:
         swing_meta["frames"] = swing_frames
@@ -622,7 +622,7 @@ def build_swing_block(swing, frame_px, columns, used_cells, height_px):
     for direction in DIRECTIONS:
         for number, part in enumerate(swing["parts"][direction]):
             for turn, (image, pivot) in enumerate(mswing.variants(part, swing["bodies"][direction], turn_angles, WORK_SCALE,
-                                                                  aether_sheet.draw_outline, aether_sheet.OUTLINE_PX)):
+                                                                  cutout.draw_outline, cutout.OUTLINE_PX)):
                 images.append(image)
                 owners.append((direction, number, pivot))
     start = -(-used_cells // columns) * columns

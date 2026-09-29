@@ -8,7 +8,7 @@ Qwen 逐格改姿勢、OpenPose 骨架、Aether 畫格、Flux Klein 兩格接龍
 
 輸入有兩種，擇一：
   --source  <路徑.glb>   本機圖轉 3D 產的模型（art_pipeline/comfy/views_to_mesh.py 的輸出）。
-                         會先扭到標準比例、綁到 characters_v3 的標準人形骨架，動作直接沿用。
+                         會先扭到標準比例、綁到 characters 的標準人形骨架，動作直接沿用。
   --rigged  <路徑.glb>   已經綁好標準骨架、帶動作的模型，例如 assets/generated/models/characters_real/ 那批。
 
 輸出到 assets/generated/sprites/characters/body/<名稱>/：sheet.png、mask.png、meta.json 和 .import，
@@ -17,14 +17,14 @@ Qwen 逐格改姿勢、OpenPose 骨架、Aether 畫格、Flux Klein 兩格接龍
 --directions 5 只算五個讓引擎鏡射另外三個。相機仰角照遊戲鏡頭的 45 度。
 
 用法：
-  blender -b --factory-startup --python-exit-code 1 -P art_pipeline/characters_v5/cbuild.py -- \
-      <名稱> --source art_source/characters_v5/<名稱>/mesh.glb [--job novice] [--directions 8] [--preview]
+  blender -b --factory-startup --python-exit-code 1 -P art_pipeline/characters/cbuild.py -- \
+      <名稱> --source art_source/characters/<名稱>/mesh.glb [--job novice] [--directions 8] [--preview]
   --preview 只算八個方向的站姿排成一張檢查圖，不算整套動作，先看再決定要不要跑全部
   --candidate 整套算好但放到 placeholder 那個不出貨的資料夾，--body=<名稱> 在遊戲裡看得到；使用者點頭再不加這個參數正式輸出
   --layer 名稱=路徑.glb@掛點[*倍率] 裝備或裝飾的圖層，可以重複給。網格掛到骨架的掛點（hand_r、hand_l、head、back、body），
       用同一顆相機在每一格單獨算成 characters/layers/<名稱>/ 那一份圖集，畫格錨點動作全部和身體一樣，
       引擎把同一格直接疊上去。meta 的 order 記每一格圖層在身體前面還是後面
-  --keep-rig 把綁好骨架的模型另存到 assets/generated/models/characters_v5/<名稱>.glb，可以在 Blender 裡檢查
+  --keep-rig 把綁好骨架的模型另存到 assets/generated/models/characters/<名稱>.glb，可以在 Blender 裡檢查
   --elevation 30 產圖俯角，預設 45；矮頭身的臉在 45 度會跑到球底下，30 度看得到臉
   --head-lift 25 綁骨前把頭往後仰幾度讓臉朝鏡頭，預設 25，0 就不動
 
@@ -39,8 +39,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 PIPELINE_DIR = os.path.dirname(HERE)
 PROJECT_ROOT = os.path.dirname(PIPELINE_DIR)
-for path in (HERE, os.path.join(PIPELINE_DIR, "characters_v3"), os.path.join(PIPELINE_DIR, "monsters_v2"),
-             PIPELINE_DIR):
+for path in (HERE, os.path.join(PIPELINE_DIR, "common"), os.path.join(PIPELINE_DIR, "monsters"), PIPELINE_DIR):
     if path not in sys.path:
         sys.path.insert(0, path)
 
@@ -48,8 +47,8 @@ import bpy  # noqa: E402
 import numpy as np  # noqa: E402
 from mathutils import Matrix, Vector  # noqa: E402
 
-import blenv  # noqa: E402  characters_v3 那一份
-import mimg  # noqa: E402  monsters_v2 的完稿處理
+import blenv  # noqa: E402  characters 那一份
+import mimg  # noqa: E402  monsters 的完稿處理
 from common import atlas  # noqa: E402
 from common import sheet_output  # noqa: E402
 
@@ -57,11 +56,11 @@ OUT_ROOT = os.path.join(PROJECT_ROOT, "assets", "generated", "sprites", "charact
 # 還沒給使用者看過的候選圖集放這裡：引擎的搜尋路徑找得到（--body=名稱 看得到），
 # 但這個資料夾不進版本庫也不出貨，記憶體測試也不會把它算進出貨的圖集裡
 CANDIDATE_ROOT = os.path.join(PROJECT_ROOT, "assets", "generated", "sprites", "placeholder", "characters", "body")
-RIG_OUT = os.path.join(PROJECT_ROOT, "assets", "generated", "models", "characters_v5")
-WORK = os.environ.get("CHARACTER_WORK") or os.path.join(PIPELINE_DIR, "_build", "characters_v5")
+RIG_OUT = os.path.join(PROJECT_ROOT, "assets", "generated", "models", "characters")
+WORK = os.environ.get("CHARACTER_WORK") or os.path.join(PIPELINE_DIR, "_build", "characters")
 APPEARANCES = os.path.join(PROJECT_ROOT, "data", "appearances.json")
 
-# 畫格契約，和 characters_v4/build_novice_sheets.py 同一組數字，出處 docs/精靈圖規格.md
+# 畫格契約，出處 docs/精靈圖規格.md
 FRAME_SIZE = (176, 232)
 ANCHOR = (88, 208)
 PIXELS_PER_METER = 96.0
@@ -180,7 +179,7 @@ def _bind_source(path, gender):
     """本機圖轉 3D 的網格扭到定裝圖的比例、綁到那副比例的標準骨架，回傳 (骨架, 網格, 報告)
 
     骨架和網格用同一組比例參數（CARD_SPEC），所以骨頭一定落在網格裡面；
-    比例是定裝圖那種 2.8 頭身，不是 characters_v3 那副 4.07 頭身的標準，
+    比例是定裝圖那種 2.8 頭身，不是 characters 那副 4.07 頭身的標準，
     不然 3 頭身的網格會被拉成長腿，長相就不是使用者畫的那個了
     """
     import dodge_anim
@@ -614,7 +613,7 @@ LAYER_ROOT = os.path.join(PROJECT_ROOT, "assets", "generated", "sprites", "chara
 CANDIDATE_LAYER_ROOT = os.path.join(PROJECT_ROOT, "assets", "generated", "sprites", "placeholder",
                                     "characters", "layers")
 # 圖層網格掛到掛點之後要多轉的角度，每個掛點一組歐拉角（度）。
-# characters_v3 的武器是「原點在掛點、刀尖朝 +Y」做的；掛點骨頭從關節往角色前方伸，
+# characters 的武器是「原點在掛點、刀尖朝 +Y」做的；掛點骨頭從關節往角色前方伸，
 # 掛上去之後刀尖的朝向由這裡補。值是拿 weapon_sword 對著站姿試出來的，換一批網格要重看
 LAYER_ROTATION_DEG = {"hand_r": (0.0, 0.0, 0.0), "hand_l": (0.0, 0.0, 0.0), "head": (0.0, 0.0, 0.0),
                       "back": (0.0, 0.0, 0.0), "body": (0.0, 0.0, 0.0)}
@@ -877,7 +876,7 @@ def render(name, armature, meshes, directions, job="novice", preview=False, cand
         "head_width": _measure_head_width(front_idle),
         "actions": meta_actions,
         "head_attach": head_attach,
-        "source": {"pipeline": "art_pipeline/characters_v5/cbuild.py", "camera_elevation_deg": CAMERA_ELEVATION_DEG,
+        "source": {"pipeline": "art_pipeline/characters/cbuild.py", "camera_elevation_deg": CAMERA_ELEVATION_DEG,
                    "job": job},
     }
     meta = sheet_output.packed_meta(meta, starts, columns)

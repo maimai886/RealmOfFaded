@@ -52,7 +52,7 @@
   },
   "motion": "hop",
   "source": {
-    "pipeline": "art_pipeline/monsters_v2/mpuppet.py",
+    "pipeline": "art_pipeline/monsters/mpuppet.py",
     "views": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\art_source\\monsters\\南門\\史萊姆\\views"
   }
 }

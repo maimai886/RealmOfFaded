@@ -186,7 +186,7 @@ def build(gender="neutral", body=None):
     """做出一副標準人形骨架，既有動作可以直接播
 
     body 不給就用 proportions.BODIES 那副 4.07 頭身的標準比例；
-    給的話照那個 Body 的比例排骨頭，characters_v5 用它做定裝圖那種 2.8 頭身的骨架
+    給的話照那個 Body 的比例排骨頭，characters 用它做定裝圖那種 2.8 頭身的骨架
     """
     body = body or proportions.BODIES[gender]
     points = humanoid.joints(body)

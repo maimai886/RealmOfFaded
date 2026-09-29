@@ -9,7 +9,7 @@ import sys
 NEEDS_PILLOW = True
 
 PIPELINE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(PIPELINE_DIR, "characters_v5"))
+sys.path.insert(0, os.path.join(PIPELINE_DIR, "characters"))
 
 
 def _palette():

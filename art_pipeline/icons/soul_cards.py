@@ -6,7 +6,7 @@
 先在四倍大小畫好再縮到 40，外圈補一格深褐色描邊，和其他道具圖示一樣。
 
 不需要 Blender，一般的 Python 加 Pillow、numpy 就能跑：
-    python art_pipeline/icons_v2/soul_cards.py [--out=資料夾] [id ...]
+    python art_pipeline/icons/soul_cards.py [--out=資料夾] [id ...]
 """
 
 import json

@@ -203,7 +203,7 @@ def export_rig(path=None, gender="neutral"):
     }
     if path is None:
         root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        path = os.path.join(root, "art_source", "characters_v3", "humanoid_rig.json")
+        path = os.path.join(root, "art_source", "characters", "humanoid_rig.json")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as handle:
         json.dump(data, handle, ensure_ascii=False, indent=2)

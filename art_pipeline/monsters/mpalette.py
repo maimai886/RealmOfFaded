@@ -17,7 +17,7 @@ import os
 import bpy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEX_DIR = os.path.join(os.path.dirname(os.path.dirname(HERE)), "art_source", "monsters_v2",
+TEX_DIR = os.path.join(os.path.dirname(os.path.dirname(HERE)), "art_source", "monsters",
                        "tex", "out")
 
 # 所有色階共用的最亮一格

@@ -65,7 +65,7 @@
       "ships": true,
       "status": "approved",
       "risk": "none",
-      "notes": "紙偶骨架 puppet_rig 經 characters_v3/rig.py 從 kaykit/characters/Knight.glb 拿骨架和動作，所以它不是只有場景在用。2026-09-24 先清掉包裡沒被載入的 91 個檔案，NPC 改 2D 之後再清掉 Knight 以外的角色和整個 weapons，要的話照 pinned_commits 重新 clone。"
+      "notes": "cbuild 經 characters/rig.py 從 kaykit/characters/Knight.glb 拿骨架和動作，所以它不是只有場景在用。2026-09-24 先清掉包裡沒被載入的 91 個檔案，NPC 改 2D 之後再清掉 Knight 以外的角色和整個 weapons，要的話照 pinned_commits 重新 clone。"
     },
     {
       "id": "vendor.kenney_ui_rpg",
@@ -272,7 +272,7 @@
       "source": {
         "tool_chain": [
           "Meshy meshy-6 產網格",
-          "art_pipeline/characters_v3/rehome_meshy.py 拿掉舊骨架重綁到 humanoid.py 的標準骨架"
+          "art_pipeline/characters/rehome_meshy.py 拿掉舊骨架重綁到 humanoid.py 的標準骨架"
         ],
         "concept_images": "AI 產圖，產圖工具未記錄，原圖已經不在版本庫",
         "job_records": "已刪除。art_pipeline/meshy 2026-09-24 清掉",
@@ -300,7 +300,7 @@
       "contents": "只剩 18 件裝備外觀：armor 3、cape 3、cap/circlet/helm 3、weapon 9。身體、髮型、表情圖集、臉部檢查圖 2026-09-24 清掉",
       "source": {
         "tool": "程式化 Blender",
-        "pipeline": "art_pipeline/characters_v3/build.py、weapon.py、gear.py、headgear.py，2026-09-24 跟著 3D 角色一起清掉，要重產得從 git 歷史拿回來",
+        "pipeline": "art_pipeline/characters/build.py、weapon.py、gear.py、headgear.py，2026-09-24 跟著 3D 角色一起清掉，要重產得從 git 歷史拿回來",
         "rig_donor": "assets/vendor/kaykit/characters/Knight.glb（CC0）"
       },
       "license": {
@@ -321,7 +321,7 @@
       "contents": "1 具共用身體、2 張臉、8 件 NPC 配件",
       "source": {
         "tool": "程式化 Blender",
-        "pipeline": "art_pipeline/characters_v3/build_mannequin.py"
+        "pipeline": "art_pipeline/characters/build_mannequin.py"
       },
       "license": {
         "name": "自製",
@@ -331,7 +331,7 @@
       "ships": false,
       "status": "removed",
       "risk": "none",
-      "notes": "2026-09-24 NPC 改成 2D 之後 3D 角色整條拿掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。以前是灰白人體模型和九個 NPC 的配件。紙偶骨架用的是 characters_v3/mannequin.py 程式化產生的人偶，不是這個資料夾的檔案，拿掉之後 puppet_rig 的 rig.json 一個位元組都沒變。",
+      "notes": "2026-09-24 NPC 改成 2D 之後 3D 角色整條拿掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。以前是灰白人體模型和九個 NPC 的配件。紙偶骨架用的是 characters/mannequin.py 程式化產生的人偶，不是這個資料夾的檔案，拿掉之後紙偶骨架一個位元組都沒變。",
       "removed": "2026-09-24"
     },
     {
@@ -340,7 +340,7 @@
       "path": "assets/generated/models/characters_real3/**",
       "file_count": 4,
       "source": {
-        "tool": "art_pipeline/characters_v3/reproportion.py 吃 characters_real 再做一次空間扭曲"
+        "tool": "art_pipeline/characters/reproportion.py 吃 characters_real 再做一次空間扭曲"
       },
       "license": {
         "name": "衍生自 Meshy 付費方案產出",
@@ -497,7 +497,7 @@
       "sheet_count": 4,
       "file_count": 8,
       "source": {
-        "tool": "2D 紙偶 art_pipeline/monsters_v2/mpuppet.py：使用者畫的四視圖直接當方向圖，走路分跳搖踏，耳朵角葉子自動切成部位跟著甩",
+        "tool": "2D 紙偶 art_pipeline/monsters/mpuppet.py：使用者畫的四視圖直接當方向圖，走路分跳搖踏，耳朵角葉子自動切成部位跟著甩",
         "input": "art_source/monsters/南門/<怪>/views/"
       },
       "license": {
@@ -554,8 +554,8 @@
       "file_count": 6,
       "source": {
         "tool": "2D 紙偶：使用者畫的五張視圖切零件照標準骨架動",
-        "pipeline": "art_pipeline/characters_v5/puppet_rig.py、puppet_poses.py、puppet_sheet.py；圖層是 puppet_layer.py",
-        "input": "art_source/characters_v5/male_base/views"
+        "pipeline": "art_pipeline/characters/rig2d.py、puppet_poses.py、puppet_sheet.py；圖層是 puppet_layer.py",
+        "input": "art_source/characters/male_base/views"
       },
       "license": {
         "name": "自製",
@@ -587,7 +587,7 @@
       "file_count": 38,
       "source": {
         "tool": "程式化 Blender",
-        "pipeline": "art_pipeline/icons_v2/effects.py"
+        "pipeline": "art_pipeline/icons/effects.py"
       },
       "license": {
         "name": "自製",
@@ -654,11 +654,11 @@
         "jobs": 21
       },
       "source": {
-        "current_tool": "art_pipeline/icons_v2/icons.py 和 faith_icons.py，用小型 3D 場景正交算圖再縮到 40×40，完全程式化沒有 AI",
+        "current_tool": "art_pipeline/icons/icons.py 和 faith_icons.py，用小型 3D 場景正交算圖再縮到 40×40，完全程式化沒有 AI",
         "older_tool": "art_pipeline/ui/icons.py 切 art_source/ui/icons_{a..e}_raw.png 那五張 AI 大圖",
         "which_is_which": "沒有紀錄。兩條管線寫到同一個資料夾，名字對不上的會留著原本的圖",
         "jobs_tool": "art_pipeline/ui/job_icons.py 切使用者自己畫的 art_source/ui/job_icons_raw.png，白色線稿用亮度反推透明度，64×64",
-        "colour_tool": "art_pipeline/icons_v2/colour_icons.py 在 Blender 算顏料和色種，art_pipeline/icons_v2/soul_cards.py 用 Pillow 把怪物圖集正面那一格合成色魄卡片，2026-09-25"
+        "colour_tool": "art_pipeline/icons/colour_icons.py 在 Blender 算顏料和色種，art_pipeline/icons/soul_cards.py 用 Pillow 把怪物圖集正面那一格合成色魄卡片，2026-09-25"
       },
       "license": {
         "name": "混合：程式化的是自製，切圖的衍生自未知來源的 AI 產圖",
@@ -860,9 +860,9 @@
       "removed": "2026-09-24"
     },
     {
-      "id": "source.characters_v5",
+      "id": "source.characters",
       "kind": "source_image_and_model",
-      "path": "art_source/characters_v5/**",
+      "path": "art_source/characters/**",
       "status": "approved",
       "risk": "none",
       "note": "每個身體一個資料夾，views/ 是 s、sw、w、nw、n 五張視圖，紙偶從 male_base/views 切零件。mesh.glb 是 2026-09-23 本機四視圖轉 3D 的試作，現在只給 cbuild.py 算裝備圖層時當陪算的身體。",

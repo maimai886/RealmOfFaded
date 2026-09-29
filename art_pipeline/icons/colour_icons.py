@@ -5,7 +5,7 @@
 不經過 Blender，在 soul_cards.py。
 
 用法：
-    blender -b --factory-startup --python-exit-code 1 -P art_pipeline/icons_v2/colour_icons.py -- [id ...]
+    blender -b --factory-startup --python-exit-code 1 -P art_pipeline/icons/colour_icons.py -- [id ...]
 """
 
 import math
@@ -14,7 +14,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-for sub in ("", "characters_v2", "monsters_v2", "icons_v2"):
+for sub in ("", "common", "monsters", "icons"):
     path = os.path.join(ROOT, sub) if sub else ROOT
     if path not in sys.path:
         sys.path.insert(0, path)

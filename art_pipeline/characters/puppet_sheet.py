@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""紙偶動畫：把使用者畫的視圖切成零件，照 puppet_rig.py 的骨架動起來，組成身體圖集。用系統的 python 跑，要有 Pillow。
+"""紙偶動畫：把使用者畫的視圖切成零件，照 rig2d.py 的骨架動起來，組成身體圖集。用系統的 python 跑，要有 Pillow。
 
 每一格都是使用者的線條，比例不會飄；八方向、所有動作、任何張數都從同一套零件出；換裝就是換零件的圖。
 零件怎麼切：視圖對到參考姿勢的骨架後，每個像素歸給最近的那一段骨頭，頭是一個圓。
 零件怎麼動：每一格拿參考骨頭到動作骨頭的 2D 相似變換（平移、旋轉、縮放），零件照深度由遠到近疊上去。
 
 用法：
-  python art_pipeline/characters_v5/puppet_sheet.py <視圖資料夾> <rig 資料夾> <名稱> [--candidate] [--debug 資料夾]
-視圖資料夾裡要有 s、sw、w、nw、n 五張，白底，整個人都在圖裡；rig 資料夾是 puppet_rig.py 的輸出。
+  python art_pipeline/characters/puppet_sheet.py <視圖資料夾> <rig 資料夾> <名稱> [--candidate] [--debug 資料夾]
+視圖資料夾裡要有 s、sw、w、nw、n 五張，白底，整個人都在圖裡；rig 資料夾是 rig2d.py 的輸出。
 """
 
 import argparse
@@ -23,7 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
 sys.path.insert(0, HERE)
 from common import sheet_output  # noqa: E402
-import aether_sheet  # noqa: E402
+from common import cutout  # noqa: E402
 import puppet_poses  # noqa: E402
 
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -54,13 +54,13 @@ ORDER = ["idle", "walk", "attack", "cast", "hit", "die", "sit", "pickup"]
 def cut_view(path, bbox_target, frame_size):
     """視圖去背、切到外框，縮到人偶剪影的外框大小，腳底對齊；回傳工作解析度的 RGBA 畫布"""
     image = Image.open(path).convert("RGB")
-    cut = aether_sheet.cut(image)
+    cut = cutout.cut(image)
     if PIXEL_MODE:
         # 像素圖的邊是一格墨線不是墨和白紙混色，反算會把邊上的膚色算成半透明的紅
         rgb = np.asarray(image)
-        paper = (np.asarray(cut)[..., 3] == 0) & (rgb.min(2) > aether_sheet.WHITE)
+        paper = (np.asarray(cut)[..., 3] == 0) & (rgb.min(2) > cutout.WHITE)
         cut = Image.fromarray(np.dstack([rgb, np.where(paper, 0, 255).astype(np.uint8)]), "RGBA")
-    figure = aether_sheet.trim(cut)
+    figure = cutout.trim(cut)
     x0, y0, x1, y1 = bbox_target
     target_h = (y1 - y0) * WORK_SCALE
     scale = target_h / float(figure.height)
@@ -659,7 +659,7 @@ def layer_sequence(posed):
 
 def _harden_alpha(frame):
     """像素圖：透明度只留 0 和 255，再包上描邊用的邊框，格子的排法才和描邊過的一樣"""
-    pad = aether_sheet.OUTLINE_PX
+    pad = cutout.OUTLINE_PX
     arr = np.asarray(frame).copy()
     arr[..., 3] = np.where(arr[..., 3] >= 128, 255, 0).astype(np.uint8)
     canvas = Image.new("RGBA", (frame.width + pad * 2, frame.height + pad * 2), (0, 0, 0, 0))
@@ -806,11 +806,11 @@ def main():
                     # 像素圖的描邊畫在圖裡；半透明的像素切成全透明或全不透明，放大看才是乾淨的格子
                     frame = _harden_alpha(frame)
                 else:
-                    frame = aether_sheet.draw_outline(frame)
+                    frame = cutout.draw_outline(frame)
                 if args.skeleton:
                     from PIL import ImageDraw
                     pen = ImageDraw.Draw(frame)
-                    pad = aether_sheet.OUTLINE_PX
+                    pad = cutout.OUTLINE_PX
                     for name, values in posed.items():
                         if name in ("head_circle", "bbox"):
                             continue
@@ -820,13 +820,13 @@ def main():
         print("%s：%d 格 × %d 方向" % (action, block["frames"], len(directions)))
     columns = 8
     rows = -(-len(cells) // columns)
-    pad = aether_sheet.OUTLINE_PX
+    pad = cutout.OUTLINE_PX
     sheet = Image.new("RGBA", (columns * frame_size[0], rows * frame_size[1]), (0, 0, 0, 0))
     for index, cell in enumerate(cells):
         # 描邊會超出畫格一圈，只貼畫格裡的部分，不然腳碰到下緣時描邊會溢到下一列的格子頂上
         trimmed = cell.crop((pad, pad, pad + frame_size[0], pad + frame_size[1]))
         sheet.alpha_composite(trimmed, (index % columns * frame_size[0], index // columns * frame_size[1]))
-    out_dir = os.path.abspath(os.path.join(aether_sheet.CANDIDATE_ROOT if args.candidate else aether_sheet.SHIP_ROOT, args.name))
+    out_dir = os.path.abspath(os.path.join(cutout.CANDIDATE_ROOT if args.candidate else cutout.SHIP_ROOT, args.name))
     os.makedirs(out_dir, exist_ok=True)
     sheet_path = os.path.join(out_dir, "sheet.png")
     sheet.save(sheet_path)
@@ -843,7 +843,7 @@ def main():
             "top_row": int(first_rows.min()), "luma_ranges": paperdoll.luma_ranges(first),
             "directions": directions, "filter": "nearest" if PIXEL_MODE else "linear", "layout": "packed", "head_layer": False, "head_width": 0,
             "actions": actions, "head_attach": head_attach,
-            "source": {"pipeline": "art_pipeline/characters_v5/puppet_sheet.py", "views": os.path.relpath(args.views, PROJECT_ROOT).replace(os.sep, "/")}}
+            "source": {"pipeline": "art_pipeline/characters/puppet_sheet.py", "views": os.path.relpath(args.views, PROJECT_ROOT).replace(os.sep, "/")}}
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as handle:
         json.dump(meta, handle, ensure_ascii=False, indent=2)
         handle.write("\n")

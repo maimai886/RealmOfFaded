@@ -14,10 +14,10 @@
 
 用法：
 
-    python3 art_pipeline/characters_v3/designsheet.py measure 設定圖.png
-    python3 art_pipeline/characters_v3/designsheet.py spec 設定圖.png
-    python3 art_pipeline/characters_v3/designsheet.py cut 設定圖.png 輸出前綴
-    python3 art_pipeline/characters_v3/designsheet.py normalize 設定圖.png 出.png --ratio 4.07
+    python3 art_pipeline/characters/designsheet.py measure 設定圖.png
+    python3 art_pipeline/characters/designsheet.py spec 設定圖.png
+    python3 art_pipeline/characters/designsheet.py cut 設定圖.png 輸出前綴
+    python3 art_pipeline/characters/designsheet.py normalize 設定圖.png 出.png --ratio 4.07
 
 這支不匯入 bpy，也不需要 Blender，用系統的 python3 跑，只要有 Pillow。
 """

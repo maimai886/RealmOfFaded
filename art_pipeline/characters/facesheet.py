@@ -12,7 +12,7 @@
 「從頭頂往下佔頭高幾成」，不是像素，所以頭的尺寸改了這張圖不用重畫。
 
 這個檔案不需要 Blender，直接跑：
-    python3 art_pipeline/characters_v3/facesheet.py
+    python3 art_pipeline/characters/facesheet.py
 """
 
 import math

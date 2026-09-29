@@ -5,10 +5,10 @@
 用系統的 python 跑，要有 Pillow 和 numpy。
 
 用法：
-  python art_pipeline/characters_v5/puppet_layer.py <rig 資料夾> <身體圖集資料夾> <圖.png> <名稱> \\
+  python art_pipeline/characters/puppet_layer.py <rig 資料夾> <身體圖集資料夾> <圖.png> <名稱> \\
       [--socket hand_r] [--grip 0.5,0.92] [--axis -90] [--length 0.35] [--angle 0] [--candidate]
 
-  rig 資料夾   puppet_rig.py 輸出的那個，裡面有 rig.json，男女各一份，圖層要照身體那一份的骨架做
+  rig 資料夾   rig2d.py 輸出的那個，裡面有 rig.json，男女各一份，圖層要照身體那一份的骨架做
   身體圖集     assets/generated/sprites/characters/body/male_novice 這種，畫格、動作、排法全部照它
   圖           一個資料夾，裡面 s、sw、w、nw、n 五張各自畫（正面看的刀是窄的、側面是整片，一張圖轉角度做不到，
                使用者 2026-09-24 退回過）；資料夾裡可以放 layer.json，每個方向各自給 grip、axis、angle、length。
@@ -35,7 +35,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
 from common import sheet_output  # noqa: E402
-import aether_sheet  # noqa: E402
+from common import cutout  # noqa: E402
 import puppet_poses  # noqa: E402
 
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -65,8 +65,8 @@ def load_image(path):
     if image.mode == "RGBA" and np.asarray(image)[..., 3].min() == 0:
         figure = image
     else:
-        figure = aether_sheet.cut(image.convert("RGB"))
-    return aether_sheet.trim(figure)
+        figure = cutout.cut(image.convert("RGB"))
+    return cutout.trim(figure)
 
 
 def load_views(path, directions, defaults):
@@ -208,10 +208,10 @@ def main():
                         canvas.alpha_composite(layer)
                 place(canvas, figure, grip, axis, scale, point, direction_angle + math.radians(extra_angle))
                 cell = canvas.resize(frame_size, Image.LANCZOS)
-                cells[int(info["start"]) + index * int(info["frames"]) + frame] = aether_sheet.draw_outline(cell)
+                cells[int(info["start"]) + index * int(info["frames"]) + frame] = cutout.draw_outline(cell)
     total = max(cells) + 1
     rows_count = -(-total // columns)
-    pad = aether_sheet.OUTLINE_PX
+    pad = cutout.OUTLINE_PX
     sheet = Image.new("RGBA", (columns * frame_size[0], rows_count * frame_size[1]), (0, 0, 0, 0))
     for index, cell in cells.items():
         trimmed = cell.crop((pad, pad, pad + frame_size[0], pad + frame_size[1]))
@@ -225,7 +225,7 @@ def main():
     meta = {"frame_size": list(frame_size), "columns": columns, "pixels_per_meter": ppm, "anchor": list(body["anchor"]),
             "directions": directions, "layout": "packed", "filter": body.get("filter", "linear"), "head_layer": False,
             "actions": {name: dict(info) for name, info in body["actions"].items()}, "order": order,
-            "source": {"pipeline": "art_pipeline/characters_v5/puppet_layer.py", "image": os.path.abspath(args.image),
+            "source": {"pipeline": "art_pipeline/characters/puppet_layer.py", "image": os.path.abspath(args.image),
                        "rig": os.path.abspath(args.rig), "body": os.path.abspath(args.body), "socket": args.socket,
                        "per_direction_views": os.path.isdir(args.image), "defaults": defaults}}
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as handle:

@@ -319,7 +319,7 @@
     }
   },
   "source": {
-    "pipeline": "art_pipeline/characters_v5/puppet_layer.py",
+    "pipeline": "art_pipeline/characters/puppet_layer.py",
     "image": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\assets\\ui\\icons\\items\\knife.png",
     "rig": "C:\\Users\\h1243\\AppData\\Local\\Temp\\claude\\C--Users-h1243-Desktop-workspace-Sproutia\\60a7716e-1edd-4276-87d4-10feb835fa1e\\scratchpad\\puppet_rig_male30",
     "body": "C:\\Users\\h1243\\Desktop\\workspace\\Sproutia\\assets\\generated\\sprites\\characters\\body\\male_novice",

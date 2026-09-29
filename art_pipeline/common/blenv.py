@@ -12,9 +12,7 @@ import bpy
 # 專案根目錄從這個檔案的位置推，不寫死哪一台機器的絕對路徑；
 # 檢查圖的暫存資料夾可以用環境變數 ROF_SHOT_DIR 蓋掉，預設放在不進版本庫的 _build 底下
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SHOT_DIR = os.environ.get("ROF_SHOT_DIR") or os.path.join(PROJECT_ROOT, "art_pipeline", "_build", "shots_v3")
-SRC_DIR = os.path.join(PROJECT_ROOT, "art_source", "characters_v3")
-OUT_DIR = os.path.join(PROJECT_ROOT, "assets", "generated", "characters_v2")
+SHOT_DIR = os.environ.get("ROF_SHOT_DIR") or os.path.join(PROJECT_ROOT, "art_pipeline", "_build", "shots")
 
 
 def view3d():

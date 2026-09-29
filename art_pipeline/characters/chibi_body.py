@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """用幾何體拼的乾淨素體算八方向、八動作的身體圖集。在 Blender 裡跑。
 
-生成的 3D 網格算出來的人物是垃圾，決策紀錄 2026-09-23 有寫。這條用的是 characters_v3 那具幾何人偶：
+生成的 3D 網格算出來的人物是垃圾，決策紀錄 2026-09-23 有寫。這條用的是 characters 那具幾何人偶：
 球、管子、環拼出來的乾淨網格，比例照定裝圖量出來的 cbuild.CARD_SPEC，顏色是素體的膚色和白衣白褲，
 頭藏掉由使用者畫的頭圖層蓋（headsheet.py），輪廓用 Freestyle 描邊。全部本機、不花錢、每一格都是同一個模型算的。
 
 用法：
-  blender -b --factory-startup --python-exit-code 1 -P art_pipeline/characters_v5/chibi_body.py -- <名稱> [--gender male] [--job novice] [--preview] [--candidate] [--directions 8] [--no-head-layer] [--no-ink]
+  blender -b --factory-startup --python-exit-code 1 -P art_pipeline/characters/chibi_body.py -- <名稱> [--gender male] [--job novice] [--preview] [--candidate] [--directions 8] [--no-head-layer] [--no-ink]
       [--gear 路徑.glb@掛點[*倍率]] [--layer 名稱=路徑.glb@掛點[*倍率]]
 --gear 把網格掛在掛點上和身體一起算進同一張圖，例如鎧甲和武器；--layer 另外算成一張圖層圖集，交給引擎照前後疊，例如頭盔。
 """
@@ -16,7 +16,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import cbuild  # noqa: E402  它會把 characters_v3、monsters_v2、common 加進路徑
+import cbuild  # noqa: E402  它會把 characters、monsters、common 加進路徑
 
 import bpy  # noqa: E402
 

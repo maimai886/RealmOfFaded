@@ -785,8 +785,8 @@
     }
   },
   "source": {
-    "pipeline": "art_pipeline/characters_v5/puppet_sheet.py",
-    "views": "art_source/characters_v5/male_base/views",
+    "pipeline": "art_pipeline/characters/puppet_sheet.py",
+    "views": "art_source/characters/male_base/views",
     "shipped_from": "puppet_sheet.py 直接出貨 2026-09-28 走路照 RO 初心者重調：髖在兩腳最開時下沉、正面前腳往鏡頭伸、斜向兩腳收攏"
   }
 }

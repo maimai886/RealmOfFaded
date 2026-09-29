@@ -12,7 +12,7 @@
 格式寫在 docs/精靈圖規格.md「紙娃娃圖層」，引擎照那一份讀。
 
 用法：
-  python art_pipeline/characters_v5/paperdoll.py <輸出資料夾> [--height 180|90] [--views 視圖資料夾] [--rig rig.json]
+  python art_pipeline/characters/paperdoll.py <輸出資料夾> [--height 180|90] [--views 視圖資料夾] [--rig rig.json]
       [--layers hair,hat_a,knife] [--actions idle,walk,...]
 --height 180 是 1 比 1、畫格 176×232；90 是一半的像素、畫格 88×116，遊戲裡放大兩倍顯示。工作畫布兩種一樣大。
 """
@@ -38,7 +38,7 @@ import testpieces  # noqa: E402
 from common import sheet_output  # noqa: E402
 
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-DEFAULT_VIEWS = os.path.join(PROJECT_ROOT, "art_source", "characters_v5", "male_base", "views")
+DEFAULT_VIEWS = os.path.join(PROJECT_ROOT, "art_source", "characters", "male_base", "views")
 # 工作解析度：180 高的畫格每一格拆成 WORK×WORK 個工作像素；90 高的目標就是每格 2×WORK
 WORK = 4
 BASE_FRAME = (176, 232)
@@ -490,7 +490,7 @@ def build(out_dir, height, views, rig, layer_names, actions_wanted=None, log=pri
                  "paperdoll": 1, "display_scale": int(round(180.0 / height)),
                  "top_row": int(first_rows.min()) if len(first_rows) else frame[1], "luma_ranges": luma_ranges(first),
                  "actions": body_actions, "head_attach": head_attach,
-                 "source": {"pipeline": "art_pipeline/characters_v5/paperdoll.py", "rig": rig.get("source", {}),
+                 "source": {"pipeline": "art_pipeline/characters/paperdoll.py", "rig": rig.get("source", {}),
                             "work_scale": k, "palette": "assets/generated/sprites/characters/ramps.json"}}
     with open(os.path.join(body_dir, "meta.json"), "w", encoding="utf-8") as handle:
         json.dump(body_meta, handle, ensure_ascii=False, indent=1)
@@ -527,7 +527,7 @@ def build(out_dir, height, views, rig, layer_names, actions_wanted=None, log=pri
                 "actions": {a: {kk: vv for kk, vv in body_actions[a].items() if kk != "start"} for a in actions},
                 "cells": cells_meta, "ramp": spec.ramp, "dye": spec.dye, "luma_ranges": luma_ranges(first_cell, first_mask),
                 "hides_hair": False, "test_piece": True,
-                "source": {"pipeline": "art_pipeline/characters_v5/paperdoll.py", "piece": "testpieces.py %s" % spec.name}}
+                "source": {"pipeline": "art_pipeline/characters/paperdoll.py", "piece": "testpieces.py %s" % spec.name}}
         with open(os.path.join(layer_dir, "meta.json"), "w", encoding="utf-8") as handle:
             json.dump(meta, handle, ensure_ascii=False, separators=(",", ":"))
         if write_import_root:

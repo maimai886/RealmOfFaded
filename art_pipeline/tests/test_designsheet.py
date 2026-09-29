@@ -11,7 +11,7 @@ import sys
 NEEDS_PILLOW = True
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CHARACTERS = os.path.join(os.path.dirname(HERE), "characters_v3")
+CHARACTERS = os.path.join(os.path.dirname(HERE), "characters")
 if CHARACTERS not in sys.path:
     sys.path.insert(0, CHARACTERS)
 

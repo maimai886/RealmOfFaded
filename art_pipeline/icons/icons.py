@@ -13,7 +13,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-for sub in ("characters_v2", "monsters_v2", "icons_v2"):
+for sub in ("common", "monsters", "icons"):
     path = os.path.join(ROOT, sub)
     if path not in sys.path:
         sys.path.insert(0, path)
@@ -34,7 +34,7 @@ ICON_PX = 40
 SUPER = 4
 ITEM_DIR = os.path.join(blenv.PROJECT_ROOT, "assets", "ui", "icons", "items")
 SKILL_DIR = os.path.join(blenv.PROJECT_ROOT, "assets", "ui", "icons", "skills")
-SRC_DIR = os.path.join(blenv.PROJECT_ROOT, "art_source", "icons_v2")
+SRC_DIR = os.path.join(blenv.PROJECT_ROOT, "art_source", "icons")
 
 # 色階代號：主、次、點綴
 R = mpalette.slot_specs

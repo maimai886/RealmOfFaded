@@ -15,7 +15,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-for sub in ("characters_v2", "monsters_v2", "icons_v2"):
+for sub in ("common", "monsters", "icons"):
     path = os.path.join(ROOT, sub)
     if path not in sys.path:
         sys.path.insert(0, path)

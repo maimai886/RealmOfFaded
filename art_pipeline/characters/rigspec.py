@@ -268,7 +268,7 @@ class RigSpec:
 
 # 出貨用的那一份，量自使用者 2026-09-18 拍板的初心者設定圖。
 # 量法和數字來源寫在 docs/美術風格指南.md 第 2.1 節，
-# 重量一次：python3 art_pipeline/characters_v3/designsheet.py spec 設定圖.png
+# 重量一次：python3 art_pipeline/characters/designsheet.py spec 設定圖.png
 #
 # 十四具身體共用同一副骨架，所以標準只能有一份。
 # 之後使用者再畫別的設定圖，不是換掉這一份，是用 designsheet.normalize

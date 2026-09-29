@@ -87,10 +87,10 @@
         "commercial_use": true
       },
       "used_at_runtime": false,
-      "ships": true,
-      "status": "dead",
+      "ships": false,
+      "status": "removed",
       "risk": "none",
-      "notes": "程式、場景、資料全部零引用。介面實際用的是 assets/ui/skin 那一套自製皮膚。90 個檔案白佔出貨包。"
+      "notes": "程式、場景、資料全部零引用，2026-09-29 刪掉；這一筆留著當來源紀錄。"
     },
     {
       "id": "vendor.audio.sfx",
@@ -425,10 +425,10 @@
         "attribution_required": false
       },
       "used_at_runtime": false,
-      "ships": true,
-      "status": "dead",
+      "ships": false,
+      "status": "removed",
       "risk": "none",
-      "notes": "只有 map_environment.gd 的一句註解提到它。data/maps/town.json 用的是 townkit。和 townkit 直接競爭同一個位置。"
+      "notes": "data/maps/town.json 用的是 townkit，這組沒人用，2026-09-29 刪掉；town_retex.py 還在，dungeon 那一組靠它產。"
     },
     {
       "id": "generated.models.dungeon_retex",
@@ -651,8 +651,7 @@
       "breakdown": {
         "items": 59,
         "skills": 60,
-        "jobs": 21,
-        "root": 12
+        "jobs": 21
       },
       "source": {
         "current_tool": "art_pipeline/icons_v2/icons.py 和 faith_icons.py，用小型 3D 場景正交算圖再縮到 40×40，完全程式化沒有 AI",
@@ -669,7 +668,7 @@
       "ships": true,
       "status": "shipping_unreviewed",
       "risk": "medium",
-      "notes": "技能 60 個對 60 個剛好滿。道具 69 個裡有 40 個有圖示、29 個沒有，缺的會退到程式畫的彩色方塊。根目錄那 12 個全部是孤兒，唯一的取用點 UiTheme.icon() 零呼叫。docs/美術方向.md 說共 76 個，實際是 100 個。 2026-09-18 加 jobs/ 21 個職業圖標，使用者自己畫的，授權乾淨，左上狀態板和角色卡在用。 2026-09-25 加奪色的九個道具圖示：四種顏料、年輪色種、四張色魄卡片，全部自製，色魄的卡面來自使用者畫的怪物圖。 同一天再加斥候考試的四種嫩枝，colour_icons.py 算的。 再加術士考試的四瓶溶液和失敗的溶液。 再加術士考試彩蛋的神秘的溶液。"
+      "notes": "技能 60 個對 60 個剛好滿。道具 69 個裡有 40 個有圖示、29 個沒有，缺的會退到程式畫的彩色方塊。根目錄的 13 個孤兒 2026-09-29 刪掉。docs/美術方向.md 說共 76 個，實際是 100 個。 2026-09-18 加 jobs/ 21 個職業圖標，使用者自己畫的，授權乾淨，左上狀態板和角色卡在用。 2026-09-25 加奪色的九個道具圖示：四種顏料、年輪色種、四張色魄卡片，全部自製，色魄的卡面來自使用者畫的怪物圖。 同一天再加斥候考試的四種嫩枝，colour_icons.py 算的。 再加術士考試的四瓶溶液和失敗的溶液。 再加術士考試彩蛋的神秘的溶液。"
     },
     {
       "id": "ui.portraits",

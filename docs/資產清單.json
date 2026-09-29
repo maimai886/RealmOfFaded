@@ -25,7 +25,7 @@
       "path": "assets/vendor/kaykit/**",
       "file_count": 139,
       "subsets": {
-        "characters": "2 檔，Knight.glb 和它的貼圖，來自 Adventurers；其他角色 2026-09-24 清掉",
+        "characters": "2026-09-29 刪掉，Knight.glb 只給已刪的 cbuild 當骨架和動作來源",
         "dungeon": "62 檔，來自 Dungeon Remastered",
         "nature": "55 檔，來自 Medieval Hexagon",
         "town": "13 檔，來自 Medieval Hexagon",
@@ -49,10 +49,8 @@
         "name": "CC0 1.0 Universal",
         "url": "http://creativecommons.org/publicdomain/zero/1.0/",
         "copies_in_repo": [
-          "assets/vendor/kaykit/LICENSE_adventurers.txt",
           "assets/vendor/kaykit/LICENSE_dungeon_remastered.txt",
-          "assets/vendor/kaykit/LICENSE_medieval_hexagon.txt",
-          "assets/vendor/kaykit/LICENSE_skeletons.txt"
+          "assets/vendor/kaykit/LICENSE_medieval_hexagon.txt"
         ],
         "attribution_required": false,
         "attribution_suggested": "Kay Lousberg, www.kaylousberg.com",
@@ -65,7 +63,7 @@
       "ships": true,
       "status": "approved",
       "risk": "none",
-      "notes": "cbuild 經 characters/rig.py 從 kaykit/characters/Knight.glb 拿骨架和動作，所以它不是只有場景在用。2026-09-24 先清掉包裡沒被載入的 91 個檔案，NPC 改 2D 之後再清掉 Knight 以外的角色和整個 weapons，要的話照 pinned_commits 重新 clone。"
+      "notes": "2026-09-24 先清掉包裡沒被載入的 91 個檔案，NPC 改 2D 之後再清掉 Knight 以外的角色和整個 weapons；2026-09-29 刪掉 Knight 和地圖、程式都沒用到的零件，要的話照 pinned_commits 重新 clone。"
     },
     {
       "id": "vendor.kenney_ui_rpg",
@@ -96,9 +94,9 @@
       "id": "vendor.audio.sfx",
       "kind": "sound",
       "path": "assets/vendor/audio/{impact-sounds,interface-sounds,rpg-audio}/Audio/**",
-      "file_count": 247,
-      "wired_count": 159,
-      "unused_count": 88,
+      "file_count": 153,
+      "wired_count": 153,
+      "unused_count": 0,
       "source": {
         "creator": "Kenney Vleugels",
         "url": "https://www.kenney.nl",
@@ -123,7 +121,7 @@
       "status": "approved",
       "risk": "none",
       "mapping": "src/audio/sound_map.gd 的 EVENTS，62 個事件對應 159 個檔案，零個斷掉的引用。對照表在 docs/音效對照.md。",
-      "notes": "88 個沒接的檔案照樣被 export_filter=all_resources 打包進去。2026-09-17 使用者說腳步聲整套移除，35 個 footstep_*.ogg 連同 .import 一起砍掉，原本是 282 個。這些是 Kenney 整包的一部分，來源網址寫在上面，要的話重新下載得回來。"
+      "notes": "2026-09-17 使用者說腳步聲整套移除，砍掉 35 個 footstep；2026-09-29 砍掉舊專案 sound_map.gd 沒接的 94 個。這些是 Kenney 整包的一部分，要的話重新下載得回來。"
     },
     {
       "id": "vendor.fonts",
@@ -308,10 +306,11 @@
         "commercial_use": true
       },
       "used_at_runtime": false,
-      "ships": true,
-      "status": "shipping_unreviewed",
+      "ships": false,
+      "status": "removed",
       "risk": "none",
-      "notes": "只剩裝備網格，遊戲執行時不載入，3D 角色那條 2026-09-24 拿掉了。cbuild.py --layer 算裝備圖層從這裡拿網格，所以留著。匯出設定是 all_resources，所以它照樣進出貨包。"
+      "notes": "3D 角色算圖那條 cbuild 產線 2026-09-29 刪掉，裝備網格跟著刪，要重產得從 git 歷史拿回來。這一筆留著當來源紀錄。",
+      "removed": "2026-09-29"
     },
     {
       "id": "generated.models.characters_mannequin",
@@ -525,15 +524,15 @@
       "file_count": 24,
       "source": {
         "tool": "程式化 Blender",
-        "pipeline": "art_pipeline/npcs_v2/nbuild.py"
+        "pipeline": "art_pipeline/npcs/npc_sheet.py，立牌原圖在 art_source/npcs/volume"
       },
       "license": {
         "name": "自製",
         "commercial_use": true
       },
       "used_at_runtime": false,
-      "ships": false,
-      "status": "removed",
+      "ships": true,
+      "status": "shipping_unreviewed",
       "risk": "none",
       "format": {
         "frame_px": 96,
@@ -543,8 +542,7 @@
           "talk"
         ]
       },
-      "notes": "2026-09-24 清掉，檔案搬到本機 _待刪除/，不在版本庫。這一筆留著當來源紀錄。96×96、64 px/m 的舊規格。NPC 現在走 3D，改成 2D 圖集是下一件，要照玩家角色的規格重做。",
-      "removed": "2026-09-24"
+      "notes": "九個 NPC 的 2D 圖集，畫格和錨點照玩家的 male_novice。新客戶端還沒接。"
     },
     {
       "id": "generated.sprites.characters",
@@ -602,7 +600,7 @@
         "pixels_per_meter": 64,
         "directions": 1
       },
-      "notes": "bolt_fire、bolt_ice、bolt_lightning、meteor 四份有 sheet.png 和 meta.json 但沒有 texture.png，也不在 src/world/skill_effects.gd 的 ART 表裡，所以永遠不會被載入。meteor_fall 是出貨的技能，現在畫的是程式產的佔位圖。"
+      "notes": "沒被載入的 bolt_fire、bolt_ice、bolt_lightning、meteor 2026-09-29 刪了，effects.py 也拿掉。meteor_fall 是出貨的技能，現在畫的是程式產的佔位圖。"
     },
     {
       "id": "generated.sprites.placeholder",
@@ -797,9 +795,9 @@
       "id": "tools.local_generation",
       "kind": "tool",
       "path": "art_pipeline/comfy/**",
-      "status": "removed",
+      "status": "active",
       "risk": "low",
-      "note": "本機 ComfyUI 產線 art_pipeline/comfy，3D 算圖失敗之後 2026-09-24 清掉。下面的模型授權紀錄留著，以後再用同一批模型時查這裡。ComfyUI 本身和模型檔在 D:\\ComfyUI，不在版本庫。",
+      "note": "本機 ComfyUI。3D 算圖那條 2026-09-24 清掉，只留 art_pipeline/comfy/flux.py 給概念圖、地形材質、道具圖、技能圖示、NPC 立牌用。下面的模型授權紀錄留著。ComfyUI 本身和模型檔在 D:\\ComfyUI，不在版本庫。",
       "models": {
         "Qwen-Image-Edit-2511 (GGUF Q3_K_M)": {
           "use": "定裝圖轉方向、小圖重畫",
@@ -856,8 +854,7 @@
           "license": "CC0",
           "source": "見 vendor.kaykit"
         }
-      },
-      "removed": "2026-09-24"
+      }
     },
     {
       "id": "source.characters",
@@ -865,7 +862,7 @@
       "path": "art_source/characters/**",
       "status": "approved",
       "risk": "none",
-      "note": "每個身體一個資料夾，views/ 是 s、sw、w、nw、n 五張視圖，紙偶從 male_base/views 切零件。mesh.glb 是 2026-09-23 本機四視圖轉 3D 的試作，現在只給 cbuild.py 算裝備圖層時當陪算的身體。",
+      "note": "每個身體一個資料夾，views/ 是 s、sw、w、nw、n 五張視圖，紙偶從 male_base/views 切零件。",
       "provenance": {
         "tool": "視圖來自使用者的定裝圖；轉 3D 的 art_pipeline/comfy 2026-09-24 清掉",
         "first": "male_novice 2026-09-23"
@@ -893,7 +890,8 @@
       "note": "南門四隻怪的概念圖：使用者 2026-09-22 給的序列圖和總覽，2026-09-23 貼的四張正面圖存成各資料夾的 正面_使用者2026-09-23.*，圖集全部照這四張做。四視圖在各自的 views/，描述檔在 描述/。蘑菇/ 是拿掉的紅傘菇，留著當紀錄。",
       "provenance": {
         "tool": "概念圖產圖工具未記錄；四視圖當時用 art_pipeline/comfy/turnaround.py 畫，那支 2026-09-24 清掉，之後的四視圖由使用者自己畫"
-      }
+      },
+      "notes": "舊轉身產線的 36 格中間圖 2026-09-29 刪了，出貨圖集切自各隻的 views/。"
     },
     {
       "id": "source.monsters_south_gate.views5",

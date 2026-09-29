@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""紙偶骨架，不用 Blender：照 cbuild 同一組比例和同一顆 30 度正交相機，把站直的標準骨架投影到畫格上，寫成 rig.json。
+"""紙偶骨架，不用 Blender：照定裝卡的比例和 30 度正交相機，把站直的標準骨架投影到畫格上，寫成 rig.json。
 
 動作由 puppet_poses.py 在畫面上設計，骨架只有兩個用途：切零件的參考姿勢、每個方向的站姿，
 兩個都是站直手垂下，用比例算得出來，不需要 KayKit 的動作檔。
@@ -34,7 +34,7 @@ ANCHOR = (88, 208)
 PIXELS_PER_METER = 96.0
 CAMERA_ELEVATION_DEG = 30.0
 DIRECTIONS = ["s", "sw", "w", "nw", "n"]
-# 和 cbuild.CARD_SPEC 同一組：定裝卡量出來的 2.83 頭身
+# 定裝卡量出來的 2.83 頭身
 CARD_SPEC = {"head_ratio": 2.83, "head_width_per_head": 0.99, "shoulder_per_head_width": 1.085,
              "shoulder_per_height": 0.556, "crotch_per_height": 0.317, "stance_per_head_width": 0.595,
              "leg_width_per_head_width": 0.323}

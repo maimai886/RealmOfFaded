@@ -26,7 +26,7 @@ DIAG_SCALE = 0.75
 DIAG_LEG_GATHER = 0.6
 # 走路大腿前後各擺幾度：側面兩腳最開 0.47 個身高，和 RO 初心者走路量到的一樣
 WALK_THIGH_DEG = 30.0
-# 和 cbuild.CAMERA_ELEVATION_DEG 同一個，骨架是照這個俯角投影的
+# 和 rig2d.CAMERA_ELEVATION_DEG 同一個，骨架是照這個俯角投影的
 CAMERA_ELEVATION_DEG = 30.0
 
 

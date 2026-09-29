@@ -39,9 +39,6 @@ OUT_ROOT = os.path.join(blenv.PROJECT_ROOT, "assets", "generated", "sprites", "e
 EFFECTS = {
     "arc": dict(frames=6, fps=24, color="#fff3d6"),
     "bolt": dict(frames=6, fps=18, color="#fff0d6"),
-    "bolt_fire": dict(frames=6, fps=18, color="#ff9447", shape="bolt"),
-    "bolt_ice": dict(frames=6, fps=18, color="#94d1ff", shape="bolt"),
-    "bolt_lightning": dict(frames=6, fps=18, color="#e8f78a", shape="bolt"),
     "burst": dict(frames=6, fps=20, color="#fff0c0"),
     "ring": dict(frames=6, fps=12, color="#c8f0a0"),
     "disc": dict(frames=5, fps=10, color="#ffe6a8"),
@@ -50,7 +47,6 @@ EFFECTS = {
     "star": dict(frames=6, fps=12, color="#ffe66b"),
     "snow": dict(frames=6, fps=10, color="#bfe9ff"),
     "aura": dict(frames=8, fps=10, color="#9ff2b8"),
-    "meteor": dict(frames=8, fps=16, color="#ff9447"),
 }
 ART_SHAPES = ["arc", "bolt", "burst", "ring", "disc", "trap", "flame", "star", "snow", "aura"]
 
@@ -120,15 +116,6 @@ def _shape(builder, shape, t):
         for k in range(3):
             phase = (t + k / 3.0) % 1.0
             g.ring(builder, 0.18 + 0.28 * phase, 0.03 * (1 - phase), 0 if k else 1, phase * 0.15, 0.55)
-    elif shape == "meteor":
-        if t < 0.5:
-            k = t / 0.5
-            g.orb(builder, (0.3 - 0.6 * k, 0, 0.45 - 0.7 * k), 0.16, 0, glow=False)
-            g.flame(builder, (0.3 - 0.6 * k + 0.05, 0.02, 0.45 - 0.7 * k), 0.4, 0.1, 0, 1)
-        else:
-            k = (t - 0.5) / 0.5
-            g.star(builder, (-0.3, 0, -0.25), 0.15 + 0.4 * k, 8, 0, 0.06 * (1 - k * 0.7))
-            g.ring(builder, 0.15 + 0.35 * k, 0.04 * (1 - k * 0.5), 1, -0.3, 0.45)
 
 
 def _camera(flat):
@@ -160,7 +147,7 @@ def _frame(effect_id, shape, t, main_hex, core_hex):
 
 def render(effect_id):
     spec = EFFECTS[effect_id]
-    shape = spec.get("shape", effect_id)
+    shape = effect_id
     frames = [_frame(effect_id, shape, i / max(1, spec["frames"] - 1), spec["color"], "#fffaf0")
               for i in range(spec["frames"])]
     out_dir = os.path.join(OUT_ROOT, effect_id)
@@ -173,7 +160,7 @@ def render(effect_id):
             "actions": {"play": {"row": 0, "frames": spec["frames"], "fps": spec["fps"], "loop": effect_id in ("flame", "aura", "trap", "disc", "ring")}}}
     with open(os.path.join(out_dir, "meta.json"), "w", encoding="utf-8") as handle:
         json.dump(meta, handle, ensure_ascii=False, indent=2)
-    if shape in ART_SHAPES and effect_id == shape:
+    if shape in ART_SHAPES:
         # ART 表用的單張：白色帶透明，顏色交給 modulate
         white = _frame(effect_id, shape, 0.35, "#ffffff", "#ffffff")
         white[..., :3] = 1.0

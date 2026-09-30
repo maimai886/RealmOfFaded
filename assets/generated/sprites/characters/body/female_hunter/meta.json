@@ -1,0 +1,85 @@
+{
+ "frame_size": [
+  176,
+  232
+ ],
+ "columns": 16,
+ "pixels_per_meter": 96,
+ "anchor": [
+  88,
+  208
+ ],
+ "top_row": 24,
+ "directions": [
+  "s",
+  "sw",
+  "w",
+  "nw",
+  "n",
+  "ne",
+  "e",
+  "se"
+ ],
+ "filter": "nearest",
+ "actions": {
+  "idle": {
+   "frames": 1,
+   "fps": 1,
+   "loop": true,
+   "start": 0
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "start": 8
+  },
+  "sit": {
+   "frames": 1,
+   "fps": 1,
+   "loop": true,
+   "start": 72
+  },
+  "pickup": {
+   "frames": 3,
+   "fps": 8,
+   "loop": false,
+   "start": 80
+  },
+  "standby": {
+   "frames": 6,
+   "fps": 6,
+   "loop": true,
+   "start": 104
+  },
+  "attack1": {
+   "frames": 5,
+   "fps": 10,
+   "loop": false,
+   "start": 152
+  },
+  "hit": {
+   "frames": 3,
+   "fps": 10,
+   "loop": false,
+   "start": 192
+  },
+  "die": {
+   "frames": 1,
+   "fps": 1,
+   "loop": false,
+   "start": 216
+  },
+  "cast": {
+   "frames": 6,
+   "fps": 8,
+   "loop": true,
+   "start": 224
+  }
+ },
+ "source": {
+  "pipeline": "art_pipeline/_build/ro/hunter_atlas.py",
+  "from": "rofpose LoRA 第 6000 步，pose_norm 清過"
+ },
+ "layout": "packed"
+}

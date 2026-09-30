@@ -80,13 +80,13 @@ impl RofWorld {
 }
 
 impl RofWorld {
-    fn actor(&mut self, gender: Gender, appearance: &Appearance, at: [f32; 2]) -> Gd<Actor> {
+    fn actor(&mut self, gender: Gender, job: &str, appearance: &Appearance, at: [f32; 2]) -> Gd<Actor> {
         let mut actor = Actor::new_alloc();
         let mut look = VarDictionary::new();
         for (key, value) in appearance {
             look.set(key.as_str(), *value);
         }
-        actor.bind_mut().setup(gender.as_str().into(), look);
+        actor.bind_mut().setup(gender.as_str().into(), job.into(), look);
         actor.set_position(spot(at));
         self.base_mut().add_child(&actor);
         actor
@@ -107,7 +107,7 @@ impl RofWorld {
                 let built = crate::map::build(&enter.map);
                 self.base_mut().add_child(&built);
                 Actor::light_from(built.clone().upcast());
-                let mut actor = self.actor(enter.me.gender, &enter.me.appearance, me);
+                let mut actor = self.actor(enter.me.gender, &enter.me.character.job_id, &enter.me.appearance, me);
                 actor.bind_mut().set_display_name(enter.me.name, true);
                 self.me = Some(actor);
                 self.self_id = enter.self_id;
@@ -132,7 +132,7 @@ impl RofWorld {
                 }
             }
             Push::EntitySpawn(s) if s.id != self.self_id => {
-                let mut actor = self.actor(s.gender, &s.appearance, [s.x, s.z]);
+                let mut actor = self.actor(s.gender, &s.job_id, &s.appearance, [s.x, s.z]);
                 actor.bind_mut().set_display_name(s.name, false);
                 self.others.insert(s.id, (actor, SnapshotBuffer::new(clock.server_now(now), [s.x, s.z])));
             }

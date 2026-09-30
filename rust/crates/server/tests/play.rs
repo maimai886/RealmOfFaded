@@ -167,3 +167,12 @@ async fn after_players_leave_in_every_way_newcomers_still_see_each_other() {
     let servers = a.request("server.list", json!({})).await;
     assert_eq!(servers["servers"][0]["online"], 2, "在線人數只算還在的人");
 }
+
+#[tokio::test(flavor = "multi_thread")]
+async fn a_hunter_server_makes_hunters_seen_as_hunters_by_everyone() {
+    let server = common::server_with(|s| s.start_job = "hunter".into()).await;
+    let (mut a, _) = Bot::player(&server, "hunta", "獵甲").await;
+    assert_eq!(a.push("world.enter").await["self"]["character"]["job_id"], "hunter", "自己進地圖是獵人");
+    let (mut b, _) = Bot::player(&server, "huntb", "獵乙").await;
+    assert_eq!(b.push("entity.spawn").await["job_id"], "hunter", "別人看到的是獵人");
+}

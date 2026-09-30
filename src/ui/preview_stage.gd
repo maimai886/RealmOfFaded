@@ -35,8 +35,8 @@ func _init(stage_size: Vector2, frame_height := 2.0, rotatable := false) -> void
 	_viewport.add_child(camera)
 
 
-func show_character(gender: String, appearance: Dictionary) -> void:
-	var key := gender + JSON.stringify(appearance)
+func show_character(gender: String, appearance: Dictionary, job := "novice") -> void:
+	var key := gender + job + JSON.stringify(appearance)
 	if key == _key:
 		return
 	_key = key
@@ -44,7 +44,7 @@ func show_character(gender: String, appearance: Dictionary) -> void:
 		_actor.queue_free()
 	_actor = Actor.new()
 	_viewport.add_child(_actor)
-	_actor.setup(gender, appearance)
+	_actor.setup(gender, job, appearance)
 	_face()
 
 

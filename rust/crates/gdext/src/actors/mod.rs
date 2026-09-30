@@ -123,9 +123,11 @@ pub struct Actor {
 
 #[godot_api]
 impl Actor {
+    /// 身體先找這個職業的，沒畫的職業用初心者
     #[func]
-    pub(crate) fn setup(&mut self, gender: GString, _appearance: VarDictionary) {
-        let Some(sheet) = Sheet::cached(&format!("{BODY_DIR}/{gender}_novice"))
+    pub(crate) fn setup(&mut self, gender: GString, job: GString, _appearance: VarDictionary) {
+        let Some(sheet) = Sheet::cached(&format!("{BODY_DIR}/{gender}_{job}"))
+            .or_else(|| Sheet::cached(&format!("{BODY_DIR}/{gender}_novice")))
             .or_else(|| Sheet::cached(&format!("{BODY_DIR}/{SHARED_GENDER}_novice")))
         else {
             godot_error!("讀不到初心者底板圖集：{gender}");
@@ -459,7 +461,7 @@ impl INode3D for ActorPreview {
                 let facing = yaw - index as f32 * FRAC_PI_4;
                 let mut actor = Actor::new_alloc();
                 actor.set_position(Vector3::new((index as f32 - 3.5) * 2.2, 0.0, row));
-                actor.bind_mut().setup(gender.into(), VarDictionary::new());
+                actor.bind_mut().setup(gender.into(), "novice".into(), VarDictionary::new());
                 actor.bind_mut().set_layers(layers.clone());
                 self.base_mut().add_child(&actor);
                 self.actors.push((actor, Vector2::new(facing.sin(), facing.cos()) * speed));

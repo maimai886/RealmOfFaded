@@ -11,6 +11,7 @@ async fn main() -> ExitCode {
     let mut port = DEFAULT_PORT;
     let mut data_dir: Option<PathBuf> = None;
     let mut config = PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/config/servers.json"));
+    let mut start_job = None;
     for arg in std::env::args().skip(1) {
         if let Some(v) = arg.strip_prefix("--port=") {
             let Ok(p) = v.parse() else {
@@ -22,6 +23,8 @@ async fn main() -> ExitCode {
             data_dir = Some(v.into());
         } else if let Some(v) = arg.strip_prefix("--config=") {
             config = v.into();
+        } else if let Some(v) = arg.strip_prefix("--start-job=") {
+            start_job = Some(v.to_owned());
         }
     }
     let cwd = std::env::current_dir().unwrap_or_default();
@@ -30,7 +33,10 @@ async fn main() -> ExitCode {
         return ExitCode::FAILURE;
     };
     let started = match rof_server::Settings::load(dir, &config) {
-        Ok(settings) => rof_server::start(settings, port).await,
+        Ok(mut settings) => {
+            settings.start_job = start_job.unwrap_or(settings.start_job);
+            rof_server::start(settings, port).await
+        }
         Err(e) => Err(e),
     };
     match started {

@@ -40,6 +40,8 @@ pub struct Settings {
     pub idle_timeout_ms: i64,
     /// 登入猜錯的計數時間窗，也是鎖多久
     pub lock_ms: i64,
+    /// 新角色的職業，正式是初心者；開發時用 --start-job= 直接看某職業的圖
+    pub start_job: String,
 }
 
 #[derive(Clone, Deserialize)]
@@ -65,6 +67,7 @@ impl Settings {
             heartbeat_ms: 20_000,
             idle_timeout_ms: 60_000,
             lock_ms: 300_000,
+            start_job: "novice".into(),
         })
     }
 }

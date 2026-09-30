@@ -23,6 +23,7 @@ struct Player {
     name: String,
     gender: Gender,
     appearance: Appearance,
+    job_id: String,
     walker: Walker,
     seen: BTreeSet<u32>,
     last_motion: Option<Motion>,
@@ -127,7 +128,7 @@ impl World {
                 appearance: character.appearance.clone(),
                 x: snap(position[0]),
                 z: snap(position[1]),
-                character: CharacterView { job_id: "novice".into(), base_level: 1, job_level: 1 },
+                character: CharacterView { job_id: character.job_id.clone(), base_level: 1, job_level: 1 },
             },
         };
         self.outbox.push((conn, encode_push(&Push::WorldEnter(enter))));
@@ -147,6 +148,7 @@ impl World {
             name: character.name.clone(),
             gender: character.gender,
             appearance: character.appearance.clone(),
+            job_id: character.job_id.clone(),
             walker: Walker::new(position),
             seen: BTreeSet::new(),
             last_motion: None,
@@ -196,7 +198,7 @@ impl World {
             alive: true,
             facing: p.walker.facing,
             name: p.name.clone(),
-            job_id: "novice".into(),
+            job_id: p.job_id.clone(),
             gender: p.gender,
             appearance: p.appearance.clone(),
             equipment: Default::default(),

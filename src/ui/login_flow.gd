@@ -619,7 +619,7 @@ func _character_slot(index: int, slot_size: Vector2) -> Control:
 	var summary: Dictionary = _characters[index]
 	var stage := PreviewStage.new(Vector2(140, 88) if _phone else Vector2(196, 160))
 	column.add_child(stage)
-	stage.show_character(summary["gender"], summary["appearance"])
+	stage.show_character(summary["gender"], summary["appearance"], summary["job_id"])
 	var name_label := _text(summary["name"])
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(name_label)

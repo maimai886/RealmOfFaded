@@ -16,7 +16,6 @@ use crate::world::World;
 use crate::{AuditLog, CLOSE_KICK, CLOSE_NORMAL, Input, Out, ServerConfig, Settings, Throttle, source_key};
 
 const MAP: &str = "meadow";
-const JOB: &str = "novice";
 const SLOTS_PER_SERVER: usize = 3;
 const MAX_SESSIONS_PER_IP: usize = 10;
 const VIOLATION_WINDOW_MS: i64 = 5_000;
@@ -88,6 +87,7 @@ pub(crate) struct Character {
     pub(crate) name: String,
     pub(crate) gender: Gender,
     pub(crate) appearance: Appearance,
+    pub(crate) job_id: String,
     created_at: i64,
     pub(crate) position: [f32; 2],
 }
@@ -125,6 +125,9 @@ pub(crate) struct Game {
 impl Game {
     pub(crate) fn new(settings: Settings, audit: AuditLog) -> Result<Self, String> {
         let dir = &settings.data_dir;
+        if rof_data::read_json(&dir.join("jobs.json"))?.get(&settings.start_job).is_none() {
+            return Err(format!("jobs.json 沒有職業 {}", settings.start_job));
+        }
         Ok(Game {
             appearances: Appearances::load(dir)?,
             reserved: ReservedNames::load(dir)?,
@@ -454,7 +457,7 @@ impl Game {
             .map(|c| CharacterSummary {
                 id: c.id.clone(),
                 name: c.name.clone(),
-                job_id: JOB.into(),
+                job_id: c.job_id.clone(),
                 base_level: 1,
                 job_level: 1,
                 map: MAP.into(),
@@ -491,8 +494,9 @@ impl Game {
         let id = format!("c{}", self.characters.len() + 1);
         let created_at = SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs() as i64);
         let position = self.world.map.player_spawn;
+        let job_id = self.settings.start_job.clone();
         let character =
-            Character { id, account, server_id, name, gender: create.gender, appearance, created_at, position };
+            Character { id, account, server_id, name, gender: create.gender, appearance, job_id, created_at, position };
         let reply = CreateReply { character_id: character.id.clone() };
         self.characters.push(character);
         done(reply)
